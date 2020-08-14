@@ -1360,3 +1360,8 @@ header label {
 .post-content pre .javascript .function {
   color: #8959a8;
 }
+@media screen and (max-width: 650px) {
+  #github_widget {
+    display: none;
+  }
+}
