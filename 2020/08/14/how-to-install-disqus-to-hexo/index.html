@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+
+<link rel="stylesheet" href="//fonts.googleapis.com/earlyaccess/notosanskr.css">
+
+
+    <meta name="author" content="zini">
+
+
+    <meta name="subtitle" content="tech blog by Zini">
+
+
+
+
+<title>Hexo에 Disqus 설치하기 | zinirun</title>
+
+
+
+    <link rel="icon" href="/favicon.png">
+
+
+
+
+    <!-- stylesheets list from _config.yml -->
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+
+
+
+    <!-- scripts list from _config.yml -->
+    
+    <script src="/js/script.js"></script>
+    
+    <script src="/js/tocbot.min.js"></script>
+    
+
+
+
+    
+    
+        
+    
+
+
+<meta name="generator" content="Hexo 5.0.2"></head>
+<body>
+    <div class="wrapper">
+        <header>
+  <nav class="navbar">
+    <div class="container">
+      <div
+        class="navbar-header header-logo"
+        style="font-size: 13pt; font-weight: 600;"
+      >
+        <a href="/" style="color: #2d96bd;"
+          >zini&#39;s tech blog</a
+        >
+      </div>
+      <div class="menu navbar-right">
+        
+        <a class="menu-item" href="/archives">Posts</a>
+        
+        <a class="menu-item" href="/category">Categories</a>
+        
+        <a class="menu-item" href="/tag">Tags</a>
+        
+        <input id="switch_default" type="checkbox" class="switch_default" />
+        <label for="switch_default" class="toggleBtn"></label>
+      </div>
+    </div>
+  </nav>
+
+  
+  <nav class="navbar-mobile" id="nav-mobile">
+    <div class="container">
+      <div class="navbar-header">
+        <div>
+          <a href="/">zini&#39;s tech blog</a
+          ><a id="mobile-toggle-theme">·&nbsp;Light</a>
+        </div>
+        <div class="menu-toggle" onclick="mobileBtn()">&#9776; Menu</div>
+      </div>
+      <div class="menu" id="mobile-menu">
+        
+        <a class="menu-item" href="/archives">Posts</a>
+        
+        <a class="menu-item" href="/category">Categories</a>
+        
+        <a class="menu-item" href="/tag">Tags</a>
+        
+      </div>
+    </div>
+  </nav>
+</header>
+<script>
+  var mobileBtn = function f() {
+    var toggleMenu = document.getElementsByClassName("menu-toggle")[0];
+    var mobileMenu = document.getElementById("mobile-menu");
+    if (toggleMenu.classList.contains("active")) {
+      toggleMenu.classList.remove("active");
+      mobileMenu.classList.remove("active");
+    } else {
+      toggleMenu.classList.add("active");
+      mobileMenu.classList.add("active");
+    }
+  };
+</script>
+
+        <div class="main">
+            <div class="container">
+    
+    
+        <div class="post-toc">
+    <div class="tocbot-list">
+    </div>
+    <div class="tocbot-list-menu">
+        <a class="tocbot-toc-expand" onclick="expand_toc()">Expand all</a>
+        <a onclick="go_top()">Back to top</a>
+        <a onclick="go_bottom()">Go to bottom</a>
+    </div>
+</div>
+
+<script>
+    document.ready(
+        function () {
+            tocbot.init({
+                tocSelector: '.tocbot-list',
+                contentSelector: '.post-content',
+                headingSelector: 'h1, h2, h3, h4, h5',
+                collapseDepth: 1,
+                orderedList: false,
+                scrollSmooth: true,
+            })
+        }
+    )
+
+    function expand_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 6,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "collapse_toc()");
+        b.innerHTML = "Collapse all"
+    }
+
+    function collapse_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 1,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "expand_toc()");
+        b.innerHTML = "Expand all"
+    }
+
+    function go_top() {
+        window.scrollTo(0, 0);
+    }
+
+    function go_bottom() {
+        window.scrollTo(0, document.body.scrollHeight);
+    }
+
+</script>
+    
+
+    
+    <article class="post-wrap">
+        <header class="post-header">
+            <h1 class="post-title">Hexo에 Disqus 설치하기</h1>
+            
+                <div class="post-meta">
+                    
+                        Author: <a itemprop="author" rel="author" href="/">zini</a>
+                    
+
+                    
+                        <span class="post-time">
+                        Date: <a href="#">August 14, 2020&nbsp;&nbsp;23:40:48</a>
+                        </span>
+                    
+                    
+                        <span class="post-category">
+                    Category:
+                            
+                                <a href="/categories/blog/">blog</a>
+                            
+                        </span>
+                    
+                </div>
+            
+        </header>
+
+        <div class="post-content">
+            <p>기본적으로 Hexo에는 댓글 기능이 없다. 개발자가 만들어서 쓰던지, 설치형 댓글 서비스를 이용하던지 해야한다. 이미 유명한 <strong>Disqus</strong>라는 댓글 서비스가 있기 때문에 이를 이용하면 효율적인 댓글 시스템을 구축할 수 있다.</p>
+<p>사용하는 블로그 테마에 따라 comment를 지원하는 경우가 있을 수 있으니 해당 테마의 설명에서 확인해보자.</p>
+<p>내가 사용하는 <a target="_blank" rel="noopener" href="https://github.com/Siricee/hexo-theme-Chic">Chic 테마</a>는 disqus comment 기능이 내장되어 있지 않기 때문에 직접 코드를 넣어주어야 했다.</p>
+<h2 id="Disqus-가입-설정하기"><a href="#Disqus-가입-설정하기" class="headerlink" title="Disqus 가입, 설정하기"></a>Disqus 가입, 설정하기</h2><ul>
+<li><a target="_blank" rel="noopener" href="https://disqus.com/">Disqus</a>에 회원가입 후 프로필, 계정을 설정하고 <strong>GET STARTED</strong> 버튼을 클릭한다.</li>
+<li><strong>I want to install Disqus on my site</strong>를 클릭한다.</li>
+<li>사이트명, 카테고리를 선택하고 <strong>Create Site</strong>를 클릭한다.</li>
+<li>plan을 선택해야 하는데 무료 사용으로도 댓글 기능을 사용할 수 있기에 <code>Basic</code>을 선택한다.</li>
+</ul>
+<p>이제 <strong>Platform</strong>을 선택하는데, Jekyll, WordPress 등의 블로그 플랫폼은 지원하지만 Hexo는 목록에 없다. 밑에 **I don’t see my platform~**을 선택한다.</p>
+<h2 id="테마에-Disqus-위젯-넣기"><a href="#테마에-Disqus-위젯-넣기" class="headerlink" title="테마에 Disqus 위젯 넣기"></a>테마에 Disqus 위젯 넣기</h2><p>테마에서 post와 관련된 ejs 파일을 찾아 밑의 코드 <strong>또는 Disqus 사이트에서 넣으라고 준 코드</strong> 를 원하는 부분에 끼워넣으면 된다.</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">&quot;disqus_thread&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">script</span>&gt;</span></span><br><span class="line">    /**</span><br><span class="line">    *  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.</span><br><span class="line"><span class="javascript">    *  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https:<span class="comment">//disqus.com/admin/universalcode/#configuration-variables*/</span></span></span><br><span class="line">    /*</span><br><span class="line"><span class="javascript">    <span class="keyword">var</span> disqus_config = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span></span><br><span class="line"><span class="javascript">    <span class="built_in">this</span>.page.url = PAGE_URL;  <span class="comment">// Replace PAGE_URL with your page&#x27;s canonical URL variable</span></span></span><br><span class="line"><span class="javascript">    <span class="built_in">this</span>.page.identifier = PAGE_IDENTIFIER; <span class="comment">// Replace PAGE_IDENTIFIER with your page&#x27;s unique identifier variable</span></span></span><br><span class="line">    &#125;;</span><br><span class="line">    */</span><br><span class="line"><span class="javascript">    (<span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123; <span class="comment">// DON&#x27;T EDIT BELOW THIS LINE</span></span></span><br><span class="line"><span class="javascript">    <span class="keyword">var</span> d = <span class="built_in">document</span>, s = d.createElement(<span class="string">&#x27;script&#x27;</span>);</span></span><br><span class="line"><span class="javascript">    s.src = <span class="string">&#x27;https://사용자이름.disqus.com/embed.js&#x27;</span>;</span></span><br><span class="line"><span class="javascript">    s.setAttribute(<span class="string">&#x27;data-timestamp&#x27;</span>, +<span class="keyword">new</span> <span class="built_in">Date</span>());</span></span><br><span class="line">    (d.head || d.body).appendChild(s);</span><br><span class="line">    &#125;)();</span><br><span class="line">    <span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">noscript</span>&gt;</span>Please enable JavaScript to view the <span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">&quot;https://disqus.com/?ref_noscript&quot;</span>&gt;</span>comments powered by Disqus.<span class="tag">&lt;/<span class="name">a</span>&gt;</span><span class="tag">&lt;/<span class="name">noscript</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="Hexo-서버-재실행하기"><a href="#Hexo-서버-재실행하기" class="headerlink" title="Hexo 서버 재실행하기"></a>Hexo 서버 재실행하기</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hexo d -g</span><br></pre></td></tr></table></figure>
+<p>모든 설정이 끝났으니 Hexo 서버를 deploy한다.</p>
+<p>이제 블로그를 가보면, 게시물마다 Disqus 댓글 시스템이 구축된 것을 볼 수 있다!<br>무슨 블로그 플랫폼에 댓글이 셀프냐고 할 수도 있겠지만, 익숙한 것에 대한 고마움을 느낀다.</p>
+
+        </div>
+
+        
+            <section class="post-copyright">
+                
+                
+                
+                
+
+            </section>
+        
+        <section class="post_disqus">
+            <div id="disqus_thread"></div>
+            <script>
+            
+            /**
+            *  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+            *  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables*/
+            /*
+            var disqus_config = function () {
+            this.page.url = PAGE_URL;  // Replace PAGE_URL with your page's canonical URL variable
+            this.page.identifier = PAGE_IDENTIFIER; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+            };
+            */
+            (function() { // DON'T EDIT BELOW THIS LINE
+            var d = document, s = d.createElement('script');
+            s.src = 'https://zinirun.disqus.com/embed.js';
+            s.setAttribute('data-timestamp', +new Date());
+            (d.head || d.body).appendChild(s);
+            })();
+            </script>
+            <noscript>Please enable JavaScript to view the <a target="_blank" rel="noopener" href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+        </section>
+        <section class="post-tags">
+            <div>
+                <span>Tag(s):</span>
+                <span class="tag">
+                    
+                    
+                        <a href="/tags/hexo/"># hexo</a>
+                    
+                        <a href="/tags/disqus/"># disqus</a>
+                    
+                        
+                </span>
+            </div>
+            <div>
+                <a href="javascript:window.history.back();">back</a>
+                <span>· </span>
+                <a href="/">home</a>
+            </div>
+        </section>
+        <section class="post-nav">
+            
+            
+            <a class="next" rel="next" href="/2020/08/14/how-to-install-hexo/">Hexo 기술블로그 시작하기, 내가 Hexo를 선택한 이유</a>
+            
+        </section>
+
+
+    </article>
+</div>
+
+        </div>
+        <footer id="footer" class="footer">
+  <div class="copyright">
+    <span
+      >© zini | Powered by
+      <a href="https://hexo.io" target="_blank">Hexo</a> &
+      <a href="https://github.com/" target="_blank">Github Pages</a></span
+    >
+  </div>
+</footer>
+
+    </div>
+</body>
+</html>
