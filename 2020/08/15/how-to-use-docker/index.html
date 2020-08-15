@@ -1,0 +1,545 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+<link rel="canonical" href="https://zinirun.github.io/2020/08/15/how-to-use-docker/">
+
+
+<link rel="stylesheet" href="//fonts.googleapis.com/earlyaccess/notosanskr.css">
+
+
+    <meta name="author" content="zini">
+
+
+    <meta name="subtitle" content="tech blog by Zini">
+
+
+
+
+<title>Docker(도커) 시작하기, 설치부터 배포까지 | zinirun</title>
+
+
+
+    <link rel="icon" href="/favicon.png">
+
+
+
+
+    <!-- stylesheets list from _config.yml -->
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+
+
+
+    <!-- scripts list from _config.yml -->
+    
+    <script src="/js/script.js"></script>
+    
+    <script src="/js/tocbot.min.js"></script>
+    
+
+
+
+    
+    
+        
+    
+
+
+<meta name="generator" content="Hexo 5.0.2"><link rel="alternate" href="/feed.xml" title="zinirun" type="application/atom+xml">
+</head>
+<body>
+    <div class="wrapper">
+        <header>
+  <nav class="navbar">
+    <div class="container">
+      <div class="navbar-header header-logo" style="font-size: 13pt; font-weight: 600;">
+        <a id="blog_logo" href="/" style="color: #2d96bd;">zini&#39;s tech blog</a>
+      </div>
+      <div class="menu navbar-right">
+        
+        <a class="menu-item" href="/archives">Posts</a>
+        
+        <a class="menu-item" href="/category">Categories</a>
+        
+        <a class="menu-item" href="/tag">Tags</a>
+        
+        <input id="switch_default" type="checkbox" class="switch_default">
+        <label for="switch_default" class="toggleBtn"></label>
+      </div>
+    </div>
+  </nav>
+
+  
+  <nav class="navbar-mobile" id="nav-mobile">
+    <div class="container">
+      <div class="navbar-header">
+        <div>
+          <a href="/" style="color: #2d96bd;">zini&#39;s tech blog</a><a id="mobile-toggle-theme">·&nbsp;Light</a>
+        </div>
+        <div class="menu-toggle" onclick="mobileBtn()">&#9776; Menu</div>
+      </div>
+      <div class="menu" id="mobile-menu">
+        
+        <a class="menu-item" href="/archives">Posts</a>
+        
+        <a class="menu-item" href="/category">Categories</a>
+        
+        <a class="menu-item" href="/tag">Tags</a>
+        
+      </div>
+    </div>
+  </nav>
+</header>
+<script>
+  var mobileBtn = function f() {
+    var toggleMenu = document.getElementsByClassName("menu-toggle")[0];
+    var mobileMenu = document.getElementById("mobile-menu");
+    if (toggleMenu.classList.contains("active")) {
+      toggleMenu.classList.remove("active");
+      mobileMenu.classList.remove("active");
+    } else {
+      toggleMenu.classList.add("active");
+      mobileMenu.classList.add("active");
+    }
+  };
+</script>
+
+        <div class="main">
+            <div class="container">
+    
+    
+        <div class="post-toc">
+    <div class="tocbot-list">
+    </div>
+    <div class="tocbot-list-menu">
+        <a class="tocbot-toc-expand" onclick="expand_toc()">Expand all</a>
+        <a onclick="go_top()">Back to top</a>
+        <a onclick="go_bottom()">Go to bottom</a>
+    </div>
+</div>
+
+<script>
+    document.ready(
+        function () {
+            tocbot.init({
+                tocSelector: '.tocbot-list',
+                contentSelector: '.post-content',
+                headingSelector: 'h1, h2, h3, h4, h5',
+                collapseDepth: 1,
+                orderedList: false,
+                scrollSmooth: true,
+            })
+        }
+    )
+
+    function expand_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 6,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "collapse_toc()");
+        b.innerHTML = "Collapse all"
+    }
+
+    function collapse_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 1,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "expand_toc()");
+        b.innerHTML = "Expand all"
+    }
+
+    function go_top() {
+        window.scrollTo(0, 0);
+    }
+
+    function go_bottom() {
+        window.scrollTo(0, document.body.scrollHeight);
+    }
+
+</script>
+    
+
+    
+    <article class="post-wrap">
+        <header class="post-header">
+            <h1 class="post-title">Docker(도커) 시작하기, 설치부터 배포까지</h1>
+            
+                <div class="post-meta">
+                    
+                        Author: <a itemprop="author" rel="author" href="/">zini</a>
+                    
+
+                    
+                        <span class="post-time">
+                        Date: <a href="#">August 15, 2020&nbsp;&nbsp;22:42:12</a>
+                        </span>
+                    
+                    
+                        <span class="post-category">
+                    Category:
+                            
+                                <a href="/categories/cloud/">cloud</a>
+                            
+                                <a href="/categories/cloud/docker/">docker</a>
+                            
+                        </span>
+                    
+                </div>
+            
+        </header>
+
+        <div class="post-content">
+            <h1 id="Docker-Guide"><a href="#Docker-Guide" class="headerlink" title="Docker Guide"></a>Docker Guide</h1><img src="https://subicura.com/assets/article_images/2017-01-19-docker-guide-for-beginners-1/docker-logo.png" width="300" title="Docker" alt="Docker logo">
+
+<p>우측의 목차 <code>tocbot</code>을 이용하면 편리합니다!</p>
+<h2 id="1-도커를-왜-쓸까-뭐길래"><a href="#1-도커를-왜-쓸까-뭐길래" class="headerlink" title="1. 도커를 왜 쓸까? 뭐길래?"></a>1. 도커를 왜 쓸까? 뭐길래?</h2><h3 id="들어가며"><a href="#들어가며" class="headerlink" title="들어가며"></a>들어가며</h3><p>서버 스터디를 하면서 ‘클라우드에 도커를 올려라’라는 말을 듣고, 듣긴 들은 것 같은데 대체 도커가 뭔지를 몰랐다. 단어 하나만 듣고 서버 <code>NHN TOAST 클라우드</code>에 여자저차 올리긴 했지만 완벽한 개념을 숙지하지 못하고 마구잡이로 올린 탓에 의미가 없었다.</p>
+<p>다들 도커를 접하는 많은 이유가 있겠지만, 도커, 이미지, 컨테이너 등 기본적인 개념을 알고 ‘왜’ 쓰는지 알아야 할 것 같아서 정리해보았다.</p>
+<h3 id="도커의-등장-전"><a href="#도커의-등장-전" class="headerlink" title="도커의 등장 전,"></a>도커의 등장 전,</h3><p>기존에 서버를 관리하는 것은 매우 어려웠고 복잡한 영역이어서, 새 서버를 세팅하려면 그때마다 config등의 구축환경을 다시 세팅하고, 그 후에도 리눅스 버전이나 환경의 변화가 생기면 충돌이 일어나기 쉽상이었다.</p>
+<p>한 서버에 다수의 프로그램을 설치하면 라이브러리, 포트 충돌을 고려한 설치가 굉장히 어려웠고, 마이크로서비스 아키텍쳐, DevOps 등의 등장으로 서버 관리는 더 어려워졌다.</p>
+<h3 id="도커의-등장"><a href="#도커의-등장" class="headerlink" title="도커의 등장,"></a>도커의 등장,</h3><p>이후 도커의 등장으로 서버 관리의 방식은 완전히 바뀌었다.</p>
+<p>도커는 컨테이너 기반의 오픈소스 가상화 플랫폼이다. 컨테이너 안에는 다양한 프로그램, 실행 환경을 ‘컨테이너’라는 개념으로 추상화하고 클라우드, PC 등 어디서든 실행할 수 있다. 구글에서는 모든 서비스들이 20억개의 컨테이너로 동작한다고 한다.</p>
+<h3 id="VM-vs-Docker"><a href="#VM-vs-Docker" class="headerlink" title="VM vs Docker"></a>VM vs Docker</h3><p>컨테이너는 격리된 공간에서 프로세스가 동작하는 기술이다. 기존의 가상화 방식은 OS를 가상화하는 것이었다. VMware 등의 가상머신은 Host OS 위에 Guest OS 전체를 가상화한다. 이 방식은 사용법도 간단하고 여러가지 운영체제를 가상화할 수 있지만 무겁고 느리기 때문에 운영환경의 사용에는 적합하지 않았다.</p>
+<p><img src="https://miro.medium.com/max/862/1*wOBkzBpi1Hl9Nr__Jszplg.png" alt="d11"></p>
+<p>이후 CPU의 가상화 기술을 이용한 반가상화 방식이 등장한다. Guest OS가 필요하지만 전체 OS를 가상화하는 방식이 아니어서 성능은 향상되었다. 이 기술은 OpenStack, AWS 등의 클라우드 서비스의 가상 컴퓨터 기술의 기반이 되었다.</p>
+<p>전가상화, 반가상화 모두 성능 문제가 있었다. 이를 개선한 프로세스 격리 방식이 등장한다. 리눅스에서 리눅스 컨테이너라고 하며 단순하게 프로세스를 격리시키는 방식이기 때문에 가볍고 빠르게 동작한다. CPU나 메모리 등의 자원을 프로세스가 필요한 만큼만 할당하고 더 필요하면 그때마다 추가적으로 할당하기 때문에 성능적인 손실이 거의 없었다.</p>
+<p>하나의 서버에 다수의 컨테이너를 실행하면 서로 영향을 주지 않고 독립적으로 실행된다. 실행 중인 컨테이너에 접속하며 명령어 입력, 패키지 설치, 사용자 추가 등 모든 작업을 할 수 있다. 컨테이너를 만드는 시간은 길어야 2초로 가상머신보다 훨씬 빠르다.</p>
+<p>이 전에도 프로세스 격리 방식의 가상화 기술(LXC, Jail 등)이 있었지만 성공하지는 못했다. 도커는 LXC를 기반으로 시작해서 이 후 자체적인 libcontainer 기술을 사용했고 runC 기술에 합쳐졌다. 도커가 성공한 이유는 존재하는 좋은 기술들을 잘 포장해서 오픈 소스로 배포했기 때문이 아닐까.</p>
+<h3 id="Image-Container-…"><a href="#Image-Container-…" class="headerlink" title="Image, Container, …"></a>Image, Container, …</h3><p>도커에서 가장 중요한 개념은 컨테이너, 이미지이다. 이미지는 컨테이너 실행에 필요한 파일, 설정값을 모두 포함하고 있는 것이고 변하지 않는다. 이미지를 실행한 것이 컨테이너이고 여기서 추가, 변화되는 값은 컨테이너에 저장된다. 같은 이미지로 다수의 컨테이너를 생성할 수 있고 컨테이너의 변화가 생겨도 이미지에는 영향을 주지 않는다.</p>
+<p>예를 들어 CentOS 이미지는 CentOS를 실행하기 위한 모든 파일, 설정값을 가지고 있고, Tensorflow 이미지 안에는 Tensorflow, Python, Jupyter 등 딥 러닝에 필요한 환경이 모두 들어가 있다. 이미지는 컨테이너를 실행하기 위한 모든 정보를 가지고 있기 때문에 개발 환경 등의 구축을 위해서 이것저것 설치하고 설정할 필요가 없다. 새로운 서버가 추가되면 만들어 놓은 이미지를 다운받고 컨테이너만 생성하면 된다.</p>
+<p>도커 이미지는 Dockerhub에서 업로드, 다운로드 할 수도 있다. 현재 공개된 이미지는 50만개가 넘고 누구나 쉽게 명령어를 이용하여 이미지를 만들고 배포하고(push) 다운로드(pull)받을 수 있다.</p>
+<h3 id="Layer"><a href="#Layer" class="headerlink" title="Layer"></a>Layer</h3><p>도커 이미지는 컨테이너 실행에 대한 모든 정보를 담고 있기 때문에 용량이 매우 크다. 따라서 기존의 이미지에 파일 하나를 추가했다고 수백메가가 넘어가는 이미지를 다시 다운로드한다면 매우 비효율적일 수 밖에 없다.</p>
+<p>도커는 레이어; Layer라는 개념을 사용한다. 유니온 파일 시스템을 이용하여 다수의 레이어를 하나의 파일시스템으로 사용할 수 있게 해준다. 이미지는 여러 개의 읽기 전용 레이어(Read-only Layer)로 구성되고 파일에 변화(추가, 수정)가 생기면 새로운 레이어가 생성된다.</p>
+<p>예를 들어 CentOS 이미지가 C1 + C2 레이어의 집합이라면 이 이미지에서 nginx가 구동되는 환경의 이미지 레이어는 C1 + C2 + nginx 가 된다. 이런 식으로 기존의 이미지 레이어 위에 레이어가 추가되는 방식으로 최소한의 용량을 사용할 수 있게 된다. 여러대의 서버에 배포하는 것을 감안하면 엄청나게 영리한 설계이다.</p>
+<h3 id="도입을-마치며"><a href="#도입을-마치며" class="headerlink" title="도입을 마치며"></a>도입을 마치며</h3><p>도커를 기반으로 한 오픈소스 프로젝트는 수십만개가 넘어가고 굉장히 활발히 진행되고 있다. 훌륭한 생테계를 기반으로 클라우드 컨테이너 세계에서 de facto(사실상 표준)가 되었다. 이번에는 도커에 대한 전반적인 역사와 개념을 매우 얕게 정리해보았는데 다음부터는 본격적으로 도커의 설치, 컨테이너 관리와 활용 등을 정리해보도록 하겠다.</p>
+<h2 id="2-도커-설치하기"><a href="#2-도커-설치하기" class="headerlink" title="2. 도커 설치하기"></a>2. 도커 설치하기</h2><p>도커는 소스를 컴파일해서 설치하는 방법, 자동 설치 스크립트를 사용하는 방법, 리눅스 배포판의 패키지로 설치하는 방법이 있다. 소스를 컴파일해서 설치하는 방법은 복잡하니 직접 찾아보자.</p>
+<h3 id="1-자동-설치-스크립트"><a href="#1-자동-설치-스크립트" class="headerlink" title="1. 자동 설치 스크립트"></a>1. 자동 설치 스크립트</h3><p>리눅스 버전을 자동으로 인식하여 도커 패키지를 설치해주는 스크립트이다.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo wget -qO- https:&#x2F;&#x2F;get.docker.com&#x2F; | sh</span><br></pre></td></tr></table></figure>
+
+<p>이 스크립트로 도커를 설치하면 hello-world 이미지도 같이 설치되는데, 사용하지 않으므로 삭제하도록 하자.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo docker rm &#39;sudo docker ps -aq&#39;</span><br><span class="line">sudo docker rmi hello-world</span><br></pre></td></tr></table></figure>
+
+<h3 id="2-패키지-직접-설치"><a href="#2-패키지-직접-설치" class="headerlink" title="2. 패키지 직접 설치"></a>2. 패키지 직접 설치</h3><ul>
+<li>Ubuntu<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get update</span><br><span class="line">sudo apt-get nistall docker.io</span><br><span class="line">sudo ln -sf &#x2F;usr&#x2F;bin&#x2F;docker.io &#x2F;usr&#x2F;local&#x2F;bin&#x2F;docker</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<p><code>/usr/bin/docker.io</code> 실행파일을 <code>/usr/local/bin/docker</code> 로 링크해서 사용</p>
+<ul>
+<li>CentOS7<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">sudo yum install docker</span><br><span class="line">sudo service docker start #Docker 서비스 실행</span><br><span class="line">sudo chkconfig docker on #부팅시 자동 실행</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<ul>
+<li>Mac, Windows의 경우는 <a target="_blank" rel="external nofollow noopener noreferrer" href="https://docker.com/">도커 공식홈</a>에서 받고 설치하면 되므로 다른 글을 참조하자.</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo docker version</span><br></pre></td></tr></table></figure>
+
+<p>도커 버전 명령어를 통해 설치가 잘 되었는지 확인해보자.</p>
+<p>이로써 Docker 설치가 끝났다!</p>
+<h2 id="3-이미지-받아서-실행하기-ft-컨테이너-명령어-sudo-입력-안하기"><a href="#3-이미지-받아서-실행하기-ft-컨테이너-명령어-sudo-입력-안하기" class="headerlink" title="3. 이미지 받아서 실행하기 (ft. 컨테이너 명령어, sudo 입력 안하기)"></a>3. 이미지 받아서 실행하기 (ft. 컨테이너 명령어, sudo 입력 안하기)</h2><h3 id="tip-sudo-입력하지-않기"><a href="#tip-sudo-입력하지-않기" class="headerlink" title="tip. sudo 입력하지 않기"></a>tip. sudo 입력하지 않기</h3><p>docker를 쓰다보면 <code>sudo</code>를 항상 붙여줘야 하는데 이는 docker 명령을 root 권한으로 실행해야 하기 때문에 일반 계정에서는 <code>sudo</code>가 항상 붙는 것이다. 매번 입력하기 귀찮고 빠뜨릴 때도 많다. <code>sudo</code>를 입력하지 않는 방법은 2가지이다.</p>
+<ol>
+<li>처음부터 root 계정으로 로그인하거나 root 계정으로 전환</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo su #root 계정으로 전환</span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li>현재 계정을 docker 그룹에 포함</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo usermod -aG docker $&#123;USER&#125;</span><br><span class="line">sudo service docker restart</span><br></pre></td></tr></table></figure>
+
+<h3 id="도커-이미지-다운로드-받아서-실행하기"><a href="#도커-이미지-다운로드-받아서-실행하기" class="headerlink" title="도커 이미지 다운로드 받아서 실행하기"></a>도커 이미지 다운로드 받아서 실행하기</h3><p>도커는 이미지를 만들거나 받아서 호스트에 저장한 후 컨테이너로 run해서 프로세스로 만든다. 무언가 실행하려면 이미지가 필요한 셈이다.</p>
+<p>이미지를 직접 만드는 방법도 있고, docker hub를 이용해서 공식 이미지나 다른 사용자들이 만들어놓은 이미지를 다운로드받는 방법도 있다.</p>
+<p>우선 Docker Hub에서 이미지를 받는 방법이다. 우분투 리눅스 이미지를 받아보겠다.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker pull ubuntu:latest</span><br></pre></td></tr></table></figure>
+
+<p><code>docker pull &lt;이미지 이름&gt;:&lt;태그&gt;</code> 형식이다. <code>latest</code>를 설정하면 최신 버전을 받는다. <code>latest</code> 대신 <code>16.04</code>, <code>18.04</code>를 입력해서 태그를 지정해 줄 수도 있다.<br>이미지 이름에서 <code>username/imagename:tagname</code> 형식을 사용하면 공식 이미지가 아닌 사용자 이미지를 받는다.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">docker images</span><br><span class="line">docker run -it --name hello ubuntu &#x2F;bin&#x2F;bash</span><br></pre></td></tr></table></figure>
+
+<p>이제 docker images 명령어를 통해 이미지를 출력하여 도커 이미지가 잘 받아졌는지 확인하고 ubuntu 이미지를 컨테이너로 실행해보자.</p>
+<p><code>docker run &lt;옵션&gt; &lt;이미지 이름&gt; &lt;실행할 파일&gt;</code> 형식이다.<br>위의 코드는 ubuntu 이미지를 컨테이너로 생성 후 이미지 안의 <code>/bin/bash</code>를 실행한다. 이미지 이름 대신 이미지 ID를 사용해도 좋다.</p>
+<p><code>-it</code> 옵션을 사용하면 실행된 Bash 쉘에 입출력을 할 수 있다.<br><code>--name</code> 옵션을 사용하면 컨테이너 이름을 지정해줄 수 있고, 지정하지 않으면 자동으로 이름을 부여한다.</p>
+<p>이제 <code>Host OS</code>와 완전 격리된 공간이 생성되었다. <code>cd</code>,<code>ls</code> 명령으로 확인해보면 완전 분리된 공간임을 알 수 있다. <code>exit</code>를 입력하면 Bash 쉘에서 빠져나온다. (도커 -&gt; HostOS)</p>
+<p>저기서 만든 컨테이너에서 <code>exit</code>를 입력하면 <code>/bin/bash</code>파일을 직접 실행했기 때문에 컨테이너가 정지상태로 바뀐다.</p>
+<p>여기서 컨테이너의 상태가 나왔는데, <strong>컨테이너의 상태나 시작, 종료</strong> 등은 어떻게 해야할까?</p>
+<h3 id="컨테이너-관련-명령어"><a href="#컨테이너-관련-명령어" class="headerlink" title="컨테이너 관련 명령어"></a>컨테이너 관련 명령어</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">docker ps -a #모든 컨테이너 출력(정지 컨테이너 포함)</span><br><span class="line">docker ps #실행 중인 컨테이너만 출력</span><br><span class="line">docker start hello #hello 이름의 컨테이너 시작</span><br><span class="line">docker restart hello #hello 이름의 컨테이너 재시작(재부팅)</span><br><span class="line">docker attach hello #컨테이너에 접속(bash 쉘 접속)</span><br><span class="line">docker stop hello #hello 이름의 컨테이너 종료</span><br><span class="line">docker rm hello #hello 이름의 컨테이너 삭제</span><br><span class="line">docker rm -f hello #hello 이름의 컨테이너 강제삭제</span><br></pre></td></tr></table></figure>
+
+<p>여기서 컨테이너를 삭제하는 명령어는 <code>rm</code>이고, 이미지를 삭제하는 명령어는 <code>rmi</code>를 쓰면 된다.</p>
+<p>우분투 공식 이미지를 받아서 컨테이너화 시키고 그 컨테이너를 시작, 종료하는 명령어도 알게 되었다. 다음에는 나만의 Docker 이미지를 생성해보도록 하겠다.</p>
+<h2 id="4-나만의-이미지-생성하기-ft-Dockerfile"><a href="#4-나만의-이미지-생성하기-ft-Dockerfile" class="headerlink" title="4. 나만의 이미지 생성하기(ft. Dockerfile)"></a>4. 나만의 이미지 생성하기(ft. Dockerfile)</h2><p>이전에 <code>Docker Hub</code>에서 만들어놓은 이미지를 다운로드 받아서 구동하는 것을 다뤘는데, 이번에는 <code>Dockerfile</code>을 직접 짜서 나만의 이미지를 만들어보려고 한다.</p>
+<h3 id="들어가기-전에"><a href="#들어가기-전에" class="headerlink" title="들어가기 전에,"></a>들어가기 전에,</h3><p>사실 이 부분에 대해서 이해가 많이 어려웠다. <code>Container</code>에서 필요한 프로그램들을 다운로드 받고 <code>commit</code> 명령어를 사용해서 이미지를 만들어도 될텐데, 왜 굳이 <code>Dockerfile</code>을 bash 명령어를 써가며 이미지를 빌드해야 되는지 몰랐다.</p>
+<p>그렇게 찾아본 결과 <code>commit</code> 명령어를 사용해서 이미지를 생성하는 방법은 실무에서 거의 쓰이지 않는다고 한다. 패키지 업데이트도 힘들고, 버전 관리도 까다로워서 <code>Dockerfile</code>을 파일화해서 관리하는 것이 <strong>버전 관리나 패키지 업데이트</strong> 등의 면에서도 우월하다는 것이다.</p>
+<h3 id="이제-Dockerfile을-만들어보자"><a href="#이제-Dockerfile을-만들어보자" class="headerlink" title="이제 Dockerfile을 만들어보자."></a>이제 <code>Dockerfile</code>을 만들어보자.</h3><p>Dockerfile은 Docker 이미지 설정 파일이다. 이 파일에 설정된 내용대로 이미지를 생성한다. 먼저 example 디렉토리를 생성한 뒤 해당 디렉토리로 이동한다. 모든 빌드와 관련된 파일들이 한 폴더(example)에서 이루어진다.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">mkdir example</span><br><span class="line">cd example</span><br></pre></td></tr></table></figure>
+
+<p>이번에 다루는 이미지 빌드는 모든 과정을 Dockerfile과 쉘 스크립트 파일로 통합하는 방법이다.<br>그러면 <code>build-run.sh</code> 파일을 만들고 인자를 전달해서 실행하면 이미지를 만들고 컨테이너로 run까지 <em>one-click</em>으로 할 수 있게 된다.</p>
+<h3 id="Dockerfile-관련-명령어"><a href="#Dockerfile-관련-명령어" class="headerlink" title="Dockerfile 관련 명령어"></a>Dockerfile 관련 명령어</h3><p><code>Dockerfile</code>을 만들기 전에 필요한 명령어들을 몇 개 알아보자.</p>
+<h4 id="FROM"><a href="#FROM" class="headerlink" title="FROM"></a>FROM</h4><p>어떤 이미지를 기반으로 할지 설정한다. Docker 이미지는 기존에 만들어진 이미지를 기반으로 생성한다. 만약 완전히 새로운 이미지를 생성하고 싶으면(“맨 땅에서 시작한다”) <code>FROM scratch</code>를 쓰면 된다.</p>
+<h4 id="MAINTAINER"><a href="#MAINTAINER" class="headerlink" title="MAINTAINER"></a>MAINTAINER</h4><p>메인테이너(제작자) 정보이다. Author(저자)라고 생각하면 된다.</p>
+<h4 id="RUN"><a href="#RUN" class="headerlink" title="RUN"></a>RUN</h4><p>쉘 스크립트/명령을 실행한다.<br>이미지 생성 중에는 사용자 입력을 받을 수 없다. 그래서 <code>apt-get install</code> 명령어를 사용할 경우 <code>-y</code> 옵션을 붙여야 한다.</p>
+<h4 id="VOLUME"><a href="#VOLUME" class="headerlink" title="VOLUME"></a>VOLUME</h4><p>호스트와 공유할 디렉터리 목록이다. <code>docker run</code> 명령어에서 <code>-v</code> 옵션으로 설정할 수도 있다.</p>
+<h4 id="ADD"><a href="#ADD" class="headerlink" title="ADD"></a>ADD</h4><p>빌드시에 주어진 컨텍스트에서 첫번째 인자로 주어진 파일, 폴더를 두번째 인자로 주어진 컨테이너 경로에 추가한다.</p>
+<h4 id="CMD"><a href="#CMD" class="headerlink" title="CMD"></a>CMD</h4><p>컨테이너가 시작되었을 때 실행할 실행 파일/쉘 스크립트이다.</p>
+<h4 id="EXPOSE"><a href="#EXPOSE" class="headerlink" title="EXPOSE"></a>EXPOSE</h4><p>호스트와 연결할 포트 번호이다. 외부와 통신을 가능하게 노출시켜 준다. 기본적으로 컨테이너 실행시 <code>docker run -p</code> 옵션을 주게 되면 암묵적으로 <code>EXPOSE</code>가 된다.</p>
+<p>이 명령어들을 바탕으로 <code>ubuntu 18.04</code> 기반의 <code>xrdp</code>, <code>vim</code> 등의 필수 패키지들이 설치된 나만의 우분투 이미지 <code>Dockerfile</code>을 만들어 보았다.</p>
+<p><code>Dockerfile</code></p>
+<figure class="highlight docker"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">FROM</span> ubuntu:<span class="number">18.04</span></span><br><span class="line"><span class="comment">#set root password</span></span><br><span class="line"><span class="keyword">RUN</span><span class="bash"> <span class="built_in">echo</span> <span class="string">&quot;root:ubuntu&quot;</span> | chpasswd</span></span><br><span class="line"><span class="comment"># install packages</span></span><br><span class="line"><span class="keyword">RUN</span><span class="bash"> apt-get update \</span></span><br><span class="line"><span class="bash">    &amp;&amp; apt-get install --yes --force-yes --no-install-recommends \</span></span><br><span class="line"><span class="bash">        sudo \</span></span><br><span class="line"><span class="bash">        software-properties-common \</span></span><br><span class="line"><span class="bash">        xorg \</span></span><br><span class="line"><span class="bash">        xserver-xorg \</span></span><br><span class="line"><span class="bash">        xfce4 \</span></span><br><span class="line"><span class="bash">        gnome-themes-standard \</span></span><br><span class="line"><span class="bash">        gtk2-engines-pixbuf \</span></span><br><span class="line"><span class="bash">        file-roller \</span></span><br><span class="line"><span class="bash">        evince \</span></span><br><span class="line"><span class="bash">        gpicview \</span></span><br><span class="line"><span class="bash">        leafpad \</span></span><br><span class="line"><span class="bash">        xfce4-whiskermenu-plugin \</span></span><br><span class="line"><span class="bash">        ttf-ubuntu-font-family \</span></span><br><span class="line"><span class="bash">        dbus-x11 \</span></span><br><span class="line"><span class="bash">        vnc4server \</span></span><br><span class="line"><span class="bash">        vim \</span></span><br><span class="line"><span class="bash">        xfce4-terminal \</span></span><br><span class="line"><span class="bash">        xrdp \</span></span><br><span class="line"><span class="bash">        xorgxrdp</span></span><br><span class="line"><span class="comment"># add the user and designate sudo authority</span></span><br><span class="line"><span class="keyword">RUN</span><span class="bash"> adduser ubuntu</span></span><br><span class="line"><span class="keyword">RUN</span><span class="bash"> <span class="built_in">echo</span> <span class="string">&quot;ubuntu:ubuntu&quot;</span> | chpasswd</span></span><br><span class="line"><span class="keyword">RUN</span><span class="bash"> <span class="built_in">echo</span> <span class="string">&quot;ubuntu ALL=(ALL:ALL) ALL&quot;</span> &gt;&gt; /etc/sudoers</span></span><br><span class="line"><span class="comment">#set the port number of xrdp</span></span><br><span class="line"><span class="keyword">RUN</span><span class="bash"> sed -i <span class="string">&#x27;s/3389/port_number/&#x27;</span> /etc/xrdp/xrdp.ini</span></span><br><span class="line"><span class="comment">#install xubuntu-desktop</span></span><br><span class="line"><span class="keyword">RUN</span><span class="bash"> apt-get install --yes --force-yes --no-install-recommends \</span></span><br><span class="line"><span class="bash">        xubuntu-desktop \</span></span><br><span class="line"><span class="bash">    &amp;&amp; apt-get clean \</span></span><br><span class="line"><span class="bash">    &amp;&amp; rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*</span></span><br><span class="line"><span class="comment"># insert entrypoint.sh and set ENTRYPOINT</span></span><br><span class="line"><span class="keyword">ADD</span><span class="bash"> entrypoint.sh /entrypoint.sh</span></span><br><span class="line"><span class="keyword">ENTRYPOINT</span><span class="bash"> /entrypoint.sh</span></span><br></pre></td></tr></table></figure>
+
+<p>여기서</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">RUN sed -i &#39;s&#x2F;3389&#x2F;port_number&#x2F;&#39; &#x2F;etc&#x2F;xrdp&#x2F;xrdp.ini</span><br><span class="line">cs</span><br></pre></td></tr></table></figure>
+
+<p><code>sed</code> 명령어는 파일에 있는 특정 단어를 찾아서 다른 단어로 바꾸는 역할을 한다.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ENTRYPOINT &#x2F;entrypoint.sh</span><br></pre></td></tr></table></figure>
+<p><code>ENTRYPOINT</code> 명령어는 컨테이너가 처음 실행될 때(run/start 시) 한번 수행되는 스크립트를 지정한다. 따라서 이미지를 빌드하고 컨테이너로 run하면 <code>entrypoint.sh</code> 쉘 스크립트가 실행된다.</p>
+<p><code>entrypoint.sh</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">#!&#x2F;bin&#x2F;bash</span><br><span class="line"># create a dbus system daemon</span><br><span class="line">service dbus start</span><br><span class="line"># create the sock dir properly</span><br><span class="line">&#x2F;bin&#x2F;sh &#x2F;usr&#x2F;share&#x2F;xrdp&#x2F;socksetup</span><br><span class="line"># run xrdp and xrdp-sesman in the foreground so the logs show in docker</span><br><span class="line">xrdp-sesman -ns &amp;</span><br><span class="line">xrdp -ns &amp;</span><br><span class="line"># run shell for interface</span><br><span class="line">&#x2F;bin&#x2F;bash</span><br></pre></td></tr></table></figure>
+
+<p><code>dbus</code>, <code>xrdp</code> 서비스를 위한 <code>entrypoint</code> 설정이다.</p>
+<p>이제 이미지 빌드에 필요한 Dockerfile, entrypoint.sh를 만들었으니 docker run에 필요한 최종 파일인 <code>build-run.sh</code> 파일을 만들어보자.</p>
+<p><code>build-run.sh</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">#!&#x2F;bin&#x2F;bash</span><br><span class="line">#edit the port number in Dockerfile</span><br><span class="line">sed -i &#39;s&#x2F;port_number&#x2F;&#39;$1&#39;&#x2F;&#39; .&#x2F;Dockerfile</span><br><span class="line">#start building image from Dockerfile</span><br><span class="line">docker build -t $2 .</span><br><span class="line">#run container from built image</span><br><span class="line">docker container run -d -it --name $3 -p $1:$1 $2</span><br><span class="line">docker container start $3</span><br><span class="line">#return Dockerfile into first state</span><br><span class="line">sed -i &#39;s&#x2F;&#39;$1&#39;&#x2F;port_number&#x2F;&#39; .&#x2F;Dockerfile</span><br></pre></td></tr></table></figure>
+
+<p><code>$1, $2, $3</code>은 <code>build-run.sh</code>의 인자 번호이다.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">.&#x2F;build-run.sh [포트번호] [이미지 이름] [컨테이너 이름]</span><br></pre></td></tr></table></figure>
+
+<p>위 명령어를 실행하게 되면 해당 포트 번호, 이미지 이름, 컨테이너 이름으로 이미지 빌드, 실행(run)까지 완료하게 된다.</p>
+<p>이미지 빌드에는 시간이 다소 걸린다. 잘 참고 기다리면 나만의 이미지가 생성된다. 이 이미지를 도커 허브에 올려보고 다른 os 기반에서 다운로드 받아서 컨테이너에 올려보자.</p>
+<h2 id="5-도커-살펴보기-이미지-컨테이너-관련-명령어"><a href="#5-도커-살펴보기-이미지-컨테이너-관련-명령어" class="headerlink" title="5. 도커 살펴보기 (이미지, 컨테이너 관련 명령어)"></a>5. 도커 살펴보기 (이미지, 컨테이너 관련 명령어)</h2><p>지금까지 기본적인 명령어와 이미지 생성 방법을 알아보았다. 이제 이미지, 컨테이너 정보를 조회하는 방법, 컨테이너에서 파일 꺼내기, 변경된 파일을 확인하기, 변경 사항을 이미지로 저장하는 방법을 알아보자.</p>
+<h4 id="history"><a href="#history" class="headerlink" title="history"></a>history</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker history hello:0.1</span><br></pre></td></tr></table></figure>
+
+<p><code>docker history &lt;이미지 이름&gt;:&lt;태그&gt;</code> 형식이다. 이미지 이름 대신 ID를 사용할 수도 있다.</p>
+<h4 id="cp"><a href="#cp" class="headerlink" title="cp"></a>cp</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker cp hello:&#x2F;etc&#x2F;nginx&#x2F;nginx.conf .&#x2F;</span><br></pre></td></tr></table></figure>
+
+<p><code>docker cp &lt;컨테이너 이름&gt;:&lt;경로&gt; &lt;호스트 경로&gt;</code> 형식이다. 호스트 경로에 컨테이너 내부 파일 <code>nginx.conf</code> 파일이 복사된다.</p>
+<h4 id="commit"><a href="#commit" class="headerlink" title="commit"></a>commit</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker commit -a &quot;zini &lt;zinirun.blogspot.com&gt;&quot; -m &quot;add hello.txt&quot; hello hello:0.2</span><br></pre></td></tr></table></figure>
+
+<p><code>docker commit &lt;옵션&gt; &lt;컨테이너 이름&gt; &lt;이미지 이름&gt;:&lt;태그&gt;</code> 형식이다. 컨테이너의 변경 사항을 이미지 파일로 생성한다. -a 옵션은 커밋한 사용자 정보, -m 옵션은 로그 메시지를 설정한다. 그렇게 hello 컨테이너를 <code>hello:0.2</code> 이미지로 생성하게 된다.</p>
+<h4 id="diff"><a href="#diff" class="headerlink" title="diff"></a>diff</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker diff hello</span><br></pre></td></tr></table></figure>
+
+<p><code>docker diff &lt;컨테이너 이름&gt;</code> 형식이다. <code>컨테이너 ID</code>를 사용해도 된다. 출력하게 되면</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">ubuntu@zini-01:&#x2F;home&#x2F;zini&#x2F;doc_ex$ docker diff hello</span><br><span class="line">C &#x2F;run</span><br><span class="line">A &#x2F;run&#x2F;xrdp</span><br><span class="line">A &#x2F;run&#x2F;xrdp&#x2F;sockdir</span><br><span class="line">A &#x2F;run&#x2F;dbus</span><br><span class="line">A &#x2F;run&#x2F;dbus&#x2F;pid</span><br><span class="line">A &#x2F;run&#x2F;dbus&#x2F;system_bus_socket</span><br><span class="line">C &#x2F;tmp</span><br><span class="line">A &#x2F;tmp&#x2F;.X11-unix</span><br><span class="line">C &#x2F;var</span><br><span class="line">C &#x2F;var&#x2F;log</span><br><span class="line">C &#x2F;var&#x2F;log&#x2F;xrdp.log</span><br><span class="line">C &#x2F;var&#x2F;log&#x2F;xrdp-sesman.log</span><br></pre></td></tr></table></figure>
+
+<p>변경된 파일 목록을 출력하는데 <code>A</code>는 추가된 파일, <code>C</code>는 변경된 파일, <code>D</code>는 삭제된 파일이다.</p>
+<h4 id="inspect"><a href="#inspect" class="headerlink" title="inspect"></a>inspect</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker inspect hello</span><br></pre></td></tr></table></figure>
+
+<p><code>docker inspect &lt;이미지 or 컨테이너 이름&gt;</code> 형식이다. ID를 사용해도 된다. 이미지나 컨테이너의 세부 정보를 출력한다.</p>
+<h2 id="6-DockerHub-사용하기"><a href="#6-DockerHub-사용하기" class="headerlink" title="6. DockerHub 사용하기"></a>6. DockerHub 사용하기</h2><p>이번에는 Docker를 좀 더 다양하게 활용하는 방법, <code>Docker Hub</code> 사용법을 알아보겠다.</p>
+<h3 id="Docker-Login"><a href="#Docker-Login" class="headerlink" title="Docker Login"></a>Docker Login</h3><p>우선 <a target="_blank" rel="external nofollow noopener noreferrer" href="https://dockerhub.com/">Docker Hub</a>에 로그인 후 회원가입하자.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker login</span><br></pre></td></tr></table></figure>
+<p>명령어를 입력하여 docker 계정으로 로그인하자.</p>
+<h3 id="로컬에-이미지-저장하기"><a href="#로컬에-이미지-저장하기" class="headerlink" title="로컬에 이미지 저장하기"></a>로컬에 이미지 저장하기</h3><p>Docker 레지스트리 서버도 Docker Hub에 이미지로 제공된다. 먼저 레지스트리 이미지를 받는다.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker pull registry:latest</span><br></pre></td></tr></table></figure>
+
+<p><code>registry:latest</code> 이미지를 컨테이너로 실행한다.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">docker run -d -p 5000:5000 hello-registry \</span><br><span class="line">    -v &#x2F;tmp&#x2F;registry:&#x2F;tmp&#x2F;registry \</span><br><span class="line">    registry:latest</span><br></pre></td></tr></table></figure>
+
+<p>이 명령어를 실행하면 이미지 파일이 호스트의 <code>/tmp/registry</code> 디렉터리에 저장된다.</p>
+<h3 id="push-명령으로-이미지-올리기"><a href="#push-명령으로-이미지-올리기" class="headerlink" title="push 명령으로 이미지 올리기"></a>push 명령으로 이미지 올리기</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">docker tag hello:0.1 zini&#x2F;hello:0.1</span><br><span class="line">docker push zini&#x2F;hello:0.1</span><br></pre></td></tr></table></figure>
+
+<p><code>docker tag &lt;이미지 이름&gt;:&lt;태그&gt; &lt;Docker 사용자명/레지스트리 URL&gt;/&lt;이미지 이름&gt;:&lt;태그&gt;</code> 형식이다.</p>
+<p><code>docker hub</code>에 업로드할 때는 이미지 이름의 형식을 맞춰줘야 한다. 도커허브의 아이디가 <code>zini</code>라면 <code>zini/이미지이름:태그</code> 형식으로 <code>tag</code> 명령어를 이용하여 이미지 이름을 바꿔주고 <code>push</code>하면 업로드 된다.</p>
+<h3 id="pull-명령으로-이미지-받기"><a href="#pull-명령으로-이미지-받기" class="headerlink" title="pull 명령으로 이미지 받기"></a>pull 명령으로 이미지 받기</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker pull zini&#x2F;hello:0.1</span><br></pre></td></tr></table></figure>
+
+<p>이전에서도 우분투 공식 이미지를 받을 때</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker pull ubuntu:latest</span><br></pre></td></tr></table></figure>
+
+<p>명령어를 사용했을 것이다. 우분투는 공식 이미지이기 때문에 URL/ID 필요없이 <code>&lt;이미지이름&gt;:&lt;태그&gt;</code> 형식을 사용하면 된다. 방금 <code>push</code>로 올린 이미지를 <code>pull</code>로 받아보자.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">ubuntu@zini-01:&#x2F;home&#x2F;zini&#x2F;doc_ex$ docker images</span><br><span class="line">REPOSITORY              TAG                 IMAGE ID            CREATED             SIZE</span><br><span class="line">zini&#x2F;hello           0.1                 e100ad1021f7        22 hours ago        1.17GB</span><br></pre></td></tr></table></figure>
+
+<p><code>docker images</code> 명령어로 확인하면 이미지가 받아진 것을 확인할 수 있다.</p>
+<p>이제 이 이미지를 <strong>삭제</strong>해보자.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker rmi zini&#x2F;hello:0.1</span><br></pre></td></tr></table></figure>
+<p><code>rmi</code> 명령어를 사용하면 이미지를 삭제할 수 있다. 강제로 삭제할 경우 <code>-f</code> 옵션을 추가하면 된다.</p>
+<h2 id="7-도커-컨테이너-연결하기-nginX-mongoDB"><a href="#7-도커-컨테이너-연결하기-nginX-mongoDB" class="headerlink" title="7. 도커 컨테이너 연결하기 (nginX, mongoDB)"></a>7. 도커 컨테이너 연결하기 (nginX, mongoDB)</h2><p>도커로 이미지를 생성할 때 필요한 프로그램, 예를 들면 웹 서버, DB 등의 프로그램들을 모두 설치할 수도 있지만 보통은 프로그램별로 이미지를 생성 후 컨테이너화해서 연결한다.</p>
+<p>이번에는 nginx 웹 서버와 <code>MongoDB</code>의 이미지를 생성 후 연결해보도록 하겠다.</p>
+<p>우선 <code>MongoDB</code> 이미지를 생성한다.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker run --name db -d mongo</span><br></pre></td></tr></table></figure>
+
+<p>필자의 경우 80 포트는 이미 우분투 host os에서 nginx 서버로 돌아가고 있기 때문에 8888 포트를 열어주어서 도커의 80 포트와 연결하였다.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker run --name web -d -p 8888:80 --link db:db nginx</span><br></pre></td></tr></table></figure>
+
+<p><code>-p 8888:80</code> 에 주목하자. <code>-p</code> 옵션은 호스트의 포트와 도커의 가상 포트를 연결한다. 형식은 <code>-p &lt;Host Port&gt;:&lt;Docker Port&gt;</code>이다. 필자는 이 부분을 모르고 <code>8888:8888</code>로 연결했다가 같이 스터디하는 친구에게 혼났다. 도커에 대한 개념을 확실하게 알고 했어야 했는데..</p>
+<p>이 명령어를 실행하면 <code>nginx</code> 최신 이미지를 받고 앞서 실행한 db 컨테이너 <code>mongoDB</code>와 연결하여 <code>web</code> 이라는 이름의 <code>nginx</code> 서버를 컨테이너로 실행한다.</p>
+<p>일반적으로 IP를 통해서 브라우저로 접속할 경우 포트를 입력하지 않으면 80 포트로 자동 접속한다. nginx 서버를 그렇게 연결하고 싶다면 <code>-p 80:80</code> 옵션으로 실행하면 된다.</p>
+<p><img src="https://1.bp.blogspot.com/-pK1I_-ZRbvA/XiWMMlctOCI/AAAAAAAAAQo/7LMipZuSFp8KAuAnnGazBvdzBFedfQ8UwCLcBGAsYHQ/s640/%25EA%25B5%25AC%25EB%258F%2599%25ED%2599%2595%25EC%259D%25B8.png" alt="d71"></p>
+<p>브라우저로 <code>&lt;IP&gt;:&lt;호스트 연결 포트&gt;</code>로 접속하면 nginx 기본 페이지가 출력됨을 확인할 수 있다!</p>
+<p>이 <code>nginx</code> 컨테이너는 <code>mongoDB</code> 컨테이너와 연결되어 있어서 <code>web</code> 컨테이너 안에서 <code>db:27017</code> 주소로 <code>db</code> 컨테이너의 <code>mongoDB</code>에 접속할 수 있다.</p>
+<h2 id="8-Git-Docker로-앱-배포하기"><a href="#8-Git-Docker로-앱-배포하기" class="headerlink" title="8. Git, Docker로 앱 배포하기"></a>8. Git, Docker로 앱 배포하기</h2><p>서버를 운영하고 애플리케이션을 배포하는 방법은 서비스 환경, 구축하는 사람에 따라 다양한 방법이 나올 수 있다. 이번에는 분산형 버전 관리 시스템 Git과 Docker를 이용한 애플리케이션 배포 방법을 알아보겠다.</p>
+<p><em>참고 도서: 가장 빨리 만나는 Docker (이재홍)</em></p>
+<h3 id="서버-한-대에-애플리케이션-배포하기"><a href="#서버-한-대에-애플리케이션-배포하기" class="headerlink" title="서버 한 대에 애플리케이션 배포하기"></a>서버 한 대에 애플리케이션 배포하기</h3><p>대략적인 순서는 다음과 같다.</p>
+<ol>
+<li>개발자 PC에서 애플리케이션 개발</li>
+<li>git push 명령으로 소스를 서버에 업로드</li>
+<li>서버에서 저장소에 git push 명령이 발생하며 git hook을 실행</li>
+<li>git hook에서 도커 이미지를 생성, 이미지를 컨테이너로 실행</li>
+</ol>
+<p>이제 본격적으로 배포하는 과정을 알아보자.</p>
+<ol>
+<li>개발자 PC에서 <a target="_blank" rel="external nofollow noopener noreferrer" href="http://git-scm.com/">Git 설치</a>, 저장소 생성<br>개발자 PC에 <code>Git</code>을 설치한다.</li>
+</ol>
+<p><em>우분투, CentOS에서 install git 명령어를 사용해도 상관없다. 필자는 윈도우의 Git Bash로 실습하겠다.</em></p>
+<p><code>Git Bash</code>를 실행하고 명령어로 Git 저장소를 생성하고, 저장소 디렉토리로 이동한다.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git init exampleapp</span><br><span class="line">cd exampleapp</span><br></pre></td></tr></table></figure>
+
+<p><code>git config</code> 명령으로 이메일, 이름을 설정한다.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git config --global user.email zini@example.com</span><br><span class="line">git config --global user.name &quot;zini&quot;</span><br></pre></td></tr></table></figure>
+
+
+<ol start="2">
+<li>개발자 PC에서 <code>Node.js</code>로 웹 서버 작성 및 도커파일(Dockerfile) 작성<br>개발자 PC에서 간단히 <code>Node.js</code>로 웹서버를 작성한다. 그 내용을 <code>app.js</code>로 저장한다.</li>
+</ol>
+<p><code>app.js</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">var express &#x3D; require(&#39;express&#39;);</span><br><span class="line">var app &#x3D; express();</span><br><span class="line"> </span><br><span class="line">app.get([&#39;&#x2F;&#39;, &#39;&#x2F;index.html&#39;], function (req, res) &#123;</span><br><span class="line">  res.send(&#39;Hello Docker&#39;);</span><br><span class="line">&#125;);</span><br><span class="line"> </span><br><span class="line">app.listen(80);</span><br></pre></td></tr></table></figure>
+
+<p><code>npm</code> 패키지 사용을 위해 다음과 같이 작성하고 <code>package.json</code>로 저장한다.</p>
+<p><code>package.json</code></p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  <span class="attr">&quot;name&quot;</span>: <span class="string">&quot;exampleapp&quot;</span>,</span><br><span class="line">  <span class="attr">&quot;description&quot;</span>: <span class="string">&quot;Hello Docker&quot;</span>,</span><br><span class="line">  <span class="attr">&quot;version&quot;</span>: <span class="string">&quot;0.0.1&quot;</span>,</span><br><span class="line">  <span class="attr">&quot;dependencies&quot;</span>: &#123;</span><br><span class="line">    <span class="attr">&quot;express&quot;</span>: <span class="string">&quot;4.4.x&quot;</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>이제 <code>Dockerfile</code>을 작성하자. 서버에서 도커 이미지를 생성할 수 있도록 개발자 PC에서 <code>Dockerfile</code>을 작성한다. 다음 내용을 <code>Dockerfile</code>로 저장한다.</p>
+<p><code>Dockerfile</code></p>
+<figure class="highlight docker"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">FROM</span> ubuntu:<span class="number">14.04</span></span><br><span class="line"><span class="keyword">RUN</span><span class="bash"> apt-get update</span></span><br><span class="line"><span class="keyword">RUN</span><span class="bash"> apt-get install -y nodejs npm</span></span><br><span class="line"><span class="keyword">ADD</span><span class="bash"> app.js /var/www/app.js</span></span><br><span class="line"><span class="keyword">ADD</span><span class="bash"> package.json /var/www/package.json</span></span><br><span class="line"><span class="keyword">WORKDIR</span><span class="bash"> /var/www</span></span><br><span class="line"><span class="keyword">RUN</span><span class="bash"> npm install</span></span><br><span class="line"><span class="keyword">CMD</span><span class="bash"> nodejs app.js</span></span><br></pre></td></tr></table></figure>
+
+<p>모든 파일(js, json, Dockefile)은 git 디렉토리의 <code>exampleapp</code>에 위치시킨다.</p>
+<p><code>git add</code>, <code>git commit</code> 명령으로 개발자 PC의 <code>exampleapp</code> 저장소에 파일을 커밋한다.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">git add app.js package.json</span><br><span class="line">git commit -m &quot;add source&quot;</span><br><span class="line">git add Dockerfile</span><br><span class="line">git commit -m &quot;add Dockerfile&quot;</span><br></pre></td></tr></table></figure>
+
+<ol start="3">
+<li>개발자 PC에서 SSH 키 생성<br>개발자 PC에서 <code>ssh-keygen</code> 명령을 실행하여 SSH키를 생성한다.</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ssh-keygen</span><br></pre></td></tr></table></figure>
+
+<p>명령어 실행시 나오는 문장에서는 모두 Enter로 넘어간다.<br>이제 <code>/home/(사용자 계정)/.ssh</code> 디렉토리에 <code>id_rsa.pub</code>, <code>id_rsa.pub</code> 파일이 생성되었다.</p>
+<ol start="4">
+<li>서버에 Git 설치 및 저장소 생성<br>이제 서버를 설정하자. Docker가 리눅스 전용이므로 리눅스 서버에서 작업하자.<br>필자는 우분투를 사용하겠다. 서버에 <code>Git</code>을 설치하는 것부터 시작하자.</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get install git</span><br></pre></td></tr></table></figure>
+
+<p>현재 리눅스 계정의 홈 디렉토리(<code>/home/&lt;사용자 계정&gt;</code>)에 <code>exampleapp</code> 저장소를 생성한다. 그리고 개발자 PC에서 push한 소스를 받을 수 있도록 <code>receive.denycurrentbranch</code>를 <code>ignore</code>로 설정한다.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git init exampleapp</span><br><span class="line">git config receive.denycurrentbranch ignore</span><br></pre></td></tr></table></figure>
+
+
+<ol start="5">
+<li>서버에 Docker 설치 및 SSH 키 설정<br>이제 서버에 Docker를 설치한다. 설치되어 있다면 넘어가자.</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get install docker.io</span><br><span class="line">sudo ln -sf &#x2F;usr&#x2F;bin&#x2F;docker.io &#x2F;usr&#x2F;local&#x2F;bin&#x2F;docker</span><br></pre></td></tr></table></figure>
+
+<p>서버의 <code>/home/&lt;서버 사용자 계정&gt;</code> 디렉토리에 <code>.ssh</code> 디렉토리를 생성 후 권한을 설정한다.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">mkdir .ssh</span><br><span class="line">chmod 700 .ssh</span><br></pre></td></tr></table></figure>
+<p><em>필자는 .ssh 폴더가 왜인지 모르게 이미 존재해서 따로 설정하지 않았다.</em></p>
+<p><code>.ssh</code> 디렉토리에 <code>authorized_keys</code> 파일을 생성한다(vi 명령어로). 개발자 PC에서 생성한 <code>id_rsa.pub</code> 파일의 내용을 (메모장으로 열어) 복사해서 <code>authorized_keys</code> 파일에 붙여넣는다.</p>
+<p><code>ssh-rsa ~</code> 형식의 내용일 것이다. <code>authorized_keys</code> 파일도 권한을 설정한다.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">chmod 600 authorized_keys</span><br></pre></td></tr></table></figure>
+
+<p>이제 개발자 PC에서 비밀번호 없이 <code>git push</code> 명령을 사용할 수 있다.</p>
+<ol start="6">
+<li>서버에 Git Hook 설정<br>개발자 PC에서 git push 명령으로 소스를 올리면 Docker 이미지, 컨테이너를 생성하도록 <code>Git Hook</code>을 설정한다.</li>
+</ol>
+<p>다음 내용을 <code>/home/&lt;서버 사용자 계정&gt;/exampleapp/.git/hooks</code> 디렉토리에 <code>post-receive</code>로 저장한다.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">#!&#x2F;bin&#x2F;bash</span><br><span class="line"> </span><br><span class="line">APP_NAME&#x3D;exampleapp</span><br><span class="line">APP_DIR&#x3D;$HOME&#x2F;$APP_NAME</span><br><span class="line">REVISION&#x3D;$(expr substr $(git rev-parse --verify HEAD) 1 7)</span><br><span class="line"> </span><br><span class="line">GIT_WORK_TREE&#x3D;$APP_DIR git checkout -f</span><br><span class="line"> </span><br><span class="line">cd $APP_DIR</span><br><span class="line">docker build --tag $APP_NAME:$REVISION .</span><br><span class="line">docker stop $APP_NAME</span><br><span class="line">docker rm $APP_NAME</span><br><span class="line">docker run -d --name $APP_NAME -p 80:80 $APP_NAME:$REVISION</span><br></pre></td></tr></table></figure>
+
+<p>이제 <code>post-receive</code> 파일에 실행권한을 부여한다.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">chmod +x post-receive</span><br></pre></td></tr></table></figure>
+
+<p><code>Git Hook</code> 설정이 끝났다.</p>
+<ol start="7">
+<li>개발자 PC에서 소스 Push<br>이제 개발자 PC로 돌아와서 <code>exampleapp</code> 저장소 디렉토리로 이동한 뒤 <code>git remote add</code> 명령어로 <code>origin</code> 주소를 설정한다.</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git remote add origin 서버사용자계정@IP주소&#x2F;도메인:exampleapp</span><br></pre></td></tr></table></figure>
+
+<p><code>git push</code> 명령으로 소스를 서버에 업로드한다.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git push origin master</span><br></pre></td></tr></table></figure>
+
+<p>명령 출력 결과에서 Docker 이미지와 컨테이너가 생성되는 모습을 볼 수 있다. <code>git push</code> 명령어가 완전히 끝나면 웹 브라우저를 실행하여 IP 주소를 입력해보자. <code>Hello Docker</code>가 표시된다. 소스를 수정한 뒤 서버에 <code>Push</code> 하면 새 Docker 컨테이너가 생성된다.</p>
+<h2 id="마치며"><a href="#마치며" class="headerlink" title="마치며"></a>마치며</h2><p>기본적인 도커의 설치, 사용부터 배포까지 알아보았다. 반년 전에 공부했던 포스팅 내용을 한번에 정리했는데 이게 나은 것 같다. 도커는 정말 무궁무진하다. 여러가지 토이 플젝이던, 큰 플젝이던 거의 90%의 웹 서비스에는 도커를 사용했다. 한번 쓸 줄 알면 다음 쓰는 건 쉽다. 한번씩 자동화 스크립트를 만들어서 배포해보면 (물론 기업에서 사용하는 스크립트와는 비교불가겠지만) 경이로움을 금치 못한다. 도커는 충분히 공부할 가치가 있는 플랫폼이라고 생각한다.</p>
+
+        </div>
+
+        
+            <section class="post-copyright">
+                
+                
+                
+                
+
+            </section>
+        
+        <section class="post_disqus">
+            <div id="disqus_thread"></div>
+            <script>
+            
+            /**
+            *  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+            *  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables*/
+            /*
+            var disqus_config = function () {
+            this.page.url = PAGE_URL;  // Replace PAGE_URL with your page's canonical URL variable
+            this.page.identifier = PAGE_IDENTIFIER; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+            };
+            */
+            (function() { // DON'T EDIT BELOW THIS LINE
+            var d = document, s = d.createElement('script');
+            s.src = 'https://zinirun.disqus.com/embed.js';
+            s.setAttribute('data-timestamp', +new Date());
+            (d.head || d.body).appendChild(s);
+            })();
+            </script>
+            <noscript>Please enable JavaScript to view the <a target="_blank" rel="external nofollow noopener noreferrer" href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+        </section>
+        <section class="post-tags">
+            <div>
+                <span>Tag(s):</span>
+                <span class="tag">
+                    
+                    
+                        <a href="/tags/cloud/"># cloud</a>
+                    
+                        <a href="/tags/linux/"># linux</a>
+                    
+                        <a href="/tags/docker/"># docker</a>
+                    
+                        
+                </span>
+            </div>
+            <div>
+                <a href="javascript:window.history.back();">back</a>
+                <span>· </span>
+                <a href="/">home</a>
+            </div>
+        </section>
+        <section class="post-nav">
+            
+            
+            <a class="next" rel="next" href="/2020/08/15/toast-a-to-z/">NHN Toast Cloud 설명서 (구축에서 활용까지)</a>
+            
+        </section>
+
+
+    </article>
+</div>
+
+        </div>
+        <footer id="footer" class="footer">
+  <div class="copyright">
+    <span>© zini | Powered by
+      <a href="https://hexo.io" target="_blank" rel="external nofollow noopener noreferrer">Hexo</a> &
+      <a href="https://github.com/" target="_blank" rel="external nofollow noopener noreferrer">Github Pages</a></span>
+  </div>
+</footer>
+
+    </div>
+</body>
+</html>
