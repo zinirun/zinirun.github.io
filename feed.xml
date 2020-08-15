@@ -38,11 +38,11 @@
     <category term="docker" scheme="https://zinirun.github.io/categories/cloud/docker/"/>
     
     
+    <category term="docker" scheme="https://zinirun.github.io/tags/docker/"/>
+    
     <category term="cloud" scheme="https://zinirun.github.io/tags/cloud/"/>
     
     <category term="linux" scheme="https://zinirun.github.io/tags/linux/"/>
-    
-    <category term="docker" scheme="https://zinirun.github.io/tags/docker/"/>
     
   </entry>
   
@@ -68,13 +68,13 @@
     <category term="toast" scheme="https://zinirun.github.io/categories/cloud/toast/"/>
     
     
-    <category term="toast" scheme="https://zinirun.github.io/tags/toast/"/>
-    
     <category term="cloud" scheme="https://zinirun.github.io/tags/cloud/"/>
     
-    <category term="ubuntu" scheme="https://zinirun.github.io/tags/ubuntu/"/>
-    
     <category term="linux" scheme="https://zinirun.github.io/tags/linux/"/>
+    
+    <category term="toast" scheme="https://zinirun.github.io/tags/toast/"/>
+    
+    <category term="ubuntu" scheme="https://zinirun.github.io/tags/ubuntu/"/>
     
   </entry>
   

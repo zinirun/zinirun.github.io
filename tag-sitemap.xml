@@ -3,13 +3,6 @@
 
 
     <url>
-        <loc>https://zinirun.github.io/tags/docker/</loc>
-        <lastmod>2020-08-15T14:38:27.111Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.2</priority>
-    </url>
-
-    <url>
         <loc>https://zinirun.github.io/tags/linux/</loc>
         <lastmod>2020-08-15T14:38:27.111Z</lastmod>
         <changefreq>weekly</changefreq>
@@ -18,6 +11,13 @@
 
     <url>
         <loc>https://zinirun.github.io/tags/cloud/</loc>
+        <lastmod>2020-08-15T14:38:27.111Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
+        <loc>https://zinirun.github.io/tags/docker/</loc>
         <lastmod>2020-08-15T14:38:27.111Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>
