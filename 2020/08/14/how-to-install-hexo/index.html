@@ -2,9 +2,9 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-<meta name="viewport"
-      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
 <meta http-equiv="X-UA-Compatible" content="ie=edge">
+<link rel="canonical" href="https://zinirun.github.io/2020/08/14/how-to-install-hexo/">
 
 
 <link rel="stylesheet" href="//fonts.googleapis.com/earlyaccess/notosanskr.css">
@@ -49,19 +49,15 @@
     
 
 
-<meta name="generator" content="Hexo 5.0.2"></head>
+<meta name="generator" content="Hexo 5.0.2"><link rel="alternate" href="/feed.xml" title="zinirun" type="application/atom+xml">
+</head>
 <body>
     <div class="wrapper">
         <header>
   <nav class="navbar">
     <div class="container">
-      <div
-        class="navbar-header header-logo"
-        style="font-size: 13pt; font-weight: 600;"
-      >
-        <a id="blog_logo" href="/" style="color: #2d96bd;"
-          >zini&#39;s tech blog</a
-        >
+      <div class="navbar-header header-logo" style="font-size: 13pt; font-weight: 600;">
+        <a id="blog_logo" href="/" style="color: #2d96bd;">zini&#39;s tech blog</a>
       </div>
       <div class="menu navbar-right">
         
@@ -71,7 +67,7 @@
         
         <a class="menu-item" href="/tag">Tags</a>
         
-        <input id="switch_default" type="checkbox" class="switch_default" />
+        <input id="switch_default" type="checkbox" class="switch_default">
         <label for="switch_default" class="toggleBtn"></label>
       </div>
     </div>
@@ -82,8 +78,7 @@
     <div class="container">
       <div class="navbar-header">
         <div>
-          <a href="/" style="color: #2d96bd;">zini&#39;s tech blog</a
-          ><a id="mobile-toggle-theme">·&nbsp;Light</a>
+          <a href="/" style="color: #2d96bd;">zini&#39;s tech blog</a><a id="mobile-toggle-theme">·&nbsp;Light</a>
         </div>
         <div class="menu-toggle" onclick="mobileBtn()">&#9776; Menu</div>
       </div>
@@ -208,9 +203,9 @@
         </header>
 
         <div class="post-content">
-            <h2 id="멀쩡한-블로그를-이사한-이유"><a href="#멀쩡한-블로그를-이사한-이유" class="headerlink" title="멀쩡한 블로그를 이사한 이유"></a>멀쩡한 블로그를 이사한 이유</h2><p>기존에 나는 <a target="_blank" rel="noopener" href="https://zinirun.blogspot.com/">blogspot 블로그</a>을 사용했다. 처음엔 명색이 개발자의 기술 블로그인데 <code>github pages</code>나 <code>netlify</code>에 <code>jekyll</code>을 사용한 블로그를 만들어보고 싶었지만, 굳이 블로그 플랫폼에 큰 신경을 쓸 필요가 있을까 싶어 <code>blogspot</code>을 계속 사용했다. 사용할 수록 불편함이 드러났다. 우선 코드 삽입을 지원하지 않아서 따로 Colorscripter를 사용하는 것, 테마 자체가 불안정하고 커스텀도 완벽하지 않아서 “내가 쓰고 싶은 블로그”를 완성하지 못했다. 이사를 결심했다.</p>
+            <h2 id="멀쩡한-블로그를-이사한-이유"><a href="#멀쩡한-블로그를-이사한-이유" class="headerlink" title="멀쩡한 블로그를 이사한 이유"></a>멀쩡한 블로그를 이사한 이유</h2><p>기존에 나는 <a target="_blank" rel="external nofollow noopener noreferrer" href="https://zinirun.blogspot.com/">blogspot 블로그</a>을 사용했다. 처음엔 명색이 개발자의 기술 블로그인데 <code>github pages</code>나 <code>netlify</code>에 <code>jekyll</code>을 사용한 블로그를 만들어보고 싶었지만, 굳이 블로그 플랫폼에 큰 신경을 쓸 필요가 있을까 싶어 <code>blogspot</code>을 계속 사용했다. 사용할 수록 불편함이 드러났다. 우선 코드 삽입을 지원하지 않아서 따로 Colorscripter를 사용하는 것, 테마 자체가 불안정하고 커스텀도 완벽하지 않아서 “내가 쓰고 싶은 블로그”를 완성하지 못했다. 이사를 결심했다.</p>
 <h3 id="Jekyll이냐-Hexo냐"><a href="#Jekyll이냐-Hexo냐" class="headerlink" title="Jekyll이냐 Hexo냐"></a>Jekyll이냐 Hexo냐</h3><p>가장 많이 사용하는 <code>Jekyll</code>, 열심히 따라오고 있는 <code>Hexo</code>중 고민을 많이 했다. Jekyll이 <code>Ruby</code> 기반, Hexo가 <code>Node.js</code> 기반이라고 한다. 그래서 Hexo보다 Jekyll이 속도면에서 뒤쳐진다. 그리고 일단 나는 <code>Ruby</code>를 몰라서 문제 해결이나 번들 충돌을 해결할 자신이 없었다. <code>Node</code>는 플젝도 몇번 해보고 어느정도 안다고 생각해서 보다 <em>나에게 친숙한</em> Hexo를 선택하게 되었다.</p>
-<h2 id="Hexo-설치하기"><a href="#Hexo-설치하기" class="headerlink" title="Hexo 설치하기"></a>Hexo 설치하기</h2><p><a target="_blank" rel="noopener" href="https://nodejs.org/ko/">Node.js</a>와 <a target="_blank" rel="noopener" href="https://git-scm.com/">Git</a>을 먼저 설치하자.</p>
+<h2 id="Hexo-설치하기"><a href="#Hexo-설치하기" class="headerlink" title="Hexo 설치하기"></a>Hexo 설치하기</h2><p><a target="_blank" rel="external nofollow noopener noreferrer" href="https://nodejs.org/ko/">Node.js</a>와 <a target="_blank" rel="external nofollow noopener noreferrer" href="https://git-scm.com/">Git</a>을 먼저 설치하자.</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ npm install -g hexo-cli</span><br></pre></td></tr></table></figure>
 <p>-g 옵션은 global로, 특정 폴더(프로젝트)가 아닌 글로벌 폴더에 저장하여 어디서든 사용할 수 있게 해준다.</p>
 <h2 id="Hexo-시작하기"><a href="#Hexo-시작하기" class="headerlink" title="Hexo 시작하기"></a>Hexo 시작하기</h2><p>블로그 폴더를 하나 만들 것이다. 이름은 blog가 아니라도 상관없다.</p>
@@ -230,7 +225,7 @@
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo g -d</span><br></pre></td></tr></table></figure>
 <p>g: generate, d: deploy - 빌드/배포를 한번에 할 수 있다. (물론 따로도 할 수 있다)</p>
 <p>이제 <code>사용자이름.gitgub.io</code>에 접속해서 확인해보자!</p>
-<h2 id="Theme-설치-설정까지"><a href="#Theme-설치-설정까지" class="headerlink" title="Theme 설치, 설정까지"></a>Theme 설치, 설정까지</h2><p>기본 테마도 괜찮지만 이걸 그대로 사용할 것이라면 Hexo를 사용하지도 않았다. <a target="_blank" rel="noopener" href="https://hexo.io/themes/">Hexo Themes</a>에서 300개가 넘는 테마를 고를 수 있다. 고심끝에 고른 테마는 <a target="_blank" rel="noopener" href="https://github.com/Siricee/hexo-theme-Chic">Siricee의 Chic</a> 테마이다. 테마 설정도 어렵지 않다.</p>
+<h2 id="Theme-설치-설정까지"><a href="#Theme-설치-설정까지" class="headerlink" title="Theme 설치, 설정까지"></a>Theme 설치, 설정까지</h2><p>기본 테마도 괜찮지만 이걸 그대로 사용할 것이라면 Hexo를 사용하지도 않았다. <a target="_blank" rel="external nofollow noopener noreferrer" href="https://hexo.io/themes/">Hexo Themes</a>에서 300개가 넘는 테마를 고를 수 있다. 고심끝에 고른 테마는 <a target="_blank" rel="external nofollow noopener noreferrer" href="https://github.com/Siricee/hexo-theme-Chic">Siricee의 Chic</a> 테마이다. 테마 설정도 어렵지 않다.</p>
 <p><strong>테마마다 설치, 설정 과정이 다를 수도 있다, 꼭 확인해보자</strong></p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ <span class="built_in">cd</span> blog/themes</span><br><span class="line">$ git <span class="built_in">clone</span> https://github.com/Siricee/hexo-theme-Chic.git Chic</span><br></pre></td></tr></table></figure>
 <p>처음 init시 정한 폴더명이 blog가 아니라면 이름을 바꿔서 들어가자.</p>
@@ -272,7 +267,7 @@
             (d.head || d.body).appendChild(s);
             })();
             </script>
-            <noscript>Please enable JavaScript to view the <a target="_blank" rel="noopener" href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+            <noscript>Please enable JavaScript to view the <a target="_blank" rel="external nofollow noopener noreferrer" href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
         </section>
         <section class="post-tags">
             <div>
@@ -307,11 +302,9 @@
         </div>
         <footer id="footer" class="footer">
   <div class="copyright">
-    <span
-      >© zini | Powered by
-      <a href="https://hexo.io" target="_blank">Hexo</a> &
-      <a href="https://github.com/" target="_blank">Github Pages</a></span
-    >
+    <span>© zini | Powered by
+      <a href="https://hexo.io" target="_blank" rel="external nofollow noopener noreferrer">Hexo</a> &
+      <a href="https://github.com/" target="_blank" rel="external nofollow noopener noreferrer">Github Pages</a></span>
   </div>
 </footer>
 

@@ -1369,3 +1369,7 @@ header label {
   text-decoration: underline;
   text-decoration-color: #2d96bd;
 }
+.video-container iframe {
+  width: 90%;
+  height: 350px;
+}

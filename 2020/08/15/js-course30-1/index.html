@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+<link rel="canonical" href="https://zinirun.github.io/2020/08/15/js-course30-1/">
+
+
+<link rel="stylesheet" href="//fonts.googleapis.com/earlyaccess/notosanskr.css">
+
+
+    <meta name="author" content="zini">
+
+
+    <meta name="subtitle" content="tech blog by Zini">
+
+
+
+
+<title>Javascript 30 시작 - Day 1 Drum Kit | zinirun</title>
+
+
+
+    <link rel="icon" href="/favicon.png">
+
+
+
+
+    <!-- stylesheets list from _config.yml -->
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+
+
+
+    <!-- scripts list from _config.yml -->
+    
+    <script src="/js/script.js"></script>
+    
+    <script src="/js/tocbot.min.js"></script>
+    
+
+
+
+    
+    
+        
+    
+
+
+<meta name="generator" content="Hexo 5.0.2"><link rel="alternate" href="/feed.xml" title="zinirun" type="application/atom+xml">
+</head>
+<body>
+    <div class="wrapper">
+        <header>
+  <nav class="navbar">
+    <div class="container">
+      <div class="navbar-header header-logo" style="font-size: 13pt; font-weight: 600;">
+        <a id="blog_logo" href="/" style="color: #2d96bd;">zini&#39;s tech blog</a>
+      </div>
+      <div class="menu navbar-right">
+        
+        <a class="menu-item" href="/archives">Posts</a>
+        
+        <a class="menu-item" href="/category">Categories</a>
+        
+        <a class="menu-item" href="/tag">Tags</a>
+        
+        <input id="switch_default" type="checkbox" class="switch_default">
+        <label for="switch_default" class="toggleBtn"></label>
+      </div>
+    </div>
+  </nav>
+
+  
+  <nav class="navbar-mobile" id="nav-mobile">
+    <div class="container">
+      <div class="navbar-header">
+        <div>
+          <a href="/" style="color: #2d96bd;">zini&#39;s tech blog</a><a id="mobile-toggle-theme">·&nbsp;Light</a>
+        </div>
+        <div class="menu-toggle" onclick="mobileBtn()">&#9776; Menu</div>
+      </div>
+      <div class="menu" id="mobile-menu">
+        
+        <a class="menu-item" href="/archives">Posts</a>
+        
+        <a class="menu-item" href="/category">Categories</a>
+        
+        <a class="menu-item" href="/tag">Tags</a>
+        
+      </div>
+    </div>
+  </nav>
+</header>
+<script>
+  var mobileBtn = function f() {
+    var toggleMenu = document.getElementsByClassName("menu-toggle")[0];
+    var mobileMenu = document.getElementById("mobile-menu");
+    if (toggleMenu.classList.contains("active")) {
+      toggleMenu.classList.remove("active");
+      mobileMenu.classList.remove("active");
+    } else {
+      toggleMenu.classList.add("active");
+      mobileMenu.classList.add("active");
+    }
+  };
+</script>
+
+        <div class="main">
+            <div class="container">
+    
+    
+        <div class="post-toc">
+    <div class="tocbot-list">
+    </div>
+    <div class="tocbot-list-menu">
+        <a class="tocbot-toc-expand" onclick="expand_toc()">Expand all</a>
+        <a onclick="go_top()">Back to top</a>
+        <a onclick="go_bottom()">Go to bottom</a>
+    </div>
+</div>
+
+<script>
+    document.ready(
+        function () {
+            tocbot.init({
+                tocSelector: '.tocbot-list',
+                contentSelector: '.post-content',
+                headingSelector: 'h1, h2, h3, h4, h5',
+                collapseDepth: 1,
+                orderedList: false,
+                scrollSmooth: true,
+            })
+        }
+    )
+
+    function expand_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 6,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "collapse_toc()");
+        b.innerHTML = "Collapse all"
+    }
+
+    function collapse_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 1,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "expand_toc()");
+        b.innerHTML = "Expand all"
+    }
+
+    function go_top() {
+        window.scrollTo(0, 0);
+    }
+
+    function go_bottom() {
+        window.scrollTo(0, document.body.scrollHeight);
+    }
+
+</script>
+    
+
+    
+    <article class="post-wrap">
+        <header class="post-header">
+            <h1 class="post-title">Javascript 30 시작 - Day 1 Drum Kit</h1>
+            
+                <div class="post-meta">
+                    
+                        Author: <a itemprop="author" rel="author" href="/">zini</a>
+                    
+
+                    
+                        <span class="post-time">
+                        Date: <a href="#">August 15, 2020&nbsp;&nbsp;20:23:36</a>
+                        </span>
+                    
+                    
+                        <span class="post-category">
+                    Category:
+                            
+                                <a href="/categories/javascript/">javascript</a>
+                            
+                        </span>
+                    
+                </div>
+            
+        </header>
+
+        <div class="post-content">
+            <h2 id="Javascript30과-VanillaJS"><a href="#Javascript30과-VanillaJS" class="headerlink" title="Javascript30과 VanillaJS"></a>Javascript30과 VanillaJS</h2><p><a target="_blank" rel="external nofollow noopener noreferrer" href="https://javascript30.com/">Javascript 30</a>은 Wes Bos가 강의하는 Vanilla JS만을 이용하여 30개의 프로젝트를 만드는 프로그램이다. 프레임워크, 컴파일러, 라이브러리 등이 없는 순수한 자바스크립트인 Vanilla JS로 완벽한 결과물을 만들 수 있다. 그래도 JS를 접한지 1년이 넘어가고, 나름 만들어본 프로젝트도 많았지만 Day 1을 시작하며 한참을 반성했다.</p>
+<h2 id="Javscript30-시작하기"><a href="#Javscript30-시작하기" class="headerlink" title="Javscript30 시작하기"></a>Javscript30 시작하기</h2><p><a target="_blank" rel="external nofollow noopener noreferrer" href="https://javascript30.com/">Javascript 30</a> 사이트에서 강의를 제공하고, 유튜브에서도 똑같은 강의가 올라와 있어서, 굳이 가입할 필요가 없다.</p>
+<p>제작자가 올린 Github의 <a target="_blank" rel="external nofollow noopener noreferrer" href="https://github.com/wesbos/JavaScript30">JavaScript30 프로젝트</a>를 fork하여 시작해도 되고, 코드만 다운받아도 된다.</p>
+<p>Course를 공부하는 방법은 간단하다. 각 프로젝트마다 <code>index-START.html</code> 파일과 <code>index-FINISHED.html</code> 파일이 있는데, START로 문제를 해결하고, FINISHED로 모범답안을 참고하면 된다.</p>
+<h2 id="Day-1-Javascript-Drum-Kit"><a href="#Day-1-Javascript-Drum-Kit" class="headerlink" title="Day 1 - Javascript Drum Kit"></a>Day 1 - Javascript Drum Kit</h2><div class="video-container"><iframe src="https://www.youtube.com/embed/VuN8qwZoego" frameborder="0" loading="lazy" allowfullscreen></iframe></div>
+
+<h3 id="START"><a href="#START" class="headerlink" title="START"></a>START</h3><p>이제 <code>index-START.html</code>를 드럼 킷으로 만들어보자.</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE <span class="meta-keyword">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span> <span class="attr">lang</span>=<span class="string">&quot;en&quot;</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">&quot;UTF-8&quot;</span> /&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">title</span>&gt;</span>JS Drum Kit<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">link</span> <span class="attr">rel</span>=<span class="string">&quot;stylesheet&quot;</span> <span class="attr">href</span>=<span class="string">&quot;style.css&quot;</span> /&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;keys&quot;</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">div</span> <span class="attr">data-key</span>=<span class="string">&quot;65&quot;</span> <span class="attr">class</span>=<span class="string">&quot;key&quot;</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">kbd</span>&gt;</span>A<span class="tag">&lt;/<span class="name">kbd</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">span</span> <span class="attr">class</span>=<span class="string">&quot;sound&quot;</span>&gt;</span>clap<span class="tag">&lt;/<span class="name">span</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">div</span> <span class="attr">data-key</span>=<span class="string">&quot;83&quot;</span> <span class="attr">class</span>=<span class="string">&quot;key&quot;</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">kbd</span>&gt;</span>S<span class="tag">&lt;/<span class="name">kbd</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">span</span> <span class="attr">class</span>=<span class="string">&quot;sound&quot;</span>&gt;</span>hihat<span class="tag">&lt;/<span class="name">span</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">div</span> <span class="attr">data-key</span>=<span class="string">&quot;68&quot;</span> <span class="attr">class</span>=<span class="string">&quot;key&quot;</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">kbd</span>&gt;</span>D<span class="tag">&lt;/<span class="name">kbd</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">span</span> <span class="attr">class</span>=<span class="string">&quot;sound&quot;</span>&gt;</span>kick<span class="tag">&lt;/<span class="name">span</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">div</span> <span class="attr">data-key</span>=<span class="string">&quot;70&quot;</span> <span class="attr">class</span>=<span class="string">&quot;key&quot;</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">kbd</span>&gt;</span>F<span class="tag">&lt;/<span class="name">kbd</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">span</span> <span class="attr">class</span>=<span class="string">&quot;sound&quot;</span>&gt;</span>openhat<span class="tag">&lt;/<span class="name">span</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">div</span> <span class="attr">data-key</span>=<span class="string">&quot;71&quot;</span> <span class="attr">class</span>=<span class="string">&quot;key&quot;</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">kbd</span>&gt;</span>G<span class="tag">&lt;/<span class="name">kbd</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">span</span> <span class="attr">class</span>=<span class="string">&quot;sound&quot;</span>&gt;</span>boom<span class="tag">&lt;/<span class="name">span</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">div</span> <span class="attr">data-key</span>=<span class="string">&quot;72&quot;</span> <span class="attr">class</span>=<span class="string">&quot;key&quot;</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">kbd</span>&gt;</span>H<span class="tag">&lt;/<span class="name">kbd</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">span</span> <span class="attr">class</span>=<span class="string">&quot;sound&quot;</span>&gt;</span>ride<span class="tag">&lt;/<span class="name">span</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">div</span> <span class="attr">data-key</span>=<span class="string">&quot;74&quot;</span> <span class="attr">class</span>=<span class="string">&quot;key&quot;</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">kbd</span>&gt;</span>J<span class="tag">&lt;/<span class="name">kbd</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">span</span> <span class="attr">class</span>=<span class="string">&quot;sound&quot;</span>&gt;</span>snare<span class="tag">&lt;/<span class="name">span</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">div</span> <span class="attr">data-key</span>=<span class="string">&quot;75&quot;</span> <span class="attr">class</span>=<span class="string">&quot;key&quot;</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">kbd</span>&gt;</span>K<span class="tag">&lt;/<span class="name">kbd</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">span</span> <span class="attr">class</span>=<span class="string">&quot;sound&quot;</span>&gt;</span>tom<span class="tag">&lt;/<span class="name">span</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">div</span> <span class="attr">data-key</span>=<span class="string">&quot;76&quot;</span> <span class="attr">class</span>=<span class="string">&quot;key&quot;</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">kbd</span>&gt;</span>L<span class="tag">&lt;/<span class="name">kbd</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">span</span> <span class="attr">class</span>=<span class="string">&quot;sound&quot;</span>&gt;</span>tink<span class="tag">&lt;/<span class="name">span</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="name">audio</span> <span class="attr">data-key</span>=<span class="string">&quot;65&quot;</span> <span class="attr">src</span>=<span class="string">&quot;sounds/clap.wav&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">audio</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">audio</span> <span class="attr">data-key</span>=<span class="string">&quot;83&quot;</span> <span class="attr">src</span>=<span class="string">&quot;sounds/hihat.wav&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">audio</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">audio</span> <span class="attr">data-key</span>=<span class="string">&quot;68&quot;</span> <span class="attr">src</span>=<span class="string">&quot;sounds/kick.wav&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">audio</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">audio</span> <span class="attr">data-key</span>=<span class="string">&quot;70&quot;</span> <span class="attr">src</span>=<span class="string">&quot;sounds/openhat.wav&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">audio</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">audio</span> <span class="attr">data-key</span>=<span class="string">&quot;71&quot;</span> <span class="attr">src</span>=<span class="string">&quot;sounds/boom.wav&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">audio</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">audio</span> <span class="attr">data-key</span>=<span class="string">&quot;72&quot;</span> <span class="attr">src</span>=<span class="string">&quot;sounds/ride.wav&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">audio</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">audio</span> <span class="attr">data-key</span>=<span class="string">&quot;74&quot;</span> <span class="attr">src</span>=<span class="string">&quot;sounds/snare.wav&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">audio</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">audio</span> <span class="attr">data-key</span>=<span class="string">&quot;75&quot;</span> <span class="attr">src</span>=<span class="string">&quot;sounds/tom.wav&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">audio</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">audio</span> <span class="attr">data-key</span>=<span class="string">&quot;76&quot;</span> <span class="attr">src</span>=<span class="string">&quot;sounds/tink.wav&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">audio</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="FINISHED"><a href="#FINISHED" class="headerlink" title="FINISHED"></a>FINISHED</h3><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE <span class="meta-keyword">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span> <span class="attr">lang</span>=<span class="string">&quot;en&quot;</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">&quot;UTF-8&quot;</span> /&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">title</span>&gt;</span>JS Drum Kit<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">link</span> <span class="attr">rel</span>=<span class="string">&quot;stylesheet&quot;</span> <span class="attr">href</span>=<span class="string">&quot;style.css&quot;</span> /&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;keys&quot;</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">div</span> <span class="attr">data-key</span>=<span class="string">&quot;65&quot;</span> <span class="attr">class</span>=<span class="string">&quot;key&quot;</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">kbd</span>&gt;</span>A<span class="tag">&lt;/<span class="name">kbd</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">span</span> <span class="attr">class</span>=<span class="string">&quot;sound&quot;</span>&gt;</span>clap<span class="tag">&lt;/<span class="name">span</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">div</span> <span class="attr">data-key</span>=<span class="string">&quot;83&quot;</span> <span class="attr">class</span>=<span class="string">&quot;key&quot;</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">kbd</span>&gt;</span>S<span class="tag">&lt;/<span class="name">kbd</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">span</span> <span class="attr">class</span>=<span class="string">&quot;sound&quot;</span>&gt;</span>hihat<span class="tag">&lt;/<span class="name">span</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">div</span> <span class="attr">data-key</span>=<span class="string">&quot;68&quot;</span> <span class="attr">class</span>=<span class="string">&quot;key&quot;</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">kbd</span>&gt;</span>D<span class="tag">&lt;/<span class="name">kbd</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">span</span> <span class="attr">class</span>=<span class="string">&quot;sound&quot;</span>&gt;</span>kick<span class="tag">&lt;/<span class="name">span</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">div</span> <span class="attr">data-key</span>=<span class="string">&quot;70&quot;</span> <span class="attr">class</span>=<span class="string">&quot;key&quot;</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">kbd</span>&gt;</span>F<span class="tag">&lt;/<span class="name">kbd</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">span</span> <span class="attr">class</span>=<span class="string">&quot;sound&quot;</span>&gt;</span>openhat<span class="tag">&lt;/<span class="name">span</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">div</span> <span class="attr">data-key</span>=<span class="string">&quot;71&quot;</span> <span class="attr">class</span>=<span class="string">&quot;key&quot;</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">kbd</span>&gt;</span>G<span class="tag">&lt;/<span class="name">kbd</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">span</span> <span class="attr">class</span>=<span class="string">&quot;sound&quot;</span>&gt;</span>boom<span class="tag">&lt;/<span class="name">span</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">div</span> <span class="attr">data-key</span>=<span class="string">&quot;72&quot;</span> <span class="attr">class</span>=<span class="string">&quot;key&quot;</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">kbd</span>&gt;</span>H<span class="tag">&lt;/<span class="name">kbd</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">span</span> <span class="attr">class</span>=<span class="string">&quot;sound&quot;</span>&gt;</span>ride<span class="tag">&lt;/<span class="name">span</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">div</span> <span class="attr">data-key</span>=<span class="string">&quot;74&quot;</span> <span class="attr">class</span>=<span class="string">&quot;key&quot;</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">kbd</span>&gt;</span>J<span class="tag">&lt;/<span class="name">kbd</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">span</span> <span class="attr">class</span>=<span class="string">&quot;sound&quot;</span>&gt;</span>snare<span class="tag">&lt;/<span class="name">span</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">div</span> <span class="attr">data-key</span>=<span class="string">&quot;75&quot;</span> <span class="attr">class</span>=<span class="string">&quot;key&quot;</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">kbd</span>&gt;</span>K<span class="tag">&lt;/<span class="name">kbd</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">span</span> <span class="attr">class</span>=<span class="string">&quot;sound&quot;</span>&gt;</span>tom<span class="tag">&lt;/<span class="name">span</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">div</span> <span class="attr">data-key</span>=<span class="string">&quot;76&quot;</span> <span class="attr">class</span>=<span class="string">&quot;key&quot;</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">kbd</span>&gt;</span>L<span class="tag">&lt;/<span class="name">kbd</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">span</span> <span class="attr">class</span>=<span class="string">&quot;sound&quot;</span>&gt;</span>tink<span class="tag">&lt;/<span class="name">span</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="name">audio</span> <span class="attr">data-key</span>=<span class="string">&quot;65&quot;</span> <span class="attr">src</span>=<span class="string">&quot;sounds/clap.wav&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">audio</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">audio</span> <span class="attr">data-key</span>=<span class="string">&quot;83&quot;</span> <span class="attr">src</span>=<span class="string">&quot;sounds/hihat.wav&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">audio</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">audio</span> <span class="attr">data-key</span>=<span class="string">&quot;68&quot;</span> <span class="attr">src</span>=<span class="string">&quot;sounds/kick.wav&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">audio</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">audio</span> <span class="attr">data-key</span>=<span class="string">&quot;70&quot;</span> <span class="attr">src</span>=<span class="string">&quot;sounds/openhat.wav&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">audio</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">audio</span> <span class="attr">data-key</span>=<span class="string">&quot;71&quot;</span> <span class="attr">src</span>=<span class="string">&quot;sounds/boom.wav&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">audio</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">audio</span> <span class="attr">data-key</span>=<span class="string">&quot;72&quot;</span> <span class="attr">src</span>=<span class="string">&quot;sounds/ride.wav&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">audio</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">audio</span> <span class="attr">data-key</span>=<span class="string">&quot;74&quot;</span> <span class="attr">src</span>=<span class="string">&quot;sounds/snare.wav&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">audio</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">audio</span> <span class="attr">data-key</span>=<span class="string">&quot;75&quot;</span> <span class="attr">src</span>=<span class="string">&quot;sounds/tom.wav&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">audio</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">audio</span> <span class="attr">data-key</span>=<span class="string">&quot;76&quot;</span> <span class="attr">src</span>=<span class="string">&quot;sounds/tink.wav&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">audio</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="javascript">      <span class="function"><span class="keyword">function</span> <span class="title">removeTransition</span>(<span class="params">e</span>) </span>&#123;</span></span><br><span class="line"><span class="javascript">        <span class="keyword">if</span> (e.propertyName !== <span class="string">&quot;transform&quot;</span>) <span class="keyword">return</span>;</span></span><br><span class="line"><span class="javascript">        e.target.classList.remove(<span class="string">&quot;playing&quot;</span>);</span></span><br><span class="line">      &#125;</span><br><span class="line"></span><br><span class="line"><span class="javascript">      <span class="function"><span class="keyword">function</span> <span class="title">playSound</span>(<span class="params">e</span>) </span>&#123;</span></span><br><span class="line"><span class="javascript">        <span class="keyword">const</span> audio = <span class="built_in">document</span>.querySelector(<span class="string">`audio[data-key=&quot;<span class="subst">$&#123;e.keyCode&#125;</span>&quot;]`</span>);</span></span><br><span class="line"><span class="javascript">        <span class="keyword">const</span> key = <span class="built_in">document</span>.querySelector(<span class="string">`div[data-key=&quot;<span class="subst">$&#123;e.keyCode&#125;</span>&quot;]`</span>);</span></span><br><span class="line"><span class="javascript">        <span class="keyword">if</span> (!audio) <span class="keyword">return</span>;</span></span><br><span class="line"></span><br><span class="line"><span class="javascript">        key.classList.add(<span class="string">&quot;playing&quot;</span>);</span></span><br><span class="line">        audio.currentTime = 0;</span><br><span class="line">        audio.play();</span><br><span class="line">      &#125;</span><br><span class="line"></span><br><span class="line"><span class="javascript">      <span class="keyword">const</span> keys = <span class="built_in">Array</span>.from(<span class="built_in">document</span>.querySelectorAll(<span class="string">&quot;.key&quot;</span>));</span></span><br><span class="line"><span class="javascript">      keys.forEach(<span class="function">(<span class="params">key</span>) =&gt;</span></span></span><br><span class="line"><span class="javascript">        key.addEventListener(<span class="string">&quot;transitionend&quot;</span>, removeTransition)</span></span><br><span class="line">      );</span><br><span class="line"><span class="javascript">      <span class="built_in">window</span>.addEventListener(<span class="string">&quot;keydown&quot;</span>, playSound);</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>Day 1이라서 무심코 봤다가 큰 코 다쳤다. 우선 audio 태그를 다뤄본 적이 거의 없어 js에서 플레이시키는 방법도 몰랐다.</p>
+<p>또한 <code>getElementsbyClassName</code>, <code>getElementById</code>에 익숙해져서 <code>querySelector</code>에서 <code>data-key</code> 속성으로 <code>DOM</code> 객체를 다루는 것도 쉽지 않았다.</p>
+<p>이번에 완전히 새로 배운 것은 <code>classList</code>이다. <code>DOM</code> 객체에 <code>class</code>를 부여하고(<code>add</code>), 삭제(<code>remove</code>)할 수도 있다. 예를 들어 <code>key</code>에 <code>playing</code>이라는 <code>class</code>를 부여하면, <code>css</code>에 작성된 <code>.playing</code> 효과가 나타나고, 원할 때 <code>remove</code>로 삭제할 수 있다.</p>
+<p>그리고 <code>transitionend</code>라는 <code>event</code>가 있는 것도 처음 알았다. 변형이 끝났을 때의 이벤트를 어떻게 처리할까 하다가 저런 사소한 이벤트의 제어도 순수하게 가능한게 신기했다.</p>
+<p><strong>그렇게 Day 1이 끝났다.</strong></p>
+
+        </div>
+
+        
+            <section class="post-copyright">
+                
+                
+                
+                
+
+            </section>
+        
+        <section class="post_disqus">
+            <div id="disqus_thread"></div>
+            <script>
+            
+            /**
+            *  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+            *  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables*/
+            /*
+            var disqus_config = function () {
+            this.page.url = PAGE_URL;  // Replace PAGE_URL with your page's canonical URL variable
+            this.page.identifier = PAGE_IDENTIFIER; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+            };
+            */
+            (function() { // DON'T EDIT BELOW THIS LINE
+            var d = document, s = d.createElement('script');
+            s.src = 'https://zinirun.disqus.com/embed.js';
+            s.setAttribute('data-timestamp', +new Date());
+            (d.head || d.body).appendChild(s);
+            })();
+            </script>
+            <noscript>Please enable JavaScript to view the <a target="_blank" rel="external nofollow noopener noreferrer" href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+        </section>
+        <section class="post-tags">
+            <div>
+                <span>Tag(s):</span>
+                <span class="tag">
+                    
+                    
+                        <a href="/tags/javascript/"># javascript</a>
+                    
+                        <a href="/tags/javascript30/"># javascript30</a>
+                    
+                        <a href="/tags/VanillaJS/"># VanillaJS</a>
+                    
+                        
+                </span>
+            </div>
+            <div>
+                <a href="javascript:window.history.back();">back</a>
+                <span>· </span>
+                <a href="/">home</a>
+            </div>
+        </section>
+        <section class="post-nav">
+            
+                <a class="prev" rel="prev" href="/2020/08/15/js-course30-2/">Javascript 30 - Day 2 JS and CSS clock</a>
+            
+            
+            <a class="next" rel="next" href="/2020/08/14/how-to-install-disqus-to-hexo/">Hexo에 Disqus 설치하기</a>
+            
+        </section>
+
+
+    </article>
+</div>
+
+        </div>
+        <footer id="footer" class="footer">
+  <div class="copyright">
+    <span>© zini | Powered by
+      <a href="https://hexo.io" target="_blank" rel="external nofollow noopener noreferrer">Hexo</a> &
+      <a href="https://github.com/" target="_blank" rel="external nofollow noopener noreferrer">Github Pages</a></span>
+  </div>
+</footer>
+
+    </div>
+</body>
+</html>

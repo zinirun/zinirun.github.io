@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+<link rel="canonical" href="https://zinirun.github.io/2020/08/15/js-course30-2/">
+
+
+<link rel="stylesheet" href="//fonts.googleapis.com/earlyaccess/notosanskr.css">
+
+
+    <meta name="author" content="zini">
+
+
+    <meta name="subtitle" content="tech blog by Zini">
+
+
+
+
+<title>Javascript 30 - Day 2 JS and CSS clock | zinirun</title>
+
+
+
+    <link rel="icon" href="/favicon.png">
+
+
+
+
+    <!-- stylesheets list from _config.yml -->
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+
+
+
+    <!-- scripts list from _config.yml -->
+    
+    <script src="/js/script.js"></script>
+    
+    <script src="/js/tocbot.min.js"></script>
+    
+
+
+
+    
+    
+        
+    
+
+
+<meta name="generator" content="Hexo 5.0.2"><link rel="alternate" href="/feed.xml" title="zinirun" type="application/atom+xml">
+</head>
+<body>
+    <div class="wrapper">
+        <header>
+  <nav class="navbar">
+    <div class="container">
+      <div class="navbar-header header-logo" style="font-size: 13pt; font-weight: 600;">
+        <a id="blog_logo" href="/" style="color: #2d96bd;">zini&#39;s tech blog</a>
+      </div>
+      <div class="menu navbar-right">
+        
+        <a class="menu-item" href="/archives">Posts</a>
+        
+        <a class="menu-item" href="/category">Categories</a>
+        
+        <a class="menu-item" href="/tag">Tags</a>
+        
+        <input id="switch_default" type="checkbox" class="switch_default">
+        <label for="switch_default" class="toggleBtn"></label>
+      </div>
+    </div>
+  </nav>
+
+  
+  <nav class="navbar-mobile" id="nav-mobile">
+    <div class="container">
+      <div class="navbar-header">
+        <div>
+          <a href="/" style="color: #2d96bd;">zini&#39;s tech blog</a><a id="mobile-toggle-theme">·&nbsp;Light</a>
+        </div>
+        <div class="menu-toggle" onclick="mobileBtn()">&#9776; Menu</div>
+      </div>
+      <div class="menu" id="mobile-menu">
+        
+        <a class="menu-item" href="/archives">Posts</a>
+        
+        <a class="menu-item" href="/category">Categories</a>
+        
+        <a class="menu-item" href="/tag">Tags</a>
+        
+      </div>
+    </div>
+  </nav>
+</header>
+<script>
+  var mobileBtn = function f() {
+    var toggleMenu = document.getElementsByClassName("menu-toggle")[0];
+    var mobileMenu = document.getElementById("mobile-menu");
+    if (toggleMenu.classList.contains("active")) {
+      toggleMenu.classList.remove("active");
+      mobileMenu.classList.remove("active");
+    } else {
+      toggleMenu.classList.add("active");
+      mobileMenu.classList.add("active");
+    }
+  };
+</script>
+
+        <div class="main">
+            <div class="container">
+    
+    
+        <div class="post-toc">
+    <div class="tocbot-list">
+    </div>
+    <div class="tocbot-list-menu">
+        <a class="tocbot-toc-expand" onclick="expand_toc()">Expand all</a>
+        <a onclick="go_top()">Back to top</a>
+        <a onclick="go_bottom()">Go to bottom</a>
+    </div>
+</div>
+
+<script>
+    document.ready(
+        function () {
+            tocbot.init({
+                tocSelector: '.tocbot-list',
+                contentSelector: '.post-content',
+                headingSelector: 'h1, h2, h3, h4, h5',
+                collapseDepth: 1,
+                orderedList: false,
+                scrollSmooth: true,
+            })
+        }
+    )
+
+    function expand_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 6,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "collapse_toc()");
+        b.innerHTML = "Collapse all"
+    }
+
+    function collapse_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 1,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "expand_toc()");
+        b.innerHTML = "Expand all"
+    }
+
+    function go_top() {
+        window.scrollTo(0, 0);
+    }
+
+    function go_bottom() {
+        window.scrollTo(0, document.body.scrollHeight);
+    }
+
+</script>
+    
+
+    
+    <article class="post-wrap">
+        <header class="post-header">
+            <h1 class="post-title">Javascript 30 - Day 2 JS and CSS clock</h1>
+            
+                <div class="post-meta">
+                    
+                        Author: <a itemprop="author" rel="author" href="/">zini</a>
+                    
+
+                    
+                        <span class="post-time">
+                        Date: <a href="#">August 15, 2020&nbsp;&nbsp;20:59:22</a>
+                        </span>
+                    
+                    
+                        <span class="post-category">
+                    Category:
+                            
+                                <a href="/categories/javascript/">javascript</a>
+                            
+                        </span>
+                    
+                </div>
+            
+        </header>
+
+        <div class="post-content">
+            <h2 id="Day-2-JS-and-CSS-clock"><a href="#Day-2-JS-and-CSS-clock" class="headerlink" title="Day 2 - JS and CSS clock"></a>Day 2 - JS and CSS clock</h2><div class="video-container"><iframe src="https://www.youtube.com/embed/xu87YWbr4X0" frameborder="0" loading="lazy" allowfullscreen></iframe></div>
+
+<h3 id="START"><a href="#START" class="headerlink" title="START"></a>START</h3><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE <span class="meta-keyword">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span> <span class="attr">lang</span>=<span class="string">&quot;en&quot;</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">&quot;UTF-8&quot;</span> /&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">title</span>&gt;</span>JS + CSS Clock<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;clock&quot;</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;clock-face&quot;</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;hand hour-hand&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;hand min-hand&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;hand second-hand&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="name">style</span>&gt;</span></span><br><span class="line">      html &#123;</span><br><span class="line">        background: #018ded url(https://unsplash.it/1500/1000?image=881&amp;blur=5);</span><br><span class="line">        background-size: cover;</span><br><span class="line">        font-family: &quot;helvetica neue&quot;;</span><br><span class="line">        text-align: center;</span><br><span class="line">        font-size: 10px;</span><br><span class="line">      &#125;</span><br><span class="line"></span><br><span class="line">      body &#123;</span><br><span class="line">        margin: 0;</span><br><span class="line">        font-size: 2rem;</span><br><span class="line">        display: flex;</span><br><span class="line">        flex: 1;</span><br><span class="line">        min-height: 100vh;</span><br><span class="line">        align-items: center;</span><br><span class="line">      &#125;</span><br><span class="line"></span><br><span class="line"><span class="css">      <span class="selector-class">.clock</span> &#123;</span></span><br><span class="line">        width: 30rem;</span><br><span class="line">        height: 30rem;</span><br><span class="line">        border: 20px solid white;</span><br><span class="line">        border-radius: 50%;</span><br><span class="line">        margin: 50px auto;</span><br><span class="line">        position: relative;</span><br><span class="line">        padding: 2rem;</span><br><span class="line"><span class="css">        <span class="selector-tag">box-shadow</span>: 0 0 0 4<span class="selector-tag">px</span> <span class="selector-tag">rgba</span>(0, 0, 0, 0<span class="selector-class">.1</span>), <span class="selector-tag">inset</span> 0 0 0 3<span class="selector-tag">px</span> <span class="selector-id">#efefef</span>,</span></span><br><span class="line"><span class="css">          <span class="selector-tag">inset</span> 0 0 10<span class="selector-tag">px</span> <span class="selector-tag">black</span>, 0 0 10<span class="selector-tag">px</span> <span class="selector-tag">rgba</span>(0, 0, 0, 0<span class="selector-class">.2</span>);</span></span><br><span class="line">      &#125;</span><br><span class="line"></span><br><span class="line"><span class="css">      <span class="selector-class">.clock-face</span> &#123;</span></span><br><span class="line">        position: relative;</span><br><span class="line">        width: 100%;</span><br><span class="line">        height: 100%;</span><br><span class="line">        transform: translateY(</span><br><span class="line">          -3px</span><br><span class="line"><span class="css">        ); <span class="comment">/* account for the height of the clock hands */</span></span></span><br><span class="line">      &#125;</span><br><span class="line"></span><br><span class="line"><span class="css">      <span class="selector-class">.hand</span> &#123;</span></span><br><span class="line">        width: 50%;</span><br><span class="line">        height: 6px;</span><br><span class="line">        background: black;</span><br><span class="line">        position: absolute;</span><br><span class="line">        top: 50%;</span><br><span class="line">      &#125;</span><br><span class="line">    <span class="tag">&lt;/<span class="name">style</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="FINISHED"><a href="#FINISHED" class="headerlink" title="FINISHED"></a>FINISHED</h3><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE <span class="meta-keyword">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span> <span class="attr">lang</span>=<span class="string">&quot;en&quot;</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">&quot;UTF-8&quot;</span> /&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">title</span>&gt;</span>JS + CSS Clock<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;clock&quot;</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;clock-face&quot;</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;hand hour-hand&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;hand min-hand&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;hand second-hand&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="name">style</span>&gt;</span></span><br><span class="line">      html &#123;</span><br><span class="line">        background: #018ded url(https://unsplash.it/1500/1000?image=881&amp;blur=5);</span><br><span class="line">        background-size: cover;</span><br><span class="line">        font-family: &quot;helvetica neue&quot;;</span><br><span class="line">        text-align: center;</span><br><span class="line">        font-size: 10px;</span><br><span class="line">      &#125;</span><br><span class="line"></span><br><span class="line">      body &#123;</span><br><span class="line">        margin: 0;</span><br><span class="line">        font-size: 2rem;</span><br><span class="line">        display: flex;</span><br><span class="line">        flex: 1;</span><br><span class="line">        min-height: 100vh;</span><br><span class="line">        align-items: center;</span><br><span class="line">      &#125;</span><br><span class="line"></span><br><span class="line"><span class="css">      <span class="selector-class">.clock</span> &#123;</span></span><br><span class="line">        width: 30rem;</span><br><span class="line">        height: 30rem;</span><br><span class="line">        border: 20px solid white;</span><br><span class="line">        border-radius: 50%;</span><br><span class="line">        margin: 50px auto;</span><br><span class="line">        position: relative;</span><br><span class="line">        padding: 2rem;</span><br><span class="line"><span class="css">        <span class="selector-tag">box-shadow</span>: 0 0 0 4<span class="selector-tag">px</span> <span class="selector-tag">rgba</span>(0, 0, 0, 0<span class="selector-class">.1</span>), <span class="selector-tag">inset</span> 0 0 0 3<span class="selector-tag">px</span> <span class="selector-id">#efefef</span>,</span></span><br><span class="line"><span class="css">          <span class="selector-tag">inset</span> 0 0 10<span class="selector-tag">px</span> <span class="selector-tag">black</span>, 0 0 10<span class="selector-tag">px</span> <span class="selector-tag">rgba</span>(0, 0, 0, 0<span class="selector-class">.2</span>);</span></span><br><span class="line">      &#125;</span><br><span class="line"></span><br><span class="line"><span class="css">      <span class="selector-class">.clock-face</span> &#123;</span></span><br><span class="line">        position: relative;</span><br><span class="line">        width: 100%;</span><br><span class="line">        height: 100%;</span><br><span class="line">        transform: translateY(</span><br><span class="line">          -3px</span><br><span class="line"><span class="css">        ); <span class="comment">/* account for the height of the clock hands */</span></span></span><br><span class="line">      &#125;</span><br><span class="line"></span><br><span class="line"><span class="css">      <span class="selector-class">.hand</span> &#123;</span></span><br><span class="line">        width: 50%;</span><br><span class="line">        height: 6px;</span><br><span class="line">        background: black;</span><br><span class="line">        position: absolute;</span><br><span class="line">        top: 50%;</span><br><span class="line">        transform-origin: 100%;</span><br><span class="line">        transform: rotate(90deg);</span><br><span class="line"><span class="css">        <span class="selector-tag">transition</span>: <span class="selector-tag">all</span> 0<span class="selector-class">.05s</span>;</span></span><br><span class="line"><span class="css">        <span class="selector-tag">transition-timing-function</span>: <span class="selector-tag">cubic-bezier</span>(0<span class="selector-class">.1</span>, 2<span class="selector-class">.7</span>, 0<span class="selector-class">.58</span>, 1);</span></span><br><span class="line">      &#125;</span><br><span class="line">    <span class="tag">&lt;/<span class="name">style</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="javascript">      <span class="keyword">const</span> secHand = <span class="built_in">document</span>.querySelector(<span class="string">&quot;.second-hand&quot;</span>);</span></span><br><span class="line"><span class="javascript">      <span class="keyword">const</span> minHand = <span class="built_in">document</span>.querySelector(<span class="string">&quot;.min-hand&quot;</span>);</span></span><br><span class="line"><span class="javascript">      <span class="keyword">const</span> hourHand = <span class="built_in">document</span>.querySelector(<span class="string">&quot;.hour-hand&quot;</span>);</span></span><br><span class="line"></span><br><span class="line"><span class="javascript">      <span class="function"><span class="keyword">function</span> <span class="title">setClock</span>(<span class="params"></span>) </span>&#123;</span></span><br><span class="line"><span class="javascript">        <span class="keyword">const</span> now = <span class="keyword">new</span> <span class="built_in">Date</span>();</span></span><br><span class="line"></span><br><span class="line"><span class="javascript">        <span class="keyword">const</span> sec = now.getSeconds();</span></span><br><span class="line"><span class="javascript">        <span class="keyword">const</span> secDeg = (sec / <span class="number">60</span>) * <span class="number">360</span> + <span class="number">90</span>;</span></span><br><span class="line"><span class="javascript">        secHand.style.transform = <span class="string">`rotate(<span class="subst">$&#123;secDeg&#125;</span>deg)`</span>;</span></span><br><span class="line"></span><br><span class="line"><span class="javascript">        <span class="keyword">const</span> min = now.getMinutes();</span></span><br><span class="line"><span class="javascript">        <span class="keyword">const</span> minDeg = (min / <span class="number">60</span>) * <span class="number">360</span> + (sec / <span class="number">60</span>) * <span class="number">6</span> + <span class="number">90</span>;</span></span><br><span class="line"><span class="javascript">        minHand.style.transform = <span class="string">`rotate(<span class="subst">$&#123;minDeg&#125;</span>deg)`</span>;</span></span><br><span class="line"></span><br><span class="line"><span class="javascript">        <span class="keyword">const</span> hour = now.getHours();</span></span><br><span class="line"><span class="javascript">        <span class="keyword">const</span> hourDeg = (hour / <span class="number">12</span>) * <span class="number">360</span> + (min / <span class="number">60</span>) * <span class="number">30</span> + <span class="number">90</span>;</span></span><br><span class="line"><span class="javascript">        hourHand.style.transform = <span class="string">`rotate(<span class="subst">$&#123;hourDeg&#125;</span>deg)`</span>;</span></span><br><span class="line">      &#125;</span><br><span class="line"></span><br><span class="line"><span class="javascript">      <span class="built_in">setInterval</span>(setClock, <span class="number">1000</span>);</span></span><br><span class="line">      setClock();</span><br><span class="line">    <span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p><code>rotate</code> css 속성을 자주 접하지 않아 난해했다. 아무리 돌려도 중간을 중심으로 침이 돌아가지 않아서 솔루션을 봤는데, css를 수정했어야 했다.</p>
+<p><code>.hand</code> css 속성에</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-tag">transform-origin</span>: 100%;</span><br><span class="line"><span class="selector-tag">transform</span>: <span class="selector-tag">rotate</span>(90<span class="selector-tag">deg</span>);</span><br><span class="line"><span class="selector-tag">transition</span>: <span class="selector-tag">all</span> 0<span class="selector-class">.05s</span>;</span><br><span class="line"><span class="selector-tag">transition-timing-function</span>: <span class="selector-tag">cubic-bezier</span>(0<span class="selector-class">.1</span>, 2<span class="selector-class">.7</span>, 0<span class="selector-class">.58</span>, 1);</span><br></pre></td></tr></table></figure>
+
+<p>위의 항목을 추가한다. 이 작업만 하면 초마다, 분마다, 시간마다 침이 몇 도(<code>degree</code>) 움직여야 하는지만 알면 <code>Date()</code>를 사용하여 현재 초, 분, 시간을 받아올 수 있다. 시계는 1초마다 움직이므로 <code>setInterval(function, 1000)</code>으로 시계를 움직이는 함수를 작성해서 실행한다.</p>
+
+        </div>
+
+        
+            <section class="post-copyright">
+                
+                
+                
+                
+
+            </section>
+        
+        <section class="post_disqus">
+            <div id="disqus_thread"></div>
+            <script>
+            
+            /**
+            *  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+            *  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables*/
+            /*
+            var disqus_config = function () {
+            this.page.url = PAGE_URL;  // Replace PAGE_URL with your page's canonical URL variable
+            this.page.identifier = PAGE_IDENTIFIER; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+            };
+            */
+            (function() { // DON'T EDIT BELOW THIS LINE
+            var d = document, s = d.createElement('script');
+            s.src = 'https://zinirun.disqus.com/embed.js';
+            s.setAttribute('data-timestamp', +new Date());
+            (d.head || d.body).appendChild(s);
+            })();
+            </script>
+            <noscript>Please enable JavaScript to view the <a target="_blank" rel="external nofollow noopener noreferrer" href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+        </section>
+        <section class="post-tags">
+            <div>
+                <span>Tag(s):</span>
+                <span class="tag">
+                    
+                    
+                        <a href="/tags/javascript/"># javascript</a>
+                    
+                        <a href="/tags/javascript30/"># javascript30</a>
+                    
+                        <a href="/tags/VanillaJS/"># VanillaJS</a>
+                    
+                        
+                </span>
+            </div>
+            <div>
+                <a href="javascript:window.history.back();">back</a>
+                <span>· </span>
+                <a href="/">home</a>
+            </div>
+        </section>
+        <section class="post-nav">
+            
+            
+            <a class="next" rel="next" href="/2020/08/15/js-course30-1/">Javascript 30 시작 - Day 1 Drum Kit</a>
+            
+        </section>
+
+
+    </article>
+</div>
+
+        </div>
+        <footer id="footer" class="footer">
+  <div class="copyright">
+    <span>© zini | Powered by
+      <a href="https://hexo.io" target="_blank" rel="external nofollow noopener noreferrer">Hexo</a> &
+      <a href="https://github.com/" target="_blank" rel="external nofollow noopener noreferrer">Github Pages</a></span>
+  </div>
+</footer>
+
+    </div>
+</body>
+</html>
