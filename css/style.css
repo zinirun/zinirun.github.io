@@ -165,7 +165,7 @@ html::-webkit-scrollbar-thumb:hover {
   background-color: #ddd;
 }
 body {
-  font-size: 11pt;
+  font-size: 12pt;
   font-weight: normal;
   line-height: 2em;
   background-color: #fff;
@@ -1364,4 +1364,8 @@ header label {
   #github_widget {
     display: none;
   }
+}
+#blog_logo:hover {
+  text-decoration: underline;
+  text-decoration-color: #2d96bd;
 }

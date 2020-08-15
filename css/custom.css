@@ -3,3 +3,7 @@
     display: none;
   }
 }
+#blog_logo:hover {
+  text-decoration: underline;
+  text-decoration-color: #2d96bd;
+}
