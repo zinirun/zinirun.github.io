@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
 <meta http-equiv="X-UA-Compatible" content="ie=edge">
-<link rel="canonical" href="https://zinirun.github.io/tag/">
+<link rel="canonical" href="https://zinirun.github.io/page/2/">
 
 
 <link rel="stylesheet" href="//fonts.googleapis.com/earlyaccess/notosanskr.css">
@@ -18,7 +18,7 @@
 
 
 
-<title>Tag | zinirun</title>
+<title>zinirun</title>
 
 
 
@@ -110,42 +110,77 @@
 
         <div class="main">
             
-
     <div class="container">
-        <div class="post-wrap tags">
-            <h2 class="post-title">Tags</h2>
-
-            <div class="tag-cloud-tags">
-                
-                    <a href="/tags/hexo/">hexo<small>(2)</small></a>
-                
-                    <a href="/tags/disqus/">disqus<small>(1)</small></a>
-                
-                    <a href="/tags/gh-pages/">gh-pages<small>(1)</small></a>
-                
-                    <a href="/tags/flask/">flask<small>(1)</small></a>
-                
-                    <a href="/tags/javascript/">javascript<small>(5)</small></a>
-                
-                    <a href="/tags/javascript30/">javascript30<small>(4)</small></a>
-                
-                    <a href="/tags/VanillaJS/">VanillaJS<small>(4)</small></a>
-                
-                    <a href="/tags/docker/">docker<small>(1)</small></a>
-                
-                    <a href="/tags/cloud/">cloud<small>(2)</small></a>
-                
-                    <a href="/tags/linux/">linux<small>(2)</small></a>
-                
-                    <a href="/tags/toast/">toast<small>(1)</small></a>
-                
-                    <a href="/tags/ubuntu/">ubuntu<small>(1)</small></a>
-                
-                    <a href="/tags/vanillaJS/">vanillaJS<small>(1)</small></a>
-                
-            </div>
-        </div>
+  <div class="intro">
+    <div class="avatar">
+      <a href="/archives"><img src="/image/avatar.jpg"></a>
     </div>
+    <div class="nickname">zini</div>
+    <div class="description"><p>Server Infra, Web BE/FE Programmer<br><i>지니는 오늘도 달린다</i> 🏃</p>
+</div>
+    <div class="links">
+       
+      <a class="link-item" title="Blog" href="/archives">
+        
+        
+        <i class="iconfont icon-blog"></i>
+        
+      </a>
+      
+      <a class="link-item" title="Resume" target="_blank" rel="external nofollow noopener noreferrer" href="https://www.notion.so/Heo-Jeon-Jin-cf010c73b5cf441c928faee757cd6e7a">
+        
+        
+        <i class="iconfont icon-resume"></i>
+        
+      </a>
+      
+      <a class="link-item" title="Instagram" target="_blank" rel="external nofollow noopener noreferrer" href="https://instagram.com/normalzini">
+        
+        
+        <i class="iconfont icon-instagram"></i>
+        
+      </a>
+      
+      <a class="link-item" title="Github" target="_blank" rel="external nofollow noopener noreferrer" href="https://github.com/zinirun">
+        
+        
+        <i class="iconfont icon-github"></i>
+        
+      </a>
+       
+    </div>
+    <div id="github_widget" style="margin-top: 15px;">
+      <!-- Include the library. -->
+      <script src="https://unpkg.com/github-calendar@latest/dist/github-calendar.min.js"></script>
+
+      <!-- Optionally, include the theme (if you don't want to struggle to write the CSS) -->
+      <link rel="stylesheet" href="https://unpkg.com/github-calendar@latest/dist/github-calendar-responsive.css">
+
+      <div>
+        <!-- Prepare a container for your calendar. -->
+        <div class="calendar" style="width: 650px;">
+          <!-- Loading stuff -->
+          Loading data ...
+        </div>
+      </div>
+
+      <script>
+        GitHubCalendar(".calendar", "zinirun", {
+          responsive: true,
+          tooltips: false,
+          global_stats: false,
+        }).then(function () {
+          // delete the space underneath the module bar which is caused by minheight
+          document.getElementsByClassName("calendar")[0].style.minHeight =
+            "120px";
+          // hide more and less legen below the contribution graph
+          document.getElementsByClassName("contrib-legend")[0].style.display =
+            "none";
+        });
+      </script>
+    </div>
+  </div>
+</div>
 
 
         </div>
