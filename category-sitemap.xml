@@ -8,6 +8,27 @@
     </url>
 
     <url>
+        <loc>https://zinirun.github.io/categories/algorithm/</loc>
+        <lastmod>2020-08-18T11:15:36.706Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
+        <loc>https://zinirun.github.io/categories/cloud/kubernetes/</loc>
+        <lastmod>2020-08-18T11:12:54.304Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
+        <loc>https://zinirun.github.io/categories/cloud/</loc>
+        <lastmod>2020-08-18T11:12:54.304Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
         <loc>https://zinirun.github.io/categories/javascript/</loc>
         <lastmod>2020-08-16T13:12:44.911Z</lastmod>
         <changefreq>weekly</changefreq>
@@ -23,13 +44,6 @@
 
     <url>
         <loc>https://zinirun.github.io/categories/cloud/docker/</loc>
-        <lastmod>2020-08-15T14:38:27.111Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.2</priority>
-    </url>
-
-    <url>
-        <loc>https://zinirun.github.io/categories/cloud/</loc>
         <lastmod>2020-08-15T14:38:27.111Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>
