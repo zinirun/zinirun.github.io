@@ -3,22 +3,15 @@
 
 
     <url>
-        <loc>https://zinirun.github.io/tags/vanillaJS/</loc>
-        <lastmod>2020-08-16T13:07:35.160Z</lastmod>
+        <loc>https://zinirun.github.io/tags/VanillaJS/</loc>
+        <lastmod>2020-08-16T13:12:44.911Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>
     </url>
 
     <url>
         <loc>https://zinirun.github.io/tags/javascript/</loc>
-        <lastmod>2020-08-16T13:07:35.160Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.2</priority>
-    </url>
-
-    <url>
-        <loc>https://zinirun.github.io/tags/VanillaJS/</loc>
-        <lastmod>2020-08-16T07:35:54.884Z</lastmod>
+        <lastmod>2020-08-16T13:12:44.911Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>
     </url>
