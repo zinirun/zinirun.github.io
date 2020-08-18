@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+<link rel="canonical" href="https://zinirun.github.io/2020/08/18/js-course30-5/">
+
+
+<link rel="stylesheet" href="//fonts.googleapis.com/earlyaccess/notosanskr.css">
+
+
+    <meta name="author" content="zini">
+
+
+    <meta name="subtitle" content="tech blog by Zini">
+
+
+
+
+<title>Javascript 30 - Day 5 Flex Panel Gallery | zinirun</title>
+
+
+
+    <link rel="icon" href="/favicon.png">
+
+
+
+
+    <!-- stylesheets list from _config.yml -->
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+
+
+
+    <!-- scripts list from _config.yml -->
+    
+    <script src="/js/script.js"></script>
+    
+    <script src="/js/tocbot.min.js"></script>
+    
+
+
+
+    
+    
+        
+    
+
+
+<meta name="generator" content="Hexo 5.0.2"><link rel="alternate" href="/feed.xml" title="zinirun" type="application/atom+xml">
+</head>
+<body>
+    <div class="wrapper">
+        <header>
+  <nav class="navbar">
+    <div class="container">
+      <div class="navbar-header header-logo" style="font-size: 13pt; font-weight: 600;">
+        <a id="blog_logo" href="/" style="color: #2d96bd;">zini&#39;s Devlog</a>
+      </div>
+      <div class="menu navbar-right">
+        
+        <a class="menu-item" href="/archives">Posts</a>
+        
+        <a class="menu-item" href="/category">Categories</a>
+        
+        <a class="menu-item" href="/tag">Tags</a>
+        
+        <input id="switch_default" type="checkbox" class="switch_default">
+        <label for="switch_default" class="toggleBtn"></label>
+      </div>
+    </div>
+  </nav>
+
+  
+  <nav class="navbar-mobile" id="nav-mobile">
+    <div class="container">
+      <div class="navbar-header">
+        <div>
+          <a href="/" style="color: #2d96bd;">zini&#39;s Devlog</a><a id="mobile-toggle-theme">·&nbsp;Light</a>
+        </div>
+        <div class="menu-toggle" onclick="mobileBtn()">&#9776; Menu</div>
+      </div>
+      <div class="menu" id="mobile-menu">
+        
+        <a class="menu-item" href="/archives">Posts</a>
+        
+        <a class="menu-item" href="/category">Categories</a>
+        
+        <a class="menu-item" href="/tag">Tags</a>
+        
+      </div>
+    </div>
+  </nav>
+</header>
+<script>
+  var mobileBtn = function f() {
+    var toggleMenu = document.getElementsByClassName("menu-toggle")[0];
+    var mobileMenu = document.getElementById("mobile-menu");
+    if (toggleMenu.classList.contains("active")) {
+      toggleMenu.classList.remove("active");
+      mobileMenu.classList.remove("active");
+    } else {
+      toggleMenu.classList.add("active");
+      mobileMenu.classList.add("active");
+    }
+  };
+</script>
+
+        <div class="main">
+            <div class="container">
+    
+    
+        <div class="post-toc">
+    <div class="tocbot-list">
+    </div>
+    <div class="tocbot-list-menu">
+        <a class="tocbot-toc-expand" onclick="expand_toc()">Expand All</a>
+        <a onclick="go_top()">Top</a>
+        <a onclick="go_bottom()">Bottom</a>
+    </div>
+</div>
+
+<script>
+    document.ready(
+        function () {
+            tocbot.init({
+                tocSelector: '.tocbot-list',
+                contentSelector: '.post-content',
+                headingSelector: 'h1, h2, h3, h4, h5',
+                collapseDepth: 1,
+                orderedList: false,
+                scrollSmooth: true,
+            })
+        }
+    )
+
+    function expand_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 6,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "collapse_toc()");
+        b.innerHTML = "Collapse all"
+    }
+
+    function collapse_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 1,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "expand_toc()");
+        b.innerHTML = "Expand all"
+    }
+
+    function go_top() {
+        window.scrollTo(0, 0);
+    }
+
+    function go_bottom() {
+        window.scrollTo(0, document.body.scrollHeight);
+    }
+
+</script>
+    
+
+    
+    <article class="post-wrap">
+        <header class="post-header">
+            <h1 class="post-title">Javascript 30 - Day 5 Flex Panel Gallery</h1>
+            
+                <div class="post-meta">
+                    
+                        Author: <a itemprop="author" rel="author" href="/">zini</a>
+                    
+
+                    
+                        <span class="post-time">
+                        Date: <a href="#">August 18, 2020&nbsp;&nbsp;22:14:09</a>
+                        </span>
+                    
+                    
+                        <span class="post-category">
+                    Category:
+                            
+                                <a href="/categories/javascript/">javascript</a>
+                            
+                        </span>
+                    
+                </div>
+            
+        </header>
+
+        <div class="post-content">
+            <h2 id="Day-5-Flex-Panel-Gallery"><a href="#Day-5-Flex-Panel-Gallery" class="headerlink" title="Day 5 - Flex Panel Gallery"></a>Day 5 - Flex Panel Gallery</h2><div class="video-container"><iframe src="https://www.youtube.com/embed/9eif30i26jg" frameborder="0" loading="lazy" allowfullscreen></iframe></div>
+<h3 id="CSS-Part"><a href="#CSS-Part" class="headerlink" title="CSS Part"></a>CSS Part</h3><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-class">.panels</span> &#123;</span><br><span class="line">        <span class="attribute">min-height</span>: <span class="number">100vh</span>;</span><br><span class="line">        <span class="attribute">overflow</span>: hidden;</span><br><span class="line">        <span class="attribute">display</span>: flex;</span><br><span class="line">      &#125;</span><br><span class="line"></span><br><span class="line"><span class="selector-class">.panel</span> &#123;</span><br><span class="line">    <span class="attribute">background</span>: <span class="number">#6b0f9c</span>;</span><br><span class="line">    <span class="attribute">box-shadow</span>: inset <span class="number">0</span> <span class="number">0</span> <span class="number">0</span> <span class="number">5px</span> <span class="built_in">rgba</span>(<span class="number">255</span>, <span class="number">255</span>, <span class="number">255</span>, <span class="number">0.1</span>);</span><br><span class="line">    <span class="attribute">color</span>: white;</span><br><span class="line">    <span class="attribute">text-align</span>: center;</span><br><span class="line">    <span class="attribute">align-items</span>: center;</span><br><span class="line">    <span class="comment">/* Safari transitionend event.propertyName === flex */</span></span><br><span class="line">    <span class="comment">/* Chrome + FF transitionend event.propertyName === flex-grow */</span></span><br><span class="line">    <span class="attribute">transition</span>: font-size <span class="number">0.7s</span> <span class="built_in">cubic-bezier</span>(<span class="number">0.61</span>, -<span class="number">0.19</span>, <span class="number">0.7</span>, -<span class="number">0.11</span>),</span><br><span class="line">      flex <span class="number">0.7s</span> <span class="built_in">cubic-bezier</span>(<span class="number">0.61</span>, -<span class="number">0.19</span>, <span class="number">0.7</span>, -<span class="number">0.11</span>), background <span class="number">0.2s</span>;</span><br><span class="line">    <span class="attribute">font-size</span>: <span class="number">20px</span>;</span><br><span class="line">    <span class="attribute">background-size</span>: cover;</span><br><span class="line">    <span class="attribute">background-position</span>: center;</span><br><span class="line">    <span class="attribute">flex</span>: <span class="number">1</span>;</span><br><span class="line">    <span class="attribute">justify-content</span>: center;</span><br><span class="line">    <span class="attribute">display</span>: flex;</span><br><span class="line">    <span class="attribute">flex-direction</span>: column;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/* Flex Children */</span></span><br><span class="line"><span class="selector-class">.panel</span> &gt; * &#123;</span><br><span class="line">    <span class="attribute">margin</span>: <span class="number">0</span>;</span><br><span class="line">    <span class="attribute">width</span>: <span class="number">100%</span>;</span><br><span class="line">    <span class="attribute">transition</span>: transform <span class="number">0.5s</span>;</span><br><span class="line">    <span class="attribute">flex</span>: <span class="number">1</span> <span class="number">0</span> auto;</span><br><span class="line">    <span class="attribute">display</span>: flex;</span><br><span class="line">    <span class="attribute">justify-content</span>: center;</span><br><span class="line">    <span class="attribute">align-items</span>: center;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><code>Flex Display</code>에 대한 이해가 필요한 예제였다. <code>Flex</code>나 <code>Grid</code>에 완전히 익숙하지가 않아 차근차근 이해하려 노력했다.</p>
+<h3 id="Flex"><a href="#Flex" class="headerlink" title="Flex"></a>Flex</h3><p><code>Flex</code>와 관련된 CSS 속성들이 정말 많다. 간단하게 이번 에제에서 사용된 것만 정리해보면,</p>
+<p><code>flex: 1</code> : flex 적용을 받는 요소들의 너비를 1로 통일 (1이든 100이든 상관없음)<br><code>justify-content: center</code>, <code>align-items: center</code> : 요소 중앙 정렬<br><code>flex-direction: column</code> : flex 적용을 받는 요소 안에 내용물의 방향(기본: <code>row</code>)</p>
+<p><strong>Flex Layout은 <a target="_blank" rel="external nofollow noopener noreferrer" href="https://studiomeal.com/archives/197">이 곳</a>에 정리가 잘 되어 있다</strong></p>
+<h3 id="cubic-bezier"><a href="#cubic-bezier" class="headerlink" title="cubic-bezier"></a>cubic-bezier</h3><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-tag">transition</span>: <span class="selector-tag">font-size</span> 0<span class="selector-class">.7s</span> <span class="selector-tag">cubic-bezier</span>(0<span class="selector-class">.61</span>, <span class="selector-tag">-0</span><span class="selector-class">.19</span>, 0<span class="selector-class">.7</span>, <span class="selector-tag">-0</span><span class="selector-class">.11</span>),</span><br><span class="line">          <span class="selector-tag">flex</span> 0<span class="selector-class">.7s</span> <span class="selector-tag">cubic-bezier</span>(0<span class="selector-class">.61</span>, <span class="selector-tag">-0</span><span class="selector-class">.19</span>, 0<span class="selector-class">.7</span>, <span class="selector-tag">-0</span><span class="selector-class">.11</span>), <span class="selector-tag">background</span> 0<span class="selector-class">.2s</span>;</span><br></pre></td></tr></table></figure>
+<p><code>.panel</code>에 선언된 css 속성이다. <code>cubic-bezier()</code> function은 <code>transition</code> 속성 또는 <code>transition-timing-function</code> 속성에서 전환 시작과 끝까지의 효과를 제어한다.</p>
+<p><img src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=http://cfile9.uf.tistory.com/image/99DBDB4F5B0CD3E418BCA9" alt="베지어곡선"></p>
+<p>이 <code>베지어 곡선</code>을 정의하는 것이라고 이해하면 된다.</p>
+<p>위의 예에서 <code>transition</code>이 일어날 때 <code>font-size</code>, <code>flex</code>에 대해 <code>cubic-bezier</code>를 정의했는데, <code>()</code>에 들어가는 4개의 숫자가 곡선의 <code>curve</code>를 나타낸다.</p>
+<h3 id="event-처리를-위한-css-class-설정"><a href="#event-처리를-위한-css-class-설정" class="headerlink" title="event 처리를 위한 css class 설정"></a>event 처리를 위한 css class 설정</h3><p>이제 <code>Javascript</code>에서 각 <code>panel</code>에 이벤트를 걸어 <code>css</code> 속성을 바꿔주는데, 이 때 <code>classList.toggle</code>을 통해 css를 제어할 것이다.</p>
+<p>우선 <code>.panel</code>의 첫 번째와 마지막 글자를 위한 <code>transform</code> 속성을 정의한다.</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-class">.panel</span> &gt; *<span class="selector-pseudo">:first-child</span> &#123;</span><br><span class="line">  <span class="attribute">transform</span>: <span class="built_in">translateY</span>(-<span class="number">100%</span>);</span><br><span class="line">&#125;</span><br><span class="line"><span class="selector-class">.panel</span><span class="selector-class">.open-active</span> &gt; *<span class="selector-pseudo">:first-child</span> &#123;</span><br><span class="line">  <span class="attribute">transform</span>: <span class="built_in">translateY</span>(<span class="number">0</span>);</span><br><span class="line">&#125;</span><br><span class="line"><span class="selector-class">.panel</span> &gt; *<span class="selector-pseudo">:last-child</span> &#123;</span><br><span class="line">  <span class="attribute">transform</span>: <span class="built_in">translateY</span>(<span class="number">100%</span>);</span><br><span class="line">&#125;</span><br><span class="line"><span class="selector-class">.panel</span><span class="selector-class">.open-active</span> &gt; *<span class="selector-pseudo">:last-child</span> &#123;</span><br><span class="line">  <span class="attribute">transform</span>: <span class="built_in">translateY</span>(<span class="number">0</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>이제 <code>.panel</code>의 flex layout을 변경하기 위해 <code>flex</code> 속성을 정의한다.</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-class">.panel</span><span class="selector-class">.open</span> &#123;</span><br><span class="line">    <span class="attribute">flex</span>: <span class="number">5</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>모든 요소가 <code>flex: 1</code>인 상태에서 <code>.open</code> class를 부여받은 <code>panel</code>만 5배의 비율로 늘어난다.</p>
+<h2 id="Javascript-Part"><a href="#Javascript-Part" class="headerlink" title="Javascript Part"></a>Javascript Part</h2><p>이제 <code>.panel</code>에 event를 걸어준다.</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> panels = <span class="built_in">document</span>.querySelectorAll(<span class="string">&quot;.panel&quot;</span>);</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">toggleOpen</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">&quot;Hello&quot;</span>);</span><br><span class="line">  <span class="built_in">this</span>.classList.toggle(<span class="string">&quot;open&quot;</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">toggleActive</span>(<span class="params">e</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">if</span> (e.propertyName.includes(<span class="string">&quot;flex&quot;</span>)) &#123;</span><br><span class="line">    <span class="built_in">this</span>.classList.toggle(<span class="string">&quot;open-active&quot;</span>);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line">panels.forEach(<span class="function">(<span class="params">panel</span>) =&gt;</span> panel.addEventListener(<span class="string">&quot;click&quot;</span>, toggleOpen));</span><br><span class="line">panels.forEach(<span class="function">(<span class="params">panel</span>) =&gt;</span></span><br><span class="line">  panel.addEventListener(<span class="string">&quot;transitionend&quot;</span>, toggleActive)</span><br><span class="line">);</span><br></pre></td></tr></table></figure>
+<p><code>toggle</code> 속성이 꽤 자주 사용된다. <code>class</code>를 부여하는데, 있으면 놔두고 없으면 추가한다.</p>
+<h2 id="응용"><a href="#응용" class="headerlink" title="응용"></a>응용</h2><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> panels = <span class="built_in">document</span>.querySelectorAll(<span class="string">&quot;.panel&quot;</span>);</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">toggleOpen</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  panels.forEach(<span class="function">(<span class="params">panel</span>) =&gt;</span> panel.classList.remove(<span class="string">&quot;open&quot;</span>));</span><br><span class="line">  <span class="built_in">this</span>.classList.toggle(<span class="string">&quot;open&quot;</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">toggleActive</span>(<span class="params">e</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">if</span> (e.propertyName.includes(<span class="string">&quot;flex&quot;</span>)) &#123;</span><br><span class="line">    <span class="built_in">this</span>.classList.toggle(<span class="string">&quot;open-active&quot;</span>);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line">panels.forEach(<span class="function">(<span class="params">panel</span>) =&gt;</span> panel.addEventListener(<span class="string">&quot;click&quot;</span>, toggleOpen));</span><br><span class="line">panels.forEach(<span class="function">(<span class="params">panel</span>) =&gt;</span></span><br><span class="line">  panel.addEventListener(<span class="string">&quot;transitionend&quot;</span>, toggleActive)</span><br><span class="line">);</span><br></pre></td></tr></table></figure>
+<p>한 이미지를 선택할 때 나머지 이미지의 layout을 원래대로 돌려놓게 응용했다.</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">panels.forEach(<span class="function">(<span class="params">panel</span>) =&gt;</span> panel.classList.remove(<span class="string">&quot;open&quot;</span>));</span><br></pre></td></tr></table></figure>
+<p><code>toggleOpen()</code> 함수가 실행될 때 모든 <code>panel</code>의 <code>open</code> class를 삭제한 후 이벤트가 발생한 <code>panel</code>에만 <code>open</code> class를 부여했다.</p>
+
+        </div>
+
+        
+            <section class="post-copyright">
+                
+                
+                
+                
+
+            </section>
+        
+        <section class="post_disqus">
+            <div id="disqus_thread"></div>
+            <script>
+            
+            /**
+            *  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+            *  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables*/
+            /*
+            var disqus_config = function () {
+            this.page.url = PAGE_URL;  // Replace PAGE_URL with your page's canonical URL variable
+            this.page.identifier = PAGE_IDENTIFIER; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+            };
+            */
+            (function() { // DON'T EDIT BELOW THIS LINE
+            var d = document, s = d.createElement('script');
+            s.src = 'https://zinirun.disqus.com/embed.js';
+            s.setAttribute('data-timestamp', +new Date());
+            (d.head || d.body).appendChild(s);
+            })();
+            </script>
+            <noscript>Please enable JavaScript to view the <a target="_blank" rel="external nofollow noopener noreferrer" href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+        </section>
+        <section class="post-tags">
+            <div>
+                <span>Tag(s):</span>
+                <span class="tag">
+                    
+                    
+                        <a href="/tags/javascript/"># javascript</a>
+                    
+                        <a href="/tags/javascript30/"># javascript30</a>
+                    
+                        <a href="/tags/VanillaJS/"># VanillaJS</a>
+                    
+                        
+                </span>
+            </div>
+            <div>
+                <a href="javascript:window.history.back();">back</a>
+                <span>· </span>
+                <a href="/">home</a>
+            </div>
+        </section>
+        <section class="post-nav">
+            
+            
+            <a class="next" rel="next" href="/2020/08/18/ps-greedy-1/">Algorithm - Greedy (그리디, 탐욕법)</a>
+            
+        </section>
+
+
+    </article>
+</div>
+
+        </div>
+        <footer id="footer" class="footer">
+  <div class="copyright">
+    <span>© zini | Powered by
+      <a href="https://hexo.io" target="_blank" rel="external nofollow noopener noreferrer">Hexo</a> &
+      <a href="https://github.com/" target="_blank" rel="external nofollow noopener noreferrer">Github Pages</a></span>
+  </div>
+</footer>
+
+    </div>
+</body>
+</html>
