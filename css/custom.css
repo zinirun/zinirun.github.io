@@ -11,3 +11,6 @@
   width: 90%;
   height: 350px;
 }
+.post-content code {
+  font-size: 14px;
+}
