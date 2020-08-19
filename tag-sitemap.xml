@@ -4,28 +4,28 @@
 
     <url>
         <loc>https://zinirun.github.io/tags/ps/</loc>
-        <lastmod>2020-08-19T07:10:28.096Z</lastmod>
+        <lastmod>2020-08-19T07:13:27.059Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>
     </url>
 
     <url>
         <loc>https://zinirun.github.io/tags/algorithm/</loc>
-        <lastmod>2020-08-19T07:10:28.096Z</lastmod>
+        <lastmod>2020-08-19T07:13:27.059Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>
     </url>
 
     <url>
         <loc>https://zinirun.github.io/tags/react/</loc>
-        <lastmod>2020-08-18T16:02:17.554Z</lastmod>
+        <lastmod>2020-08-18T16:03:47.441Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>
     </url>
 
     <url>
         <loc>https://zinirun.github.io/tags/javascript/</loc>
-        <lastmod>2020-08-18T16:02:17.554Z</lastmod>
+        <lastmod>2020-08-18T16:03:47.441Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>
     </url>
@@ -45,14 +45,14 @@
     </url>
 
     <url>
-        <loc>https://zinirun.github.io/tags/kubernetes/</loc>
+        <loc>https://zinirun.github.io/tags/docker/</loc>
         <lastmod>2020-08-18T11:12:54.304Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>
     </url>
 
     <url>
-        <loc>https://zinirun.github.io/tags/docker/</loc>
+        <loc>https://zinirun.github.io/tags/kubernetes/</loc>
         <lastmod>2020-08-18T11:12:54.304Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>

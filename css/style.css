@@ -794,7 +794,7 @@ header label {
 .post-content code,
 .post-content pre {
   padding: 7px;
-  font-size: 13px;
+  font-size: 14px;
   font-family: Consolas, Monaco, Menlo, Consolas, monospace;
 }
 .post-content code {
@@ -952,7 +952,7 @@ header label {
 .post-content pre {
   line-height: 1.7em;
   padding: 7px;
-  font-size: 13px;
+  font-size: 14px;
   font-family: Consolas, Monaco, Menlo, Consolas, monospace;
 }
 .post-content code {

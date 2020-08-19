@@ -9,7 +9,7 @@
 
     <url>
         <loc>https://zinirun.github.io/2020/08/19/ps-implementation-1/</loc>
-        <lastmod>2020-08-19T07:10:28.096Z</lastmod>
+        <lastmod>2020-08-19T07:13:27.059Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
 
@@ -17,7 +17,7 @@
 
     <url>
         <loc>https://zinirun.github.io/2020/08/19/react-child-property/</loc>
-        <lastmod>2020-08-18T16:02:17.554Z</lastmod>
+        <lastmod>2020-08-18T16:03:47.441Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
 
@@ -42,6 +42,14 @@
     <url>
         <loc>https://zinirun.github.io/2020/08/16/start-k8s/</loc>
         <lastmod>2020-08-18T11:12:54.304Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>https://zinirun.github.io/2020/08/15/js-course30-1/</loc>
+        <lastmod>2020-08-16T13:12:53.182Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
 
@@ -98,14 +106,6 @@
     <url>
         <loc>https://zinirun.github.io/2020/08/15/js-course30-2/</loc>
         <lastmod>2020-08-15T12:33:31.835Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.6</priority>
-
-    </url>
-
-    <url>
-        <loc>https://zinirun.github.io/2020/08/15/js-course30-1/</loc>
-        <lastmod>2020-08-15T11:59:53.397Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
 
