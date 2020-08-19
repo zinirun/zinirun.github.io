@@ -6,7 +6,7 @@
   <link href="https://zinirun.github.io/feed.xml" rel="self"/>
   
   <link href="https://zinirun.github.io/"/>
-  <updated>2020-08-19T13:00:53.813Z</updated>
+  <updated>2020-08-19T13:15:42.453Z</updated>
   <id>https://zinirun.github.io/</id>
   
   <author>
@@ -15,6 +15,38 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Flask 앱 도커로 서비스하기 (nginX, uwsgi)</title>
+    <link href="https://zinirun.github.io/2020/08/19/deploy-flask-to-docker/"/>
+    <id>https://zinirun.github.io/2020/08/19/deploy-flask-to-docker/</id>
+    <published>2020-08-19T13:04:45.000Z</published>
+    <updated>2020-08-19T13:15:42.453Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="Flask-배포하기"><a href="#Flask-배포하기" class="headerlink" title="Flask 배포하기"></a>Flask 배포하기</h2><p><strong>Flask</strong>에서 만든 웹 어플리케이션을 서버에서 서비스한다면 서버(Host OS)상에 만든 파일을 업로드하고 <code>nginX</code> 프레임워크와 <code>Flask</code> 앱을 연결시키기 위해 <code>uwsgi</code>을 사용할 수 있다.</p><p>우분투 서버에서 Flask 기반의 서비스를 구동하기 위해 <code>Python</code>, <code>Anaconda</code>, <code>nginX</code>, <code>uwsgi</code>를 세팅하고 파이썬에 Flask와 필요한 라이브러리를 <code>pip</code>로 설치할 수 있다.</p><p>그러나 Docker를 사용하면 패키지 버전 충돌에 스트레스 받지 않고 간편하게 웹 서비스를 컨테이너화할 수 있다.</p><p>이 글은 Flask 구동에 관련된 파이썬 파일과 웹 파일(py, html 등)이 작성되었다는 가정하에 시작한다.</p><h2 id="Flask-서비스-준비"><a href="#Flask-서비스-준비" class="headerlink" title="Flask 서비스 준비"></a>Flask 서비스 준비</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&#x27;__main__&#x27;</span>:</span><br><span class="line">    <span class="comment"># 서버 실행</span></span><br><span class="line">    app.run(host=<span class="string">&#x27;0.0.0.0&#x27;</span>, debug=<span class="literal">True</span>, port=<span class="number">80</span>)</span><br></pre></td></tr></table></figure><p>메인이 되는 파이썬 파일을 수정한다. port를 <code>80</code>으로 설정한 이유는 nginX의 기본 포트가 <code>80</code>이기 때문에 이를 설정하지 않으면 컨테이너화해도 nginX와 포트를 공유하지 못해 웹 페이지가 정상적으로 열지 못한다.</p><p>그리고 파일 위치를 정리한다. 프로젝트 폴더 내에 <code>app</code> 폴더를 만들어 <code>main.py</code>를 포함한 파일과 폴더를 위치시킨다. 완료된 모습은 위와 같다. 프로젝트 폴더로 들어가면 <code>app</code> 폴더와 곧 만들 <code>Dockerfile</code>만 존재한다.</p><h2 id="Dockerfile-requirements-작성하기"><a href="#Dockerfile-requirements-작성하기" class="headerlink" title="Dockerfile, requirements 작성하기"></a>Dockerfile, requirements 작성하기</h2><p>도커의 장점을 활용할 때가 왔다. Dockerhub를 검색하니 <code>uwsgi+nginx+flask</code> 환경이 모두 세팅된 이미지가 있었다. 이를 사용해서 간단하게 플라스크 앱을 싱글 컨테이너로 배포할 수 있다.</p><p><code>Dockerfile</code></p><figure class="highlight docker"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">FROM</span> tiangolo/uwsgi-nginx-flask:python3.<span class="number">7</span></span><br><span class="line"><span class="keyword">COPY</span><span class="bash"> ./app /app</span></span><br><span class="line"><span class="keyword">RUN</span><span class="bash"> pip install -r requirements.txt</span></span><br></pre></td></tr></table></figure><ul><li><code>FROM</code> : tiangolo/uwsgi-nginx-flask 이미지를 통해 도커이미지를 만든다.</li><li><code>COPY</code> : app 폴더 내의 내용을 컨테이너 내부의 app 폴더에 복사한다.</li><li><code>RUN</code> : app 폴더 내에 만들어둔 requirements.txt 내용을 파이썬 패키지 설치한다.</li><li>참고로 <code>Dockerfile</code>은 확장자가 없는, 그냥 파일명이 <code>Dockerfile</code>이다.</li></ul><p><code>app</code> 폴더 내의 <code>requirements.txt</code> 파일에는 파이썬에 필요한 라이브러리의 목록이 들어있다.</p><p><code>requirements.txt</code></p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">opencv-python</span><br><span class="line">scikit-learn</span><br></pre></td></tr></table></figure><p>이는 예시이다. 필자는 이미지 분석에 필요한 라이브러리를 추가했다. 필요한 라이브러리들을 엔터로 구분하여 작성하면 된다. Flask는 이미지에 들어있기 때문에 작성할 필요가 없다.</p><h2 id="Docker-이미지-빌드하고-실행하기"><a href="#Docker-이미지-빌드하고-실행하기" class="headerlink" title="Docker 이미지 빌드하고 실행하기"></a>Docker 이미지 빌드하고 실행하기</h2><p>이제 도커 이미지를 만들기 위한 모든 파일 작성이 끝났다. 프로젝트 폴더를 <code>ftp</code>를 이용해 서버에 업로드하고(Github을 이용해도 상관없다), 터미널에서 <code>프로젝트 폴더</code>로 이동하자.</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker build -t myimage .</span><br></pre></td></tr></table></figure><p>도커 이미지를 빌드한다. <code>myimage</code> 대신 원하는 이름을 사용해도 된다. 마지막의 온점 <code>.</code> 을 까먹지 말자. 해당 폴더에서 자동으로 <code>Dockerfile</code>을 찾아 이미지를 빌드할 것이다.</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker run -d --name mycontainer -p 80:80 myimage</span><br></pre></td></tr></table></figure><p>빌드된 <code>myimage</code> 이미지를 컨테이너로 실행한다. <code>-d</code>는 백그라운드 실행이다.</p><p>호스트의 <code>80</code>포트와 도커의 <code>80</code>포트를 공유함으로써 <code>호스트 IP/도메인</code>을 통해 브라우저로 접속할 수 있다. 주소에 포트를 입력하지 않으면 자동으로 80포트로 접속하기 때문에 굳이 <code>:80</code>을 입력할 필요가 없다.</p><p>이제 브라우저를 통해서 접속한다.</p><p>접속 거부 메시지가 뜬다면 <code>py</code> 파일에서 <code>app.run</code>의 포트를 <code>80</code>으로 설정했는지 확인해보자. 다른 오류 메시지가 뜬다면 <em>역시 구글링이 답이다.</em></p><h2 id="마치며"><a href="#마치며" class="headerlink" title="마치며"></a>마치며</h2><p>Docker를 통해 Flask 기반의 웹 애플리케이션을 서비스해보았다. 도커의 편리함을 또 체감한다. 환경 구축뿐만 아니라 컨테이너화해서 구동하는 이점을 생각하면 Host에서 직접 구동하는 것보다는 훨씬 뛰어난 것을 느낀다.</p>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;h2 id=&quot;Flask-배포하기&quot;&gt;&lt;a href=&quot;#Flask-배포하기&quot; class=&quot;headerlink&quot; title=&quot;Flask 배포하기&quot;&gt;&lt;/a&gt;Flask 배포하기&lt;/h2&gt;&lt;p&gt;&lt;strong&gt;Flask&lt;/strong&gt;에서 만든 웹 어플리케이션을 </summary>
+      
+    
+    
+    
+    <category term="flask" scheme="https://zinirun.github.io/categories/flask/"/>
+    
+    <category term="docker" scheme="https://zinirun.github.io/categories/flask/docker/"/>
+    
+    
+    <category term="flask" scheme="https://zinirun.github.io/tags/flask/"/>
+    
+    <category term="docker" scheme="https://zinirun.github.io/tags/docker/"/>
+    
+    <category term="nginx" scheme="https://zinirun.github.io/tags/nginx/"/>
+    
+    <category term="uwsgi" scheme="https://zinirun.github.io/tags/uwsgi/"/>
+    
+  </entry>
   
   <entry>
     <title>Javascript 30 - Day 6 Type Ahead</title>
