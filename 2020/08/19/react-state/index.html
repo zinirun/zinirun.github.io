@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+<link rel="canonical" href="https://zinirun.github.io/2020/08/19/react-state/">
+
+
+<link rel="stylesheet" href="//fonts.googleapis.com/earlyaccess/notosanskr.css">
+
+
+    <meta name="author" content="zini">
+
+
+    <meta name="subtitle" content="tech blog by Zini">
+
+
+
+
+<title>ReactJS - state (컴포넌트 상태 관리) | zinirun</title>
+
+
+
+    <link rel="icon" href="/favicon.png">
+
+
+
+
+    <!-- stylesheets list from _config.yml -->
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+
+
+
+    <!-- scripts list from _config.yml -->
+    
+    <script src="/js/script.js"></script>
+    
+    <script src="/js/tocbot.min.js"></script>
+    
+
+
+
+    
+    
+        
+    
+
+
+<meta name="generator" content="Hexo 5.0.2"><link rel="alternate" href="/feed.xml" title="zinirun" type="application/atom+xml">
+</head>
+<body>
+    <div class="wrapper">
+        <header>
+  <nav class="navbar">
+    <div class="container">
+      <div class="navbar-header header-logo" style="font-size: 13pt; font-weight: 600;">
+        <a id="blog_logo" href="/" style="color: #2d96bd;">zini&#39;s Devlog</a>
+      </div>
+      <div class="menu navbar-right">
+        
+        <a class="menu-item" href="/archives">Posts</a>
+        
+        <a class="menu-item" href="/category">Categories</a>
+        
+        <a class="menu-item" href="/tag">Tags</a>
+        
+        <input id="switch_default" type="checkbox" class="switch_default">
+        <label for="switch_default" class="toggleBtn"></label>
+      </div>
+    </div>
+  </nav>
+
+  
+  <nav class="navbar-mobile" id="nav-mobile">
+    <div class="container">
+      <div class="navbar-header">
+        <div>
+          <a href="/" style="color: #2d96bd;">zini&#39;s Devlog</a><a id="mobile-toggle-theme">·&nbsp;Light</a>
+        </div>
+        <div class="menu-toggle" onclick="mobileBtn()">&#9776; Menu</div>
+      </div>
+      <div class="menu" id="mobile-menu">
+        
+        <a class="menu-item" href="/archives">Posts</a>
+        
+        <a class="menu-item" href="/category">Categories</a>
+        
+        <a class="menu-item" href="/tag">Tags</a>
+        
+      </div>
+    </div>
+  </nav>
+</header>
+<script>
+  var mobileBtn = function f() {
+    var toggleMenu = document.getElementsByClassName("menu-toggle")[0];
+    var mobileMenu = document.getElementById("mobile-menu");
+    if (toggleMenu.classList.contains("active")) {
+      toggleMenu.classList.remove("active");
+      mobileMenu.classList.remove("active");
+    } else {
+      toggleMenu.classList.add("active");
+      mobileMenu.classList.add("active");
+    }
+  };
+</script>
+
+        <div class="main">
+            <div class="container">
+    
+    
+        <div class="post-toc">
+    <div class="tocbot-list">
+    </div>
+    <div class="tocbot-list-menu">
+        <a class="tocbot-toc-expand" onclick="expand_toc()">Expand All</a>
+        <a onclick="go_top()">Top</a>
+        <a onclick="go_bottom()">Bottom</a>
+    </div>
+</div>
+
+<script>
+    document.ready(
+        function () {
+            tocbot.init({
+                tocSelector: '.tocbot-list',
+                contentSelector: '.post-content',
+                headingSelector: 'h1, h2, h3, h4, h5',
+                collapseDepth: 1,
+                orderedList: false,
+                scrollSmooth: true,
+            })
+        }
+    )
+
+    function expand_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 6,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "collapse_toc()");
+        b.innerHTML = "Collapse all"
+    }
+
+    function collapse_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 1,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "expand_toc()");
+        b.innerHTML = "Expand all"
+    }
+
+    function go_top() {
+        window.scrollTo(0, 0);
+    }
+
+    function go_bottom() {
+        window.scrollTo(0, document.body.scrollHeight);
+    }
+
+</script>
+    
+
+    
+    <article class="post-wrap">
+        <header class="post-header">
+            <h1 class="post-title">ReactJS - state (컴포넌트 상태 관리)</h1>
+            
+                <div class="post-meta">
+                    
+                        Author: <a itemprop="author" rel="author" href="/">zini</a>
+                    
+
+                    
+                        <span class="post-time">
+                        Date: <a href="#">August 19, 2020&nbsp;&nbsp;23:55:53</a>
+                        </span>
+                    
+                    
+                        <span class="post-category">
+                    Category:
+                            
+                                <a href="/categories/ReactJS/">ReactJS</a>
+                            
+                        </span>
+                    
+                </div>
+            
+        </header>
+
+        <div class="post-content">
+            <h2 id="state"><a href="#state" class="headerlink" title="state"></a>state</h2><p>프로퍼티는 컴포넌트 내부에서 값을 바꿀 수 없다. 그러면 상품의 수량을 입력하거나, 댓글을 남기는 등 값을 바꿔야 하는 경우엔 어떻게 할까? <code>state</code>를 사용한다.</p>
+<h3 id="StateExample-jsx"><a href="#StateExample-jsx" class="headerlink" title="StateExample.jsx"></a>StateExample.jsx</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br></pre></td><td class="code"><pre><span class="line">import React, &#123; Component &#125; from &#39;react&#39;;</span><br><span class="line"></span><br><span class="line">class StateExample extends Component &#123;</span><br><span class="line">  constructor(props) &#123;</span><br><span class="line">    super(props); &#x2F;&#x2F;state 정의</span><br><span class="line">    &#x2F;&#x2F;forceUpdate 사용시 this.loading&#x3D;true; 와 같이 직접선언</span><br><span class="line">    this.state &#x3D; &#123;</span><br><span class="line">      loading: true,</span><br><span class="line">      formData: &#39;no data&#39;,</span><br><span class="line">    &#125;;</span><br><span class="line">    this.handleData &#x3D; this.handleData.bind(this); &#x2F;&#x2F;함수로 넘어갈 this는 반드시 생성자에서 bind로 묶어야함</span><br><span class="line">    setTimeout(this.handleData, 3000); &#x2F;&#x2F;3초 후 저장된 값을 변경</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  handleData() &#123;</span><br><span class="line">    const data &#x3D; &#39;new data&#39;;</span><br><span class="line">    const &#123; formData &#125; &#x3D; this.state; &#x2F;&#x2F;특수변수 this.state를 사용하여 state값에 접근</span><br><span class="line">    &#x2F;&#x2F;setState가 호출되면 자동으로 render함수가 호출됨</span><br><span class="line">    &#x2F;&#x2F;직접 변경하고 검증없이 강제로 render함수를 실행하고 싶다면</span><br><span class="line">    &#x2F;&#x2F;this로 접근해서 직접 바꾸고 this.forceUpdate() 사용</span><br><span class="line">    &#x2F;&#x2F;but render에서의 접근은 this.state.data가 아닌 this.data로 접근</span><br><span class="line">    &#x2F;&#x2F; this.loading &#x3D; false;</span><br><span class="line">    &#x2F;&#x2F; this.formData &#x3D; data + this.formData;</span><br><span class="line">    &#x2F;&#x2F; this.forceUpdate();</span><br><span class="line"></span><br><span class="line">    this.setState(&#123;</span><br><span class="line">      loading: false,</span><br><span class="line">      formData: data + formData,</span><br><span class="line">    &#125;);</span><br><span class="line">    console.log(&#39;loading값&#39;, this.state.loading);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  &#x2F;&#x2F;setState 함수의 인자로 함수를 전달하면 이전 state값을 쉽게 읽을 수 있음</span><br><span class="line">  handleData2(data) &#123;</span><br><span class="line">    this.setState((prevState) &#x3D;&gt; (&#123;</span><br><span class="line">      loading: false,</span><br><span class="line">      formData: data + prevState.formData,</span><br><span class="line">    &#125;));</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  render() &#123;</span><br><span class="line">    return (</span><br><span class="line">      &lt;div&gt;</span><br><span class="line">        &lt;span&gt;로딩중: &#123;String(this.state.loading)&#125;&lt;&#x2F;span&gt;</span><br><span class="line">        &lt;span&gt;결과: &#123;this.state.formData&#125;&lt;&#x2F;span&gt;</span><br><span class="line">      &lt;&#x2F;div&gt;</span><br><span class="line">    );</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">export default StateExample;</span><br></pre></td></tr></table></figure>
+
+<p>기본적으로 state는</p>
+<ul>
+<li><code>constructor</code>에 선언</li>
+<li><code>setState()</code>로 변경</li>
+</ul>
+<p>이렇게 사용한다.</p>
+<p><code>setState()</code>가 실행되면 검증 단계 후 자동으로 <code>render()</code>를 실행시키므로 별도의 새로고침 없이도 동적인 페이지에서 값이 바뀐다. 검증 단계를 거치기 싫고 강제로 값을 바꿔 새로고침을 만들고 싶다면 <code>forceUpdate()</code>를 사용하면 되는데, 자세한 설명은 위 코드 내에 주석으로 해놓았다.</p>
+<p>그리고 중요한 것은, 함수로 넘어갈 <code>this</code>는 반드시 생성자 <code>constructor</code>에서 <code>bind()</code> 함수로 묶어주어야 한다.</p>
+<h3 id="이전-상태와-함께-사용하기"><a href="#이전-상태와-함께-사용하기" class="headerlink" title="이전 상태와 함께 사용하기"></a>이전 상태와 함께 사용하기</h3><p>상태를 바꿀 때 이전 상태가 필요한 경우가 있다. <code>count</code>를 1씩 증가시키는 예제로 살펴보자.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">import React, &#123; Component &#125; from &#39;react&#39;;</span><br><span class="line"></span><br><span class="line">class Counter extends Component &#123;</span><br><span class="line">  constructor(props) &#123;</span><br><span class="line">    super(props);</span><br><span class="line">    this.state &#x3D; &#123;</span><br><span class="line">      count: 0,</span><br><span class="line">    &#125;;</span><br><span class="line">    &#x2F;&#x2F;state 정의</span><br><span class="line">    this.increaseCount &#x3D; this.increaseCount.bind(this);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  increaseCount() &#123;</span><br><span class="line">    this.setState((prev) &#x3D;&gt; (&#123; count: prev.count + 1 &#125;));</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  render() &#123;</span><br><span class="line">    return (</span><br><span class="line">      &lt;div&gt;</span><br><span class="line">        &lt;span&gt;카운트: &#123;this.state.count&#125;&lt;&#x2F;span&gt;</span><br><span class="line">        &lt;button onClick&#x3D;&#123;this.increaseCount&#125;&gt;카운트 증가&lt;&#x2F;button&gt;</span><br><span class="line">      &lt;&#x2F;div&gt;</span><br><span class="line">    );</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">export default Counter;</span><br></pre></td></tr></table></figure>
+<p><code>count</code>를 <code>이전 값 + 1</code> 해줘야 하므로 이전 <code>state</code>에 대한 접근이 필요한데, 이 때 <code>setState</code>의 첫 번째 인자로 이전 상태에 접근할 수 있다.</p>
+
+        </div>
+
+        
+            <section class="post-copyright">
+                
+                
+                
+                
+
+            </section>
+        
+        <section class="post_disqus">
+            <div id="disqus_thread"></div>
+            <script>
+            
+            /**
+            *  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+            *  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables*/
+            /*
+            var disqus_config = function () {
+            this.page.url = PAGE_URL;  // Replace PAGE_URL with your page's canonical URL variable
+            this.page.identifier = PAGE_IDENTIFIER; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+            };
+            */
+            (function() { // DON'T EDIT BELOW THIS LINE
+            var d = document, s = d.createElement('script');
+            s.src = 'https://zinirun.disqus.com/embed.js';
+            s.setAttribute('data-timestamp', +new Date());
+            (d.head || d.body).appendChild(s);
+            })();
+            </script>
+            <noscript>Please enable JavaScript to view the <a target="_blank" rel="external nofollow noopener noreferrer" href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+        </section>
+        <section class="post-tags">
+            <div>
+                <span>Tag(s):</span>
+                <span class="tag">
+                    
+                    
+                        <a href="/tags/javascript/"># javascript</a>
+                    
+                        <a href="/tags/react/"># react</a>
+                    
+                        
+                </span>
+            </div>
+            <div>
+                <a href="javascript:window.history.back();">back</a>
+                <span>· </span>
+                <a href="/">home</a>
+            </div>
+        </section>
+        <section class="post-nav">
+            
+            
+            <a class="next" rel="next" href="/2020/08/19/deploy-flask-to-docker/">Flask 앱 도커로 서비스하기 (nginX, uwsgi)</a>
+            
+        </section>
+
+
+    </article>
+</div>
+
+        </div>
+        <footer id="footer" class="footer">
+  <div class="copyright">
+    <span>© zini | Powered by
+      <a href="https://hexo.io" target="_blank" rel="external nofollow noopener noreferrer">Hexo</a>
+  </span></div>
+</footer>
+
+    </div>
+</body>
+</html>
