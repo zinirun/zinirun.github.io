@@ -8,6 +8,13 @@
     </url>
 
     <url>
+        <loc>https://zinirun.github.io/categories/algorithm/</loc>
+        <lastmod>2020-08-20T06:30:54.417Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
         <loc>https://zinirun.github.io/categories/javascript/</loc>
         <lastmod>2020-08-20T00:57:31.774Z</lastmod>
         <changefreq>weekly</changefreq>
@@ -31,13 +38,6 @@
     <url>
         <loc>https://zinirun.github.io/categories/flask/</loc>
         <lastmod>2020-08-19T13:16:23.695Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.2</priority>
-    </url>
-
-    <url>
-        <loc>https://zinirun.github.io/categories/algorithm/</loc>
-        <lastmod>2020-08-19T07:25:50.101Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>
     </url>
