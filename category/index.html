@@ -67,18 +67,36 @@
   <nav class="navbar">
     <div class="container">
       <div class="navbar-header header-logo" style="font-size: 13pt; font-weight: 600;">
-        <a id="blog_logo" href="/" style="color: #2d96bd;">zini&#39;s Devlog</a>
+        <a id="blog_logo" href="/" style="color: #2d96bd;"><img class="logo-ico" src="/image/logo.png" alt="zini's Devlog"></a>
+        
+        <a class="menu-item left-menu" href="/archives">Posts</a>
+        
+        <a class="menu-item left-menu" href="/category">Categories</a>
+        
+        <a class="menu-item left-menu" href="/tag">Tags</a>
+        
+<!--
+        <input id="switch_default" type="checkbox" class="switch_default" />
+        <label for="switch_default" class="toggleBtn" style="margin-left: 0px;"></label>
+-->
       </div>
       <div class="menu navbar-right">
+        <!--mynav-->
+        <div id="mynav-container">
         
-        <a class="menu-item" href="/archives">Posts</a>
+        <a class="menu-item" href="/categories/javascript"><img class="menu-ico" src="/image/icons/js.png" alt="Javascript"></a>
         
-        <a class="menu-item" href="/category">Categories</a>
+        <a class="menu-item" href="/categories/nodejs"><img class="menu-ico" src="/image/icons/node.png" alt="Node"></a>
         
-        <a class="menu-item" href="/tag">Tags</a>
+        <a class="menu-item" href="/categories/ReactJS"><img class="menu-ico" src="/image/icons/react.png" alt="React"></a>
         
-        <input id="switch_default" type="checkbox" class="switch_default">
-        <label for="switch_default" class="toggleBtn"></label>
+        <a class="menu-item" href="/categories/cloud/docker"><img class="menu-ico" src="/image/icons/docker.png" alt="Docker"></a>
+        
+        <a class="menu-item" href="/categories/cloud/kubernetes"><img class="menu-ico" src="/image/icons/k8s.png" alt="Kubernetes"></a>
+        
+        <a class="menu-item" href="/categories/algorithm"><img class="menu-ico" src="/image/icons/ps-code.png" alt="Algorithm"></a>
+        
+        </div>
       </div>
     </div>
   </nav>
@@ -88,7 +106,7 @@
     <div class="container">
       <div class="navbar-header">
         <div>
-          <a href="/" style="color: #2d96bd;">zini&#39;s Devlog</a><a id="mobile-toggle-theme">·&nbsp;Light</a>
+          <a href="/" style="color: #2d96bd;">zini&#39;s Devlog<span id="mobile-toggle-theme"></span></a>
         </div>
         <div class="menu-toggle" onclick="mobileBtn()">&#9776; Menu</div>
       </div>
@@ -128,6 +146,34 @@
        
       <div class="card-item">
         <div class="categories">
+          <a href="/categories/blog/">
+            <h3>
+              <i class="iconfont icon-category" style="padding-right: 3px;"></i>
+              blog
+            </h3>
+          </a>
+            
+          <article class="archive-item">
+            
+              <a class="archive-item-link" href="/2020/08/14/how-to-install-disqus-to-hexo/">
+                Hexo에 Disqus 설치하기
+              </a>
+            
+          </article>
+             
+          <article class="archive-item">
+            
+              <a class="archive-item-link" href="/2020/08/14/how-to-install-hexo/">
+                Hexo 기술블로그 시작하기, 내가 Hexo를 ..
+              </a>
+            
+          </article>
+            
+        </div>
+      </div>
+       
+      <div class="card-item">
+        <div class="categories">
           <a href="/categories/flask/">
             <h3>
               <i class="iconfont icon-category" style="padding-right: 3px;"></i>
@@ -156,34 +202,6 @@
        
       <div class="card-item">
         <div class="categories">
-          <a href="/categories/blog/">
-            <h3>
-              <i class="iconfont icon-category" style="padding-right: 3px;"></i>
-              blog
-            </h3>
-          </a>
-            
-          <article class="archive-item">
-            
-              <a class="archive-item-link" href="/2020/08/14/how-to-install-hexo/">
-                Hexo 기술블로그 시작하기, 내가 Hexo를 ..
-              </a>
-            
-          </article>
-             
-          <article class="archive-item">
-            
-              <a class="archive-item-link" href="/2020/08/14/how-to-install-disqus-to-hexo/">
-                Hexo에 Disqus 설치하기
-              </a>
-            
-          </article>
-            
-        </div>
-      </div>
-       
-      <div class="card-item">
-        <div class="categories">
           <a href="/categories/javascript/">
             <h3>
               <i class="iconfont icon-category" style="padding-right: 3px;"></i>
@@ -193,8 +211,16 @@
             
           <article class="archive-item">
             
-              <a class="archive-item-link" href="/2020/08/15/js-course30-2/">
-                Javascript 30 - Day 2 JS a..
+              <a class="archive-item-link" href="/2020/08/15/js-course30-1/">
+                Javascript 30 시작 - Day 1 D..
+              </a>
+            
+          </article>
+             
+          <article class="archive-item">
+            
+              <a class="archive-item-link" href="/2020/08/16/js-course30-4/">
+                Javascript 30 - Day 4 Arra..
               </a>
             
           </article>
@@ -209,8 +235,8 @@
              
           <article class="archive-item">
             
-              <a class="archive-item-link" href="/2020/08/15/js-course30-1/">
-                Javascript 30 시작 - Day 1 D..
+              <a class="archive-item-link" href="/2020/08/18/js-course30-5/">
+                Javascript 30 - Day 5 Flex..
               </a>
             
           </article>
@@ -222,16 +248,8 @@
               </a>
             
           </article>
-             
-          <article class="archive-item">
-            
-              <a class="archive-item-link" href="/2020/08/16/js-course30-4/">
-                Javascript 30 - Day 4 Arra..
-              </a>
-            
-          </article>
                      
-          <a class="more-post-link" href="/categories/javascript/">More >></a>
+          <a class="more-post-link" href="/categories/javascript/">More +</a>
           
         </div>
       </div>
@@ -275,16 +293,16 @@
              
           <article class="archive-item">
             
-              <a class="archive-item-link" href="/2020/08/19/ps-implementation-1/">
-                Algorithm - 구현 (Implementa..
+              <a class="archive-item-link" href="/2020/08/18/ps-greedy-1/">
+                Algorithm - Greedy (그리디, 탐..
               </a>
             
           </article>
              
           <article class="archive-item">
             
-              <a class="archive-item-link" href="/2020/08/18/ps-greedy-1/">
-                Algorithm - Greedy (그리디, 탐..
+              <a class="archive-item-link" href="/2020/08/19/ps-implementation-1/">
+                Algorithm - 구현 (Implementa..
               </a>
             
           </article>

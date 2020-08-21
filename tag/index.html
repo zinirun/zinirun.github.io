@@ -67,18 +67,36 @@
   <nav class="navbar">
     <div class="container">
       <div class="navbar-header header-logo" style="font-size: 13pt; font-weight: 600;">
-        <a id="blog_logo" href="/" style="color: #2d96bd;">zini&#39;s Devlog</a>
+        <a id="blog_logo" href="/" style="color: #2d96bd;"><img class="logo-ico" src="/image/logo.png" alt="zini's Devlog"></a>
+        
+        <a class="menu-item left-menu" href="/archives">Posts</a>
+        
+        <a class="menu-item left-menu" href="/category">Categories</a>
+        
+        <a class="menu-item left-menu" href="/tag">Tags</a>
+        
+<!--
+        <input id="switch_default" type="checkbox" class="switch_default" />
+        <label for="switch_default" class="toggleBtn" style="margin-left: 0px;"></label>
+-->
       </div>
       <div class="menu navbar-right">
+        <!--mynav-->
+        <div id="mynav-container">
         
-        <a class="menu-item" href="/archives">Posts</a>
+        <a class="menu-item" href="/categories/javascript"><img class="menu-ico" src="/image/icons/js.png" alt="Javascript"></a>
         
-        <a class="menu-item" href="/category">Categories</a>
+        <a class="menu-item" href="/categories/nodejs"><img class="menu-ico" src="/image/icons/node.png" alt="Node"></a>
         
-        <a class="menu-item" href="/tag">Tags</a>
+        <a class="menu-item" href="/categories/ReactJS"><img class="menu-ico" src="/image/icons/react.png" alt="React"></a>
         
-        <input id="switch_default" type="checkbox" class="switch_default">
-        <label for="switch_default" class="toggleBtn"></label>
+        <a class="menu-item" href="/categories/cloud/docker"><img class="menu-ico" src="/image/icons/docker.png" alt="Docker"></a>
+        
+        <a class="menu-item" href="/categories/cloud/kubernetes"><img class="menu-ico" src="/image/icons/k8s.png" alt="Kubernetes"></a>
+        
+        <a class="menu-item" href="/categories/algorithm"><img class="menu-ico" src="/image/icons/ps-code.png" alt="Algorithm"></a>
+        
+        </div>
       </div>
     </div>
   </nav>
@@ -88,7 +106,7 @@
     <div class="container">
       <div class="navbar-header">
         <div>
-          <a href="/" style="color: #2d96bd;">zini&#39;s Devlog</a><a id="mobile-toggle-theme">·&nbsp;Light</a>
+          <a href="/" style="color: #2d96bd;">zini&#39;s Devlog<span id="mobile-toggle-theme"></span></a>
         </div>
         <div class="menu-toggle" onclick="mobileBtn()">&#9776; Menu</div>
       </div>
@@ -127,6 +145,10 @@
 
             <div class="tag-cloud-tags">
                 
+                    <a href="/tags/hexo/">hexo<small>(2)</small></a>
+                
+                    <a href="/tags/disqus/">disqus<small>(1)</small></a>
+                
                     <a href="/tags/flask/">flask<small>(2)</small></a>
                 
                     <a href="/tags/docker/">docker<small>(3)</small></a>
@@ -134,12 +156,6 @@
                     <a href="/tags/nginx/">nginx<small>(1)</small></a>
                 
                     <a href="/tags/uwsgi/">uwsgi<small>(1)</small></a>
-                
-                    <a href="/tags/hexo/">hexo<small>(2)</small></a>
-                
-                    <a href="/tags/gh-pages/">gh-pages<small>(1)</small></a>
-                
-                    <a href="/tags/disqus/">disqus<small>(1)</small></a>
                 
                     <a href="/tags/javascript/">javascript<small>(10)</small></a>
                 
@@ -154,6 +170,8 @@
                     <a href="/tags/react/">react<small>(2)</small></a>
                 
                     <a href="/tags/kubernetes/">kubernetes<small>(1)</small></a>
+                
+                    <a href="/tags/gh-pages/">gh-pages<small>(1)</small></a>
                 
                     <a href="/tags/cloud/">cloud<small>(2)</small></a>
                 
