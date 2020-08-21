@@ -367,9 +367,9 @@
     <category term="kubernetes" scheme="https://zinirun.github.io/categories/cloud/kubernetes/"/>
     
     
-    <category term="kubernetes" scheme="https://zinirun.github.io/tags/kubernetes/"/>
-    
     <category term="docker" scheme="https://zinirun.github.io/tags/docker/"/>
+    
+    <category term="kubernetes" scheme="https://zinirun.github.io/tags/kubernetes/"/>
     
   </entry>
   
