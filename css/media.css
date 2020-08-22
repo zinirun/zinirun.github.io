@@ -1,5 +1,5 @@
 /* mobile phone and smart portable devices */
-@media screen and (max-width: 520px) {
+@media screen and (max-width: 550px) {
   .main {
     padding-top: 40pt;
   }
@@ -16,7 +16,7 @@
   .navbar-mobile .container {
     padding: 0;
     margin: 0;
-    line-height: 5.5em;
+    line-height: 4em;
     background: $light-background-color;
   }
   .navbar-mobile .container .navbar-header {
@@ -78,7 +78,7 @@
   .navbar-mobile .container .menu {
     text-align: center;
     background: #fff;
-    border-top: 1px solid #000;
+    border-top: 1px solid #ddd;
     padding-top: 1em;
     padding-bottom: 1em;
     display: none;
@@ -86,8 +86,8 @@
   }
   .navbar-mobile .container .menu a {
     display: inline-block;
-    margin: 0 1em;
-    line-height: 2.5em;
+    margin: 0 0.8em;
+    line-height: 2em;
   }
   .navbar-mobile .container .menu.active {
     display: block;
