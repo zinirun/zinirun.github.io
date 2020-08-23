@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+<link rel="canonical" href="https://zinirun.github.io/2020/08/23/js-course30-9/">
+
+
+<link rel="stylesheet" href="//fonts.googleapis.com/earlyaccess/notosanskr.css">
+
+
+    <meta name="author" content="zini">
+
+
+    <meta name="subtitle" content="tech blog by Zini">
+
+
+
+
+<title>Javascript 30 - Day 9 Dev Tools Domination | zinirun</title>
+
+
+
+    <link rel="icon" href="/favicon.png">
+
+
+
+
+    <!-- stylesheets list from _config.yml -->
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+
+
+
+    <!-- scripts list from _config.yml -->
+    
+    <script src="/js/script.js"></script>
+    
+    <script src="/js/tocbot.min.js"></script>
+    
+
+
+
+    
+    
+        
+    
+
+
+
+<script>
+	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+		(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+			m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+	ga('create', 'UA-175983012-1', 'auto');
+	ga('send', 'pageview');
+</script>
+
+<meta name="generator" content="Hexo 5.0.2"><link rel="alternate" href="/feed.xml" title="zinirun" type="application/atom+xml">
+</head>
+<body>
+    <div class="wrapper">
+        <header>
+  <nav class="navbar">
+    <div class="container">
+      <div class="navbar-header header-logo" style="font-size: 13pt; font-weight: 600;">
+        <a id="blog_logo" href="/" style="color: #2d96bd;"><img class="logo-ico spin circle" src="/image/logo.png" alt="zini's Devlog"></a>
+        
+        <a class="menu-item left-menu" href="/archives">Posts</a>
+        
+        <a class="menu-item left-menu" href="/category">Categories</a>
+        
+        <a class="menu-item left-menu" href="/tag">Tags</a>
+        
+<!--
+        <input id="switch_default" type="checkbox" class="switch_default" />
+        <label for="switch_default" class="toggleBtn" style="margin-left: 0px;"></label>
+-->
+      </div>
+      <div class="menu navbar-right">
+        <!--mynav-->
+        <div id="mynav-container">
+        
+        <a class="menu-item" href="/categories/javascript"><img class="menu-ico" src="/image/icons/js.png" alt="Javascript"></a>
+        
+        <a class="menu-item" href="/categories/nodejs"><img class="menu-ico" src="/image/icons/node.png" alt="Node"></a>
+        
+        <a class="menu-item" href="/categories/ReactJS"><img class="menu-ico" src="/image/icons/react.png" alt="React"></a>
+        
+        <a class="menu-item" href="/categories/cloud/docker"><img class="menu-ico" src="/image/icons/docker.png" alt="Docker"></a>
+        
+        <a class="menu-item" href="/categories/cloud/kubernetes"><img class="menu-ico" src="/image/icons/k8s.png" alt="Kubernetes"></a>
+        
+        <a class="menu-item" href="/categories/algorithm"><img class="menu-ico" src="/image/icons/ps-code.png" alt="Algorithm"></a>
+        
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  
+  <nav class="navbar-mobile" id="nav-mobile">
+    <div class="container">
+      <div class="navbar-header">
+        <div>
+          <a id="blog_logo" href="/" style="color: #2d96bd;"><img class="logo-ico" src="/image/logo.png" alt="zini's Devlog"></a>
+        </div>
+        <div class="menu-toggle" onclick="mobileBtn()">&#9776; Menu</div>
+      </div>
+      <div class="menu" id="mobile-menu">
+       <div id="mobile-nav">
+        
+        <a class="menu-item" href="/archives">Posts</a>
+        
+        <a class="menu-item" href="/category">Categories</a>
+        
+        <a class="menu-item" href="/tag">Tags</a>
+        
+          </div>
+        <div id="mobile-mynav">
+        
+        <a class="menu-item" href="/categories/javascript"><img class="menu-ico" src="/image/icons/js.png" alt="Javascript"></a>
+        
+        <a class="menu-item" href="/categories/nodejs"><img class="menu-ico" src="/image/icons/node.png" alt="Node"></a>
+        
+        <a class="menu-item" href="/categories/ReactJS"><img class="menu-ico" src="/image/icons/react.png" alt="React"></a>
+        
+        <a class="menu-item" href="/categories/cloud/docker"><img class="menu-ico" src="/image/icons/docker.png" alt="Docker"></a>
+        
+        <a class="menu-item" href="/categories/cloud/kubernetes"><img class="menu-ico" src="/image/icons/k8s.png" alt="Kubernetes"></a>
+        
+        <a class="menu-item" href="/categories/algorithm"><img class="menu-ico" src="/image/icons/ps-code.png" alt="Algorithm"></a>
+        
+          </div>
+      </div>
+    </div>
+  </nav>
+</header>
+<script>
+  var mobileBtn = function f() {
+    var toggleMenu = document.getElementsByClassName("menu-toggle")[0];
+    var mobileMenu = document.getElementById("mobile-menu");
+    if (toggleMenu.classList.contains("active")) {
+      toggleMenu.classList.remove("active");
+      mobileMenu.classList.remove("active");
+    } else {
+      toggleMenu.classList.add("active");
+      mobileMenu.classList.add("active");
+    }
+  };
+</script>
+
+        <div class="main">
+            <div class="container">
+    
+    
+        <div class="post-toc">
+    <div class="tocbot-list">
+    </div>
+    <div class="tocbot-list-menu">
+        <a class="tocbot-toc-expand" onclick="expand_toc()">Expand All</a>
+        <a onclick="go_top()">Top</a>
+        <a onclick="go_bottom()">Bottom</a>
+    </div>
+</div>
+
+<script>
+    document.ready(
+        function () {
+            tocbot.init({
+                tocSelector: '.tocbot-list',
+                contentSelector: '.post-content',
+                headingSelector: 'h1, h2, h3, h4, h5',
+                collapseDepth: 1,
+                orderedList: false,
+                scrollSmooth: true,
+            })
+        }
+    )
+
+    function expand_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 6,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "collapse_toc()");
+        b.innerHTML = "Collapse all"
+    }
+
+    function collapse_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 1,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "expand_toc()");
+        b.innerHTML = "Expand all"
+    }
+
+    function go_top() {
+        window.scrollTo(0, 0);
+    }
+
+    function go_bottom() {
+        window.scrollTo(0, document.body.scrollHeight);
+    }
+
+</script>
+    
+
+    
+    <article class="post-wrap">
+        <header class="post-header">
+            <h1 class="post-title">Javascript 30 - Day 9 Dev Tools Domination</h1>
+            
+                <div class="post-meta">
+                    
+                        Author: <a itemprop="author" rel="author" href="/">zini</a>
+                    
+
+                    
+                        <span class="post-time">
+                        Date: <a href="#">August 23, 2020&nbsp;&nbsp;20:55:35</a>
+                        </span>
+                    
+                    
+                        <span class="post-category">
+                    Category:
+                            
+                                <a href="/categories/javascript/">javascript</a>
+                            
+                        </span>
+                    
+                </div>
+            
+        </header>
+
+        <div class="post-content">
+            <h2 id="Day-9-Dev-Tools-Domination"><a href="#Day-9-Dev-Tools-Domination" class="headerlink" title="Day 9 - Dev Tools Domination"></a>Day 9 - Dev Tools Domination</h2><p>이번 과제는 개발자의 관점에서 사용하는 유용한 <code>console</code>의 메소드에 대한 과제이다. 사실 <code>console.log</code>, <code>console.dir</code>, <code>console.table</code> 외에는 모두 처음 들어본 내용이었고, 디버깅을 바보같이 하고 있었다는 생각에 반성하기도 했다.</p>
+<h3 id="console-log"><a href="#console-log" class="headerlink" title="console.log()"></a>console.log()</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Regular</span></span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">&#x27;hello&#x27;</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// Interpolated</span></span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">&#x27;Hello I am a %s string!&#x27;</span>, <span class="string">&#x27;💩&#x27;</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// Styled</span></span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">&#x27;%c I am some great text&#x27;</span>, <span class="string">&#x27;font-size:30px; background:red;&#x27;</span>);</span><br></pre></td></tr></table></figure>
+<p>모두가 잘 아는 <code>console.log()</code>이다. 개인적으로 두번째의 <code>Interpolated</code> 방식보다는 <code>$&#123;var&#125;~</code> 방식을 선호한다. 콘솔에 style을 줄 수 있다는 것은 몰랐다.(필요한 일은 잘 없을 것 같다)</p>
+<h3 id="console-warn-console-error-console-info"><a href="#console-warn-console-error-console-info" class="headerlink" title="console.warn(), console.error(), console.info()"></a>console.warn(), console.error(), console.info()</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// warning!</span></span><br><span class="line"><span class="built_in">console</span>.warn(<span class="string">&#x27;OH NOOO&#x27;</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// Error :|</span></span><br><span class="line"><span class="built_in">console</span>.error(<span class="string">&#x27;Shit!&#x27;</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// Info</span></span><br><span class="line"><span class="built_in">console</span>.info(<span class="string">&#x27;Crocodiles eat 3-4 people per year&#x27;</span>);</span><br></pre></td></tr></table></figure>
+<p>각각 경고, 에러, 정보(ⓘ표시)에 대한 메소드이다.</p>
+<h3 id="console-assert"><a href="#console-assert" class="headerlink" title="console.assert()"></a>console.assert()</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Testing</span></span><br><span class="line"><span class="keyword">const</span> p = <span class="built_in">document</span>.querySelector(<span class="string">&#x27;p&#x27;</span>);</span><br><span class="line"><span class="built_in">console</span>.assert(p.classList.contains(<span class="string">&#x27;ouch&#x27;</span>), <span class="string">&#x27;You did not select the right element!&#x27;</span>);</span><br></pre></td></tr></table></figure>
+<p>자바스크립트에서 assert를 사용할 수 있는지 처음 알았다. <code>console.assert()</code>는 특정 조건을 첫번째 인자로, 그 특정 조건이 <code>false</code>라면 두번째 인자를 출력한다. 이런 조건들을 지금까지 <code>if (~): console.log(~)</code> 방식으로 사용해왔는데, 유용하게 쓸 것 같다.</p>
+<h3 id="Grouping-console-group"><a href="#Grouping-console-group" class="headerlink" title="Grouping - console.group()"></a>Grouping - console.group()</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">dogs.forEach(<span class="function">(<span class="params">dog</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="built_in">console</span>.groupCollapsed(<span class="string">`<span class="subst">$&#123;dog.name&#125;</span>`</span>);</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">`This is <span class="subst">$&#123;dog.name&#125;</span>`</span>);</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">`<span class="subst">$&#123;dog.name&#125;</span> is <span class="subst">$&#123;dog.age * <span class="number">7</span>&#125;</span> years old`</span>);</span><br><span class="line">    <span class="built_in">console</span>.groupEnd(<span class="string">`<span class="subst">$&#123;dog.name&#125;</span>`</span>);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<p><code>console.group()</code> 부터 <code>console.groupEnd()</code>까지 한 그룹으로 묶어 안의 내용들을 콘솔에 나타내준다. 그룹의 기준은 각 group 메소드의 인자이다. <code>Collapsed</code>를 추가하면 닫혀있는 상태로 그룹 기준 이름만 콘솔에 나타내고, 개발자 도구에서 펼쳐서 각 내용을 볼 수 있다.</p>
+<h3 id="console-count"><a href="#console-count" class="headerlink" title="console.count()"></a>console.count()</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">console</span>.count(<span class="string">&#x27;Wes&#x27;</span>);</span><br><span class="line"><span class="built_in">console</span>.count(<span class="string">&#x27;Wes&#x27;</span>);</span><br><span class="line"><span class="built_in">console</span>.count(<span class="string">&#x27;Steve&#x27;</span>);</span><br><span class="line"><span class="built_in">console</span>.count(<span class="string">&#x27;Wes&#x27;</span>);</span><br><span class="line"><span class="built_in">console</span>.count(<span class="string">&#x27;Steve&#x27;</span>);</span><br></pre></td></tr></table></figure>
+<p>각 동일한 인자의 내용이 얼마나 콘솔에 찍혔는지를 카운트해준다.</p>
+<h3 id="console-time"><a href="#console-time" class="headerlink" title="console.time()"></a>console.time()</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">console</span>.time(<span class="string">&#x27;fetching data&#x27;</span>);</span><br><span class="line">fetch(<span class="string">&#x27;https://api.github.com/users/wesbos&#x27;</span>)</span><br><span class="line">  .then(<span class="function">(<span class="params">data</span>) =&gt;</span> data.json())</span><br><span class="line">  .then(<span class="function">(<span class="params">data</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="built_in">console</span>.timeEnd(<span class="string">&#x27;fetching data&#x27;</span>);</span><br><span class="line">    <span class="built_in">console</span>.log(data);</span><br><span class="line">  &#125;);</span><br></pre></td></tr></table></figure>
+<p>성능(시간) 측정 시 유용하게 사용할 <code>console.time()</code> 메소드이다. <code>console.time()</code>을 시작으로 <code>console.timeEnd()</code> 까지의 시간을 측정한다. <code>console.group()</code>과 사용법은 비슷하다.</p>
+<h3 id="console-dir-console-table"><a href="#console-dir-console-table" class="headerlink" title="console.dir(), console.table()"></a>console.dir(), console.table()</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">console</span>.dir(dogs);</span><br><span class="line"><span class="built_in">console</span>.table(dogs);</span><br></pre></td></tr></table></figure>
+<p>각 객체를 각각 디렉토리 형태, 테이블 형태로 표시한다.</p>
+
+        </div>
+
+        
+            <section class="post-copyright">
+                
+                
+                
+                
+
+            </section>
+        
+        <section class="post_disqus">
+            <div id="disqus_thread"></div>
+            <script>
+            
+            /**
+            *  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+            *  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables*/
+            /*
+            var disqus_config = function () {
+            this.page.url = PAGE_URL;  // Replace PAGE_URL with your page's canonical URL variable
+            this.page.identifier = PAGE_IDENTIFIER; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+            };
+            */
+            (function() { // DON'T EDIT BELOW THIS LINE
+            var d = document, s = d.createElement('script');
+            s.src = 'https://zinirun.disqus.com/embed.js';
+            s.setAttribute('data-timestamp', +new Date());
+            (d.head || d.body).appendChild(s);
+            })();
+            </script>
+            <noscript>Please enable JavaScript to view the <a target="_blank" rel="external nofollow noopener noreferrer" href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+        </section>
+        <section class="post-tags">
+            <div>
+                <span>Tag(s):</span>
+                <span class="tag">
+                    
+                    
+                        <a href="/tags/javascript/"># javascript</a>
+                    
+                        <a href="/tags/javascript30/"># javascript30</a>
+                    
+                        <a href="/tags/VanillaJS/"># VanillaJS</a>
+                    
+                        
+                </span>
+            </div>
+            <div>
+                <a href="javascript:window.history.back();">back</a>
+                <span>· </span>
+                <a href="/">home</a>
+            </div>
+        </section>
+        <section class="post-nav">
+            
+            
+            <a class="next" rel="next" href="/2020/08/23/ps-lock-and-key/">Progammers - 자물쇠와 열쇠 (2020카카오공채)</a>
+            
+        </section>
+
+
+    </article>
+</div>
+
+        </div>
+        <footer id="footer" class="footer">
+  <div class="copyright">
+    <span>© zini | Powered by
+      <a href="https://hexo.io" target="_blank" rel="external nofollow noopener noreferrer">Hexo</a>
+  </span></div>
+</footer>
+
+    </div>
+</body>
+</html>
