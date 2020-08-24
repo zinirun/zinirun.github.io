@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+<link rel="canonical" href="https://zinirun.github.io/2020/08/24/ps-summary-sort-1/">
+
+
+<link rel="stylesheet" href="//fonts.googleapis.com/earlyaccess/notosanskr.css">
+
+
+    <meta name="author" content="zini">
+
+
+    <meta name="subtitle" content="tech blog by Zini">
+
+
+
+
+<title>Algorithm - 정렬 (선택/삽입/퀵/계수/Python sort lambda) | zinirun</title>
+
+
+
+    <link rel="icon" href="/favicon.png">
+
+
+
+
+    <!-- stylesheets list from _config.yml -->
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+
+
+
+    <!-- scripts list from _config.yml -->
+    
+    <script src="/js/script.js"></script>
+    
+    <script src="/js/tocbot.min.js"></script>
+    
+
+
+
+    
+    
+        
+    
+
+
+
+<script>
+	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+		(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+			m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+	ga('create', 'UA-175983012-1', 'auto');
+	ga('send', 'pageview');
+</script>
+
+<meta name="generator" content="Hexo 5.0.2"><link rel="alternate" href="/feed.xml" title="zinirun" type="application/atom+xml">
+</head>
+<body>
+    <div class="wrapper">
+        <header>
+  <nav class="navbar">
+    <div class="container">
+      <div class="navbar-header header-logo" style="font-size: 13pt; font-weight: 600;">
+        <a id="blog_logo" href="/" style="color: #2d96bd;"><img class="logo-ico spin circle" src="/image/logo.png" alt="zini's Devlog"></a>
+        
+        <a class="menu-item left-menu" href="/archives">Posts</a>
+        
+        <a class="menu-item left-menu" href="/category">Categories</a>
+        
+        <a class="menu-item left-menu" href="/tag">Tags</a>
+        
+<!--
+        <input id="switch_default" type="checkbox" class="switch_default" />
+        <label for="switch_default" class="toggleBtn" style="margin-left: 0px;"></label>
+-->
+      </div>
+      <div class="menu navbar-right">
+        <!--mynav-->
+        <div id="mynav-container">
+        
+        <a class="menu-item" href="/categories/javascript"><img class="menu-ico" src="/image/icons/js.png" alt="Javascript"></a>
+        
+        <a class="menu-item" href="/categories/nodejs"><img class="menu-ico" src="/image/icons/node.png" alt="Node"></a>
+        
+        <a class="menu-item" href="/categories/ReactJS"><img class="menu-ico" src="/image/icons/react.png" alt="React"></a>
+        
+        <a class="menu-item" href="/categories/cloud/docker"><img class="menu-ico" src="/image/icons/docker.png" alt="Docker"></a>
+        
+        <a class="menu-item" href="/categories/cloud/kubernetes"><img class="menu-ico" src="/image/icons/k8s.png" alt="Kubernetes"></a>
+        
+        <a class="menu-item" href="/categories/algorithm"><img class="menu-ico" src="/image/icons/ps-code.png" alt="Algorithm"></a>
+        
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  
+  <nav class="navbar-mobile" id="nav-mobile">
+    <div class="container">
+      <div class="navbar-header">
+        <div>
+          <a id="blog_logo" href="/" style="color: #2d96bd;"><img class="logo-ico" src="/image/logo.png" alt="zini's Devlog"></a>
+        </div>
+        <div class="menu-toggle" onclick="mobileBtn()">&#9776; Menu</div>
+      </div>
+      <div class="menu" id="mobile-menu">
+       <div id="mobile-nav">
+        
+        <a class="menu-item" href="/archives">Posts</a>
+        
+        <a class="menu-item" href="/category">Categories</a>
+        
+        <a class="menu-item" href="/tag">Tags</a>
+        
+          </div>
+        <div id="mobile-mynav">
+        
+        <a class="menu-item" href="/categories/javascript"><img class="menu-ico" src="/image/icons/js.png" alt="Javascript"></a>
+        
+        <a class="menu-item" href="/categories/nodejs"><img class="menu-ico" src="/image/icons/node.png" alt="Node"></a>
+        
+        <a class="menu-item" href="/categories/ReactJS"><img class="menu-ico" src="/image/icons/react.png" alt="React"></a>
+        
+        <a class="menu-item" href="/categories/cloud/docker"><img class="menu-ico" src="/image/icons/docker.png" alt="Docker"></a>
+        
+        <a class="menu-item" href="/categories/cloud/kubernetes"><img class="menu-ico" src="/image/icons/k8s.png" alt="Kubernetes"></a>
+        
+        <a class="menu-item" href="/categories/algorithm"><img class="menu-ico" src="/image/icons/ps-code.png" alt="Algorithm"></a>
+        
+          </div>
+      </div>
+    </div>
+  </nav>
+</header>
+<script>
+  var mobileBtn = function f() {
+    var toggleMenu = document.getElementsByClassName("menu-toggle")[0];
+    var mobileMenu = document.getElementById("mobile-menu");
+    if (toggleMenu.classList.contains("active")) {
+      toggleMenu.classList.remove("active");
+      mobileMenu.classList.remove("active");
+    } else {
+      toggleMenu.classList.add("active");
+      mobileMenu.classList.add("active");
+    }
+  };
+</script>
+
+        <div class="main">
+            <div class="container">
+    
+    
+        <div class="post-toc">
+    <div class="tocbot-list">
+    </div>
+    <div class="tocbot-list-menu">
+        <a class="tocbot-toc-expand" onclick="expand_toc()">Expand All</a>
+        <a onclick="go_top()">Top</a>
+        <a onclick="go_bottom()">Bottom</a>
+    </div>
+</div>
+
+<script>
+    document.ready(
+        function () {
+            tocbot.init({
+                tocSelector: '.tocbot-list',
+                contentSelector: '.post-content',
+                headingSelector: 'h1, h2, h3, h4, h5',
+                collapseDepth: 1,
+                orderedList: false,
+                scrollSmooth: true,
+            })
+        }
+    )
+
+    function expand_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 6,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "collapse_toc()");
+        b.innerHTML = "Collapse all"
+    }
+
+    function collapse_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 1,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "expand_toc()");
+        b.innerHTML = "Expand all"
+    }
+
+    function go_top() {
+        window.scrollTo(0, 0);
+    }
+
+    function go_bottom() {
+        window.scrollTo(0, document.body.scrollHeight);
+    }
+
+</script>
+    
+
+    
+    <article class="post-wrap">
+        <header class="post-header">
+            <h1 class="post-title">Algorithm - 정렬 (선택/삽입/퀵/계수/Python sort lambda)</h1>
+            
+                <div class="post-meta">
+                    
+                        Author: <a itemprop="author" rel="author" href="/">zini</a>
+                    
+
+                    
+                        <span class="post-time">
+                        Date: <a href="#">August 24, 2020&nbsp;&nbsp;22:16:03</a>
+                        </span>
+                    
+                    
+                        <span class="post-category">
+                    Category:
+                            
+                                <a href="/categories/algorithm/">algorithm</a>
+                            
+                        </span>
+                    
+                </div>
+            
+        </header>
+
+        <div class="post-content">
+            <h1 id="정렬-알고리즘"><a href="#정렬-알고리즘" class="headerlink" title="정렬 알고리즘"></a>정렬 알고리즘</h1><p>정렬이란 데이터를 특정한 기준에 따라 순서대로 나열하는 것이다. 이진탐색의 전처리 과정이기도 하고, PS(Problem Solving)에서 빠지지 않는 유형의 알고리즘이다. 나는 선택 정렬은 검색 없이도 구현할 수 있었지만 삽입, 퀵, 계수 정렬은 직접 코딩하기엔 애매한 지식을 갖고 있었다. (항상 구글링해서 써먹었다) 난 알고리즘 대회 입상자가 목표가 아니라, 어느정도의 PS 실력을 갖춰 기업 코딩 테스트에 통과하는 것을 목표로 하기 때문에 각 정렬에 대한 기본적인 코드 작성, 평균 시간복잡도 정도만 인지하고 문제 풀이에 집중했다.</p>
+<h2 id="선택-정렬"><a href="#선택-정렬" class="headerlink" title="선택 정렬"></a>선택 정렬</h2><blockquote>
+<p>시간복잡도 - <code>O(N^2)</code></p>
+</blockquote>
+<p>가장 원시적인 방법으로, 매번 가장 작은 것을 선택한다는 의미에서 선택 정렬 알고리즘이라고 한다. 가장 작은 것을 선택해서 앞으로 보내는 과정을 모든 요소에 대해 반복하면 전체 데이터의 정렬이 이루어진다. 가장 무식한 방법이라고 하지만 PS를 하다보면 특정 리스트에서 가장 작은 데이터를 찾는 일이 흔하므로 선택 정렬 코드에 익숙해져야 한다.</p>
+<h3 id="선택정렬-1"><a href="#선택정렬-1" class="headerlink" title="선택정렬 1"></a>선택정렬 1</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">array = [<span class="number">7</span>,<span class="number">5</span>,<span class="number">9</span>,<span class="number">0</span>,<span class="number">3</span>,<span class="number">1</span>,<span class="number">6</span>,<span class="number">2</span>,<span class="number">4</span>,<span class="number">8</span>]</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(len(array)):</span><br><span class="line">    min_index=i</span><br><span class="line">    <span class="keyword">for</span> j <span class="keyword">in</span> range(i+<span class="number">1</span>,len(array)):</span><br><span class="line">        <span class="keyword">if</span> array[j]&lt;array[min_index]:</span><br><span class="line">            min_index=j</span><br><span class="line">    array[i], array[min_index] = array[min_index], array[i]</span><br><span class="line"></span><br><span class="line">print(array)</span><br></pre></td></tr></table></figure>
+
+<h3 id="선택정렬-2"><a href="#선택정렬-2" class="headerlink" title="선택정렬 2"></a>선택정렬 2</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">array = [<span class="number">7</span>,<span class="number">5</span>,<span class="number">9</span>,<span class="number">0</span>,<span class="number">3</span>,<span class="number">1</span>,<span class="number">6</span>,<span class="number">2</span>,<span class="number">4</span>,<span class="number">8</span>]</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(len(array)):</span><br><span class="line">    <span class="keyword">for</span> j <span class="keyword">in</span> range(i+<span class="number">1</span>,len(array)):</span><br><span class="line">        <span class="keyword">if</span> array[i]&gt;array[j]:</span><br><span class="line">            array[i], array[j] = array[j], array[i]</span><br><span class="line"></span><br><span class="line">print(array)</span><br></pre></td></tr></table></figure>
+
+<h2 id="삽입-정렬"><a href="#삽입-정렬" class="headerlink" title="삽입 정렬"></a>삽입 정렬</h2><blockquote>
+<p>시간복잡도 - 최선(정렬된 상태): <code>O(N)</code>, 최악: <code>O(N^2)</code></p>
+</blockquote>
+<p>삽입 정렬은 특정한 데이터를 적절한 위치에 삽입한다는 의미에서 삽입정렬이라고 한다. 특정한 데이터가 적절한 위치에 들어가기 전에, 그 앞까지의 데이터는 이미 정렬되어 있다고 가정한다. 정렬된 리스트에서 적절한 위치를 찾은 뒤에, 그 위치에 삽입된다.</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">array = [<span class="number">7</span>,<span class="number">5</span>,<span class="number">9</span>,<span class="number">0</span>,<span class="number">3</span>,<span class="number">1</span>,<span class="number">6</span>,<span class="number">2</span>,<span class="number">4</span>,<span class="number">8</span>]</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">1</span>,len(array)):</span><br><span class="line">    <span class="keyword">for</span> j <span class="keyword">in</span> range(i,<span class="number">0</span>,<span class="number">-1</span>):</span><br><span class="line">        <span class="keyword">if</span> array[j] &lt; array[j<span class="number">-1</span>]:</span><br><span class="line">            array[j], array[j<span class="number">-1</span>]=array[j<span class="number">-1</span>], array[j]</span><br><span class="line">        <span class="keyword">else</span>: <span class="keyword">break</span></span><br><span class="line"></span><br><span class="line">print(array)</span><br></pre></td></tr></table></figure>
+
+<p>일반적인 경우(위 처럼)에 인덱스 0인 요소를 기준으로 잡아 1부터의 요소부터 적절한 위치를 판단한다.</p>
+<h2 id="퀵-정렬"><a href="#퀵-정렬" class="headerlink" title="퀵 정렬"></a>퀵 정렬</h2><blockquote>
+<p>시간복잡도 - 평균: <code>O(NlogN)</code>, 최악: <code>O(N^2)</code></p>
+</blockquote>
+<div class="video-container"><iframe src="https://www.youtube.com/embed/Hoixgm4-P4M" frameborder="0" loading="lazy" allowfullscreen></iframe></div>
+
+<p>퀵 정렬은 가장 많이 사용되는 알고리즘이다. 병합정렬과 속도는 비슷하다. 퀵 정렬에는 피벗(pivot)이 사용된다. 큰 숫자, 작은 숫자를 교환할 때 교환하기 위한 기준이 바로 피벗이다. 사실 퀵 정렬을 글로만 이해하기는 쉽지 않고, 나는 위 영상을 참고했다.</p>
+<h3 id="퀵-정렬-1-호어-분할-방식-정석"><a href="#퀵-정렬-1-호어-분할-방식-정석" class="headerlink" title="퀵 정렬 1 - 호어 분할 방식 (정석)"></a>퀵 정렬 1 - 호어 분할 방식 (정석)</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">array = [<span class="number">7</span>,<span class="number">5</span>,<span class="number">9</span>,<span class="number">0</span>,<span class="number">3</span>,<span class="number">1</span>,<span class="number">6</span>,<span class="number">2</span>,<span class="number">4</span>,<span class="number">8</span>]</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">quick_sort</span>(<span class="params">array, start, end</span>):</span></span><br><span class="line">    <span class="keyword">if</span> start&gt;=end: <span class="keyword">return</span></span><br><span class="line">    pivot=start</span><br><span class="line">    left=start+<span class="number">1</span></span><br><span class="line">    right=end</span><br><span class="line">    <span class="keyword">while</span> left&lt;=right:</span><br><span class="line">        <span class="keyword">while</span> left&lt;=end <span class="keyword">and</span> array[left]&lt;=array[pivot]: left+=<span class="number">1</span></span><br><span class="line">        <span class="keyword">while</span> right&gt;start <span class="keyword">and</span> array[right]&gt;=array[pivot]: right-=<span class="number">1</span></span><br><span class="line">        <span class="keyword">if</span> left&gt;right: array[right],array[pivot]=array[pivot],array[right]</span><br><span class="line">        <span class="keyword">else</span>: array[left],array[right]=array[right],array[left]</span><br><span class="line">    quick_sort(array,start,right<span class="number">-1</span>)</span><br><span class="line">    quick_sort(array,right+<span class="number">1</span>,end)</span><br><span class="line"></span><br><span class="line">quick_sort(array,<span class="number">0</span>,len(array)<span class="number">-1</span>)</span><br><span class="line">print(array)</span><br></pre></td></tr></table></figure>
+
+<p>recursive 함수를 사용하는데 피벗을 기준으로 왼쪽(피봇보다 작은 데이터), 오른쪽(피봇보다 큰 데이터)로 나눠 재귀를 반복해서 하나의 정렬된 리스트로 만들어낸다.</p>
+<h3 id="퀵-정렬-2-파이썬스러운-방식"><a href="#퀵-정렬-2-파이썬스러운-방식" class="headerlink" title="퀵 정렬 2 - 파이썬스러운 방식"></a>퀵 정렬 2 - 파이썬스러운 방식</h3><p>파이썬스럽게 바꾼 퀵 정렬 코드도 있다.</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">array = [<span class="number">7</span>,<span class="number">5</span>,<span class="number">9</span>,<span class="number">0</span>,<span class="number">3</span>,<span class="number">1</span>,<span class="number">6</span>,<span class="number">2</span>,<span class="number">4</span>,<span class="number">8</span>]</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">quick_sort2</span>(<span class="params">array</span>):</span></span><br><span class="line">    <span class="keyword">if</span> len(array)&lt;=<span class="number">1</span>: <span class="keyword">return</span> array</span><br><span class="line">    pivot=array[<span class="number">0</span>]</span><br><span class="line">    tail=array[<span class="number">1</span>:] <span class="comment"># list excludes the pivot</span></span><br><span class="line">    left_=[x <span class="keyword">for</span> x <span class="keyword">in</span> tail <span class="keyword">if</span> x&lt;=pivot] <span class="comment"># left divided part</span></span><br><span class="line">    right_=[x <span class="keyword">for</span> x <span class="keyword">in</span> tail <span class="keyword">if</span> x&gt;pivot] <span class="comment"># right divided part</span></span><br><span class="line">    <span class="keyword">return</span> quick_sort2(left_)+[pivot]+quick_sort2(right_)</span><br><span class="line"></span><br><span class="line">print(quick_sort2(array))</span><br></pre></td></tr></table></figure>
+
+<p>이 코드는 [퀵 정렬 1]보다는 시간 면에서 조금 비효율적이지만 더 직관적이고 기억하기 쉽다는 장점이 있다.</p>
+<h2 id="계수정렬"><a href="#계수정렬" class="headerlink" title="계수정렬"></a>계수정렬</h2><blockquote>
+<p>시간복잡도 - <code>O(N+K)</code></p>
+</blockquote>
+<p>계수 정렬 알고리즘은 특정 조건이 부합할 때만 사용할 수 있지만 매우 빠른 알고리즘이다. 간단하게 무작위로 배치된 정수 0~100까지의 데이터가 주어지면 101까지의 0으로 초기화한 배열을 만들고 정렬해야할 리스트를 순회하며 카운트하여 새로 만든 카운트용 배열의 숫자를 1씩 증가시킨다.</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">array = [<span class="number">7</span>,<span class="number">5</span>,<span class="number">9</span>,<span class="number">0</span>,<span class="number">3</span>,<span class="number">1</span>,<span class="number">6</span>,<span class="number">2</span>,<span class="number">9</span>,<span class="number">1</span>,<span class="number">4</span>,<span class="number">8</span>,<span class="number">0</span>,<span class="number">5</span>,<span class="number">2</span>]</span><br><span class="line">count=[<span class="number">0</span>]*(max(array)+<span class="number">1</span>)</span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> array:</span><br><span class="line">    count[i]+=<span class="number">1</span></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(len(count)):</span><br><span class="line">    <span class="keyword">for</span> j <span class="keyword">in</span> range(count[i]):</span><br><span class="line">        print(i, end=<span class="string">&#x27; &#x27;</span>)</span><br></pre></td></tr></table></figure>
+
+<p>데이터의 범위가 한정되어 있다면 효과적으로 사용할 수 있으며 모든 알고리즘 중에서 가장 빠른 수준으로 동작한다. (비슷한 정렬 알고리즘으로 기수 정렬이 있다) 그러나 시간복잡도 면에서는 효율적이지만 같은 배열 크기 만큼의 카운트 배열을 하나 더 만들어야 하므로 공간복잡도 면에서는 비효율성을 초래할 수도 있으니 상황에 맞게 사용하자.</p>
+<h2 id="파이썬-기본-정렬-알고리즘-sort"><a href="#파이썬-기본-정렬-알고리즘-sort" class="headerlink" title="파이썬 기본 정렬 알고리즘 sort()"></a>파이썬 기본 정렬 알고리즘 <code>sort()</code></h2><blockquote>
+<p>시간복잡도 - <code>O(NlogN)</code></p>
+</blockquote>
+<p>파이썬의 기본 정렬 라이브러리인 <code>sort()</code>는 병합 정렬을 기반으로 만들어졌고, 시간복잡도는 <code>O(NlogN)</code>을 보장한다.</p>
+<p>기본적인 사용법은 <code>sort(배열)</code>이며 배열 요소가 2개 이상인 경우 다음과 같다.</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">a = [(<span class="number">1</span>, <span class="number">2</span>), (<span class="number">0</span>, <span class="number">1</span>), (<span class="number">5</span>, <span class="number">1</span>), (<span class="number">5</span>, <span class="number">2</span>), (<span class="number">3</span>, <span class="number">0</span>)]</span><br><span class="line"></span><br><span class="line">b=sorted(a)</span><br><span class="line">print(b)</span><br><span class="line"></span><br><span class="line">c=sorted(a, key=<span class="keyword">lambda</span> x:x[<span class="number">0</span>])</span><br><span class="line">print(c)</span><br><span class="line"></span><br><span class="line">d=sorted(a, key=<span class="keyword">lambda</span> x:x[<span class="number">1</span>])</span><br><span class="line">print(d)</span><br><span class="line"></span><br><span class="line">e=sorted(a, key=<span class="keyword">lambda</span> x:(x[<span class="number">0</span>],x[<span class="number">1</span>]))</span><br><span class="line">print(e)</span><br></pre></td></tr></table></figure>
+
+<p><code>lambda</code>를 이용하면 배열 요소의 특정 인덱스를 기준으로 정렬 기준을 정할 수 있다. 마지막 <code>e</code>는 인덱스 0을 기준으로 정렬하고, 인덱스 1인 기준으로 정렬하는 <code>lambda</code> 사용의 예시이다.</p>
+
+        </div>
+
+        
+            <section class="post-copyright">
+                
+                
+                
+                
+
+            </section>
+        
+        <section class="post_disqus">
+            <div id="disqus_thread"></div>
+            <script>
+            
+            /**
+            *  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+            *  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables*/
+            /*
+            var disqus_config = function () {
+            this.page.url = PAGE_URL;  // Replace PAGE_URL with your page's canonical URL variable
+            this.page.identifier = PAGE_IDENTIFIER; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+            };
+            */
+            (function() { // DON'T EDIT BELOW THIS LINE
+            var d = document, s = d.createElement('script');
+            s.src = 'https://zinirun.disqus.com/embed.js';
+            s.setAttribute('data-timestamp', +new Date());
+            (d.head || d.body).appendChild(s);
+            })();
+            </script>
+            <noscript>Please enable JavaScript to view the <a target="_blank" rel="external nofollow noopener noreferrer" href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+        </section>
+        <section class="post-tags">
+            <div>
+                <span>Tag(s):</span>
+                <span class="tag">
+                    
+                    
+                        <a href="/tags/algorithm/"># algorithm</a>
+                    
+                        <a href="/tags/ps/"># ps</a>
+                    
+                        
+                </span>
+            </div>
+            <div>
+                <a href="javascript:window.history.back();">back</a>
+                <span>· </span>
+                <a href="/">home</a>
+            </div>
+        </section>
+        <section class="post-nav">
+            
+            
+            <a class="next" rel="next" href="/2020/08/24/js-course30-10/">Javascript 30 - Day 10 JS Checkbox Challenge!</a>
+            
+        </section>
+
+
+    </article>
+</div>
+
+        </div>
+        <footer id="footer" class="footer">
+  <div class="copyright">
+    <span>© zini | Powered by
+      <a href="https://hexo.io" target="_blank" rel="external nofollow noopener noreferrer">Hexo</a>
+  </span></div>
+</footer>
+
+    </div>
+</body>
+</html>

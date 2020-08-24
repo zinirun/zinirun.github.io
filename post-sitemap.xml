@@ -8,6 +8,22 @@
     </url>
 
     <url>
+        <loc>https://zinirun.github.io/2020/08/24/ps-summary-sort-1/</loc>
+        <lastmod>2020-08-24T14:43:04.559Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>https://zinirun.github.io/2020/08/16/js-throttling-debouncing/</loc>
+        <lastmod>2020-08-24T13:54:35.753Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
         <loc>https://zinirun.github.io/2020/08/24/js-course30-10/</loc>
         <lastmod>2020-08-24T07:09:46.054Z</lastmod>
         <changefreq>weekly</changefreq>
@@ -24,7 +40,7 @@
     </url>
 
     <url>
-        <loc>https://zinirun.github.io/2020/08/20/ps-dfs-bfs-1/</loc>
+        <loc>https://zinirun.github.io/2020/08/20/ps-summary-dfs-bfs-1/</loc>
         <lastmod>2020-08-23T09:22:44.078Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
@@ -96,7 +112,7 @@
     </url>
 
     <url>
-        <loc>https://zinirun.github.io/2020/08/19/ps-implementation-1/</loc>
+        <loc>https://zinirun.github.io/2020/08/19/ps-summary-implementation-1/</loc>
         <lastmod>2020-08-19T07:25:50.101Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
@@ -112,7 +128,7 @@
     </url>
 
     <url>
-        <loc>https://zinirun.github.io/2020/08/18/ps-greedy-1/</loc>
+        <loc>https://zinirun.github.io/2020/08/18/ps-summary-greedy-1/</loc>
         <lastmod>2020-08-18T11:15:36.706Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
@@ -130,14 +146,6 @@
     <url>
         <loc>https://zinirun.github.io/2020/08/15/js-course30-1/</loc>
         <lastmod>2020-08-16T13:12:53.182Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.6</priority>
-
-    </url>
-
-    <url>
-        <loc>https://zinirun.github.io/2020/08/16/js-throttling-debouncing/</loc>
-        <lastmod>2020-08-16T13:12:44.911Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
 
