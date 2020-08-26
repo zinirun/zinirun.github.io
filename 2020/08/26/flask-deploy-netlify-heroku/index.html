@@ -254,7 +254,7 @@
 <p>네트리파이 개발자가 client-side가 아닌 server-side 앱은 호스팅이 안된다고 한다.</p>
 <p>정적인 웹은 얼마든지 호스팅할 수 있다. 억울해서 이거라도 적어놓으려 한다.</p>
 <h2 id="안되지만"><a href="#안되지만" class="headerlink" title="안되지만,"></a>안되지만,</h2><p>파일 업로드 등의 로직이 없는 Static Web은 네트리파이, 헤로쿠에서 얼마든지 서비스할 수 있는데, 일단 Flask 앱은 다 만들었다고 가정하고 이를 조금만 바꿔보자.</p>
-<p>네트리파이는 <code>Flask-Freeze</code>를 이용하면 되고, 헤로쿠는 <code>gunicorn</code>선에서 서비스할 수 있다. 네트리파이는 <a target="_blank" rel="external nofollow noopener noreferrer" href="https://medium.com/@francescaguiducci/how-to-build-a-simple-personal-website-with-python-flask-and-netlify-d800c97c283d">이 글</a>에 잘 정리되있으니 따라하면 되고, 헤로쿠만 정리해보겠다.</p>
+<p>네트리파이는 <code>Flask-Freeze</code>를 이용하면 되고, 헤로쿠는 <code>gunicorn</code>선에서 서비스할 수 있다. 네트리파이는 <a target="_blank" rel="external nofollow noopener noreferrer" href="https://medium.com/@francescaguiducci/how-to-build-a-simple-personal-website-with-python-flask-and-netlify-d800c97c283d">이 글</a>에 잘 정리되어 있으니 따라하면 되고, 헤로쿠만 정리해보겠다.</p>
 <h3 id="헤로쿠에서-Flask-배포하기"><a href="#헤로쿠에서-Flask-배포하기" class="headerlink" title="헤로쿠에서 Flask 배포하기"></a>헤로쿠에서 Flask 배포하기</h3><p>우선 메인 앱(py)을 실행하는 부분이</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&#x27;__main__&#x27;</span>:</span><br><span class="line">    app.run()</span><br></pre></td></tr></table></figure>
 
