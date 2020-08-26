@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
 <meta http-equiv="X-UA-Compatible" content="ie=edge">
-<link rel="canonical" href="https://zinirun.github.io/2020/08/26/js-course30-12/">
+<link rel="canonical" href="https://zinirun.github.io/2020/08/26/flask-deploy-netlify-heroku/">
 
 
 <link rel="stylesheet" href="//fonts.googleapis.com/earlyaccess/notosanskr.css">
@@ -18,7 +18,7 @@
 
 
 
-<title>Javascript 30 - Day 12 Key Sequence Detection | zinirun</title>
+<title>Flask 앱 Netlify, Heroku 배포 삽질기 | zinirun</title>
 
 
 
@@ -223,7 +223,7 @@
     
     <article class="post-wrap">
         <header class="post-header">
-            <h1 class="post-title">Javascript 30 - Day 12 Key Sequence Detection</h1>
+            <h1 class="post-title">Flask 앱 Netlify, Heroku 배포 삽질기</h1>
             
                 <div class="post-meta">
                     
@@ -232,38 +232,55 @@
 
                     
                         <span class="post-time">
-                        Date: <a href="#">August 26, 2020&nbsp;&nbsp;14:22:24</a>
+                        Date: <a href="#">August 26, 2020&nbsp;&nbsp;14:38:15</a>
                         </span>
                     
-                    
-                        <span class="post-category">
-                    Category:
-                            
-                                <a href="/categories/javascript/">javascript</a>
-                            
-                        </span>
                     
                 </div>
             
         </header>
 
         <div class="post-content">
-            <h2 id="Day-12-Key-Sequence-Detection"><a href="#Day-12-Key-Sequence-Detection" class="headerlink" title="Day 12 - Key Sequence Detection"></a>Day 12 - Key Sequence Detection</h2><div class="video-container"><iframe src="https://www.youtube.com/embed/A5eVOIqGLU" frameborder="0" loading="lazy" allowfullscreen></iframe></div>
+            <h2 id="결론은-안된다"><a href="#결론은-안된다" class="headerlink" title="결론은 안된다."></a>결론은 안된다.</h2><p>학교에서 대여해준 NHN Toast Cloud 서버가 8월 말에 사용이 중지된다는 얘기를 듣고 AWS에 입문해볼까 하다가 어차피 토이 프로젝트이니 이 정도는 <a target="_blank" rel="external nofollow noopener noreferrer" href="https://www.netlify.com/">Netlify</a>나 <a target="_blank" rel="external nofollow noopener noreferrer" href="https://herokuapp.com/">Heroku</a>에 서비스해도 될 것 같아서 배포를 하려 했는데, 딱 거기서 생각을 멈췄어야 했다. 아직도 머리가 얼얼하다.</p>
+<blockquote>
+<p>결론부터 말하자면 정적 웹(파일 업데이트가 없고 화면 view만 존재하는 웹)이 아니라면 헤로쿠든 네트리파이든 쓰면 안된다!!!</p>
+</blockquote>
+<p><img src="/images/2020-08-26-14-43-29.png"></p>
+<p>정확히 오후 한시부터 밤 열시까지 이 삽질을 했다.</p>
+<h2 id="안된다"><a href="#안된다" class="headerlink" title="안된다."></a>안된다.</h2><p>Flask는 기본적으로 파이썬을 개발용 웹으로 서비스해주기 때문에 <code>gunicorn</code>, <code>wsgi</code>같은 웹팩을 이용해서 사이트를 외부에 노출시켜야 한다.</p>
+<p>플라스크 기반의 블로그가 네트리파이나 헤로쿠에서 잘 돌아가는 이유는, 지금 내가 쓰고 있는 헥소나 지킬과 같은 블로그 툴은 <code>git push</code> 과정으로 배포하는 방식이라 결국 푸시할 때마다 정적 뷰가 생성되기 때문에 잘 사용되는 것이다.</p>
+<p>내가 옮기려는 Flask 앱은 이미지를 업로드하면 그 이미지를 분석해주는 서비스이기 때문에 이미지 “업로드”는 헤로쿠, 네트리파이와 같은 PaaS 클라우드에서는 할 수 없다..</p>
+<p><img src="/images/2020-08-26-14-49-25.png"></p>
+<p>네트리파이 개발자가 client-side가 아닌 server-side 앱은 호스팅이 안된다고 한다.</p>
+<p>정적인 웹은 얼마든지 호스팅할 수 있다. 억울해서 이거라도 적어놓으려 한다.</p>
+<h2 id="안되지만"><a href="#안되지만" class="headerlink" title="안되지만,"></a>안되지만,</h2><p>파일 업로드 등의 로직이 없는 Static Web은 네트리파이, 헤로쿠에서 얼마든지 서비스할 수 있는데, 일단 Flask 앱은 다 만들었다고 가정하고 이를 조금만 바꿔보자.</p>
+<p>네트리파이는 <code>Flask-Freeze</code>를 이용하면 되고, 헤로쿠는 <code>gunicorn</code>선에서 서비스할 수 있다. 네트리파이는 <a target="_blank" rel="external nofollow noopener noreferrer" href="https://medium.com/@francescaguiducci/how-to-build-a-simple-personal-website-with-python-flask-and-netlify-d800c97c283d">이 글</a>에 잘 정리되있으니 따라하면 되고, 헤로쿠만 정리해보겠다.</p>
+<h3 id="헤로쿠에서-Flask-배포하기"><a href="#헤로쿠에서-Flask-배포하기" class="headerlink" title="헤로쿠에서 Flask 배포하기"></a>헤로쿠에서 Flask 배포하기</h3><p>우선 메인 앱(py)을 실행하는 부분이</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&#x27;__main__&#x27;</span>:</span><br><span class="line">    app.run()</span><br></pre></td></tr></table></figure>
 
-<p>윈도우에 키보드 이벤트를 걸고 특정 비밀 문자열을 만들어서 그 문자열을 입력하면 <code>cornify</code> 효과가 나타나는 과제이다.</p>
-<p><img src="/images/2020-08-26-14-24-19.png"></p>
-<p>귀여워서 계속 쳐봤다. 이게 대체 무슨 라이브러리일까 싶어서 <a target="_blank" rel="external nofollow noopener noreferrer" href="https://www.cornify.com/">cornify</a> 사이트를 가보니 어떤 컨셉인지는 대충 알 것 같다..</p>
-<h2 id="Full-script"><a href="#Full-script" class="headerlink" title="Full script"></a>Full script</h2><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> pressed = [];</span><br><span class="line"><span class="keyword">const</span> secretCode = <span class="string">&quot;zinirun&quot;</span>;</span><br><span class="line"><span class="built_in">window</span>.addEventListener(<span class="string">&quot;keyup&quot;</span>, <span class="function">(<span class="params">e</span>) =&gt;</span> &#123;</span><br><span class="line">  <span class="built_in">console</span>.log(e.key);</span><br><span class="line">  pressed.push(e.key);</span><br><span class="line">  <span class="keyword">if</span> (pressed.length &gt; secretCode.length) &#123;</span><br><span class="line">    pressed.splice(<span class="number">0</span>, <span class="number">1</span>);</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">if</span> (pressed.join(<span class="string">&quot;&quot;</span>) === secretCode) &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">&quot;DING DING!&quot;</span>);</span><br><span class="line">    cornify_add();</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="built_in">console</span>.log(pressed);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<p>다음과 같이 되어 있는지부터 확인해보자. <code>port</code>를 임의로 건<br>드리면 안된다.</p>
+<p>또한 앱을 라우팅하는 파이썬 파일에는</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">app = Flask(__name__)</span><br></pre></td></tr></table></figure>
 
-<p>이번 Day 12 과제는 지금까지의 과제를 잘 이해했다면 쉽게 구현할 수 있었다. <code>pressed</code>라는 키를 저장해둘 배열을 만들어 입력된 키 값을 넣어주면 되는데, <code>secretCode</code>의 길이에 맞게 잘라준다. (자르는 과정없이 모든 키를 배열에 푸시한다면 비밀 문자열의 입력 여부를 파악할 수 없으니까)</p>
-<p><code>pressed</code> 배열을 자르는 코드는 <code>splice</code> 메소드를 이용하는데, 제작자와는 다르게 코드를 짰다. 원래는 다음과 같다.</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pressed.splice(-secretCode.length - <span class="number">1</span>, pressed.length - secretCode.length);</span><br></pre></td></tr></table></figure>
+<p>당연히 <code>app</code>을 <code>Flask</code>화 해야한다.</p>
+<p>그리고 프로젝트 최상위 폴더에 <code>gunicorn</code> 관련 설정 파일을 하나 만드는데 확장자 없는 <code>Procfile</code> 파일을 만들어서</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">web: gunicorn &lt;메인 앱 이름&gt;:app</span><br></pre></td></tr></table></figure>
 
-<p>다소 코드가 이해가 어려워서 내 방식대로 짰는데, 결과는 똑같다. <code>splice</code> 메소드는 첫번째 인자의 인덱스부터 두번째 인자의 개수까지 배열 요소를 삭제한다. 그러니까 내가 작성한 <code>pressed.splice</code>는 특정 조건일 때 인덱스 0을 삭제하고 앞으로 밀어주는 것이다.</p>
-<p>이제 <code>pressed</code> 배열을 <code>secretCode</code>와 비교만 해주면 된다. 배열 요소를 한 문자열로 만들기 위해 <code>join(&#39;&#39;)</code>을 사용한다. 파이썬의 <code>&#39;&#39;.join()</code>과 같은 메소드인 것 같다. 그리고 <code>secretCode</code>와 대조하는데, 정답지의 코드는</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (pressed.join(<span class="string">&quot;&quot;</span>).includes(secretCode)) &#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">&quot;DING DING!&quot;</span>);</span><br><span class="line">  cornify_add();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>이렇게 한 줄의 텍스트를 넣고 저장한다. 이 <code>Procfile</code>을 헤로쿠에서 <code>web</code>으로 인식하고 <code>gunicorn</code> 기반으로 웹을 외부에 노출시키게 된다.</p>
+<p>이제 <code>requirements.txt</code>와 <code>runtime.txt</code>만 설정하면 된다. 모두 프로젝트 최상위 폴더에 위치시킨다. 기본적으로 <code>Flask</code>와 웹팩 모듈들을 넣어준다. (파이썬 3.6.1 버전 기준이므로 버전에 맞게 바꿔준다)</p>
+<p><code>requirements.txt</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">click&#x3D;&#x3D;6.7</span><br><span class="line">Flask&#x3D;&#x3D;0.12.2</span><br><span class="line">gunicorn&#x3D;&#x3D;19.7.1</span><br><span class="line">itsdangerous&#x3D;&#x3D;0.24</span><br><span class="line">Jinja2&#x3D;&#x3D;2.9.6</span><br><span class="line">MarkupSafe&gt;1.0</span><br><span class="line">Werkzeug&#x3D;&#x3D;0.12.2</span><br></pre></td></tr></table></figure>
 
-<p>이렇게 <code>includes</code>를 이용하여 비교하는데, 결국 <code>===</code>를 사용해서 일치 여부를 판단하는 것이 더 낫다고 생각해서(어차피 <code>pressed</code> 배열은 <code>secretCode</code>의 길이만큼만 저장되고 포함되는지 여부가 궁금한게 아니고 일치하는지 여부가 궁금한거니까) 나는 <code>===</code>를 사용했다. 어떻게 하든 결과는 같다.</p>
+<p>이제 파이썬 버전만 설정하면 정말 끝이다.</p>
+<p><code>runtime.txt</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">python-3.6.1</span><br></pre></td></tr></table></figure>
+
+<p>이제 헤로쿠에 깃을 연결하고 배포하면 된다. 끝.</p>
+<p><img src="/images/2020-08-26-15-03-10.png"></p>
+<p>난 여기까지는 호스팅이 되는데 파일을 업로드하면 (당연히)</p>
+<p><img src="/images/2020-08-26-15-04-09.png"></p>
+<p>헤로쿠에서 파일 리퀘스트를 거부하는 500 Error가 발생한다.</p>
+<p>이제 뭔가를 할 때는 되는지 안되는지부터 보고 삽질을 하던지 해야겠다.. 아무튼 내가 옮기려 했던 앱은 AWS에서 서비스 할 예정이다.</p>
 
         </div>
 
@@ -303,14 +320,6 @@
                 <span>Tag(s):</span>
                 <span class="tag">
                     
-                    
-                        <a href="/tags/javascript/"># javascript</a>
-                    
-                        <a href="/tags/javascript30/"># javascript30</a>
-                    
-                        <a href="/tags/VanillaJS/"># VanillaJS</a>
-                    
-                        
                 </span>
             </div>
             <div>
@@ -321,10 +330,8 @@
         </section>
         <section class="post-nav">
             
-                <a class="prev" rel="prev" href="/2020/08/26/flask-deploy-netlify-heroku/">Flask 앱 Netlify, Heroku 배포 삽질기</a>
             
-            
-            <a class="next" rel="next" href="/2020/08/26/js-course30-11/">Javascript 30 - Day 11 Custom Video Player</a>
+            <a class="next" rel="next" href="/2020/08/26/js-course30-12/">Javascript 30 - Day 12 Key Sequence Detection</a>
             
         </section>
 
