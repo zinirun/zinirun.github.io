@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
 <meta http-equiv="X-UA-Compatible" content="ie=edge">
-<link rel="canonical" href="https://zinirun.github.io/2020/08/27/js-course30-13/">
+<link rel="canonical" href="https://zinirun.github.io/2020/08/27/ps-sort-boj-10825/">
 
 
 <link rel="stylesheet" href="//fonts.googleapis.com/earlyaccess/notosanskr.css">
@@ -18,7 +18,7 @@
 
 
 
-<title>Javascript 30 - Day 13 Slide in on Scroll | zinirun</title>
+<title>BOJ - 10825 국영수 (정렬) | zinirun</title>
 
 
 
@@ -223,7 +223,7 @@
     
     <article class="post-wrap">
         <header class="post-header">
-            <h1 class="post-title">Javascript 30 - Day 13 Slide in on Scroll</h1>
+            <h1 class="post-title">BOJ - 10825 국영수 (정렬)</h1>
             
                 <div class="post-meta">
                     
@@ -232,14 +232,14 @@
 
                     
                         <span class="post-time">
-                        Date: <a href="#">August 27, 2020&nbsp;&nbsp;16:34:32</a>
+                        Date: <a href="#">August 27, 2020&nbsp;&nbsp;21:49:23</a>
                         </span>
                     
                     
                         <span class="post-category">
                     Category:
                             
-                                <a href="/categories/javascript/">javascript</a>
+                                <a href="/categories/algorithm/">algorithm</a>
                             
                         </span>
                     
@@ -248,21 +248,13 @@
         </header>
 
         <div class="post-content">
-            <h2 id="Day-13-Slide-in-on-Scroll"><a href="#Day-13-Slide-in-on-Scroll" class="headerlink" title="Day 13 - Slide in on Scroll"></a>Day 13 - Slide in on Scroll</h2><div class="video-container"><iframe src="https://www.youtube.com/embed/uzRsENVD3W8" frameborder="0" loading="lazy" allowfullscreen></iframe></div>
+            <h2 id="국영수"><a href="#국영수" class="headerlink" title="국영수"></a>국영수</h2><p>문제 <a target="_blank" rel="external nofollow noopener noreferrer" href="https://www.acmicpc.net/problem/10825">Acmicpc</a></p>
+<p><img src="/images/2020-08-27-21-51-11.png"></p>
+<h3 id="Solution"><a href="#Solution" class="headerlink" title="Solution"></a>Solution</h3><figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">n=int(input())</span><br><span class="line">score=[]</span><br><span class="line"><span class="keyword">for</span> _ <span class="keyword">in</span> range(n):</span><br><span class="line">    name,k,e,m=input().split()</span><br><span class="line">    score.append((name, int(k), int(e), int(m)))</span><br><span class="line">score.sort(key=<span class="keyword">lambda</span> x:(-x[<span class="number">1</span>],x[<span class="number">2</span>],-x[<span class="number">3</span>],x[<span class="number">0</span>]))</span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> score:</span><br><span class="line">    print(i[<span class="number">0</span>])</span><br></pre></td></tr></table></figure>
 
-<p>이미지로 스크롤하면 슬라이드되어서 나오는 애니메이션을 추가하는 예제이다. <a href="https://zinirun.github.io/2020/08/16/js-throttling-debouncing/">디바운스</a>도 사용한다. (예전에 정리해놓길 잘했다, 정말 자주 써먹는다)</p>
-<h3 id="Debounce"><a href="#Debounce" class="headerlink" title="Debounce"></a>Debounce</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">debounce</span>(<span class="params">func, wait = <span class="number">20</span>, immediate = true</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">var</span> timeout;</span><br><span class="line">  <span class="keyword">return</span> <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">var</span> context = <span class="built_in">this</span>,</span><br><span class="line">      args = <span class="built_in">arguments</span>;</span><br><span class="line">    <span class="keyword">var</span> later = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">      timeout = <span class="literal">null</span>;</span><br><span class="line">      <span class="keyword">if</span> (!immediate) func.apply(context, args);</span><br><span class="line">    &#125;;</span><br><span class="line">    <span class="keyword">var</span> callNow = immediate &amp;&amp; !timeout;</span><br><span class="line">    <span class="built_in">clearTimeout</span>(timeout);</span><br><span class="line">    timeout = <span class="built_in">setTimeout</span>(later, wait);</span><br><span class="line">    <span class="keyword">if</span> (callNow) func.apply(context, args);</span><br><span class="line">  &#125;;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>외부에 공개되어 있는 디바운스 함수 틀 중 하나이고 강의 제작자도 그 중 하나를 썼다고 한다. (개인적으로 Zerocho님의 디바운스 예제가 더 마음에 든다)</p>
-<h3 id="checkSlide-작성"><a href="#checkSlide-작성" class="headerlink" title="checkSlide() 작성"></a>checkSlide() 작성</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">checkSlide</span>(<span class="params">e</span>) </span>&#123;</span><br><span class="line">  sliderImages.forEach(<span class="function">(<span class="params">sliderImage</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="comment">// half way through the image</span></span><br><span class="line">    <span class="keyword">const</span> slideInAt =</span><br><span class="line">      <span class="built_in">window</span>.scrollY + <span class="built_in">window</span>.innerHeight - sliderImage.height / <span class="number">2</span>;</span><br><span class="line">    <span class="comment">// bottom of the image</span></span><br><span class="line">    <span class="keyword">const</span> imageBottom = sliderImage.offsetTop + sliderImage.height;</span><br><span class="line">    <span class="keyword">const</span> isHalfShown = slideInAt &gt; sliderImage.offsetTop;</span><br><span class="line">    <span class="keyword">const</span> isNotScrolledPast = <span class="built_in">window</span>.scrollY &lt; imageBottom;</span><br><span class="line">    <span class="keyword">if</span> (isHalfShown &amp;&amp; isNotScrolledPast) &#123;</span><br><span class="line">      sliderImage.classList.add(<span class="string">&quot;active&quot;</span>);</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">      sliderImage.classList.remove(<span class="string">&quot;active&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>이미지에 슬라이드 트랜지션을 추가할 지 말지 결정하는 핵심적인 코드이다. <code>.active</code>를 추가하면 트랜지션 효과가 나타나고, 제거하면 없어진다.</p>
-<p>스크롤 값을 계산하는 부분이 가장 까다롭다. 우선 크게 계산하는 경우는 2가지인데, 이미지 위의 모서리가 보이는지, 이미지 아래의 모서리가 안보이는지 스크롤할 때 마다 디바운스로 호출하여 검사한다.</p>
-<p>이제 윈도우 객체에 <code>scroll</code> 이벤트만 디바운스를 이용해서 걸어주면 끝이다.</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">window</span>.addEventListener(<span class="string">&quot;scroll&quot;</span>, debounce(checkSlide));</span><br></pre></td></tr></table></figure>
-
-<p>이 강의의 목적은 스크롤 값을 수학을 이용해서 계산하는 것보다는, 각 객체에 대해 적절한 상황에서 변수를 선언하여 조건을 검사하고 특정 메소드를 호출할 수 있는지라고 한다. (사실 이 말이 맞는게, 스크롤 값 계산이 어렵다면 그냥 구글에 스크롤 슬라이드 이미지 검색하면 널렸다)</p>
-<p>이제 자바스크립트 30코스 절반이 다 되어간다. 바닐라JS로 모든 것을 할 수 있다는 말이 체감되고 있다.</p>
+<p>정렬의 기준이 중첩되어 있을 때 key(기준)에서 lambda를 사용하는 방법이 핵심이다.</p>
+<p>일반적으로 배열의 1번 인덱스를 기준으로 정렬할 때 <code>lambda x:x[1]</code>, 1번 인덱스로 정렬 후 2번 인덱스로 정렬할 때 <code>lambda x:(x[1], x[2])</code> 처럼 괄호 열고 인덱스만 차례로 넣으면 된다.</p>
+<p>그런데 문제에서는 증가, 감소가 번갈아가며 정렬 기준이 주어지는데 이 때는 내림차순으로 정렬할 요소에 <code>-</code>를 붙이면 반대 정렬이 된다.</p>
 
         </div>
 
@@ -303,11 +295,9 @@
                 <span class="tag">
                     
                     
-                        <a href="/tags/javascript/"># javascript</a>
+                        <a href="/tags/algorithm/"># algorithm</a>
                     
-                        <a href="/tags/javascript30/"># javascript30</a>
-                    
-                        <a href="/tags/VanillaJS/"># VanillaJS</a>
+                        <a href="/tags/ps/"># ps</a>
                     
                         
                 </span>
@@ -320,10 +310,10 @@
         </section>
         <section class="post-nav">
             
-                <a class="prev" rel="prev" href="/2020/08/27/ps-sort-boj-10825/">BOJ - 10825 국영수 (정렬)</a>
+                <a class="prev" rel="prev" href="/2020/08/27/ps-sort-boj-18310/">BOJ - 18310 안테나 (정렬)</a>
             
             
-            <a class="next" rel="next" href="/2020/08/27/react-first-todolist/">React 첫번째 프로젝트 - TodoList</a>
+            <a class="next" rel="next" href="/2020/08/27/js-course30-13/">Javascript 30 - Day 13 Slide in on Scroll</a>
             
         </section>
 
