@@ -3,6 +3,20 @@
 
 
     <url>
+        <loc>https://zinirun.github.io/tags/react/</loc>
+        <lastmod>2020-08-27T06:26:37.582Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
+        <loc>https://zinirun.github.io/tags/javascript/</loc>
+        <lastmod>2020-08-27T06:26:37.582Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
         <loc>https://zinirun.github.io/tags/VanillaJS/</loc>
         <lastmod>2020-08-26T05:36:57.342Z</lastmod>
         <changefreq>weekly</changefreq>
@@ -11,13 +25,6 @@
 
     <url>
         <loc>https://zinirun.github.io/tags/javascript30/</loc>
-        <lastmod>2020-08-26T05:36:57.342Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.2</priority>
-    </url>
-
-    <url>
-        <loc>https://zinirun.github.io/tags/javascript/</loc>
         <lastmod>2020-08-26T05:36:57.342Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>
@@ -61,13 +68,6 @@
     <url>
         <loc>https://zinirun.github.io/tags/flask/</loc>
         <lastmod>2020-08-22T14:40:05.629Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.2</priority>
-    </url>
-
-    <url>
-        <loc>https://zinirun.github.io/tags/react/</loc>
-        <lastmod>2020-08-19T15:15:45.421Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>
     </url>
