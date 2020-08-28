@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
 <meta http-equiv="X-UA-Compatible" content="ie=edge">
-<link rel="canonical" href="https://zinirun.github.io/2020/08/27/ps-sort-boj-18310/">
+<link rel="canonical" href="https://zinirun.github.io/2020/08/29/ps-sort-programmers-fail-rate/">
 
 
 <link rel="stylesheet" href="//fonts.googleapis.com/earlyaccess/notosanskr.css">
@@ -18,7 +18,7 @@
 
 
 
-<title>BOJ - 18310 안테나 (정렬) | zinirun</title>
+<title>Progammers - 실패율 (정렬) | zinirun</title>
 
 
 
@@ -223,7 +223,7 @@
     
     <article class="post-wrap">
         <header class="post-header">
-            <h1 class="post-title">BOJ - 18310 안테나 (정렬)</h1>
+            <h1 class="post-title">Progammers - 실패율 (정렬)</h1>
             
                 <div class="post-meta">
                     
@@ -232,7 +232,7 @@
 
                     
                         <span class="post-time">
-                        Date: <a href="#">August 27, 2020&nbsp;&nbsp;21:53:53</a>
+                        Date: <a href="#">August 29, 2020&nbsp;&nbsp;0:27:57</a>
                         </span>
                     
                     
@@ -248,17 +248,18 @@
         </header>
 
         <div class="post-content">
-            <h2 id="국영수"><a href="#국영수" class="headerlink" title="국영수"></a>국영수</h2><p>문제 <a target="_blank" rel="external nofollow noopener noreferrer" href="https://www.acmicpc.net/problem/18310">Acmicpc</a></p>
-<p><img src="/images/2020-08-27-21-54-41.png"></p>
-<h2 id="Solution"><a href="#Solution" class="headerlink" title="Solution"></a>Solution</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">n=int(input())</span><br><span class="line">house=sorted(list(map(int, input().split())))</span><br><span class="line">print(house[(n<span class="number">-1</span>)//<span class="number">2</span>]) <span class="comment"># n-1인 이유는 짝수일때 중간값은 2개인데 작은 값을 출력하라고 했기때문</span></span><br></pre></td></tr></table></figure>
+            <h2 id="실패율"><a href="#실패율" class="headerlink" title="실패율"></a>실패율</h2><p>문제 <a target="_blank" rel="external nofollow noopener noreferrer" href="https://programmers.co.kr/learn/courses/30/lessons/42889">프로그래머스</a></p>
+<h2 id="Solution"><a href="#Solution" class="headerlink" title="Solution"></a>Solution</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">solution</span>(<span class="params">N, stages</span>):</span></span><br><span class="line">    fail=[]</span><br><span class="line">    remain=len(stages)</span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(N):</span><br><span class="line">        <span class="keyword">if</span> remain!=<span class="number">0</span>:</span><br><span class="line">            p=stages.count(i+<span class="number">1</span>)</span><br><span class="line">            fail.append((i+<span class="number">1</span>,p/remain))</span><br><span class="line">            remain-=p</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            fail.append((i+<span class="number">1</span>,<span class="number">0</span>))</span><br><span class="line">    <span class="keyword">return</span> list(map(<span class="keyword">lambda</span> x:x[<span class="number">0</span>],sorted(fail,reverse=<span class="literal">True</span>,key=<span class="keyword">lambda</span> x:x[<span class="number">1</span>])))</span><br><span class="line"></span><br><span class="line">print(solution(<span class="number">5</span>, [<span class="number">2</span>, <span class="number">1</span>, <span class="number">2</span>, <span class="number">6</span>, <span class="number">2</span>, <span class="number">4</span>, <span class="number">3</span>, <span class="number">3</span>]))</span><br></pre></td></tr></table></figure>
 
-<p>처음 이 문제를 보고 1부터 n까지 각 요소에 대한 차이의 합을 계산해서 최소가 되는 인덱스를 반환하면 되지 않을까 했다.</p>
-<p>(틀린 코드)</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">n=int(input())</span><br><span class="line">house=sorted(list(map(int, input().split())))</span><br><span class="line">min_=<span class="number">200001</span></span><br><span class="line">loc=<span class="number">0</span></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">1</span>,n):</span><br><span class="line">    dist=sum(map(<span class="keyword">lambda</span> x:x-i,house))</span><br><span class="line">    <span class="keyword">if</span> dist&lt;min_:</span><br><span class="line">        min_=dist</span><br><span class="line">        loc=i</span><br><span class="line">print(loc)</span><br></pre></td></tr></table></figure>
+<p>주어진 <code>stages</code> 배열을 정수를 증가시키면서 count를 세고 적절히 <code>fail</code> 배열에 집어넣고, 정렬하면 된다.</p>
+<p>정렬된 배열을 리턴하는 부분이 꽤 복잡한데, 실패율(인덱스 1)을 기준으로 내림차순 정렬 후 스테이지 번호(인덱스 0)를 리스트로 반환한다.</p>
+<p>이 문제는 전에 풀었던 문제인데, 코드가 너무 더러운 것 같아 다시 풀었다. 이전 코드는</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">solution</span>(<span class="params">N, stages</span>):</span></span><br><span class="line">    a=[]</span><br><span class="line">    cur=len(stages)</span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(N):</span><br><span class="line">        <span class="keyword">if</span> cur!=<span class="number">0</span>:</span><br><span class="line">            a.append(stages.count(i+<span class="number">1</span>)/cur)</span><br><span class="line">            cur-=stages.count(i+<span class="number">1</span>)</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            a.append(<span class="number">0</span>)</span><br><span class="line">    <span class="keyword">return</span> list(map(<span class="keyword">lambda</span> x:x+<span class="number">1</span>,sorted(range(len(a)),key=a.__getitem__, reverse=<span class="literal">True</span>)))</span><br></pre></td></tr></table></figure>
 
-<p>당연히 시간 초과가 났다. 처음 작성한 코드는 시간복잡도가 <code>O(N^2)</code>이고 주어진 자연수의 범위가 20만까지이므로 20만의 제곱이 된다.</p>
-<p>문제를 잘못 읽었었다. 나는 1,5,7,9가 주어질 때 1에서 9까지의 모든 정수부를 계산했는데, 다시 보니 주어진 값에서만 안테나를 설치할 위치를 고를 수 있었다.</p>
-<p>주어진 리스트를 오름차순으로 정렬하고 중간 값을 반환하면 최적의 위치가 된다. 짝수일 경우 중간값이 2개가 되는데, 문제를 보면 여러 값일 경우 가장 작은 값을 출력하라고 했기 때문에 중간에 있는 인덱스를 계산할 때 <code>n</code>이 아닌 <code>n-1</code>로 생각하면 된다.</p>
+<p>다시 작성한 코드보다 가독성도 별로고, 코드 해석도 어려웠다.</p>
+<blockquote>
+<p>결론: “숏코딩”보다 “클린코딩”하자.</p>
+</blockquote>
 
         </div>
 
@@ -314,10 +315,10 @@
         </section>
         <section class="post-nav">
             
-                <a class="prev" rel="prev" href="/2020/08/29/ps-sort-programmers-fail-rate/">Progammers - 실패율 (정렬)</a>
+                <a class="prev" rel="prev" href="/2020/08/29/ps-sort-boj-1715/">BOJ - 1715 카드 정렬하기 (정렬)</a>
             
             
-            <a class="next" rel="next" href="/2020/08/27/ps-sort-boj-10825/">BOJ - 10825 국영수 (정렬)</a>
+            <a class="next" rel="next" href="/2020/08/27/ps-sort-boj-18310/">BOJ - 18310 안테나 (정렬)</a>
             
         </section>
 
