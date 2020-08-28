@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
 <meta http-equiv="X-UA-Compatible" content="ie=edge">
-<link rel="canonical" href="https://zinirun.github.io/2020/08/29/ps-sort-boj-1715/">
+<link rel="canonical" href="https://zinirun.github.io/2020/08/29/js-course30-14/">
 
 
 <link rel="stylesheet" href="//fonts.googleapis.com/earlyaccess/notosanskr.css">
@@ -18,7 +18,7 @@
 
 
 
-<title>BOJ - 1715 카드 정렬하기 (정렬) | zinirun</title>
+<title>Javascript 30 - Day 14 References VS Copying | zinirun</title>
 
 
 
@@ -223,7 +223,7 @@
     
     <article class="post-wrap">
         <header class="post-header">
-            <h1 class="post-title">BOJ - 1715 카드 정렬하기 (정렬)</h1>
+            <h1 class="post-title">Javascript 30 - Day 14 References VS Copying</h1>
             
                 <div class="post-meta">
                     
@@ -232,14 +232,14 @@
 
                     
                         <span class="post-time">
-                        Date: <a href="#">August 29, 2020&nbsp;&nbsp;0:28:10</a>
+                        Date: <a href="#">August 29, 2020&nbsp;&nbsp;1:35:28</a>
                         </span>
                     
                     
                         <span class="post-category">
                     Category:
                             
-                                <a href="/categories/algorithm/">algorithm</a>
+                                <a href="/categories/javascript/">javascript</a>
                             
                         </span>
                     
@@ -248,19 +248,34 @@
         </header>
 
         <div class="post-content">
-            <h2 id="국영수"><a href="#국영수" class="headerlink" title="국영수"></a>국영수</h2><p>문제 <a target="_blank" rel="external nofollow noopener noreferrer" href="https://www.acmicpc.net/problem/1715">Acmicpc</a></p>
-<p><img src="/images/2020-08-29-00-41-59.png"></p>
-<h2 id="Solution"><a href="#Solution" class="headerlink" title="Solution"></a>Solution</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> heapq</span><br><span class="line"><span class="keyword">import</span> sys</span><br><span class="line">input=sys.stdin.readline</span><br><span class="line">N = int(input())</span><br><span class="line">card_deck = []</span><br><span class="line"><span class="keyword">for</span> _ <span class="keyword">in</span> range(N):</span><br><span class="line">    heapq.heappush(card_deck, int(input()))</span><br><span class="line"><span class="keyword">if</span> len(card_deck)==<span class="number">1</span>: print(<span class="number">0</span>)</span><br><span class="line"><span class="keyword">else</span>:</span><br><span class="line">    answer=<span class="number">0</span></span><br><span class="line">    <span class="keyword">while</span> len(card_deck) &gt; <span class="number">1</span>:</span><br><span class="line">        k=heapq.heappop(card_deck)+heapq.heappop(card_deck)</span><br><span class="line">        answer+=k</span><br><span class="line">        heapq.heappush(card_deck,k)</span><br><span class="line">    print(answer)</span><br></pre></td></tr></table></figure>
+            <h2 id="Day-14-Javascript-References-VS-Copying"><a href="#Day-14-Javascript-References-VS-Copying" class="headerlink" title="Day 14 - Javascript References VS Copying"></a>Day 14 - Javascript References VS Copying</h2><div class="video-container"><iframe src="https://www.youtube.com/embed/YnfwDQ5XYF4" frameborder="0" loading="lazy" allowfullscreen></iframe></div>
 
-<p>우선순위 큐를 이용해서 2개를 뺀 후 (우선순위 큐에서 heappop하면 가장 작은 것 2개를 빼낸다) 더한 값을 결과값에 누적해서 더해주고, 다시 우선순위 큐에 집어넣는다.</p>
-<p>우선순위 큐를 사용하지 않는다면 2개를 더한 값을 넣어준 후 다시 <code>sort()</code>를 쓰던지 해서 정렬시켜야 하는데, 당연히 시간초과가 난다.</p>
-<p>어떻게든 우선순위 큐를 안써보려고 해봤지만, 로직대로면 다시 정렬해야 하기에 라이브러리를 사용 안 할수가 없다.</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">n=int(input())</span><br><span class="line">card=sorted([int(input()) <span class="keyword">for</span> _ <span class="keyword">in</span> range(n)])</span><br><span class="line">isSet=<span class="literal">False</span></span><br><span class="line">comp_sum=<span class="number">0</span></span><br><span class="line">comp=<span class="number">0</span></span><br><span class="line"><span class="keyword">for</span> idx,i <span class="keyword">in</span> enumerate(card):</span><br><span class="line">    <span class="keyword">if</span> isSet==<span class="literal">True</span>:</span><br><span class="line">        comp_sum+=(comp_sum+prev+i)</span><br><span class="line">        isSet=<span class="literal">False</span></span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        <span class="keyword">if</span> idx==n<span class="number">-1</span>: comp_sum+=(comp_sum+i)</span><br><span class="line">        prev=i</span><br><span class="line">        isSet=<span class="literal">True</span></span><br><span class="line">print(comp_sum)</span><br></pre></td></tr></table></figure>
+<p>Reference(참조)와 Copy(복사)에 대한 전반적인 개념을 다룬다. 개인적으로 자바스크립트의 속성을 이해하기 위해 정말 필요한 과제였다고 생각한다.</p>
+<h2 id="값-복사-number-String"><a href="#값-복사-number-String" class="headerlink" title="값 복사 (number, String)"></a>값 복사 (number, String)</h2><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> age = <span class="number">100</span>;</span><br><span class="line"><span class="keyword">let</span> age2 = age;</span><br><span class="line"><span class="built_in">console</span>.log(age, age2); <span class="comment">// 100, 100</span></span><br><span class="line">age = <span class="number">200</span>;</span><br><span class="line"><span class="built_in">console</span>.log(age, age2); <span class="comment">// 200, 100</span></span><br></pre></td></tr></table></figure>
 
-<p>위는 틀린 코드인데, 더해서 누적하는 과정은 여차저차 했다고 쳐도 다시 정렬하는 과정이 없기에 당연히 틀린 답이다.</p>
+<p>값은 별도의 방법없이 대입 선언만으로 복사할 수 있다. 예시는 숫자인데 문자열(String)도 마찬가지다.</p>
+<h2 id="배열-복사"><a href="#배열-복사" class="headerlink" title="배열 복사"></a>배열 복사</h2><p>배열은 값을 복사할 때 처럼 <code>=</code>로는 할 수 없다. 그러면 “복사”가 아닌 “참조”가 돼서 복사된 (것처럼 보이는) 배열의 요소가 변경되면 원래의 배열도 바뀌게 된다. 당연히 참조되었기 때문에 이런 일이 발생한다.</p>
+<p>배열을 복사하는 방법은 많다.</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> players = [<span class="string">&quot;Wes&quot;</span>, <span class="string">&quot;Sarah&quot;</span>, <span class="string">&quot;Ryan&quot;</span>, <span class="string">&quot;Poppy&quot;</span>];</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> team2 = players.slice();</span><br><span class="line"><span class="keyword">const</span> team3 = [].concat(players);</span><br><span class="line"><span class="keyword">const</span> team4 = [...players];</span><br><span class="line"><span class="keyword">const</span> team5 = <span class="built_in">Array</span>.from(players);</span><br></pre></td></tr></table></figure>
+
+<p><code>players</code> 배열을 복사하기 위해 사용할 수 있는 4가지 방법이고, 결과는 모두 같다. 나는 <code>...</code>을 사용하는 ES6 Spread 방법이 가장 마음에 든다. 참고로 <code>slice()</code>와 <code>concat()</code>으로 복사가 가능한 이유는 대상이 되는 배열을 가지고 새로운 배열을 반환하기 때문이다.</p>
+<h2 id="객체-Object-복사"><a href="#객체-Object-복사" class="headerlink" title="객체(Object) 복사"></a>객체(Object) 복사</h2><h3 id="One-Level-Copy-Object-assign"><a href="#One-Level-Copy-Object-assign" class="headerlink" title="One Level Copy - Object.assign()"></a>One Level Copy - <code>Object.assign()</code></h3><p>복사의 대상이 되는 배열은</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> person = &#123;</span><br><span class="line">  name: <span class="string">&quot;Zini&quot;</span>,</span><br><span class="line">  age: <span class="number">24</span>,</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<p>이 <code>person</code> 객체이다. 당연히 <code>=</code>를 사용하면 복사가 아닌 참조가 되어버린다.</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> personCopy = <span class="built_in">Object</span>.assign(&#123;&#125;, person, &#123; <span class="attr">number</span>: <span class="number">99</span> &#125;);</span><br></pre></td></tr></table></figure>
+
+<p><code>Object.assign</code>을 사용해서 <code>person</code> 객체를 다시 객체화시켜 복사하는 방법이 있다.</p>
 <blockquote>
-<p>문제를 보고 어떤 로직으로 풀 지, 또 거기에는 어떤 라이브러리가 필요한지 캐치하는 능력을 기르자 (아직 턱없이 부족하다)</p>
+<p>나중에는 배열에서 spread를 사용한 것처럼 <code>&#123;...person&#125;</code>으로 복사가 가능해질 것 같다. 참고로 Chrome에서는 현재 지원한다고 한다.</p>
 </blockquote>
+<h3 id="One-Level-이상의-Copy-JSON-parse-JSON-stringify"><a href="#One-Level-이상의-Copy-JSON-parse-JSON-stringify" class="headerlink" title="One Level 이상의 Copy - JSON.parse(JSON.stringify())"></a>One Level 이상의 Copy - <code>JSON.parse(JSON.stringify())</code></h3><p>복사할 대상이</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> zini = &#123;</span><br><span class="line">  name: <span class="string">&quot;Zini&quot;</span>,</span><br><span class="line">  age: <span class="number">24</span>,</span><br><span class="line">  social: &#123;</span><br><span class="line">    github: <span class="string">&quot;zinirun&quot;</span>,</span><br><span class="line">    instagram: <span class="string">&quot;@normalzini&quot;</span>,</span><br><span class="line">  &#125;,</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<p>이렇게 1레벨이 아닌 2레벨로 구성되어 있다면, 앞의 방법처럼 <code>Object.assign()</code>을 사용할 수 없다. 1레벨만 복사되고 2레벨부터는 참조되기 때문에 2레벨의 요소가 변경되면 원 배열의 값도 바뀐다.</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> ziniCopy = <span class="built_in">JSON</span>.parse(<span class="built_in">JSON</span>.stringify(zini));</span><br></pre></td></tr></table></figure>
+
+<p><code>JSON</code>을 사용하여 JSON 객체로 stringify 후 parse하면 레벨에 관계없이 복사할 수 있다. 당연히 1레벨도 복사할 수 있기 때문에 나는 객체를 복사할 때는 항상 JSON을 사용할 것 같다.</p>
 
         </div>
 
@@ -301,9 +316,11 @@
                 <span class="tag">
                     
                     
-                        <a href="/tags/algorithm/"># algorithm</a>
+                        <a href="/tags/javascript/"># javascript</a>
                     
-                        <a href="/tags/ps/"># ps</a>
+                        <a href="/tags/javascript30/"># javascript30</a>
+                    
+                        <a href="/tags/VanillaJS/"># VanillaJS</a>
                     
                         
                 </span>
@@ -316,10 +333,8 @@
         </section>
         <section class="post-nav">
             
-                <a class="prev" rel="prev" href="/2020/08/29/js-course30-14/">Javascript 30 - Day 14 References VS Copying</a>
             
-            
-            <a class="next" rel="next" href="/2020/08/29/ps-sort-programmers-fail-rate/">Progammers - 실패율 (정렬)</a>
+            <a class="next" rel="next" href="/2020/08/29/ps-sort-boj-1715/">BOJ - 1715 카드 정렬하기 (정렬)</a>
             
         </section>
 
