@@ -6,7 +6,7 @@
   <link href="https://zinirun.github.io/feed.xml" rel="self"/>
   
   <link href="https://zinirun.github.io/"/>
-  <updated>2020-08-31T06:57:20.809Z</updated>
+  <updated>2020-08-31T07:07:27.911Z</updated>
   <id>https://zinirun.github.io/</id>
   
   <author>
@@ -21,9 +21,9 @@
     <link href="https://zinirun.github.io/2020/08/31/netlify-custom-domain/"/>
     <id>https://zinirun.github.io/2020/08/31/netlify-custom-domain/</id>
     <published>2020-08-31T06:48:27.000Z</published>
-    <updated>2020-08-31T06:57:20.809Z</updated>
+    <updated>2020-08-31T07:07:27.911Z</updated>
     
-    <content type="html"><![CDATA[<p>어제 내 프로필 사이트를 하나 만들었다. Github Pages를 사용해서 배포했는데 아무리 봐도 주소 <code>zinirun.github.io/zini-profile</code>은 너무나도 길었고 <code>zinirun.github.io</code>는 현재 블로그의 레파지토리로 쓰고 있어서 프로젝트 페이지를 커스텀 도메인으로 설정할 수 있나 찾아봤는데 내가 못 찾는건지, 방법이 없었다.</p><p>그래서 네트리파이로 배포하고 커스텀 도메인을 설정했다.</p><h3 id="Netlify-설정"><a href="#Netlify-설정" class="headerlink" title="Netlify 설정"></a>Netlify 설정</h3><p><img src="/images/2020-08-31-15-52-11.png"></p><p>네트리파이에 배포한 본인의 앱 설정에는 <strong>Domain management</strong>가 있다. 들어가면</p><p><img src="/images/2020-08-31-15-53-16.png"></p><p>이렇게 <strong>Custom Domains</strong>를 설정하는 영역이 있는데 소유한 주소를 입력한다. 그러면 1단계를 넘어가고 2단계에서 Name Server를 등록하라고 한다. 나는 <a href="https://namecheap.com/">Namecheap</a> 주소를 대여받고 있어서 도메인 설정에 들어갔는데, 다른 주소 대여 서비스도 Custom DNS를 지원할 것이니 잘 찾아보면 Name Server 설정하는 영역이 있을 것이다.</p><p><img src="/images/2020-08-31-15-56-07.png"></p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">dns1.p05.nsone.net</span><br><span class="line">dns2.p05.nsone.net</span><br><span class="line">dns3.p05.nsone.net</span><br><span class="line">dns4.p05.nsone.net</span><br></pre></td></tr></table></figure><p>이 4개를 모두 등록해주면 된다. 하지만 본인의 도메인에 DNS가 정상적으로 등록되려면 하루정도의 시간이 걸린다. DNS를 정상적으로 등록했다면 네트리파이에서 검증 단계를 모두 마친 후 커스텀 도메인을 사용할 수 있다.</p>]]></content>
+    <content type="html"><![CDATA[<p>어제 내 프로필 사이트를 하나 만들었다. Github Pages를 사용해서 배포했는데 아무리 봐도 주소 <code>zinirun.github.io/zini-profile</code>은 너무나도 길었고 <code>zinirun.github.io</code>는 현재 블로그의 레파지토리로 쓰고 있어서 프로젝트 페이지를 커스텀 도메인으로 설정할 수 있나 찾아봤는데 내가 못 찾는건지, 방법이 없었다.</p><p>그래서 네트리파이로 배포하고 커스텀 도메인을 설정했다.</p><h3 id="Netlify-설정"><a href="#Netlify-설정" class="headerlink" title="Netlify 설정"></a>Netlify 설정</h3><p><img src="/images/2020-08-31-15-52-11.png"></p><p>네트리파이에 배포한 본인의 앱 설정에는 <strong>Domain management</strong>가 있다. 들어가면</p><p><img src="/images/2020-08-31-15-53-16.png"></p><p>이렇게 <strong>Custom Domains</strong>를 설정하는 영역이 있는데 소유한 주소를 입력한다.</p><h3 id="Domain-Nameserver-설정"><a href="#Domain-Nameserver-설정" class="headerlink" title="Domain Nameserver 설정"></a>Domain Nameserver 설정</h3><p>그러면 1단계를 넘어가고 2단계에서 Name Server를 등록하라고 한다. 나는 <a href="https://namecheap.com/">Namecheap</a> 주소를 대여받고 있어서 도메인 설정에 들어갔는데, 다른 주소 대여 서비스도 Custom DNS를 지원할 것이니 잘 찾아보면 Name Server 설정하는 영역이 있을 것이다.</p><p><img src="/images/2020-08-31-15-56-07.png"></p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">dns1.p05.nsone.net</span><br><span class="line">dns2.p05.nsone.net</span><br><span class="line">dns3.p05.nsone.net</span><br><span class="line">dns4.p05.nsone.net</span><br></pre></td></tr></table></figure><p>이 4개를 모두 등록해주면 된다. 하지만 본인의 도메인에 DNS가 정상적으로 등록되려면 하루정도의 시간이 걸린다. DNS를 정상적으로 등록했다면 네트리파이에서 검증 단계를 모두 마친 후 커스텀 도메인을 사용할 수 있다.</p>]]></content>
     
     
       
