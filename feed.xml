@@ -6,7 +6,7 @@
   <link href="https://zinirun.github.io/feed.xml" rel="self"/>
   
   <link href="https://zinirun.github.io/"/>
-  <updated>2020-09-01T06:15:04.403Z</updated>
+  <updated>2020-09-01T07:13:04.616Z</updated>
   <id>https://zinirun.github.io/</id>
   
   <author>
@@ -15,6 +15,34 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Javascript 30 - Day 17 Sort Without Articles</title>
+    <link href="https://zinirun.github.io/2020/09/01/js-course30-17/"/>
+    <id>https://zinirun.github.io/2020/09/01/js-course30-17/</id>
+    <published>2020-09-01T06:51:24.000Z</published>
+    <updated>2020-09-01T07:13:04.616Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="Day-17-Sort-Without-Articles"><a href="#Day-17-Sort-Without-Articles" class="headerlink" title="Day 17 - Sort Without Articles"></a>Day 17 - Sort Without Articles</h2><div class="video-container"><iframe src="https://www.youtube.com/embed/PEEo-2mRQ7A" frameborder="0" loading="lazy" allowfullscreen></iframe></div><p>이번 과제는 문자열로 구성된 배열을 정렬하는 과제이다. 문제는 그냥 정렬이 아니라 앞에 관사를 제외하고 정렬하여 <code>&lt;li&gt;</code> 객체를 넣어주어야 한다.</p><h2 id="strip-함수-만들기"><a href="#strip-함수-만들기" class="headerlink" title="strip() 함수 만들기"></a>strip() 함수 만들기</h2><p><code>strip()</code> 메소드는 자바스크립트에서 지원하는 기능이 아니다. 직접 정의하는 이 함수는 regex를 사용하여 관사 <code>a</code> <code>an</code> <code>the</code>를 제거하고, 문자열에 사용할 수 있는 기본 메소드인 <code>trim()</code>을 사용하여 앞, 뒤 공백을 제거한 후 반환한다.</p><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">strip</span>(<span class="params">band</span>) </span>&#123;</span><br><span class="line">  <span class="comment">//regex - ^:starts with, i:insensitive(full matched)</span></span><br><span class="line">  <span class="keyword">return</span> band.replace(<span class="regexp">/^(a |the |an )/i</span>, <span class="string">&quot;&quot;</span>).trim();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><p>이제 이 함수로 <code>bands</code> 배열을 정렬한 새로운 <code>sortedBands</code> 배열을 만들 것이다.</p><h2 id="sort-사용하기"><a href="#sort-사용하기" class="headerlink" title="sort() 사용하기"></a>sort() 사용하기</h2><p>기본 내장된 <code>sort()</code> 메소드를 사용한다. 위에서 작성한 <code>strip()</code> 메소드에 정렬할 인자를 각각 넣어서 정렬한다.</p><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> sortedBands = bands.sort(<span class="function">(<span class="params">a, b</span>) =&gt;</span> (strip(a) &gt; strip(b) ? <span class="number">1</span> : <span class="number">-1</span>));</span><br></pre></td></tr></table></figure><h2 id="map-join-사용하기"><a href="#map-join-사용하기" class="headerlink" title="map, join 사용하기"></a>map, join 사용하기</h2><p>이제 적절한 위치에 정렬한 <code>sortedBand</code> 요소를 각각 <code>&lt;li&gt;</code> 객체로 매핑하여 <code>innerHTML</code>에 넣어주면 된다.</p><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">bandsList.innerHTML = sortedBands.map(<span class="function">(<span class="params">band</span>) =&gt;</span> <span class="string">`&lt;li&gt;<span class="subst">$&#123;band&#125;</span>&lt;/li&gt;`</span>).join(<span class="string">&quot;&quot;</span>);</span><br></pre></td></tr></table></figure><p><code>join(&#39;&#39;)</code>을 마지막에 사용하지 않으면 <code>,</code>가 들어간 이상한 리스트가 출력될 것이다. <code>innerHTML</code>에 태그들을 매핑하여 넣을 때는 외우다싶이 마지막에 <code>join()</code> 메소드를 사용하자.</p><h2 id="Full-Script"><a href="#Full-Script" class="headerlink" title="Full Script"></a>Full Script</h2><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> bands = [</span><br><span class="line">  <span class="string">&quot;The Plot in You&quot;</span>,</span><br><span class="line">  <span class="string">&quot;The Devil Wears Prada&quot;</span>,</span><br><span class="line">  <span class="string">&quot;Pierce the Veil&quot;</span>,</span><br><span class="line">  <span class="string">&quot;Norma Jean&quot;</span>,</span><br><span class="line">  <span class="string">&quot;The Bled&quot;</span>,</span><br><span class="line">  <span class="string">&quot;Say Anything&quot;</span>,</span><br><span class="line">  <span class="string">&quot;The Midway State&quot;</span>,</span><br><span class="line">  <span class="string">&quot;We Came as Romans&quot;</span>,</span><br><span class="line">  <span class="string">&quot;Counterparts&quot;</span>,</span><br><span class="line">  <span class="string">&quot;Oh, Sleeper&quot;</span>,</span><br><span class="line">  <span class="string">&quot;A Skylit Drive&quot;</span>,</span><br><span class="line">  <span class="string">&quot;Anywhere But Here&quot;</span>,</span><br><span class="line">  <span class="string">&quot;An Old Dog&quot;</span>,</span><br><span class="line">];</span><br><span class="line"></span><br><span class="line">bandsList = <span class="built_in">document</span>.querySelector(<span class="string">&quot;#bands&quot;</span>);</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">strip</span>(<span class="params">band</span>) </span>&#123;</span><br><span class="line">  <span class="comment">//regex - ^:starts with, i:insensitive(full matched)</span></span><br><span class="line">  <span class="keyword">return</span> band.replace(<span class="regexp">/^(a |the |an )/i</span>, <span class="string">&quot;&quot;</span>).trim();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> sortedBands = bands.sort(<span class="function">(<span class="params">a, b</span>) =&gt;</span> (strip(a) &gt; strip(b) ? <span class="number">1</span> : <span class="number">-1</span>));</span><br><span class="line"></span><br><span class="line">bandsList.innerHTML = sortedBands.map(<span class="function">(<span class="params">band</span>) =&gt;</span> <span class="string">`&lt;li&gt;<span class="subst">$&#123;band&#125;</span>&lt;/li&gt;`</span>).join(<span class="string">&quot;&quot;</span>);</span><br></pre></td></tr></table></figure><blockquote><p>regex 사용은 여전히 어려운 것 같다. 외우려고 하기 보다는 필요할 때 찾아서 쓰고, 기본적인 틀 정도만 상기시켜야겠다. 이제 13개밖에 남지 않았다!</p></blockquote>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;h2 id=&quot;Day-17-Sort-Without-Articles&quot;&gt;&lt;a href=&quot;#Day-17-Sort-Without-Articles&quot; class=&quot;headerlink&quot; title=&quot;Day 17 - Sort Without Articles&quot;&gt;&lt;/a&gt;</summary>
+      
+    
+    
+    
+    <category term="javascript" scheme="https://zinirun.github.io/categories/javascript/"/>
+    
+    
+    <category term="javascript" scheme="https://zinirun.github.io/tags/javascript/"/>
+    
+    <category term="javascript30" scheme="https://zinirun.github.io/tags/javascript30/"/>
+    
+    <category term="VanillaJS" scheme="https://zinirun.github.io/tags/VanillaJS/"/>
+    
+  </entry>
   
   <entry>
     <title>Javascript 제대로 쓰기 - Code This, NOT That!</title>
@@ -517,32 +545,6 @@
     <category term="algorithm" scheme="https://zinirun.github.io/tags/algorithm/"/>
     
     <category term="ps" scheme="https://zinirun.github.io/tags/ps/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>프로그래머스 Dev-Matching 2020 웹 프론트엔드 개발자(하반기) 후기</title>
-    <link href="https://zinirun.github.io/2020/08/23/js-programmers-matching-2020-review/"/>
-    <id>https://zinirun.github.io/2020/08/23/js-programmers-matching-2020-review/</id>
-    <published>2020-08-22T15:44:03.000Z</published>
-    <updated>2020-08-22T16:07:34.435Z</updated>
-    
-    <content type="html"><![CDATA[<h3 id="가벼운-마음으로"><a href="#가벼운-마음으로" class="headerlink" title="가벼운 마음으로"></a>가벼운 마음으로</h3><p>Vanilla Javascript에 대한 어느정도의 이해를 하고 있다고 생각했고, Javascript 30 Course도 열심히 따라가고 있어 호기심 반으로 <a href="https://programmers.co.kr/competitions/251/2020-web-fe-second">프로그래머스</a>의 Dev-Matching 2020을 신청했다.</p><p>이번 Javascript 과제 테스트를 통과하면 34개의 기업 중 본인이 선택한 최대 5개의 기업에 이력서를 보낼 기회가 생긴다. (이력서 전달하기도 참 힘든 세상이다) 사실 아직 대학을 졸업하기 1년이 넘게 남고 취업에 대한 절박함은 크지 않아서 부담없이 <em>즐기는 마음으로</em> 이번 시험을 치뤘다.</p><h3 id="문제에-대해서"><a href="#문제에-대해서" class="headerlink" title="문제에 대해서"></a>문제에 대해서</h3><p>내가 작성한 코드(어차피 틀렸겠지만)를 공개하고 싶지만 아직은 문제가 공개되지 않아 문제소지가 있을 것 같아서 나중에 공식적인 리뷰가 나온다면 다시 포스팅하겠다.</p><p>시험 시간은 3시간이었고, 토이 프로젝트 개념의 과제 하나만 완성하면 되었다. 검색 관련 문제였는데, 처음에 보고 Javascript 30의 <a href="https://zinirun.github.io/2020/08/19/js-course30-6/">Day 6 - Type Ahead</a>와 정말 비슷했고 그 전에 열심히 정리한 것이 많은 도움이 됐다.</p><p>문제의 큰 틀은 <code>input</code>에서 무언가가 입력될 때 제시된 주소의 파라미터로 데이터를 가져와서 추천 검색어 기능 구현, 이미지 검색 구현(이미지 Fetch 관련된 코드는 제시해주었다)이었는데 부수적인 조건이 많았다.</p><p>우선 제시된 주소에서 가끔 데이터를 보내지 않고 에러를 보내는데, 그 부분에 대한 모든 에러 핸들링이 필요했다. 이는 Promise 문법에서 <code>catch</code>를 통해 쉽게 해결되었다. 서버 에러 말고 정말 데이터가 없어서 빈 데이터가 들어오는 경우는 <code>if (data.length &gt; 0) ~ else ~</code>를 사용해서 핸들링했다.</p><p>그리고 추천 검색어를 나타낼 때 디바운싱을 사용하는 조건이 있었는데, 얼마 전 <a href="https://zinirun.github.io/2020/08/16/js-throttling-debouncing/">디바운싱과 쓰로틀링</a>에 대해 포스팅한 것이 도움이 됐다. (이 쯤 되면 운이 좋은건가)</p><p>추가적인 사항으로 Keyboard Event에 대한 여러가지 조건들이 많았는데, 크게 <code>esc</code>, <code>enter</code>, <code>방향키(상/하)</code> 3가지였다. key 값을 받아오는 것은 event 객체의 key 값을 검사하면 쉬웠지만, 가장 애를 먹었던 것은 상하 방향키로 추천 검색어의 포커스를 이동하고 엔터를 치면 검색이 되게 해야하는 것이었다. 나는 <code>cur</code>라는 현재 포커싱된 객체에만 <code>selected</code>라는 class를 추가하여 <code>enter</code>키를 입력받으면 <code>selected</code> class가 있는 <code>li</code> 객체의 <code>innerHTML</code>를 가져와서 검색 처리하였다.</p><p>다른 조건들도 많았는데, 핵심적인 파트는 ‘검색기’인 말 그대로 검색 기능을 필수 조건대로 성실히 구현하면 되는 문제였다. <em>(물론 능력자분들이 많을 것이기에 추가 조건도 모두 구현해야겠지만)</em></p><p><strong>좋은 경험이었고, 더 열심히 해야겠다는 생각밖에 안든다.</strong></p>]]></content>
-    
-    
-      
-      
-    <summary type="html">&lt;h3 id=&quot;가벼운-마음으로&quot;&gt;&lt;a href=&quot;#가벼운-마음으로&quot; class=&quot;headerlink&quot; title=&quot;가벼운 마음으로&quot;&gt;&lt;/a&gt;가벼운 마음으로&lt;/h3&gt;&lt;p&gt;Vanilla Javascript에 대한 어느정도의 이해를 하고 있다고 생각했고, </summary>
-      
-    
-    
-    
-    <category term="javascript" scheme="https://zinirun.github.io/categories/javascript/"/>
-    
-    
-    <category term="javascript" scheme="https://zinirun.github.io/tags/javascript/"/>
-    
-    <category term="VanillaJS" scheme="https://zinirun.github.io/tags/VanillaJS/"/>
     
   </entry>
   
