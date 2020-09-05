@@ -6,7 +6,7 @@
   <link href="https://zinirun.github.io/feed.xml" rel="self"/>
   
   <link href="https://zinirun.github.io/"/>
-  <updated>2020-09-02T17:00:15.583Z</updated>
+  <updated>2020-09-05T07:32:19.589Z</updated>
   <id>https://zinirun.github.io/</id>
   
   <author>
@@ -15,6 +15,28 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>SQLD 38회 후기 (국가공인 SQL 개발자 자격증)</title>
+    <link href="https://zinirun.github.io/2020/09/05/sqld-38-review/"/>
+    <id>https://zinirun.github.io/2020/09/05/sqld-38-review/</id>
+    <published>2020-09-05T07:07:22.000Z</published>
+    <updated>2020-09-05T07:32:19.589Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="SQL-개발자-자격시험"><a href="#SQL-개발자-자격시험" class="headerlink" title="SQL 개발자 자격시험"></a>SQL 개발자 자격시험</h2><p>한국데이터산업진흥원에서 주관하는 국가공인 SQL 개발자 시험이다. 1년에 4번 실시되고, 커트라인은 100점 만점에 60점인데, 크게 파트 2개로 나뉜다.</p><ul><li>데이터 모델링의 이해 (10문항)</li><li>SQL 기본 및 활용 (40문항 - 주관식 10문항 포함)</li></ul><p>각 파트마다 60점을 넘겨야 합격 처리된다. 생각보다 10문항짜리 첫 파트에서 실수가 많아지면 안되기에 마냥 쉽다고는 할 수 없다.</p><p>나는 일주일에 1시간 정도를 할애해서 전반적으로 개념을 짚었고, 시험 직전 이틀을 5시간 정도를 문제 풀이와 개념 외우기에 집중했다. 그래서 순공시간은 17시간? 정도 될 것 같다. 기존 프로젝트를 하면서 SQL Query 사용은 많이 해봤고 데이터베이스 기초 전공 과목을 수강했기에 공부가 크게 어렵지는 않았다.</p><h2 id="38회-후기"><a href="#38회-후기" class="headerlink" title="38회 후기"></a>38회 후기</h2><p>오늘 본 SQLD는 38회인데, 학교가 경기도에 위치해 있어서 강변 근처에 밥도 먹으러 갈 김에 서울 성수중학교에서 시험을 봤다. 코로나의 여파 때문인지 좌석간의 거리도 넓고 날씨도 많이 풀려서 전반적으로 쾌적했다.</p><h3 id="인쇄-오류"><a href="#인쇄-오류" class="headerlink" title="인쇄 오류"></a>인쇄 오류</h3><p>이번 시험에는 큰 인쇄 오류가 있었다. 고사장의 절반 가까이 되는 시험지가 마지막 주관식 2문제(7, 8번)가 제대로 인쇄되어 있지 않아 엄청난 혼동을 일으켰는데, 결국 주관식 7번과 8번은 풀이하지 말라는 공지가 방송되었다. (배점은 어떻게 바뀔지 모르겠다. 4점을 그냥 줄지 없는 문제로 칠지는 나중에 알 것 같다.)</p><h3 id="파트별-후기"><a href="#파트별-후기" class="headerlink" title="파트별 후기"></a>파트별 후기</h3><p>문제를 풀기 시작하고 생각보다 첫번째 파트 <code>데이터 모델링의 이해</code>가 까다로웠다. 기본적인 개념을 묻는 퍼주기식 문제는 거의 없었고 엔터티간의 상관관계를 그림으로 주고 묻는 문제가 생각보다 많이 나왔다. 사실 그 부분을 완벽하게 공부하지 않아서 거의 감으로 풀었다. 엔터티를 분류하는 속성이 <code>키 속성</code>인지 <code>기본키 속성</code>인지 너무 헷갈렸고, <code>기본키 속성</code>으로 찍었다가 결국 틀린 것을 알게 되었다.</p><p>두번째 파트인 <code>SQL 기본 및 활용</code>은 SQL문을 주고 결과를 쓰거나, 결과를 주고 SQL문을 찾는 문제가 과반수였고, 간단해서 눈으로 바로 풀 수 있는 문제 절반, 생각을 좀 해야하는 문제 절반이었다. 퍼주는 개념 문제도 5개 정도는 있었던 것 같다. 문제와 보기에 말장난이 정말 많아서 잘 봐야한다.</p><h3 id="전반적인-느낌"><a href="#전반적인-느낌" class="headerlink" title="전반적인 느낌"></a>전반적인 느낌</h3><p>시험 시간은 10시부터 11시 30분이었는데 40분 정도에 모두 풀고, 붙잡고 있어봤자 답이 안나오는 걸 알아서 성수중학교 1등으로 나왔다. 50문제에 1시간 30분을 주므로 시간은 충분하다 못해 넘치는 것 같다. 하지만 비전공자가 보기엔 당연히 어려운 시험이고, 도전하기 위해서는 꽤 많은 노력이 필요할 것 같다.</p><p>보통 책을 사서 공부할텐데, 정말 책에 오타가 너무 많고 문제와 답이 다른 경우도 있고 개념 설명도 너무 부실해서 빨리 경쟁 업체에서 다른 책을 출시해야 할 것 같다. 거의 독점하다시피 책을 내는데 왜 이 모양으로 책을 내는지 모르겠다. 요즘 책에 오탈자를 찾으면 상품권을 주는데 아마 이 책에서 오탈자나 잘못된 정보로 상품권을 줬다면 냉장고 한 대는 뽑았을 것 같다.</p><p>그렇다고 전공자가 인강을 보는 일은 없었으면 좋겠다. 100점을 맞는다고 좋은 것도 아니고 60점만 넘기면 되므로 좀 짜증나는 책을 가지고도 60점 정도는 넘길 수 있다고 생각한다. SQLP는 모르겠는데, SQLD는 절대 인강까지 볼 만큼 까다로운 시험이 아니다.</p><blockquote><p>38회 시험의 결과는 10월 6일에 나온다. 이 글을 보신 분들 중 오늘 시험을 치르신 분들이 있다면 꼭 합격하시길 빕니다!</p></blockquote>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;h2 id=&quot;SQL-개발자-자격시험&quot;&gt;&lt;a href=&quot;#SQL-개발자-자격시험&quot; class=&quot;headerlink&quot; title=&quot;SQL 개발자 자격시험&quot;&gt;&lt;/a&gt;SQL 개발자 자격시험&lt;/h2&gt;&lt;p&gt;한국데이터산업진흥원에서 주관하는 국가공인 SQL 개발자</summary>
+      
+    
+    
+    
+    
+    <category term="sqld" scheme="https://zinirun.github.io/tags/sqld/"/>
+    
+  </entry>
   
   <entry>
     <title>Javascript 30 - Day 18 Adding Up Times with Reduce</title>
@@ -511,34 +533,6 @@
     <category term="algorithm" scheme="https://zinirun.github.io/tags/algorithm/"/>
     
     <category term="ps" scheme="https://zinirun.github.io/tags/ps/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Javascript 30 - Day 10 JS Checkbox Challenge!</title>
-    <link href="https://zinirun.github.io/2020/08/24/js-course30-10/"/>
-    <id>https://zinirun.github.io/2020/08/24/js-course30-10/</id>
-    <published>2020-08-24T06:52:05.000Z</published>
-    <updated>2020-08-24T07:09:46.054Z</updated>
-    
-    <content type="html"><![CDATA[<h2 id="Day-10-JS-Checkbox-Challenge"><a href="#Day-10-JS-Checkbox-Challenge" class="headerlink" title="Day 10 - JS Checkbox Challenge!"></a>Day 10 - JS Checkbox Challenge!</h2><div class="video-container"><iframe src="https://www.youtube.com/embed/RIPYsKx1iiU" frameborder="0" loading="lazy" allowfullscreen></iframe></div><p>이번 과제는 <code>Shift</code> 키 이벤트로 <code>Checkbox</code> 객체를 다중 선택할 수 있게 한다. 예를 들어, Gmail, 윈도우의 개체를 선택하고 <code>Shift</code>키와 함께 선택한 요소에서부터 다음에 선택한 요소까지 다중으로 선택되는 기능을 구현하는 것이다.</p><h3 id="css-속성"><a href="#css-속성" class="headerlink" title="css + 속성"></a>css + 속성</h3><p>우선 css부터 이해가 필요하다. 체크박스 객체가 선택되었을 때 옆에 딸린 <code>p</code> 객체를 어떻게 줄을 그을 것인지, 물론 Javascript로도 할 수 있지만 css의 기본 속성으로도 구현할 수 있다.</p><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-tag">input</span><span class="selector-pseudo">:checked</span> + <span class="selector-tag">p</span> &#123;</span><br><span class="line">  <span class="attribute">background</span>: <span class="number">#f9f9f9</span>;</span><br><span class="line">  <span class="attribute">text-decoration</span>: line-through;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><p>간단하다. <code>input</code> 객체가 <code>checked</code> 상태일 때 <code>+</code>를 통해서 <code>p</code>의 css 속성을 제어할 수 있다. <code>checked</code> 말고도 <code>hover</code>, <code>focus</code> 등의 여러가지 속성이 많다.</p><h3 id="Script-Part"><a href="#Script-Part" class="headerlink" title="Script Part"></a>Script Part</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">const</span> checkboxes = <span class="built_in">document</span>.querySelectorAll(<span class="string">&#x27;.inbox input[type=&quot;checkbox&quot;]&#x27;</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> lastChecked;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">handleCheck</span>(<span class="params">e</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">let</span> inBetween = <span class="literal">false</span>;</span><br><span class="line">  <span class="keyword">if</span> (e.shiftKey &amp;&amp; <span class="built_in">this</span>.checked) &#123;</span><br><span class="line">    checkboxes.forEach(<span class="function"><span class="params">checkbox</span> =&gt;</span> &#123;</span><br><span class="line">      <span class="built_in">console</span>.log(checkbox);</span><br><span class="line">      <span class="keyword">if</span> (checkbox === <span class="built_in">this</span> || checkbox === lastChecked) &#123;</span><br><span class="line">        inBetween = !inBetween;</span><br><span class="line">        <span class="built_in">console</span>.log(<span class="string">&#x27;Starting to check them in between!&#x27;</span>);</span><br><span class="line">      &#125;</span><br><span class="line">      <span class="keyword">if</span> (inBetween) &#123;</span><br><span class="line">        checkbox.checked = <span class="literal">true</span>;</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;);</span><br><span class="line">  &#125;</span><br><span class="line">  lastChecked = <span class="built_in">this</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">checkboxes.forEach(<span class="function"><span class="params">checkbox</span> =&gt;</span> checkbox.addEventListener(<span class="string">&#x27;click&#x27;</span>, handleCheck));</span><br></pre></td></tr></table></figure><p>우선 체크박스 객체 전체를 선언하고 마지막에 체크된 객체를 저장하기 위해 <code>lastChecked</code>를 따로 만든다.</p><p>이제 체크박스들에 <code>handleCheck()</code> 함수를 이벤트로 걸어주는데, <code>inBetween</code>을 그냥 보면 이해가 어려울 것이다.</p><p>완성된 예제를 잘 생각해보자. 마지막에 선택한 체크박스 객체와 지금 클릭한 체크박스 객체 사이를 <code>checked</code>로 만들어주면 된다. 여기서 중간의 체크박스 객체들을 <code>inBetween = true</code>로 구분하여 체크해주는 것이다. 처음에는 <code>inBetween</code>을 <code>false</code>로 초기화시킨 후, 마지막에 선택했거나, 지금 클릭했다면 그 때 <code>inBetween</code>이 <code>true</code>로 업데이트되고, 또 다시 마지막에 선택했거나, 지금 클릭했다면 <code>false</code>로 업데이트되면서 중간의 객체들이 모두 체크된다. 이 방법을 이용하면 밑에서 위로 체크하는지, 위에서 밑으로 체크하는지 별도로 구현할 필요가 없다.</p><p>아마 이번 과제를 배우지 않았다면 <code>bottomUp</code>, <code>upBottom</code>을 선언하여 따로 구분짓고 for loop를 돌렸을 것 같다. 기발한 아이디어는 가독성, 효율 모두 좋게 만든다. 더 노력해야겠다.</p>]]></content>
-    
-    
-      
-      
-    <summary type="html">&lt;h2 id=&quot;Day-10-JS-Checkbox-Challenge&quot;&gt;&lt;a href=&quot;#Day-10-JS-Checkbox-Challenge&quot; class=&quot;headerlink&quot; title=&quot;Day 10 - JS Checkbox Challenge!&quot;&gt;&lt;/a</summary>
-      
-    
-    
-    
-    <category term="javascript" scheme="https://zinirun.github.io/categories/javascript/"/>
-    
-    
-    <category term="javascript" scheme="https://zinirun.github.io/tags/javascript/"/>
-    
-    <category term="javascript30" scheme="https://zinirun.github.io/tags/javascript30/"/>
-    
-    <category term="VanillaJS" scheme="https://zinirun.github.io/tags/VanillaJS/"/>
     
   </entry>
   

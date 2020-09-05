@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
 <meta http-equiv="X-UA-Compatible" content="ie=edge">
-<link rel="canonical" href="https://zinirun.github.io/2020/09/03/js-course30-18/">
+<link rel="canonical" href="https://zinirun.github.io/2020/09/05/sqld-38-review/">
 
 
 <link rel="stylesheet" href="//fonts.googleapis.com/earlyaccess/notosanskr.css">
@@ -18,7 +18,7 @@
 
 
 
-<title>Javascript 30 - Day 18 Adding Up Times with Reduce | zinirun</title>
+<title>SQLD 38회 후기 (국가공인 SQL 개발자 자격증) | zinirun</title>
 
 
 
@@ -223,7 +223,7 @@
     
     <article class="post-wrap">
         <header class="post-header">
-            <h1 class="post-title">Javascript 30 - Day 18 Adding Up Times with Reduce</h1>
+            <h1 class="post-title">SQLD 38회 후기 (국가공인 SQL 개발자 자격증)</h1>
             
                 <div class="post-meta">
                     
@@ -232,32 +232,32 @@
 
                     
                         <span class="post-time">
-                        Date: <a href="#">September 3, 2020&nbsp;&nbsp;0:19:16</a>
+                        Date: <a href="#">September 5, 2020&nbsp;&nbsp;16:07:22</a>
                         </span>
                     
-                    
-                        <span class="post-category">
-                    Category:
-                            
-                                <a href="/categories/javascript/">javascript</a>
-                            
-                        </span>
                     
                 </div>
             
         </header>
 
         <div class="post-content">
-            <h2 id="Day-18-Adding-Up-Times-with-Reduce"><a href="#Day-18-Adding-Up-Times-with-Reduce" class="headerlink" title="Day 18 - Adding Up Times with Reduce"></a>Day 18 - Adding Up Times with Reduce</h2><div class="video-container"><iframe src="https://www.youtube.com/embed/SadWPo2KZWg" frameborder="0" loading="lazy" allowfullscreen></iframe></div>
-
-<p>이번 과제는 map, reduce에 대한 방법만 알고 있다면 간단하게 해결할 수 있다.</p>
-<h2 id="Full-Script"><a href="#Full-Script" class="headerlink" title="Full Script"></a>Full Script</h2><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> timeNodes = [...document.querySelectorAll(<span class="string">&quot;[data-time]&quot;</span>)];</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> seconds = timeNodes</span><br><span class="line">  .map(<span class="function">(<span class="params">node</span>) =&gt;</span> node.dataset.time)</span><br><span class="line">  .map(<span class="function">(<span class="params">timeCode</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">const</span> [mins, secs] = timeCode.split(<span class="string">&quot;:&quot;</span>).map(<span class="built_in">parseFloat</span>);</span><br><span class="line">    <span class="keyword">return</span> mins * <span class="number">60</span> + secs;</span><br><span class="line">  &#125;)</span><br><span class="line">  .reduce(<span class="function">(<span class="params">total, eachSeconds</span>) =&gt;</span> total + eachSeconds);</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> secondsLeft = seconds;</span><br><span class="line"><span class="keyword">const</span> hours = <span class="built_in">Math</span>.floor(secondsLeft / <span class="number">3600</span>);</span><br><span class="line">secondsLeft %= <span class="number">3600</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> mins = <span class="built_in">Math</span>.floor(secondsLeft / <span class="number">60</span>);</span><br><span class="line">secondsLeft %= <span class="number">60</span>;</span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(hours, mins, secondsLeft);</span><br></pre></td></tr></table></figure>
-
-<p><code>querySelectorAll</code>로 가져온 데이터는 Node List의 형태이므로 spread 문법을 이용하여 풀어서 배열화시켜 저장한다. <code>Array.from()</code>을 사용해도 상관없다.</p>
-<p>우선 시간에 대한 데이터는 각각 <code>&lt;li data-time=&quot;4:04&quot;&gt;Video 58&lt;/li&gt;</code> 형식의 태그 안에 dataset으로 들어있는데, 이를 <code>map</code>으로 시간을 추출하기 위해 먼저 매핑한다.</p>
-<p>그 후 시간의 형식이 <code>mm:ss</code> 형식이므로 <code>:</code>를 기준으로 <code>split()</code>을 사용하여 나눈 후 <code>parseFloat</code>을 이용하여 실수형 형변환을 시킨다.</p>
-<p>그 값을 <code>reduce</code>를 사용하여 더해주면 되는데, 첫번째 인자인 <code>total</code>은 총 누적 값이고, 두번째 인자인 <code>eachSeconds</code>는 누적 값이다.</p>
-<p>두번의 매핑 후 한번의 리듀스를 거치면 결국 초 단위로 바꾼 총 누적 값이 되고, 이 값을 시간, 분, 초로 잘라서 콘솔에 출력하면 된다.</p>
+            <h2 id="SQL-개발자-자격시험"><a href="#SQL-개발자-자격시험" class="headerlink" title="SQL 개발자 자격시험"></a>SQL 개발자 자격시험</h2><p>한국데이터산업진흥원에서 주관하는 국가공인 SQL 개발자 시험이다. 1년에 4번 실시되고, 커트라인은 100점 만점에 60점인데, 크게 파트 2개로 나뉜다.</p>
+<ul>
+<li>데이터 모델링의 이해 (10문항)</li>
+<li>SQL 기본 및 활용 (40문항 - 주관식 10문항 포함)</li>
+</ul>
+<p>각 파트마다 60점을 넘겨야 합격 처리된다. 생각보다 10문항짜리 첫 파트에서 실수가 많아지면 안되기에 마냥 쉽다고는 할 수 없다.</p>
+<p>나는 일주일에 1시간 정도를 할애해서 전반적으로 개념을 짚었고, 시험 직전 이틀을 5시간 정도를 문제 풀이와 개념 외우기에 집중했다. 그래서 순공시간은 17시간? 정도 될 것 같다. 기존 프로젝트를 하면서 SQL Query 사용은 많이 해봤고 데이터베이스 기초 전공 과목을 수강했기에 공부가 크게 어렵지는 않았다.</p>
+<h2 id="38회-후기"><a href="#38회-후기" class="headerlink" title="38회 후기"></a>38회 후기</h2><p>오늘 본 SQLD는 38회인데, 학교가 경기도에 위치해 있어서 강변 근처에 밥도 먹으러 갈 김에 서울 성수중학교에서 시험을 봤다. 코로나의 여파 때문인지 좌석간의 거리도 넓고 날씨도 많이 풀려서 전반적으로 쾌적했다.</p>
+<h3 id="인쇄-오류"><a href="#인쇄-오류" class="headerlink" title="인쇄 오류"></a>인쇄 오류</h3><p>이번 시험에는 큰 인쇄 오류가 있었다. 고사장의 절반 가까이 되는 시험지가 마지막 주관식 2문제(7, 8번)가 제대로 인쇄되어 있지 않아 엄청난 혼동을 일으켰는데, 결국 주관식 7번과 8번은 풀이하지 말라는 공지가 방송되었다. (배점은 어떻게 바뀔지 모르겠다. 4점을 그냥 줄지 없는 문제로 칠지는 나중에 알 것 같다.)</p>
+<h3 id="파트별-후기"><a href="#파트별-후기" class="headerlink" title="파트별 후기"></a>파트별 후기</h3><p>문제를 풀기 시작하고 생각보다 첫번째 파트 <code>데이터 모델링의 이해</code>가 까다로웠다. 기본적인 개념을 묻는 퍼주기식 문제는 거의 없었고 엔터티간의 상관관계를 그림으로 주고 묻는 문제가 생각보다 많이 나왔다. 사실 그 부분을 완벽하게 공부하지 않아서 거의 감으로 풀었다. 엔터티를 분류하는 속성이 <code>키 속성</code>인지 <code>기본키 속성</code>인지 너무 헷갈렸고, <code>기본키 속성</code>으로 찍었다가 결국 틀린 것을 알게 되었다.</p>
+<p>두번째 파트인 <code>SQL 기본 및 활용</code>은 SQL문을 주고 결과를 쓰거나, 결과를 주고 SQL문을 찾는 문제가 과반수였고, 간단해서 눈으로 바로 풀 수 있는 문제 절반, 생각을 좀 해야하는 문제 절반이었다. 퍼주는 개념 문제도 5개 정도는 있었던 것 같다. 문제와 보기에 말장난이 정말 많아서 잘 봐야한다.</p>
+<h3 id="전반적인-느낌"><a href="#전반적인-느낌" class="headerlink" title="전반적인 느낌"></a>전반적인 느낌</h3><p>시험 시간은 10시부터 11시 30분이었는데 40분 정도에 모두 풀고, 붙잡고 있어봤자 답이 안나오는 걸 알아서 성수중학교 1등으로 나왔다. 50문제에 1시간 30분을 주므로 시간은 충분하다 못해 넘치는 것 같다. 하지만 비전공자가 보기엔 당연히 어려운 시험이고, 도전하기 위해서는 꽤 많은 노력이 필요할 것 같다.</p>
+<p>보통 책을 사서 공부할텐데, 정말 책에 오타가 너무 많고 문제와 답이 다른 경우도 있고 개념 설명도 너무 부실해서 빨리 경쟁 업체에서 다른 책을 출시해야 할 것 같다. 거의 독점하다시피 책을 내는데 왜 이 모양으로 책을 내는지 모르겠다. 요즘 책에 오탈자를 찾으면 상품권을 주는데 아마 이 책에서 오탈자나 잘못된 정보로 상품권을 줬다면 냉장고 한 대는 뽑았을 것 같다.</p>
+<p>그렇다고 전공자가 인강을 보는 일은 없었으면 좋겠다. 100점을 맞는다고 좋은 것도 아니고 60점만 넘기면 되므로 좀 짜증나는 책을 가지고도 60점 정도는 넘길 수 있다고 생각한다. SQLP는 모르겠는데, SQLD는 절대 인강까지 볼 만큼 까다로운 시험이 아니다.</p>
+<blockquote>
+<p>38회 시험의 결과는 10월 6일에 나온다. 이 글을 보신 분들 중 오늘 시험을 치르신 분들이 있다면 꼭 합격하시길 빕니다!</p>
+</blockquote>
 
         </div>
 
@@ -298,11 +298,7 @@
                 <span class="tag">
                     
                     
-                        <a href="/tags/javascript/"># javascript</a>
-                    
-                        <a href="/tags/javascript30/"># javascript30</a>
-                    
-                        <a href="/tags/VanillaJS/"># VanillaJS</a>
+                        <a href="/tags/sqld/"># sqld</a>
                     
                         
                 </span>
@@ -315,10 +311,8 @@
         </section>
         <section class="post-nav">
             
-                <a class="prev" rel="prev" href="/2020/09/05/sqld-38-review/">SQLD 38회 후기 (국가공인 SQL 개발자 자격증)</a>
             
-            
-            <a class="next" rel="next" href="/2020/09/02/ps-binarysearch-get-count-of-sorted-array/">Binary Search - 정렬된 배열에서 수의 개수 구하기 (이분탐색)</a>
+            <a class="next" rel="next" href="/2020/09/03/js-course30-18/">Javascript 30 - Day 18 Adding Up Times with Reduce</a>
             
         </section>
 
