@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+<link rel="canonical" href="https://zinirun.github.io/2020/09/06/js-course30-19/">
+
+
+<link rel="stylesheet" href="//fonts.googleapis.com/earlyaccess/notosanskr.css">
+
+
+    <meta name="author" content="zini">
+
+
+    <meta name="subtitle" content="tech blog by Zini">
+
+
+
+
+<title>Javascript 30 - Day 19 Webcam Fun | zinirun</title>
+
+
+
+    <link rel="icon" href="/favicon.png">
+
+
+
+
+    <!-- stylesheets list from _config.yml -->
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+
+
+
+    <!-- scripts list from _config.yml -->
+    
+    <script src="/js/script.js"></script>
+    
+    <script src="/js/tocbot.min.js"></script>
+    
+
+
+
+    
+    
+        
+    
+
+
+
+<script>
+	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+		(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+			m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+	ga('create', 'UA-175983012-1', 'auto');
+	ga('send', 'pageview');
+</script>
+
+<meta name="generator" content="Hexo 5.0.2"><link rel="alternate" href="/feed.xml" title="zinirun" type="application/atom+xml">
+</head>
+<body>
+    <div class="wrapper">
+        <header>
+  <nav class="navbar">
+    <div class="container">
+      <div class="navbar-header header-logo" style="font-size: 13pt; font-weight: 600;">
+        <a id="blog_logo" href="/" style="color: #2d96bd;"><img class="logo-ico spin circle" src="/image/logo.png" alt="zini's Devlog"></a>
+        
+        <a class="menu-item left-menu" href="/archives">Posts</a>
+        
+        <a class="menu-item left-menu" href="/category">Categories</a>
+        
+        <a class="menu-item left-menu" href="/tag">Tags</a>
+        
+<!--
+        <input id="switch_default" type="checkbox" class="switch_default" />
+        <label for="switch_default" class="toggleBtn" style="margin-left: 0px;"></label>
+-->
+      </div>
+      <div class="menu navbar-right">
+        <!--mynav-->
+        <div id="mynav-container">
+        
+        <a class="menu-item" href="/categories/javascript"><img class="menu-ico" src="/image/icons/js.png" alt="Javascript"></a>
+        
+        <a class="menu-item" href="/categories/nodejs"><img class="menu-ico" src="/image/icons/node.png" alt="Node"></a>
+        
+        <a class="menu-item" href="/categories/ReactJS"><img class="menu-ico" src="/image/icons/react.png" alt="React"></a>
+        
+        <a class="menu-item" href="/categories/cloud/docker"><img class="menu-ico" src="/image/icons/docker.png" alt="Docker"></a>
+        
+        <a class="menu-item" href="/categories/cloud/kubernetes"><img class="menu-ico" src="/image/icons/k8s.png" alt="Kubernetes"></a>
+        
+        <a class="menu-item" href="/categories/algorithm"><img class="menu-ico" src="/image/icons/ps-code.png" alt="Algorithm"></a>
+        
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  
+  <nav class="navbar-mobile" id="nav-mobile">
+    <div class="container">
+      <div class="navbar-header">
+        <div>
+          <a id="blog_logo" href="/" style="color: #2d96bd;"><img class="logo-ico" src="/image/logo.png" alt="zini's Devlog"></a>
+        </div>
+        <div class="menu-toggle" onclick="mobileBtn()">&#9776; Menu</div>
+      </div>
+      <div class="menu" id="mobile-menu">
+       <div id="mobile-nav">
+        
+        <a class="menu-item" href="/archives">Posts</a>
+        
+        <a class="menu-item" href="/category">Categories</a>
+        
+        <a class="menu-item" href="/tag">Tags</a>
+        
+          </div>
+        <div id="mobile-mynav">
+        
+        <a class="menu-item" href="/categories/javascript"><img class="menu-ico" src="/image/icons/js.png" alt="Javascript"></a>
+        
+        <a class="menu-item" href="/categories/nodejs"><img class="menu-ico" src="/image/icons/node.png" alt="Node"></a>
+        
+        <a class="menu-item" href="/categories/ReactJS"><img class="menu-ico" src="/image/icons/react.png" alt="React"></a>
+        
+        <a class="menu-item" href="/categories/cloud/docker"><img class="menu-ico" src="/image/icons/docker.png" alt="Docker"></a>
+        
+        <a class="menu-item" href="/categories/cloud/kubernetes"><img class="menu-ico" src="/image/icons/k8s.png" alt="Kubernetes"></a>
+        
+        <a class="menu-item" href="/categories/algorithm"><img class="menu-ico" src="/image/icons/ps-code.png" alt="Algorithm"></a>
+        
+          </div>
+      </div>
+    </div>
+  </nav>
+</header>
+<script>
+  var mobileBtn = function f() {
+    var toggleMenu = document.getElementsByClassName("menu-toggle")[0];
+    var mobileMenu = document.getElementById("mobile-menu");
+    if (toggleMenu.classList.contains("active")) {
+      toggleMenu.classList.remove("active");
+      mobileMenu.classList.remove("active");
+    } else {
+      toggleMenu.classList.add("active");
+      mobileMenu.classList.add("active");
+    }
+  };
+</script>
+
+        <div class="main">
+            <div class="container">
+    
+    
+        <div class="post-toc">
+    <div class="tocbot-list">
+    </div>
+    <div class="tocbot-list-menu">
+        <a class="tocbot-toc-expand" onclick="expand_toc()">Expand All</a>
+        <a onclick="go_top()">Top</a>
+        <a onclick="go_bottom()">Bottom</a>
+    </div>
+</div>
+
+<script>
+    document.ready(
+        function () {
+            tocbot.init({
+                tocSelector: '.tocbot-list',
+                contentSelector: '.post-content',
+                headingSelector: 'h1, h2, h3, h4, h5',
+                collapseDepth: 1,
+                orderedList: false,
+                scrollSmooth: true,
+            })
+        }
+    )
+
+    function expand_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 6,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "collapse_toc()");
+        b.innerHTML = "Collapse all"
+    }
+
+    function collapse_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 1,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "expand_toc()");
+        b.innerHTML = "Expand all"
+    }
+
+    function go_top() {
+        window.scrollTo(0, 0);
+    }
+
+    function go_bottom() {
+        window.scrollTo(0, document.body.scrollHeight);
+    }
+
+</script>
+    
+
+    
+    <article class="post-wrap">
+        <header class="post-header">
+            <h1 class="post-title">Javascript 30 - Day 19 Webcam Fun</h1>
+            
+                <div class="post-meta">
+                    
+                        Author: <a itemprop="author" rel="author" href="/">zini</a>
+                    
+
+                    
+                        <span class="post-time">
+                        Date: <a href="#">September 6, 2020&nbsp;&nbsp;14:54:21</a>
+                        </span>
+                    
+                    
+                        <span class="post-category">
+                    Category:
+                            
+                                <a href="/categories/javascript/">javascript</a>
+                            
+                        </span>
+                    
+                </div>
+            
+        </header>
+
+        <div class="post-content">
+            <h2 id="Day-19-Webcam-Fun"><a href="#Day-19-Webcam-Fun" class="headerlink" title="Day 19 - Webcam Fun"></a>Day 19 - Webcam Fun</h2><div class="video-container"><iframe src="https://www.youtube.com/embed/ElWFcBlVk-o" frameborder="0" loading="lazy" allowfullscreen></iframe></div>
+
+<p>이번 과제는 웹캠을 브라우저에서 사용한다. 프로그래머스에서 온라인 코딩테스트를 볼 때 크롬에서 실시간 웹캠 사용이 되는 것이 신기했는데, 아마 이런 방식을 사용한게 아닐까 싶다.</p>
+<p>웹캠의 사용이 클라이언트만 있어서 되는게 아니고, 서버 관련 모듈을 설치하고 환경을 세팅해야 한다. 하지만 npm 환경을 사용해서 내장된 <code>package.json</code>만으로 <code>npm install</code>을 통해 모든 환경을 한번에 세팅할 수 있었다.</p>
+<h2 id="비디오-가져오기"><a href="#비디오-가져오기" class="headerlink" title="비디오 가져오기"></a>비디오 가져오기</h2><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">getVideo</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  navigator.mediaDevices</span><br><span class="line">    .getUserMedia(&#123; <span class="attr">video</span>: <span class="literal">true</span>, <span class="attr">audio</span>: <span class="literal">false</span> &#125;)</span><br><span class="line">    .then(<span class="function">(<span class="params">localMediaStream</span>) =&gt;</span> &#123;</span><br><span class="line">      video.srcObject = localMediaStream;</span><br><span class="line">      video.play();</span><br><span class="line">    &#125;)</span><br><span class="line">    .catch(<span class="function">(<span class="params">err</span>) =&gt;</span> &#123;</span><br><span class="line">      <span class="built_in">console</span>.error(<span class="string">`Oh NO!!`</span>, err);</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>캠의 비디오를 가져오는 방법은 <code>navigator.mediaDevices.getUserMedia()</code> 메소드를 사용하면 되므로 간편하다. 그 후 적절한 에러핸들링과 함께 미리 선언해놓은 <code>video</code> 돔 객체의 <code>src</code> 경로에 스트리밍되는 캠 데이터를 넣고 <code>play()</code> 시켜주면 된다.</p>
+<blockquote>
+<p>원래는 <code>video.src = window.URL.createObjectURL(localMediaStream)</code>을 사용했었는데 현재의 브라우저에서는 <code>video.srcObject=localMediaStream</code>으로 사용한다고 한다. 관련 Deprecated 정보는 <a target="_blank" rel="external nofollow noopener noreferrer" href="https://developer.mozilla.org/en-US/docs/Web/API/URL/createObjectURL">Mozilla</a>에서 확인할 수 있다.</p>
+</blockquote>
+<h2 id="캔버스에-비디오-넣기"><a href="#캔버스에-비디오-넣기" class="headerlink" title="캔버스에 비디오 넣기"></a>캔버스에 비디오 넣기</h2><p>캔버스에 비디오를 넣는 이유는 R, G, B 픽셀 값을 조정하는 바(bar)로 비디오에 장난(?)을 치기 위해서인데 굳이 비디오에 효과를 안 줘도 되면 그냥 대충 보고 넘어갔다가 필요할 때 쓰면 될 것 같다. (내가 그렇다)</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">paintToCanvas</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">const</span> width = video.videoWidth;</span><br><span class="line">  <span class="keyword">const</span> height = video.videoHeight;</span><br><span class="line">  canvas.width = width;</span><br><span class="line">  canvas.height = height;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> <span class="built_in">setInterval</span>(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">    ctx.drawImage(video, <span class="number">0</span>, <span class="number">0</span>, width, height);</span><br><span class="line">  &#125;, <span class="number">16</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>위 코드가 데이터의 픽셀에 대한 접근없이, 순수하게 비디오를 캔버스에 그려넣는 과정이다. 캠마다 너비와 높이가 다르므로 전체화면에서 적절하게 조정하기 위해, 비디오의 너비와 높이를 캔버스에 넣어준다.</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">paintToCanvas</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">const</span> width = video.videoWidth;</span><br><span class="line">  <span class="keyword">const</span> height = video.videoHeight;</span><br><span class="line">  canvas.width = width;</span><br><span class="line">  canvas.height = height;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> <span class="built_in">setInterval</span>(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">    ctx.drawImage(video, <span class="number">0</span>, <span class="number">0</span>, width, height);</span><br><span class="line">    <span class="comment">// take the pixels out</span></span><br><span class="line">    <span class="keyword">let</span> pixels = ctx.getImageData(<span class="number">0</span>, <span class="number">0</span>, width, height);</span><br><span class="line">    <span class="comment">// mess with them</span></span><br><span class="line">    pixels = redEffect(pixels);</span><br><span class="line"></span><br><span class="line">    pixels = rgbSplit(pixels);</span><br><span class="line">    ctx.globalAlpha = <span class="number">0.8</span>;</span><br><span class="line"></span><br><span class="line">    pixels = greenScreen(pixels);</span><br><span class="line">    <span class="comment">// put them back</span></span><br><span class="line">    ctx.putImageData(pixels, <span class="number">0</span>, <span class="number">0</span>);</span><br><span class="line">  &#125;, <span class="number">16</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>위 코드가 캔버스의 픽셀을 rgb를 조정하는 함수를 작성하여 다시 그려내는 과정이다. 픽셀을 조정하는 함수는 밑에서 설명하겠다. 이제 이 함수를 <code>video</code> 객체에 이벤트로 걸어주면 된다.</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">video.addEventListener(<span class="string">&quot;canplay&quot;</span>, paintToCanvas);</span><br></pre></td></tr></table></figure>
+
+<p><code>canplay</code> 라는 이벤트 속성이 있는지 몰랐다, 꽤 유용하게 사용할 것 같다.</p>
+<h2 id="비디오-캡쳐하기"><a href="#비디오-캡쳐하기" class="headerlink" title="비디오 캡쳐하기"></a>비디오 캡쳐하기</h2><p>버튼을 누르면 비디오가 캡쳐되고, 미리보기 스냅샷이 화면 아래에 삽입된다.</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">takePhoto</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="comment">// 찰칵 소리 내기</span></span><br><span class="line">  snap.currentTime = <span class="number">0</span>;</span><br><span class="line">  snap.play();</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 캔버스의 데이터를 내보내기</span></span><br><span class="line">  <span class="keyword">const</span> data = canvas.toDataURL(<span class="string">&quot;image/jpeg&quot;</span>);</span><br><span class="line">  <span class="keyword">const</span> link = <span class="built_in">document</span>.createElement(<span class="string">&quot;a&quot;</span>);</span><br><span class="line">  link.href = data;</span><br><span class="line">  link.setAttribute(<span class="string">&quot;download&quot;</span>, <span class="string">&quot;handsome&quot;</span>);</span><br><span class="line">  link.innerHTML = <span class="string">`&lt;img src=&quot;<span class="subst">$&#123;data&#125;</span>&quot; alt=&quot;Handsome Man&quot; /&gt;`</span>;</span><br><span class="line">  strip.insertBefore(link, strip.firstChild);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>버튼을 누른 후 화면 밑을 보면</p>
+<p><img src="/images/2020-09-06-15-13-58.png"></p>
+<p>이렇게 스냅샷이 보여지고 클릭하면 다운로드된다. <code>createElement</code>를 써도 되고 <code>innerHTML</code>을 <code>+=</code>로 늘여나가도 상관없을 것 같다.</p>
+<h2 id="픽셀로-장난-치기"><a href="#픽셀로-장난-치기" class="headerlink" title="픽셀로 장난(?)치기"></a>픽셀로 장난(?)치기</h2><p>밑에서부터 나오는 코드들은 솔직히 제대로 보지는 않았다. 내가 이미지 처리에 관심도 없을 뿐더러 비디오 처리시에 필터 효과가 필요하다면 그때 검색해서 쓰면 되기 때문에 굳이 하나하나 파헤치지는 않았다.</p>
+<p>그 전에, 한가지 괜찮다고 생각한 코드는</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">document</span>.querySelectorAll(<span class="string">&quot;.rgb input&quot;</span>).forEach(<span class="function">(<span class="params">input</span>) =&gt;</span> &#123;</span><br><span class="line">  levels[input.name] = input.value;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<p>이 코드인데, 난 range bar에 이벤트가 걸려있지 않은데 어떻게 값을 실시간으로 바꿀까 생각하다가 코드를 보니 이렇게 비디오가 플레이되고 있을 때 실행되는 함수 내에서 이렇게 값을 받아오고 있었다.</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">redEffect</span>(<span class="params">pixels</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">for</span> (<span class="keyword">let</span> i = <span class="number">0</span>; i &lt; pixels.data.length; i += <span class="number">4</span>) &#123;</span><br><span class="line">    pixels.data[i + <span class="number">0</span>] = pixels.data[i + <span class="number">0</span>] + <span class="number">200</span>; <span class="comment">// RED</span></span><br><span class="line">    pixels.data[i + <span class="number">1</span>] = pixels.data[i + <span class="number">1</span>] - <span class="number">50</span>; <span class="comment">// GREEN</span></span><br><span class="line">    pixels.data[i + <span class="number">2</span>] = pixels.data[i + <span class="number">2</span>] * <span class="number">0.5</span>; <span class="comment">// Blue</span></span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> pixels;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">rgbSplit</span>(<span class="params">pixels</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">for</span> (<span class="keyword">let</span> i = <span class="number">0</span>; i &lt; pixels.data.length; i += <span class="number">4</span>) &#123;</span><br><span class="line">    pixels.data[i - <span class="number">150</span>] = pixels.data[i + <span class="number">0</span>]; <span class="comment">// RED</span></span><br><span class="line">    pixels.data[i + <span class="number">500</span>] = pixels.data[i + <span class="number">1</span>]; <span class="comment">// GREEN</span></span><br><span class="line">    pixels.data[i - <span class="number">550</span>] = pixels.data[i + <span class="number">2</span>]; <span class="comment">// Blue</span></span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> pixels;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">greenScreen</span>(<span class="params">pixels</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">const</span> levels = &#123;&#125;;</span><br><span class="line"></span><br><span class="line">  <span class="built_in">document</span>.querySelectorAll(<span class="string">&quot;.rgb input&quot;</span>).forEach(<span class="function">(<span class="params">input</span>) =&gt;</span> &#123;</span><br><span class="line">    levels[input.name] = input.value;</span><br><span class="line">  &#125;);</span><br><span class="line"></span><br><span class="line">  <span class="keyword">for</span> (i = <span class="number">0</span>; i &lt; pixels.data.length; i = i + <span class="number">4</span>) &#123;</span><br><span class="line">    red = pixels.data[i + <span class="number">0</span>];</span><br><span class="line">    green = pixels.data[i + <span class="number">1</span>];</span><br><span class="line">    blue = pixels.data[i + <span class="number">2</span>];</span><br><span class="line">    alpha = pixels.data[i + <span class="number">3</span>];</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (</span><br><span class="line">      red &gt;= levels.rmin &amp;&amp;</span><br><span class="line">      green &gt;= levels.gmin &amp;&amp;</span><br><span class="line">      blue &gt;= levels.bmin &amp;&amp;</span><br><span class="line">      red &lt;= levels.rmax &amp;&amp;</span><br><span class="line">      green &lt;= levels.gmax &amp;&amp;</span><br><span class="line">      blue &lt;= levels.bmax</span><br><span class="line">    ) &#123;</span><br><span class="line">      <span class="comment">// take it out!</span></span><br><span class="line">      pixels.data[i + <span class="number">3</span>] = <span class="number">0</span>;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> pixels;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+        </div>
+
+        
+            <section class="post-copyright">
+                
+                
+                
+                
+
+            </section>
+        
+        <section class="post_disqus">
+            <div id="disqus_thread"></div>
+            <script>
+            
+            /**
+            *  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+            *  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables*/
+            /*
+            var disqus_config = function () {
+            this.page.url = PAGE_URL;  // Replace PAGE_URL with your page's canonical URL variable
+            this.page.identifier = PAGE_IDENTIFIER; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+            };
+            */
+            (function() { // DON'T EDIT BELOW THIS LINE
+            var d = document, s = d.createElement('script');
+            s.src = 'https://zinirun.disqus.com/embed.js';
+            s.setAttribute('data-timestamp', +new Date());
+            (d.head || d.body).appendChild(s);
+            })();
+            </script>
+            <noscript>Please enable JavaScript to view the <a target="_blank" rel="external nofollow noopener noreferrer" href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+        </section>
+        <section class="post-tags">
+            <div>
+                <span>Tag(s):</span>
+                <span class="tag">
+                    
+                    
+                        <a href="/tags/javascript/"># javascript</a>
+                    
+                        <a href="/tags/javascript30/"># javascript30</a>
+                    
+                        <a href="/tags/VanillaJS/"># VanillaJS</a>
+                    
+                        
+                </span>
+            </div>
+            <div>
+                <a href="javascript:window.history.back();">back</a>
+                <span>· </span>
+                <a href="/">home</a>
+            </div>
+        </section>
+        <section class="post-nav">
+            
+            
+            <a class="next" rel="next" href="/2020/09/05/sqld-38-review/">SQLD 38회 후기 (국가공인 SQL 개발자 자격증)</a>
+            
+        </section>
+
+
+    </article>
+</div>
+
+        </div>
+        <footer id="footer" class="footer">
+  <div class="copyright">
+    <span>© zini | Powered by
+      <a href="https://hexo.io" target="_blank" rel="external nofollow noopener noreferrer">Hexo</a>
+  </span></div>
+</footer>
+
+    </div>
+</body>
+</html>
