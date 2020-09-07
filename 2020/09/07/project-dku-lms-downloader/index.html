@@ -253,6 +253,9 @@
 <div style="text-align:center">완성한 프로그램의 디자인.</div>
 <div style="text-align:center">아이콘은 단국대학교 공식 UI에서 가져왔다.</div>
 
+<blockquote>
+<p>블로그에서는 일부 중요한 코드만 언급하고, 모든 코드는 <a target="_blank" rel="external nofollow noopener noreferrer" href="https://github.com/zinirun/LMSDownloader">Github</a>에 공개되어 있고, 기여할 수 있다.</p>
+</blockquote>
 <h2 id="로직-구성하기"><a href="#로직-구성하기" class="headerlink" title="로직 구성하기"></a>로직 구성하기</h2><p>사이트 소스를 보니 그럴만도 했다. <code>iframe</code>이 4중으로 되어 있고, 마지막 강의가 들어있는 프레임은 <code>contentDocument()</code> 메소드가 차단되어 있어 가져오지를 못했다.</p>
 <p>조금 더 생각을 바꾸고, 세번째 프레임까지 들어간 다음, 네번째 프레임을 띄워주고 거기서 <code>video</code> 객체의 <code>src</code> 경로를 가져올 수 있겠다 싶었다.</p>
 <h2 id="영상의-경로를-가져올-때-까지"><a href="#영상의-경로를-가져올-때-까지" class="headerlink" title="영상의 경로를 가져올 때 까지"></a>영상의 경로를 가져올 때 까지</h2><p>우선 세번째 프레임까지는 <code>contentDocument</code>를 통해 들어갈 수 있어서 안의 컨텐츠 내용을 가져올 수 있다.</p>
