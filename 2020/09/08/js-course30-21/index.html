@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
 <meta http-equiv="X-UA-Compatible" content="ie=edge">
-<link rel="canonical" href="https://zinirun.github.io/2020/09/10/js-programmers-matching-2020-review-2/">
+<link rel="canonical" href="https://zinirun.github.io/2020/09/08/js-course30-21/">
 
 
 <link rel="stylesheet" href="//fonts.googleapis.com/earlyaccess/notosanskr.css">
@@ -18,7 +18,7 @@
 
 
 
-<title>프로그래머스 Dev-Matching 2020 웹 프론트엔드 개발자(하반기) 합격 | zinirun</title>
+<title>Javascript 30 - Day 21 Geolocation | zinirun</title>
 
 
 
@@ -157,11 +157,73 @@
             <div class="container">
     
     
+        <div class="post-toc">
+    <div class="tocbot-list">
+    </div>
+    <div class="tocbot-list-menu">
+        <a class="tocbot-toc-expand" onclick="expand_toc()">Expand All</a>
+        <a onclick="go_top()">Top</a>
+        <a onclick="go_bottom()">Bottom</a>
+    </div>
+</div>
+
+<script>
+    document.ready(
+        function () {
+            tocbot.init({
+                tocSelector: '.tocbot-list',
+                contentSelector: '.post-content',
+                headingSelector: 'h1, h2, h3, h4, h5',
+                collapseDepth: 1,
+                orderedList: false,
+                scrollSmooth: true,
+            })
+        }
+    )
+
+    function expand_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 6,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "collapse_toc()");
+        b.innerHTML = "Collapse all"
+    }
+
+    function collapse_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 1,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "expand_toc()");
+        b.innerHTML = "Expand all"
+    }
+
+    function go_top() {
+        window.scrollTo(0, 0);
+    }
+
+    function go_bottom() {
+        window.scrollTo(0, document.body.scrollHeight);
+    }
+
+</script>
+    
 
     
     <article class="post-wrap">
         <header class="post-header">
-            <h1 class="post-title">프로그래머스 Dev-Matching 2020 웹 프론트엔드 개발자(하반기) 합격</h1>
+            <h1 class="post-title">Javascript 30 - Day 21 Geolocation</h1>
             
                 <div class="post-meta">
                     
@@ -170,7 +232,7 @@
 
                     
                         <span class="post-time">
-                        Date: <a href="#">September 10, 2020&nbsp;&nbsp;14:08:24</a>
+                        Date: <a href="#">September 8, 2020&nbsp;&nbsp;16:50:43</a>
                         </span>
                     
                     
@@ -186,15 +248,13 @@
         </header>
 
         <div class="post-content">
-            <p><a href="https://zinirun.github.io/2020/08/23/js-programmers-matching-2020-review/">이전 후기 포스트</a></p>
-<p><img src="/images/2020-09-10-14-20-21.png"></p>
-<p>프로그래머스 Dev-Matching 2020 웹 프론트엔드 개발자 하반기(제목이 참 길다)에 합격했다. 물론 기업 1차에 붙은 것이라고 하기에도 뭐한게, 희망 기업에 “이력서를 전달할 기회”를 얻었다.</p>
-<p>정말 좋다고 느낀 것은, 과제에 대해 하나하나 시니어 웹 개발자분들이 리뷰를 해준다는 것이다. 좋은 점, 아쉬운 점, 총평 3가지로 내 과제를 평가해준다. 아쉬운 코드라고 총평에는 나와있는데 상위 20%를 받은 것이 약간 아이러니하지만 뿌듯하긴 하다.</p>
-<p>사실 취업에 발등이 떨어져서 이번 테스트를 신청한 것이 아니고, 코드 리뷰도 받고 내 역량도 체크할 겸 마음 편하게 봤는데 뜻밖의 좋은 소식을 받아서 기분이 좋다.</p>
-<p>아쉬운 점 중 가장 반성하는 점 3개를 꼽자면</p>
-<p><img src="/images/2020-09-10-14-25-15.png"></p>
-<p>자바스크립트에서 클린 코드를 작성하려고 열심히 공부하고 있는데 이런 바보같은 짓을 해서 아직 정말 멀었다고 생각했다. 자바스크립트에서의 리팩토링과 디자인 패턴에 대해서 심도있는 공부가 필요할 것 같다.</p>
-<p>아무튼 자신감 10% 정도 충전한 기분이다. 더 열심히 하자.</p>
+            <h2 id="Day-21-Geolocation"><a href="#Day-21-Geolocation" class="headerlink" title="Day 21 - Geolocation"></a>Day 21 - Geolocation</h2><div class="video-container"><iframe src="https://www.youtube.com/embed/X7Cbtra0C6I" frameborder="0" loading="lazy" allowfullscreen></iframe></div>
+
+<p>이번 과제는 위치 정보를 다룰 수 있는 <code>navigator.geolocation</code>을 사용한다. 그런데 크롬 브라우저에서는 지원하지 않고 사파리에서 디버깅 모드로 속도, 위치를 바꿔가며 실습할 수 있다는데 맥 개발 환경이 없어서 코드만 보고 끝냈다. (내년에 맥북 사야할 이유가 한가지 늘었다)</p>
+<h2 id="navigator-geolocation-watchPosition"><a href="#navigator-geolocation-watchPosition" class="headerlink" title="navigator.geolocation.watchPosition()"></a>navigator.geolocation.watchPosition()</h2><p>나침반인 <code>arrow</code>와 속도계인 <code>speed</code>가 모두 구현되어 있고, 위치 값을 이용하여 이를 조작하면 된다.</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">navigator.geolocation.watchPosition(</span><br><span class="line">  (data) =&gt; &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(data);</span><br><span class="line">    speed.textContent = data.coords.speed;</span><br><span class="line">    arrow.style.transform = <span class="string">`rotate(<span class="subst">$&#123;data.coords.heading&#125;</span>deg)`</span>;</span><br><span class="line">  &#125;,</span><br><span class="line">  (err) =&gt; &#123;</span><br><span class="line">    <span class="built_in">console</span>.error(err);</span><br><span class="line">  &#125;</span><br><span class="line">);</span><br></pre></td></tr></table></figure>
+
+<p><code>watchPosition()</code> 메소드를 활용하여 <code>coords.speed</code> 데이터와 <code>coords.heading</code> 데이터로 속도와 방향을 추출할 수 있다.</p>
 
         </div>
 
@@ -237,6 +297,8 @@
                     
                         <a href="/tags/javascript/"># javascript</a>
                     
+                        <a href="/tags/javascript30/"># javascript30</a>
+                    
                         <a href="/tags/VanillaJS/"># VanillaJS</a>
                     
                         
@@ -250,8 +312,10 @@
         </section>
         <section class="post-nav">
             
+                <a class="prev" rel="prev" href="/2020/09/10/js-course30-22/">Javascript 30 - Day 22 Follow Along Link Highlighter</a>
             
-            <a class="next" rel="next" href="/2020/09/10/js-course30-22/">Javascript 30 - Day 22 Follow Along Link Highlighter</a>
+            
+            <a class="next" rel="next" href="/2020/09/07/js-course30-20/">Javascript 30 - Day 20 Speech Detection</a>
             
         </section>
 
