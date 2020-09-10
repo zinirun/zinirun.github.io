@@ -6,7 +6,7 @@
   <link href="https://zinirun.github.io/feed.xml" rel="self"/>
   
   <link href="https://zinirun.github.io/"/>
-  <updated>2020-09-07T12:56:12.751Z</updated>
+  <updated>2020-09-10T05:27:35.067Z</updated>
   <id>https://zinirun.github.io/</id>
   
   <author>
@@ -15,6 +15,33 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>프로그래머스 Dev-Matching 2020 웹 프론트엔드 개발자(하반기) 합격</title>
+    <link href="https://zinirun.github.io/2020/09/10/js-programmers-matching-2020-review-2/"/>
+    <id>https://zinirun.github.io/2020/09/10/js-programmers-matching-2020-review-2/</id>
+    <published>2020-09-10T05:08:24.000Z</published>
+    <updated>2020-09-10T05:27:35.067Z</updated>
+    
+    <content type="html"><![CDATA[<p><img src="/images/2020-09-10-14-20-21.png"></p><p>프로그래머스 Dev-Matching 2020 웹 프론트엔드 개발자 하반기(제목이 참 길다)에 합격했다. 물론 기업 1차에 붙은 것이라고 하기에도 뭐한게, 희망 기업에 “이력서를 전달할 기회”를 얻었다.</p><p>정말 좋다고 느낀 것은, 과제에 대해 하나하나 시니어 웹 개발자분들이 리뷰를 해준다는 것이다. 좋은 점, 아쉬운 점, 총평 3가지로 내 과제를 평가해준다. 아쉬운 코드라고 총평에는 나와있는데 상위 20%를 받은 것이 약간 아이러니하지만 뿌듯하긴 하다.</p><p>사실 취업에 발등이 떨어져서 이번 테스트를 신청한 것이 아니고, 코드 리뷰도 받고 내 역량도 체크할 겸 마음 편하게 봤는데 뜻밖의 좋은 소식을 받아서 기분이 좋다.</p><p>아쉬운 점 중 가장 반성하는 점 3개를 꼽자면</p><p><img src="/images/2020-09-10-14-25-15.png"></p><p>자바스크립트에서 클린 코드를 작성하려고 열심히 공부하고 있는데 이런 바보같은 짓을 해서 아직 정말 멀었다고 생각했다. 자바스크립트에서의 리팩토링과 디자인 패턴에 대해서 심도있는 공부가 필요할 것 같다.</p><p>아무튼 자신감 10% 정도 충전한 기분이다. 더 열심히 하자.</p>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;p&gt;&lt;img src=&quot;/images/2020-09-10-14-20-21.png&quot;&gt;&lt;/p&gt;
+&lt;p&gt;프로그래머스 Dev-Matching 2020 웹 프론트엔드 개발자 하반기(제목이 참 길다)에 합격했다. 물론 기업 1차에 붙은 것이라고 하기에도 뭐한게, </summary>
+      
+    
+    
+    
+    <category term="javascript" scheme="https://zinirun.github.io/categories/javascript/"/>
+    
+    
+    <category term="javascript" scheme="https://zinirun.github.io/tags/javascript/"/>
+    
+    <category term="VanillaJS" scheme="https://zinirun.github.io/tags/VanillaJS/"/>
+    
+  </entry>
   
   <entry>
     <title>Javascript 30 - Day 20 Speech Detection</title>
@@ -515,26 +542,6 @@
     <category term="javascript" scheme="https://zinirun.github.io/tags/javascript/"/>
     
     <category term="react" scheme="https://zinirun.github.io/tags/react/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Flask 앱 Netlify, Heroku 배포 삽질기</title>
-    <link href="https://zinirun.github.io/2020/08/26/flask-deploy-netlify-heroku/"/>
-    <id>https://zinirun.github.io/2020/08/26/flask-deploy-netlify-heroku/</id>
-    <published>2020-08-26T05:38:15.000Z</published>
-    <updated>2020-08-26T06:06:49.510Z</updated>
-    
-    <content type="html"><![CDATA[<h2 id="결론은-안된다"><a href="#결론은-안된다" class="headerlink" title="결론은 안된다."></a>결론은 안된다.</h2><p>학교에서 대여해준 NHN Toast Cloud 서버가 8월 말에 사용이 중지된다는 얘기를 듣고 AWS에 입문해볼까 하다가 어차피 토이 프로젝트이니 이 정도는 <a href="https://www.netlify.com/">Netlify</a>나 <a href="https://herokuapp.com/">Heroku</a>에 서비스해도 될 것 같아서 배포를 하려 했는데, 딱 거기서 생각을 멈췄어야 했다. 아직도 머리가 얼얼하다.</p><blockquote><p>결론부터 말하자면 정적 웹(파일 업데이트가 없고 화면 view만 존재하는 웹)이 아니라면 헤로쿠든 네트리파이든 쓰면 안된다!!!</p></blockquote><p><img src="/images/2020-08-26-14-43-29.png"></p><p>정확히 오후 한시부터 밤 열시까지 이 삽질을 했다.</p><h2 id="안된다"><a href="#안된다" class="headerlink" title="안된다."></a>안된다.</h2><p>Flask는 기본적으로 파이썬을 개발용 웹으로 서비스해주기 때문에 <code>gunicorn</code>, <code>wsgi</code>같은 웹팩을 이용해서 사이트를 외부에 노출시켜야 한다.</p><p>플라스크 기반의 블로그가 네트리파이나 헤로쿠에서 잘 돌아가는 이유는, 지금 내가 쓰고 있는 헥소나 지킬과 같은 블로그 툴은 <code>git push</code> 과정으로 배포하는 방식이라 결국 푸시할 때마다 정적 뷰가 생성되기 때문에 잘 사용되는 것이다.</p><p>내가 옮기려는 Flask 앱은 이미지를 업로드하면 그 이미지를 분석해주는 서비스이기 때문에 이미지 “업로드”는 헤로쿠, 네트리파이와 같은 PaaS 클라우드에서는 할 수 없다..</p><p><img src="/images/2020-08-26-14-49-25.png"></p><p>네트리파이 개발자가 client-side가 아닌 server-side 앱은 호스팅이 안된다고 한다.</p><p>정적인 웹은 얼마든지 호스팅할 수 있다. 억울해서 이거라도 적어놓으려 한다.</p><h2 id="안되지만"><a href="#안되지만" class="headerlink" title="안되지만,"></a>안되지만,</h2><p>파일 업로드 등의 로직이 없는 Static Web은 네트리파이, 헤로쿠에서 얼마든지 서비스할 수 있는데, 일단 Flask 앱은 다 만들었다고 가정하고 이를 조금만 바꿔보자.</p><p>네트리파이는 <code>Flask-Freeze</code>를 이용하면 되고, 헤로쿠는 <code>gunicorn</code>선에서 서비스할 수 있다. 네트리파이는 <a href="https://medium.com/@francescaguiducci/how-to-build-a-simple-personal-website-with-python-flask-and-netlify-d800c97c283d">이 글</a>에 잘 정리되어 있으니 따라하면 되고, 헤로쿠만 정리해보겠다.</p><h3 id="헤로쿠에서-Flask-배포하기"><a href="#헤로쿠에서-Flask-배포하기" class="headerlink" title="헤로쿠에서 Flask 배포하기"></a>헤로쿠에서 Flask 배포하기</h3><p>우선 메인 앱(py)을 실행하는 부분이</p><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&#x27;__main__&#x27;</span>:</span><br><span class="line">    app.run()</span><br></pre></td></tr></table></figure><p>다음과 같이 되어 있는지부터 확인해보자. <code>port</code>를 임의로 건드리면 안된다.</p><p>또한 앱을 라우팅하는 파이썬 파일에는</p><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">app = Flask(__name__)</span><br></pre></td></tr></table></figure><p>당연히 <code>app</code>을 <code>Flask</code>화 해야한다.</p><p>그리고 프로젝트 최상위 폴더에 <code>gunicorn</code> 관련 설정 파일을 하나 만드는데 확장자 없는 <code>Procfile</code> 파일을 만들어서</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">web: gunicorn &lt;메인 앱 이름&gt;:app</span><br></pre></td></tr></table></figure><p>이렇게 한 줄의 텍스트를 넣고 저장한다. 이 <code>Procfile</code>을 헤로쿠에서 <code>web</code>으로 인식하고 <code>gunicorn</code> 기반으로 웹을 외부에 노출시키게 된다.</p><p>이제 <code>requirements.txt</code>와 <code>runtime.txt</code>만 설정하면 된다. 모두 프로젝트 최상위 폴더에 위치시킨다. 기본적으로 <code>Flask</code>와 웹팩 모듈들을 넣어준다. (파이썬 3.6.1 버전 기준이므로 버전에 맞게 바꿔준다)</p><p><code>requirements.txt</code></p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">click&#x3D;&#x3D;6.7</span><br><span class="line">Flask&#x3D;&#x3D;0.12.2</span><br><span class="line">gunicorn&#x3D;&#x3D;19.7.1</span><br><span class="line">itsdangerous&#x3D;&#x3D;0.24</span><br><span class="line">Jinja2&#x3D;&#x3D;2.9.6</span><br><span class="line">MarkupSafe&gt;1.0</span><br><span class="line">Werkzeug&#x3D;&#x3D;0.12.2</span><br></pre></td></tr></table></figure><p>이제 파이썬 버전만 설정하면 정말 끝이다.</p><p><code>runtime.txt</code></p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">python-3.6.1</span><br></pre></td></tr></table></figure><p>이제 헤로쿠에 깃을 연결하고 배포하면 된다. 끝.</p><p><img src="/images/2020-08-26-15-03-10.png"></p><p>난 여기까지는 호스팅이 되는데 파일을 업로드하면 (당연히)</p><p><img src="/images/2020-08-26-15-04-09.png"></p><p>헤로쿠에서 파일 리퀘스트를 거부하는 500 Error가 발생한다.</p><p>이제 뭔가를 할 때는 되는지 안되는지부터 보고 삽질을 하던지 해야겠다.. 아무튼 내가 옮기려 했던 앱은 AWS에서 서비스 할 예정이다.</p>]]></content>
-    
-    
-      
-      
-    <summary type="html">&lt;h2 id=&quot;결론은-안된다&quot;&gt;&lt;a href=&quot;#결론은-안된다&quot; class=&quot;headerlink&quot; title=&quot;결론은 안된다.&quot;&gt;&lt;/a&gt;결론은 안된다.&lt;/h2&gt;&lt;p&gt;학교에서 대여해준 NHN Toast Cloud 서버가 8월 말에 사용이 중지된다는 얘기</summary>
-      
-    
-    
-    
     
   </entry>
   
