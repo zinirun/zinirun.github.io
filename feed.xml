@@ -6,7 +6,7 @@
   <link href="https://zinirun.github.io/feed.xml" rel="self"/>
   
   <link href="https://zinirun.github.io/"/>
-  <updated>2020-09-10T05:28:24.310Z</updated>
+  <updated>2020-09-11T14:54:10.195Z</updated>
   <id>https://zinirun.github.io/</id>
   
   <author>
@@ -15,6 +15,34 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Javascript 30 - Day 23 Speech Synthesis</title>
+    <link href="https://zinirun.github.io/2020/09/11/js-course30-23/"/>
+    <id>https://zinirun.github.io/2020/09/11/js-course30-23/</id>
+    <published>2020-09-11T14:37:29.000Z</published>
+    <updated>2020-09-11T14:54:10.195Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="Day-23-Speech-Synthesis"><a href="#Day-23-Speech-Synthesis" class="headerlink" title="Day 23 - Speech Synthesis"></a>Day 23 - Speech Synthesis</h2><div class="video-container"><iframe src="https://www.youtube.com/embed/saCpKH_xdgs" frameborder="0" loading="lazy" allowfullscreen></iframe></div><p>지난 <a href="https://zinirun.github.io/2020/09/07/js-course30-20/">Day 20</a>의 주제가 <strong>STT</strong>(Speech To Text)였다면, 이번 과제의 주제는 **TTS(Text To Speech)**이다. 자바스크립트 자체에서 STT를 지원하듯이 TTS도 브라우저에 내장된 <code>SpeechSynthesis</code>를 사용하면 된다. 사용법은 간단하다.</p><p>먼저 TTS의 정보가 들어간 객체인 <code>msg</code> 를 선언한다.</p><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> msg = <span class="keyword">new</span> SpeechSynthesisUtterance();</span><br></pre></td></tr></table></figure><h2 id="음성의-목록을-나타내는-populateVoices-작성하기"><a href="#음성의-목록을-나타내는-populateVoices-작성하기" class="headerlink" title="음성의 목록을 나타내는 populateVoices() 작성하기"></a>음성의 목록을 나타내는 <code>populateVoices()</code> 작성하기</h2><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">populateVoices</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  voices = <span class="built_in">this</span>.getVoices();</span><br><span class="line">  voicesDropdown.innerHTML = voices</span><br><span class="line">    .filter(<span class="function">(<span class="params">voice</span>) =&gt;</span> voice.lang.includes(<span class="string">&quot;en&quot;</span>))</span><br><span class="line">    .map(</span><br><span class="line">      (voice) =&gt;</span><br><span class="line">        <span class="string">`&lt;option value=&quot;<span class="subst">$&#123;voice.name&#125;</span>&quot;&gt;<span class="subst">$&#123;voice.name&#125;</span> (<span class="subst">$&#123;voice.lang&#125;</span>)&lt;/option&gt;`</span></span><br><span class="line">    )</span><br><span class="line">    .join(<span class="string">&quot;&quot;</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><p><code>speechSynthesis</code> 객체에서 <code>voicechanged</code> 이벤트가 일어났을 때 이 함수를 실행한다.</p><h2 id="목소리를-설정하는-setVoice-작성하기"><a href="#목소리를-설정하는-setVoice-작성하기" class="headerlink" title="목소리를 설정하는 setVoice() 작성하기"></a>목소리를 설정하는 <code>setVoice()</code> 작성하기</h2><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">setVoice</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  msg.voice = voices.find(<span class="function">(<span class="params">voice</span>) =&gt;</span> voice.name === <span class="built_in">this</span>.value);</span><br><span class="line">  toggle();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><p>음성 목록에 <code>change</code> 이벤트를 목소리를 설정하는 이 함수로 걸어준다. TTS 정보를 관리하는 <code>msg</code> 객체의 <code>voice</code> 값을 바꿔준 후 직접 작성한 <code>toggle()</code> 함수로 목소리를 다시 재생한다.</p><h2 id="음성을-재생하는-toggle-작성하기"><a href="#음성을-재생하는-toggle-작성하기" class="headerlink" title="음성을 재생하는 toggle() 작성하기"></a>음성을 재생하는 <code>toggle()</code> 작성하기</h2><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">toggle</span>(<span class="params">startOver = true</span>) </span>&#123;</span><br><span class="line">  speechSynthesis.cancel();</span><br><span class="line">  <span class="keyword">if</span> (startOver) &#123;</span><br><span class="line">    speechSynthesis.speak(msg);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><p>인자로 <code>startOver</code>를 넘기고, 기본 설정 인자인 <code>true</code>인 경우 이전 음성을 취소하고 새로운 음성을 재생하며, <code>false</code>를 인자로 주면 음성만 취소한다.</p><h2 id="다른-설정을-바꿀-수-있는-setOption-작성하기"><a href="#다른-설정을-바꿀-수-있는-setOption-작성하기" class="headerlink" title="다른 설정을 바꿀 수 있는 setOption() 작성하기"></a>다른 설정을 바꿀 수 있는 <code>setOption()</code> 작성하기</h2><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">setOption</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="built_in">this</span>.name, <span class="built_in">this</span>.value);</span><br><span class="line">  msg[<span class="built_in">this</span>.name] = <span class="built_in">this</span>.value;</span><br><span class="line">  toggle();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><p>이전 과제에서 많이 보던 옵션 변경 함수인데, <code>input</code> 객체의 <code>name</code>을 변경할 속성의 이름과 일치시키면 <code>input</code> 객체의 <code>value</code>로 별도로 옵션을 구별하여 작성할 필요없이 한번에 사용할 수 있다.</p><p>이제 이 함수들을 이벤트로 걸어준다.</p><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">speechSynthesis.addEventListener(<span class="string">&quot;voiceschanged&quot;</span>, populateVoices);</span><br><span class="line">voicesDropdown.addEventListener(<span class="string">&quot;change&quot;</span>, setVoice);</span><br><span class="line">options.forEach(<span class="function">(<span class="params">option</span>) =&gt;</span> option.addEventListener(<span class="string">&quot;change&quot;</span>, setOption));</span><br><span class="line">speakButton.addEventListener(<span class="string">&quot;click&quot;</span>, toggle);</span><br><span class="line">stopButton.addEventListener(<span class="string">&quot;click&quot;</span>, <span class="function">() =&gt;</span> toggle(<span class="literal">false</span>));</span><br><span class="line"><span class="comment">// same with toggle.bind(null, false);</span></span><br></pre></td></tr></table></figure>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;h2 id=&quot;Day-23-Speech-Synthesis&quot;&gt;&lt;a href=&quot;#Day-23-Speech-Synthesis&quot; class=&quot;headerlink&quot; title=&quot;Day 23 - Speech Synthesis&quot;&gt;&lt;/a&gt;Day 23 - Speech</summary>
+      
+    
+    
+    
+    <category term="javascript" scheme="https://zinirun.github.io/categories/javascript/"/>
+    
+    
+    <category term="javascript" scheme="https://zinirun.github.io/tags/javascript/"/>
+    
+    <category term="javascript30" scheme="https://zinirun.github.io/tags/javascript30/"/>
+    
+    <category term="VanillaJS" scheme="https://zinirun.github.io/tags/VanillaJS/"/>
+    
+  </entry>
   
   <entry>
     <title>프로그래머스 Dev-Matching 2020 웹 프론트엔드 개발자(하반기) 합격</title>
@@ -508,32 +536,6 @@
       
       
     <summary type="html">&lt;h2 id=&quot;국영수&quot;&gt;&lt;a href=&quot;#국영수&quot; class=&quot;headerlink&quot; title=&quot;국영수&quot;&gt;&lt;/a&gt;국영수&lt;/h2&gt;&lt;p&gt;문제 &lt;a href=&quot;https://www.acmicpc.net/problem/18310&quot;&gt;Acmicpc&lt;/a&gt;&lt;/p&gt;</summary>
-      
-    
-    
-    
-    <category term="algorithm" scheme="https://zinirun.github.io/categories/algorithm/"/>
-    
-    
-    <category term="algorithm" scheme="https://zinirun.github.io/tags/algorithm/"/>
-    
-    <category term="ps" scheme="https://zinirun.github.io/tags/ps/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>BOJ - 10825 국영수 (정렬)</title>
-    <link href="https://zinirun.github.io/2020/08/27/ps-sort-boj-10825/"/>
-    <id>https://zinirun.github.io/2020/08/27/ps-sort-boj-10825/</id>
-    <published>2020-08-27T12:49:23.000Z</published>
-    <updated>2020-08-28T15:35:38.291Z</updated>
-    
-    <content type="html"><![CDATA[<h2 id="국영수"><a href="#국영수" class="headerlink" title="국영수"></a>국영수</h2><p>문제 <a href="https://www.acmicpc.net/problem/10825">Acmicpc</a></p><p><img src="/images/2020-08-27-21-51-11.png"></p><h2 id="Solution"><a href="#Solution" class="headerlink" title="Solution"></a>Solution</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">n=int(input())</span><br><span class="line">score=[]</span><br><span class="line"><span class="keyword">for</span> _ <span class="keyword">in</span> range(n):</span><br><span class="line">    name,k,e,m=input().split()</span><br><span class="line">    score.append((name, int(k), int(e), int(m)))</span><br><span class="line">score.sort(key=<span class="keyword">lambda</span> x:(-x[<span class="number">1</span>],x[<span class="number">2</span>],-x[<span class="number">3</span>],x[<span class="number">0</span>]))</span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> score:</span><br><span class="line">    print(i[<span class="number">0</span>])</span><br></pre></td></tr></table></figure><p>정렬의 기준이 중첩되어 있을 때 key(기준)에서 lambda를 사용하는 방법이 핵심이다.</p><p>일반적으로 배열의 1번 인덱스를 기준으로 정렬할 때 <code>lambda x:x[1]</code>, 1번 인덱스로 정렬 후 2번 인덱스로 정렬할 때 <code>lambda x:(x[1], x[2])</code> 처럼 괄호 열고 인덱스만 차례로 넣으면 된다.</p><p>그런데 문제에서는 증가, 감소가 번갈아가며 정렬 기준이 주어지는데 이 때는 내림차순으로 정렬할 요소에 <code>-</code>를 붙이면 반대 정렬이 된다.</p>]]></content>
-    
-    
-      
-      
-    <summary type="html">&lt;h2 id=&quot;국영수&quot;&gt;&lt;a href=&quot;#국영수&quot; class=&quot;headerlink&quot; title=&quot;국영수&quot;&gt;&lt;/a&gt;국영수&lt;/h2&gt;&lt;p&gt;문제 &lt;a href=&quot;https://www.acmicpc.net/problem/10825&quot;&gt;Acmicpc&lt;/a&gt;&lt;/p&gt;</summary>
       
     
     
