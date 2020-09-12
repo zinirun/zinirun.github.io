@@ -6,7 +6,7 @@
   <link href="https://zinirun.github.io/feed.xml" rel="self"/>
   
   <link href="https://zinirun.github.io/"/>
-  <updated>2020-09-11T14:54:10.195Z</updated>
+  <updated>2020-09-12T14:16:51.242Z</updated>
   <id>https://zinirun.github.io/</id>
   
   <author>
@@ -15,6 +15,34 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Javascript 30 - Day 24 Sticky Nav</title>
+    <link href="https://zinirun.github.io/2020/09/12/js-course30-24/"/>
+    <id>https://zinirun.github.io/2020/09/12/js-course30-24/</id>
+    <published>2020-09-12T13:33:57.000Z</published>
+    <updated>2020-09-12T14:16:51.242Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="Day-24-Sticky-Nav"><a href="#Day-24-Sticky-Nav" class="headerlink" title="Day 24 - Sticky Nav"></a>Day 24 - Sticky Nav</h2><div class="video-container"><iframe src="https://www.youtube.com/embed/5FLOBCGH3_U" frameborder="0" loading="lazy" allowfullscreen></iframe></div><p>이번 과제는 반응형 웹에서 많이 쓰이는 디자인으로, 스크롤할 때 내비게이션 바(메뉴)가 고정되어 내려가고, 로고가 보이는 효과이다.</p><p>이전 과제 중에 <code>scroll</code> 속성을 이용한 과제들이 많았는데, 이번에도 그렇고, 쉬운 편이다.</p><h2 id="CSS-속성-추가하기"><a href="#CSS-속성-추가하기" class="headerlink" title="CSS 속성 추가하기"></a>CSS 속성 추가하기</h2><p>우선 우리가 고정시켜야 하는 내비게이션 바는 <code>&lt;nav&gt;</code>로 감싸져 있다. 특정 시점에서 <code>.fixed-nav</code>라는 class 속성을 추가하면 css 스타일의 변화도 쉽게 끄고 켜는 개념으로 조정할 수 있다.</p><h3 id="상단에-메뉴-고정시키기"><a href="#상단에-메뉴-고정시키기" class="headerlink" title="상단에 메뉴 고정시키기"></a>상단에 메뉴 고정시키기</h3><p>원래의 <code>nav</code> 속성은</p><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-tag">nav</span> &#123;</span><br><span class="line">  <span class="attribute">background</span>: black;</span><br><span class="line">  <span class="attribute">top</span>: <span class="number">0</span>;</span><br><span class="line">  <span class="attribute">width</span>: <span class="number">100%</span>;</span><br><span class="line">  <span class="attribute">transition</span>: all <span class="number">0.5s</span>;</span><br><span class="line">  <span class="attribute">position</span>: relative;</span><br><span class="line">  <span class="attribute">z-index</span>: <span class="number">1</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><p>이렇게 <code>relative</code> 속성이기 때문에 스크롤을 내리지 않은 상태에서는 그냥 중간에 위치한 메뉴바처럼 생겼다.</p><p>이제 <code>.fixed-nav</code> 속성이 <code>body</code>에 추가된 경우의 속성을 작성하자.</p><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-tag">body</span><span class="selector-class">.fixed-nav</span> <span class="selector-tag">nav</span> &#123;</span><br><span class="line">  <span class="attribute">position</span>: fixed;</span><br><span class="line">  <span class="attribute">box-shadow</span>: <span class="number">0</span> <span class="number">5px</span> <span class="number">0</span> <span class="built_in">rgba</span>(<span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0.1</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><p>이미 <code>nav</code>는 <code>top: 0</code>이고 <code>fixed</code> 위치 속성으로 바꿔줌으로써 상단에 고정시킬 수 있다.</p><h3 id="로고-보이게-하기"><a href="#로고-보이게-하기" class="headerlink" title="로고 보이게 하기"></a>로고 보이게 하기</h3><p>원래의 로고는</p><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-tag">li</span><span class="selector-class">.logo</span> &#123;</span><br><span class="line">  <span class="attribute">max-width</span>: <span class="number">0</span>;</span><br><span class="line">  <span class="attribute">overflow</span>: hidden;</span><br><span class="line">  <span class="attribute">background</span>: white;</span><br><span class="line">  <span class="attribute">transition</span>: all <span class="number">0.5s</span>;</span><br><span class="line">  <span class="attribute">font-weight</span>: <span class="number">600</span>;</span><br><span class="line">  <span class="attribute">font-size</span>: <span class="number">30px</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><p><code>max-width</code>가 0으로 설정되어 보이지 않는다. 간단하게 <code>.fixed-nav</code> 속성이 body에 추가됐을 때 위에서 한 것과 똑같이 <code>li.logo</code>의 <code>max-width</code> 속성만 바꾸면 된다.</p><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-class">.fixed-nav</span> <span class="selector-tag">li</span><span class="selector-class">.logo</span> &#123;</span><br><span class="line">  <span class="attribute">max-width</span>: <span class="number">500px</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><p><code>transition: all 0.5s;</code>로 설정되었기 때문에 모든 효과들이 보기 좋게 변한다. <em>(스르륵 변화한다)</em></p><h2 id="JS-작성하기"><a href="#JS-작성하기" class="headerlink" title="JS 작성하기"></a>JS 작성하기</h2><p>이번 자바스크립트 작성은 정말 쉽다. <code>window.scrollY</code>로 스크롤 한 Y 좌표 값(높이값)을 구해서 내비게이션 바의 <code>offsetTop</code>과 비교해주고 class 속성을 넣었다 뺐다 하면 끝난다.</p><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> nav = <span class="built_in">document</span>.querySelector(<span class="string">&quot;#main&quot;</span>);</span><br><span class="line"><span class="keyword">const</span> topOfNav = nav.offsetTop;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">fixNav</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">if</span> (<span class="built_in">window</span>.scrollY &gt; topOfNav) &#123;</span><br><span class="line">    <span class="built_in">document</span>.body.style.paddingTop = nav.offsetHeight + <span class="string">&quot;px&quot;</span>;</span><br><span class="line">    <span class="built_in">document</span>.body.classList.add(<span class="string">&quot;fixed-nav&quot;</span>);</span><br><span class="line">  &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    <span class="built_in">document</span>.body.style.paddingTop = <span class="number">0</span>;</span><br><span class="line">    <span class="built_in">document</span>.body.classList.remove(<span class="string">&quot;fixed-nav&quot;</span>);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="built_in">window</span>.addEventListener(<span class="string">&quot;scroll&quot;</span>, fixNav);</span><br></pre></td></tr></table></figure><p><code>paddingTop</code>을 설정하는 이유는 <code>fixed</code>로 속성이 변경될 때 의도하지 않는 여백이 생겨버려 뚝뚝 끊겨버리기 때문이다.</p><p>이제 부드러운 상단 고정 메뉴바가 완성되었다.</p>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;h2 id=&quot;Day-24-Sticky-Nav&quot;&gt;&lt;a href=&quot;#Day-24-Sticky-Nav&quot; class=&quot;headerlink&quot; title=&quot;Day 24 - Sticky Nav&quot;&gt;&lt;/a&gt;Day 24 - Sticky Nav&lt;/h2&gt;&lt;div clas</summary>
+      
+    
+    
+    
+    <category term="javascript" scheme="https://zinirun.github.io/categories/javascript/"/>
+    
+    
+    <category term="javascript" scheme="https://zinirun.github.io/tags/javascript/"/>
+    
+    <category term="javascript30" scheme="https://zinirun.github.io/tags/javascript30/"/>
+    
+    <category term="VanillaJS" scheme="https://zinirun.github.io/tags/VanillaJS/"/>
+    
+  </entry>
   
   <entry>
     <title>Javascript 30 - Day 23 Speech Synthesis</title>
@@ -510,32 +538,6 @@
       
       
     <summary type="html">&lt;h2 id=&quot;실패율&quot;&gt;&lt;a href=&quot;#실패율&quot; class=&quot;headerlink&quot; title=&quot;실패율&quot;&gt;&lt;/a&gt;실패율&lt;/h2&gt;&lt;p&gt;문제 &lt;a href=&quot;https://programmers.co.kr/learn/courses/30/lessons/428</summary>
-      
-    
-    
-    
-    <category term="algorithm" scheme="https://zinirun.github.io/categories/algorithm/"/>
-    
-    
-    <category term="algorithm" scheme="https://zinirun.github.io/tags/algorithm/"/>
-    
-    <category term="ps" scheme="https://zinirun.github.io/tags/ps/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>BOJ - 18310 안테나 (정렬)</title>
-    <link href="https://zinirun.github.io/2020/08/27/ps-sort-boj-18310/"/>
-    <id>https://zinirun.github.io/2020/08/27/ps-sort-boj-18310/</id>
-    <published>2020-08-27T12:53:53.000Z</published>
-    <updated>2020-08-28T15:35:36.322Z</updated>
-    
-    <content type="html"><![CDATA[<h2 id="국영수"><a href="#국영수" class="headerlink" title="국영수"></a>국영수</h2><p>문제 <a href="https://www.acmicpc.net/problem/18310">Acmicpc</a></p><p><img src="/images/2020-08-27-21-54-41.png"></p><h2 id="Solution"><a href="#Solution" class="headerlink" title="Solution"></a>Solution</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">n=int(input())</span><br><span class="line">house=sorted(list(map(int, input().split())))</span><br><span class="line">print(house[(n<span class="number">-1</span>)//<span class="number">2</span>]) <span class="comment"># n-1인 이유는 짝수일때 중간값은 2개인데 작은 값을 출력하라고 했기때문</span></span><br></pre></td></tr></table></figure><p>처음 이 문제를 보고 1부터 n까지 각 요소에 대한 차이의 합을 계산해서 최소가 되는 인덱스를 반환하면 되지 않을까 했다.</p><p>(틀린 코드)</p><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">n=int(input())</span><br><span class="line">house=sorted(list(map(int, input().split())))</span><br><span class="line">min_=<span class="number">200001</span></span><br><span class="line">loc=<span class="number">0</span></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">1</span>,n):</span><br><span class="line">    dist=sum(map(<span class="keyword">lambda</span> x:x-i,house))</span><br><span class="line">    <span class="keyword">if</span> dist&lt;min_:</span><br><span class="line">        min_=dist</span><br><span class="line">        loc=i</span><br><span class="line">print(loc)</span><br></pre></td></tr></table></figure><p>당연히 시간 초과가 났다. 처음 작성한 코드는 시간복잡도가 <code>O(N^2)</code>이고 주어진 자연수의 범위가 20만까지이므로 20만의 제곱이 된다.</p><p>문제를 잘못 읽었었다. 나는 1,5,7,9가 주어질 때 1에서 9까지의 모든 정수부를 계산했는데, 다시 보니 주어진 값에서만 안테나를 설치할 위치를 고를 수 있었다.</p><p>주어진 리스트를 오름차순으로 정렬하고 중간 값을 반환하면 최적의 위치가 된다. 짝수일 경우 중간값이 2개가 되는데, 문제를 보면 여러 값일 경우 가장 작은 값을 출력하라고 했기 때문에 중간에 있는 인덱스를 계산할 때 <code>n</code>이 아닌 <code>n-1</code>로 생각하면 된다.</p>]]></content>
-    
-    
-      
-      
-    <summary type="html">&lt;h2 id=&quot;국영수&quot;&gt;&lt;a href=&quot;#국영수&quot; class=&quot;headerlink&quot; title=&quot;국영수&quot;&gt;&lt;/a&gt;국영수&lt;/h2&gt;&lt;p&gt;문제 &lt;a href=&quot;https://www.acmicpc.net/problem/18310&quot;&gt;Acmicpc&lt;/a&gt;&lt;/p&gt;</summary>
       
     
     

@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
 <meta http-equiv="X-UA-Compatible" content="ie=edge">
-<link rel="canonical" href="https://zinirun.github.io/2020/09/11/js-course30-23/">
+<link rel="canonical" href="https://zinirun.github.io/2020/09/12/js-course30-24/">
 
 
 <link rel="stylesheet" href="//fonts.googleapis.com/earlyaccess/notosanskr.css">
@@ -18,7 +18,7 @@
 
 
 
-<title>Javascript 30 - Day 23 Speech Synthesis | zinirun</title>
+<title>Javascript 30 - Day 24 Sticky Nav | zinirun</title>
 
 
 
@@ -223,7 +223,7 @@
     
     <article class="post-wrap">
         <header class="post-header">
-            <h1 class="post-title">Javascript 30 - Day 23 Speech Synthesis</h1>
+            <h1 class="post-title">Javascript 30 - Day 24 Sticky Nav</h1>
             
                 <div class="post-meta">
                     
@@ -232,7 +232,7 @@
 
                     
                         <span class="post-time">
-                        Date: <a href="#">September 11, 2020&nbsp;&nbsp;23:37:29</a>
+                        Date: <a href="#">September 12, 2020&nbsp;&nbsp;22:33:57</a>
                         </span>
                     
                     
@@ -248,26 +248,31 @@
         </header>
 
         <div class="post-content">
-            <h2 id="Day-23-Speech-Synthesis"><a href="#Day-23-Speech-Synthesis" class="headerlink" title="Day 23 - Speech Synthesis"></a>Day 23 - Speech Synthesis</h2><div class="video-container"><iframe src="https://www.youtube.com/embed/saCpKH_xdgs" frameborder="0" loading="lazy" allowfullscreen></iframe></div>
+            <h2 id="Day-24-Sticky-Nav"><a href="#Day-24-Sticky-Nav" class="headerlink" title="Day 24 - Sticky Nav"></a>Day 24 - Sticky Nav</h2><div class="video-container"><iframe src="https://www.youtube.com/embed/5FLOBCGH3_U" frameborder="0" loading="lazy" allowfullscreen></iframe></div>
 
-<p>지난 <a href="https://zinirun.github.io/2020/09/07/js-course30-20/">Day 20</a>의 주제가 <strong>STT</strong>(Speech To Text)였다면, 이번 과제의 주제는 **TTS(Text To Speech)**이다. 자바스크립트 자체에서 STT를 지원하듯이 TTS도 브라우저에 내장된 <code>SpeechSynthesis</code>를 사용하면 된다. 사용법은 간단하다.</p>
-<p>먼저 TTS의 정보가 들어간 객체인 <code>msg</code> 를 선언한다.</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> msg = <span class="keyword">new</span> SpeechSynthesisUtterance();</span><br></pre></td></tr></table></figure>
+<p>이번 과제는 반응형 웹에서 많이 쓰이는 디자인으로, 스크롤할 때 내비게이션 바(메뉴)가 고정되어 내려가고, 로고가 보이는 효과이다.</p>
+<p>이전 과제 중에 <code>scroll</code> 속성을 이용한 과제들이 많았는데, 이번에도 그렇고, 쉬운 편이다.</p>
+<h2 id="CSS-속성-추가하기"><a href="#CSS-속성-추가하기" class="headerlink" title="CSS 속성 추가하기"></a>CSS 속성 추가하기</h2><p>우선 우리가 고정시켜야 하는 내비게이션 바는 <code>&lt;nav&gt;</code>로 감싸져 있다. 특정 시점에서 <code>.fixed-nav</code>라는 class 속성을 추가하면 css 스타일의 변화도 쉽게 끄고 켜는 개념으로 조정할 수 있다.</p>
+<h3 id="상단에-메뉴-고정시키기"><a href="#상단에-메뉴-고정시키기" class="headerlink" title="상단에 메뉴 고정시키기"></a>상단에 메뉴 고정시키기</h3><p>원래의 <code>nav</code> 속성은</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-tag">nav</span> &#123;</span><br><span class="line">  <span class="attribute">background</span>: black;</span><br><span class="line">  <span class="attribute">top</span>: <span class="number">0</span>;</span><br><span class="line">  <span class="attribute">width</span>: <span class="number">100%</span>;</span><br><span class="line">  <span class="attribute">transition</span>: all <span class="number">0.5s</span>;</span><br><span class="line">  <span class="attribute">position</span>: relative;</span><br><span class="line">  <span class="attribute">z-index</span>: <span class="number">1</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-<h2 id="음성의-목록을-나타내는-populateVoices-작성하기"><a href="#음성의-목록을-나타내는-populateVoices-작성하기" class="headerlink" title="음성의 목록을 나타내는 populateVoices() 작성하기"></a>음성의 목록을 나타내는 <code>populateVoices()</code> 작성하기</h2><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">populateVoices</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  voices = <span class="built_in">this</span>.getVoices();</span><br><span class="line">  voicesDropdown.innerHTML = voices</span><br><span class="line">    .filter(<span class="function">(<span class="params">voice</span>) =&gt;</span> voice.lang.includes(<span class="string">&quot;en&quot;</span>))</span><br><span class="line">    .map(</span><br><span class="line">      (voice) =&gt;</span><br><span class="line">        <span class="string">`&lt;option value=&quot;<span class="subst">$&#123;voice.name&#125;</span>&quot;&gt;<span class="subst">$&#123;voice.name&#125;</span> (<span class="subst">$&#123;voice.lang&#125;</span>)&lt;/option&gt;`</span></span><br><span class="line">    )</span><br><span class="line">    .join(<span class="string">&quot;&quot;</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>이렇게 <code>relative</code> 속성이기 때문에 스크롤을 내리지 않은 상태에서는 그냥 중간에 위치한 메뉴바처럼 생겼다.</p>
+<p>이제 <code>.fixed-nav</code> 속성이 <code>body</code>에 추가된 경우의 속성을 작성하자.</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-tag">body</span><span class="selector-class">.fixed-nav</span> <span class="selector-tag">nav</span> &#123;</span><br><span class="line">  <span class="attribute">position</span>: fixed;</span><br><span class="line">  <span class="attribute">box-shadow</span>: <span class="number">0</span> <span class="number">5px</span> <span class="number">0</span> <span class="built_in">rgba</span>(<span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0.1</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-<p><code>speechSynthesis</code> 객체에서 <code>voicechanged</code> 이벤트가 일어났을 때 이 함수를 실행한다.</p>
-<h2 id="목소리를-설정하는-setVoice-작성하기"><a href="#목소리를-설정하는-setVoice-작성하기" class="headerlink" title="목소리를 설정하는 setVoice() 작성하기"></a>목소리를 설정하는 <code>setVoice()</code> 작성하기</h2><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">setVoice</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  msg.voice = voices.find(<span class="function">(<span class="params">voice</span>) =&gt;</span> voice.name === <span class="built_in">this</span>.value);</span><br><span class="line">  toggle();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>이미 <code>nav</code>는 <code>top: 0</code>이고 <code>fixed</code> 위치 속성으로 바꿔줌으로써 상단에 고정시킬 수 있다.</p>
+<h3 id="로고-보이게-하기"><a href="#로고-보이게-하기" class="headerlink" title="로고 보이게 하기"></a>로고 보이게 하기</h3><p>원래의 로고는</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-tag">li</span><span class="selector-class">.logo</span> &#123;</span><br><span class="line">  <span class="attribute">max-width</span>: <span class="number">0</span>;</span><br><span class="line">  <span class="attribute">overflow</span>: hidden;</span><br><span class="line">  <span class="attribute">background</span>: white;</span><br><span class="line">  <span class="attribute">transition</span>: all <span class="number">0.5s</span>;</span><br><span class="line">  <span class="attribute">font-weight</span>: <span class="number">600</span>;</span><br><span class="line">  <span class="attribute">font-size</span>: <span class="number">30px</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-<p>음성 목록에 <code>change</code> 이벤트를 목소리를 설정하는 이 함수로 걸어준다. TTS 정보를 관리하는 <code>msg</code> 객체의 <code>voice</code> 값을 바꿔준 후 직접 작성한 <code>toggle()</code> 함수로 목소리를 다시 재생한다.</p>
-<h2 id="음성을-재생하는-toggle-작성하기"><a href="#음성을-재생하는-toggle-작성하기" class="headerlink" title="음성을 재생하는 toggle() 작성하기"></a>음성을 재생하는 <code>toggle()</code> 작성하기</h2><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">toggle</span>(<span class="params">startOver = true</span>) </span>&#123;</span><br><span class="line">  speechSynthesis.cancel();</span><br><span class="line">  <span class="keyword">if</span> (startOver) &#123;</span><br><span class="line">    speechSynthesis.speak(msg);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><code>max-width</code>가 0으로 설정되어 보이지 않는다. 간단하게 <code>.fixed-nav</code> 속성이 body에 추가됐을 때 위에서 한 것과 똑같이 <code>li.logo</code>의 <code>max-width</code> 속성만 바꾸면 된다.</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-class">.fixed-nav</span> <span class="selector-tag">li</span><span class="selector-class">.logo</span> &#123;</span><br><span class="line">  <span class="attribute">max-width</span>: <span class="number">500px</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-<p>인자로 <code>startOver</code>를 넘기고, 기본 설정 인자인 <code>true</code>인 경우 이전 음성을 취소하고 새로운 음성을 재생하며, <code>false</code>를 인자로 주면 음성만 취소한다.</p>
-<h2 id="다른-설정을-바꿀-수-있는-setOption-작성하기"><a href="#다른-설정을-바꿀-수-있는-setOption-작성하기" class="headerlink" title="다른 설정을 바꿀 수 있는 setOption() 작성하기"></a>다른 설정을 바꿀 수 있는 <code>setOption()</code> 작성하기</h2><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">setOption</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="built_in">this</span>.name, <span class="built_in">this</span>.value);</span><br><span class="line">  msg[<span class="built_in">this</span>.name] = <span class="built_in">this</span>.value;</span><br><span class="line">  toggle();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><code>transition: all 0.5s;</code>로 설정되었기 때문에 모든 효과들이 보기 좋게 변한다. <em>(스르륵 변화한다)</em></p>
+<h2 id="JS-작성하기"><a href="#JS-작성하기" class="headerlink" title="JS 작성하기"></a>JS 작성하기</h2><p>이번 자바스크립트 작성은 정말 쉽다. <code>window.scrollY</code>로 스크롤 한 Y 좌표 값(높이값)을 구해서 내비게이션 바의 <code>offsetTop</code>과 비교해주고 class 속성을 넣었다 뺐다 하면 끝난다.</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> nav = <span class="built_in">document</span>.querySelector(<span class="string">&quot;#main&quot;</span>);</span><br><span class="line"><span class="keyword">const</span> topOfNav = nav.offsetTop;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">fixNav</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">if</span> (<span class="built_in">window</span>.scrollY &gt; topOfNav) &#123;</span><br><span class="line">    <span class="built_in">document</span>.body.style.paddingTop = nav.offsetHeight + <span class="string">&quot;px&quot;</span>;</span><br><span class="line">    <span class="built_in">document</span>.body.classList.add(<span class="string">&quot;fixed-nav&quot;</span>);</span><br><span class="line">  &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    <span class="built_in">document</span>.body.style.paddingTop = <span class="number">0</span>;</span><br><span class="line">    <span class="built_in">document</span>.body.classList.remove(<span class="string">&quot;fixed-nav&quot;</span>);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="built_in">window</span>.addEventListener(<span class="string">&quot;scroll&quot;</span>, fixNav);</span><br></pre></td></tr></table></figure>
 
-<p>이전 과제에서 많이 보던 옵션 변경 함수인데, <code>input</code> 객체의 <code>name</code>을 변경할 속성의 이름과 일치시키면 <code>input</code> 객체의 <code>value</code>로 별도로 옵션을 구별하여 작성할 필요없이 한번에 사용할 수 있다.</p>
-<p>이제 이 함수들을 이벤트로 걸어준다.</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">speechSynthesis.addEventListener(<span class="string">&quot;voiceschanged&quot;</span>, populateVoices);</span><br><span class="line">voicesDropdown.addEventListener(<span class="string">&quot;change&quot;</span>, setVoice);</span><br><span class="line">options.forEach(<span class="function">(<span class="params">option</span>) =&gt;</span> option.addEventListener(<span class="string">&quot;change&quot;</span>, setOption));</span><br><span class="line">speakButton.addEventListener(<span class="string">&quot;click&quot;</span>, toggle);</span><br><span class="line">stopButton.addEventListener(<span class="string">&quot;click&quot;</span>, <span class="function">() =&gt;</span> toggle(<span class="literal">false</span>));</span><br><span class="line"><span class="comment">// same with toggle.bind(null, false);</span></span><br></pre></td></tr></table></figure>
+<p><code>paddingTop</code>을 설정하는 이유는 <code>fixed</code>로 속성이 변경될 때 의도하지 않는 여백이 생겨버려 뚝뚝 끊겨버리기 때문이다.</p>
+<p>이제 부드러운 상단 고정 메뉴바가 완성되었다.</p>
 
         </div>
 
@@ -325,10 +330,8 @@
         </section>
         <section class="post-nav">
             
-                <a class="prev" rel="prev" href="/2020/09/12/js-course30-24/">Javascript 30 - Day 24 Sticky Nav</a>
             
-            
-            <a class="next" rel="next" href="/2020/09/10/js-programmers-matching-2020-review-2/">프로그래머스 Dev-Matching 2020 웹 프론트엔드 개발자(하반기) 합격</a>
+            <a class="next" rel="next" href="/2020/09/11/js-course30-23/">Javascript 30 - Day 23 Speech Synthesis</a>
             
         </section>
 
