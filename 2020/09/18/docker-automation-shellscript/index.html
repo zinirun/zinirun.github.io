@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+<link rel="canonical" href="https://zinirun.github.io/2020/09/18/docker-automation-shellscript/">
+
+
+<link rel="stylesheet" href="//fonts.googleapis.com/earlyaccess/notosanskr.css">
+
+
+    <meta name="author" content="zini">
+
+
+    <meta name="subtitle" content="tech blog by Zini">
+
+
+
+
+<title>Dockerfile과 배포 자동화 스크립트 만들기 | zinirun</title>
+
+
+
+    <link rel="icon" href="/favicon.png">
+
+
+
+
+    <!-- stylesheets list from _config.yml -->
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+
+
+
+    <!-- scripts list from _config.yml -->
+    
+    <script src="/js/script.js"></script>
+    
+    <script src="/js/tocbot.min.js"></script>
+    
+
+
+
+    
+    
+        
+    
+
+
+
+<script>
+	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+		(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+			m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+	ga('create', 'UA-175983012-1', 'auto');
+	ga('send', 'pageview');
+</script>
+
+<meta name="generator" content="Hexo 5.0.2"><link rel="alternate" href="/feed.xml" title="zinirun" type="application/atom+xml">
+</head>
+<body>
+    <div class="wrapper">
+        <header>
+  <nav class="navbar">
+    <div class="container">
+      <div class="navbar-header header-logo" style="font-size: 13pt; font-weight: 600;">
+        <a id="blog_logo" href="/" style="color: #2d96bd;"><img class="logo-ico spin circle" src="/image/logo.png" alt="zini's Devlog"></a>
+        
+        <a class="menu-item left-menu" href="/archives">Posts</a>
+        
+        <a class="menu-item left-menu" href="/category">Categories</a>
+        
+        <a class="menu-item left-menu" href="/tag">Tags</a>
+        
+<!--
+        <input id="switch_default" type="checkbox" class="switch_default" />
+        <label for="switch_default" class="toggleBtn" style="margin-left: 0px;"></label>
+-->
+      </div>
+      <div class="menu navbar-right">
+        <!--mynav-->
+        <div id="mynav-container">
+        
+        <a class="menu-item" href="/categories/javascript"><img class="menu-ico" src="/image/icons/js.png" alt="Javascript"></a>
+        
+        <a class="menu-item" href="/categories/nodejs"><img class="menu-ico" src="/image/icons/node.png" alt="Node"></a>
+        
+        <a class="menu-item" href="/categories/ReactJS"><img class="menu-ico" src="/image/icons/react.png" alt="React"></a>
+        
+        <a class="menu-item" href="/categories/cloud/docker"><img class="menu-ico" src="/image/icons/docker.png" alt="Docker"></a>
+        
+        <a class="menu-item" href="/categories/cloud/kubernetes"><img class="menu-ico" src="/image/icons/k8s.png" alt="Kubernetes"></a>
+        
+        <a class="menu-item" href="/categories/algorithm"><img class="menu-ico" src="/image/icons/ps-code.png" alt="Algorithm"></a>
+        
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  
+  <nav class="navbar-mobile" id="nav-mobile">
+    <div class="container">
+      <div class="navbar-header">
+        <div>
+          <a id="blog_logo" href="/" style="color: #2d96bd;"><img class="logo-ico" src="/image/logo.png" alt="zini's Devlog"></a>
+        </div>
+        <div class="menu-toggle" onclick="mobileBtn()">&#9776; Menu</div>
+      </div>
+      <div class="menu" id="mobile-menu">
+       <div id="mobile-nav">
+        
+        <a class="menu-item" href="/archives">Posts</a>
+        
+        <a class="menu-item" href="/category">Categories</a>
+        
+        <a class="menu-item" href="/tag">Tags</a>
+        
+          </div>
+        <div id="mobile-mynav">
+        
+        <a class="menu-item" href="/categories/javascript"><img class="menu-ico" src="/image/icons/js.png" alt="Javascript"></a>
+        
+        <a class="menu-item" href="/categories/nodejs"><img class="menu-ico" src="/image/icons/node.png" alt="Node"></a>
+        
+        <a class="menu-item" href="/categories/ReactJS"><img class="menu-ico" src="/image/icons/react.png" alt="React"></a>
+        
+        <a class="menu-item" href="/categories/cloud/docker"><img class="menu-ico" src="/image/icons/docker.png" alt="Docker"></a>
+        
+        <a class="menu-item" href="/categories/cloud/kubernetes"><img class="menu-ico" src="/image/icons/k8s.png" alt="Kubernetes"></a>
+        
+        <a class="menu-item" href="/categories/algorithm"><img class="menu-ico" src="/image/icons/ps-code.png" alt="Algorithm"></a>
+        
+          </div>
+      </div>
+    </div>
+  </nav>
+</header>
+<script>
+  var mobileBtn = function f() {
+    var toggleMenu = document.getElementsByClassName("menu-toggle")[0];
+    var mobileMenu = document.getElementById("mobile-menu");
+    if (toggleMenu.classList.contains("active")) {
+      toggleMenu.classList.remove("active");
+      mobileMenu.classList.remove("active");
+    } else {
+      toggleMenu.classList.add("active");
+      mobileMenu.classList.add("active");
+    }
+  };
+</script>
+
+        <div class="main">
+            <div class="container">
+    
+    
+        <div class="post-toc">
+    <div class="tocbot-list">
+    </div>
+    <div class="tocbot-list-menu">
+        <a class="tocbot-toc-expand" onclick="expand_toc()">Expand All</a>
+        <a onclick="go_top()">Top</a>
+        <a onclick="go_bottom()">Bottom</a>
+    </div>
+</div>
+
+<script>
+    document.ready(
+        function () {
+            tocbot.init({
+                tocSelector: '.tocbot-list',
+                contentSelector: '.post-content',
+                headingSelector: 'h1, h2, h3, h4, h5',
+                collapseDepth: 1,
+                orderedList: false,
+                scrollSmooth: true,
+            })
+        }
+    )
+
+    function expand_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 6,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "collapse_toc()");
+        b.innerHTML = "Collapse all"
+    }
+
+    function collapse_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 1,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "expand_toc()");
+        b.innerHTML = "Expand all"
+    }
+
+    function go_top() {
+        window.scrollTo(0, 0);
+    }
+
+    function go_bottom() {
+        window.scrollTo(0, document.body.scrollHeight);
+    }
+
+</script>
+    
+
+    
+    <article class="post-wrap">
+        <header class="post-header">
+            <h1 class="post-title">Dockerfile과 배포 자동화 스크립트 만들기</h1>
+            
+                <div class="post-meta">
+                    
+                        Author: <a itemprop="author" rel="author" href="/">zini</a>
+                    
+
+                    
+                        <span class="post-time">
+                        Date: <a href="#">September 18, 2020&nbsp;&nbsp;21:51:03</a>
+                        </span>
+                    
+                    
+                        <span class="post-category">
+                    Category:
+                            
+                                <a href="/categories/cloud/">cloud</a>
+                            
+                                <a href="/categories/cloud/docker/">docker</a>
+                            
+                        </span>
+                    
+                </div>
+            
+        </header>
+
+        <div class="post-content">
+            <h2 id="그럴듯한-자동화"><a href="#그럴듯한-자동화" class="headerlink" title="그럴듯한 자동화"></a>그럴듯한 자동화</h2><p>프로젝트를 하다 보면, 깃에서 파일을 수정하고 Docker 이미지를 다시 만들고, 빌드한 이미지로 컨테이너를 실행하여 재배포해야할 때가 많다. 팀 프로젝트를 하면서 원래 있던 자동화 스크립트를 짜집기해서 쓰려다가 이번에 변수를 선언해서 제대로 만들어 놓는게 좋겠다 싶었다.</p>
+<p>실무에서는 Jira, Jenkins 등으로 체계적인 자동화와 버전 관리가 되어있겠지만 팀원이 4명인 프로젝트에서는 이정도면 되겠다고 생각했다.</p>
+<p>현재 프로젝트에 필요한 컨테이너는 DB 컨테이너와 노드 컨테이너이고, docker 안에서 연결되어야 한다. 학교에서 인스턴스를 하나만 주어서, 한 폴더 안에 데이터베이스와 서버 파일이 모두 들어가 있어야 했다. 나는 <code>database-app</code>으로 데이터베이스 파일을 분리했다.</p>
+<h2 id="Database-배포-자동화하기"><a href="#Database-배포-자동화하기" class="headerlink" title="Database 배포 자동화하기"></a>Database 배포 자동화하기</h2><h3 id="MySQL-Dockerfile-만들기"><a href="#MySQL-Dockerfile-만들기" class="headerlink" title="MySQL Dockerfile 만들기"></a>MySQL Dockerfile 만들기</h3><p>같은 디렉토리에 데이터베이스 구축 sql 파일을 넣고, <code>Dockerfile</code>을 작성한다.</p>
+<figure class="highlight dockerfile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">FROM</span> mysql:<span class="number">5.7</span></span><br><span class="line"><span class="keyword">LABEL</span><span class="bash"> &lt;AUTHOR&gt; &lt;github.com/GITHUB-NAME&gt;</span></span><br><span class="line"><span class="keyword">ENV</span> MYSQL_DATABASE=&lt;DB-NAME&gt; \</span><br><span class="line">    MYSQL_ROOT_PASSWORD=&lt;DB-PASSWORD&gt;</span><br><span class="line"><span class="keyword">COPY</span><span class="bash"> ./&lt;SQL-FILENAME&gt;.sql /docker-entrypoint-initdb.d/</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="Shell-Script-만들어서-자동화하기"><a href="#Shell-Script-만들어서-자동화하기" class="headerlink" title="Shell Script 만들어서 자동화하기"></a>Shell Script 만들어서 자동화하기</h3><p>이제 같은 폴더에 스크립트 파일을 작성한다.</p>
+<p><code>build_n_run.sh</code></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Build N Run DB Container</span></span><br><span class="line"><span class="comment"># 2020. 09. 18 Zini</span></span><br><span class="line"></span><br><span class="line">docker_username=<span class="string">&quot;&quot;</span></span><br><span class="line">db_image_name=<span class="string">&quot;&quot;</span></span><br><span class="line">db_container_name=<span class="string">&quot;&quot;</span></span><br><span class="line">db_password=<span class="string">&quot;&quot;</span></span><br><span class="line">version=<span class="string">&quot;&quot;</span></span><br><span class="line">port=3306 <span class="comment"># Default MySQL Port: 3306</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">echo</span> <span class="string">&quot;## Automation docker-database build and run ##&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># remove container</span></span><br><span class="line"><span class="built_in">echo</span> <span class="string">&quot;=&gt; Remove previous container...&quot;</span></span><br><span class="line">docker rm -f <span class="variable">$&#123;db_container_name&#125;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># remove image</span></span><br><span class="line"><span class="built_in">echo</span> <span class="string">&quot;=&gt; Remove previous image...&quot;</span></span><br><span class="line">docker rmi -f <span class="variable">$&#123;docker_username&#125;</span>/<span class="variable">$&#123;db_image_name&#125;</span>:<span class="variable">$&#123;version&#125;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># new-build/re-build docker image</span></span><br><span class="line"><span class="built_in">echo</span> <span class="string">&quot;=&gt; Build new image...&quot;</span></span><br><span class="line">docker build --tag <span class="variable">$&#123;docker_username&#125;</span>/<span class="variable">$&#123;db_image_name&#125;</span>:<span class="variable">$&#123;version&#125;</span> .</span><br><span class="line"></span><br><span class="line"><span class="comment"># Run container</span></span><br><span class="line"><span class="built_in">echo</span> <span class="string">&quot;=&gt; Run container...&quot;</span></span><br><span class="line">docker run -d -p <span class="variable">$&#123;port&#125;</span>:<span class="variable">$&#123;port&#125;</span> -e MYSQL_ROOT_PASSWORD=<span class="variable">$&#123;db_password&#125;</span> --name <span class="variable">$&#123;db_container_name&#125;</span> <span class="variable">$&#123;docker_username&#125;</span>/<span class="variable">$&#123;db_image_name&#125;</span>:<span class="variable">$&#123;version&#125;</span> --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci</span><br></pre></td></tr></table></figure>
+
+<p>이전에 컨테이너와 이미지가 있다면 삭제하고 재빌드 후 컨테이너를 실행한다. 이제 이 스크립트로 위에 변수만 바꿔주면서 써먹을 수 있다.</p>
+<h2 id="Node-배포-자동화하기"><a href="#Node-배포-자동화하기" class="headerlink" title="Node 배포 자동화하기"></a>Node 배포 자동화하기</h2><h3 id="Node-js-Dockerfile-만들기"><a href="#Node-js-Dockerfile-만들기" class="headerlink" title="Node.js Dockerfile 만들기"></a>Node.js Dockerfile 만들기</h3><p>이제 프로젝트 최상위 폴더에 서버(노드)에 대한 <code>Dockerfile</code>을 작성한다.</p>
+<figure class="highlight dockerfile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">FROM</span> node:<span class="number">10</span></span><br><span class="line"><span class="keyword">RUN</span><span class="bash"> npm install -g yarn; npm install forever -g;</span></span><br><span class="line"><span class="keyword">COPY</span><span class="bash"> package.json /src/package.json</span></span><br><span class="line"><span class="keyword">RUN</span><span class="bash">  <span class="built_in">cd</span> /src; yarn install;</span></span><br><span class="line"><span class="keyword">COPY</span><span class="bash"> . /src</span></span><br><span class="line"><span class="keyword">EXPOSE</span> <span class="number">3000</span></span><br><span class="line"><span class="keyword">WORKDIR</span><span class="bash"> /src</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">CMD</span><span class="bash"> yarn start</span></span><br></pre></td></tr></table></figure>
+
+<p><code>forever</code>와 <code>yarn</code> 패키지를 먼저 설치하고 패키지를 세팅한다. 예전에는 <code>npm</code>을 썼지만 속도, 성능 면에서 <code>yarn</code>을 사용하려 하고 있다.</p>
+<p><code>package.json</code>의 일부를 보면,</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  &quot;name&quot;: &quot;Homes&quot;,</span><br><span class="line">  &quot;version&quot;: &quot;0.1&quot;,</span><br><span class="line">  &quot;description&quot;: &quot;Homes App&quot;,</span><br><span class="line">  &quot;main&quot;: &quot;app.js&quot;,</span><br><span class="line">  &quot;scripts&quot;: &#123;</span><br><span class="line">    &quot;start&quot;: &quot;forever app.js&quot;,</span><br><span class="line">    &quot;test&quot;: &quot;echo \&quot;Error: no test specified\&quot; &amp;&amp; exit 1&quot;,</span><br><span class="line">    &quot;build&quot;: &quot;&quot;</span><br><span class="line">  &#125;, ...</span><br></pre></td></tr></table></figure>
+
+<p>이렇게 <code>start</code>에 <code>forever app.js</code>를 설정해뒀다.</p>
+<h3 id="Shell-Script-만들기"><a href="#Shell-Script-만들기" class="headerlink" title="Shell Script 만들기"></a>Shell Script 만들기</h3><p>같은 최상위 폴더에 <code>build_n_run.sh</code>을 작성한다. 이 스크립트는 미리 만들어둔 데이터베이스 컨테이너와 연결되어 있는 노드 컨테이너 배포를 자동화한다.</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Build N Run Container with DB Container</span></span><br><span class="line"><span class="comment"># 2020. 09. 18 Zini</span></span><br><span class="line"></span><br><span class="line"><span class="comment">### You MUST RUN Database Container First ###</span></span><br><span class="line"></span><br><span class="line">docker_username=<span class="string">&quot;&quot;</span></span><br><span class="line">container_name=<span class="string">&quot;&quot;</span></span><br><span class="line">image_name=<span class="string">&quot;&quot;</span></span><br><span class="line">db_container_name=<span class="string">&quot;&quot;</span></span><br><span class="line">version=<span class="string">&quot;&quot;</span></span><br><span class="line">host_port=3000</span><br><span class="line">virtual_port=3000</span><br><span class="line"></span><br><span class="line"><span class="built_in">echo</span> <span class="string">&quot;## Automation docker build and run ##&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># remove container</span></span><br><span class="line"><span class="built_in">echo</span> <span class="string">&quot;=&gt; Remove previous container...&quot;</span></span><br><span class="line">docker rm -f <span class="variable">$&#123;container_name&#125;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># remove image</span></span><br><span class="line"><span class="built_in">echo</span> <span class="string">&quot;=&gt; Remove previous image...&quot;</span></span><br><span class="line">docker rmi -f <span class="variable">$&#123;docker_username&#125;</span>/<span class="variable">$&#123;image_name&#125;</span>:<span class="variable">$&#123;version&#125;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># new-build/re-build docker image</span></span><br><span class="line"><span class="built_in">echo</span> <span class="string">&quot;=&gt; Build new image...&quot;</span></span><br><span class="line">docker build --tag <span class="variable">$&#123;docker_username&#125;</span>/<span class="variable">$&#123;image_name&#125;</span>:<span class="variable">$&#123;version&#125;</span> .</span><br><span class="line"></span><br><span class="line"><span class="comment"># Run container connected to existing database container</span></span><br><span class="line"><span class="built_in">echo</span> <span class="string">&quot;=&gt; Run container...&quot;</span></span><br><span class="line">docker run -t -d --name <span class="variable">$&#123;container_name&#125;</span> -p <span class="variable">$&#123;host_port&#125;</span>:<span class="variable">$&#123;virtual_port&#125;</span> --link <span class="variable">$&#123;db_container_name&#125;</span>:db -e DATABASE_HOST=db <span class="variable">$&#123;docker_username&#125;</span>/<span class="variable">$&#123;image_name&#125;</span>:<span class="variable">$&#123;version&#125;</span></span><br></pre></td></tr></table></figure>
+
+<p>데이터베이스 컨테이너와 연결할 필요가 없을 경우 마지막 <code>docker run</code> 부분만 조금 수정하면 된다. 데이터베이스 컨테이너 자동화와 거의 같은데, 연결하는 부분만 조금 다르다.</p>
+<h2 id="그럴듯한-자동화를-마치며"><a href="#그럴듯한-자동화를-마치며" class="headerlink" title="그럴듯한 자동화를 마치며"></a>그럴듯한 자동화를 마치며</h2><p>직접 작성한 스크립트 파일을 실행하기 위해서는 리눅스에서 실행 권한을 주고 실행해야 한다.</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">chmod +x build_n_run.sh</span><br></pre></td></tr></table></figure>
+
+<p>두 개의 파일에 모두 실행 권한을 주고 실행하면 된다.</p>
+<p>사실 이 과정도 너무 귀찮아서, git 업데이트와 실행 권한 설정을 모두 하는 쉘 스크립트를 또 작성했다.</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">rm -rf &lt;app-name&gt;</span><br><span class="line">git <span class="built_in">clone</span> https://github.com/zinirun/&lt;app-name&gt;</span><br><span class="line">chmod +x &lt;app-name&gt;/database-app/build_n_run.sh</span><br><span class="line">chmod +x &lt;app-name&gt;/build_n_run.sh</span><br></pre></td></tr></table></figure>
+
+<p><em>이제 업데이트할 때도 명령어 칠 생각에 두려워하지 않아도 된다.</em></p>
+
+        </div>
+
+        
+            <section class="post-copyright">
+                
+                
+                
+                
+
+            </section>
+        
+        <section class="post_disqus">
+            <div id="disqus_thread"></div>
+            <script>
+            
+            /**
+            *  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+            *  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables*/
+            /*
+            var disqus_config = function () {
+            this.page.url = PAGE_URL;  // Replace PAGE_URL with your page's canonical URL variable
+            this.page.identifier = PAGE_IDENTIFIER; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+            };
+            */
+            (function() { // DON'T EDIT BELOW THIS LINE
+            var d = document, s = d.createElement('script');
+            s.src = 'https://zinirun.disqus.com/embed.js';
+            s.setAttribute('data-timestamp', +new Date());
+            (d.head || d.body).appendChild(s);
+            })();
+            </script>
+            <noscript>Please enable JavaScript to view the <a target="_blank" rel="external nofollow noopener noreferrer" href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+        </section>
+        <section class="post-tags">
+            <div>
+                <span>Tag(s):</span>
+                <span class="tag">
+                    
+                    
+                        <a href="/tags/docker/"># docker</a>
+                    
+                        <a href="/tags/cloud/"># cloud</a>
+                    
+                        <a href="/tags/linux/"># linux</a>
+                    
+                        
+                </span>
+            </div>
+            <div>
+                <a href="javascript:window.history.back();">back</a>
+                <span>· </span>
+                <a href="/">home</a>
+            </div>
+        </section>
+        <section class="post-nav">
+            
+            
+            <a class="next" rel="next" href="/2020/09/18/ps-bfs-boj-18352/">BOJ - 18352 특정 거리의 도시 찾기 (BFS)</a>
+            
+        </section>
+
+
+    </article>
+</div>
+
+        </div>
+        <footer id="footer" class="footer">
+  <div class="copyright">
+    <span>© zini | Powered by
+      <a href="https://hexo.io" target="_blank" rel="external nofollow noopener noreferrer">Hexo</a>
+  </span></div>
+</footer>
+
+    </div>
+</body>
+</html>
