@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+<link rel="canonical" href="https://zinirun.github.io/2020/10/04/capstone-design-review-2/">
+
+
+<link rel="stylesheet" href="//fonts.googleapis.com/earlyaccess/notosanskr.css">
+
+
+    <meta name="author" content="zini">
+
+
+    <meta name="subtitle" content="tech blog by Zini">
+
+
+
+
+<title>Node.js 심화 공부와 졸업작품 리팩토링 계획 | zinirun</title>
+
+
+
+    <link rel="icon" href="/favicon.png">
+
+
+
+
+    <!-- stylesheets list from _config.yml -->
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+
+
+
+    <!-- scripts list from _config.yml -->
+    
+    <script src="/js/script.js"></script>
+    
+    <script src="/js/tocbot.min.js"></script>
+    
+
+
+
+    
+    
+        
+    
+
+
+
+<script>
+	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+		(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+			m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+	ga('create', 'UA-175983012-1', 'auto');
+	ga('send', 'pageview');
+</script>
+
+<meta name="generator" content="Hexo 5.0.2"><link rel="alternate" href="/feed.xml" title="zinirun" type="application/atom+xml">
+</head>
+<body>
+    <div class="wrapper">
+        <header>
+  <nav class="navbar">
+    <div class="container">
+      <div class="navbar-header header-logo" style="font-size: 13pt; font-weight: 600;">
+        <a id="blog_logo" href="/" style="color: #2d96bd;"><img class="logo-ico spin circle" src="/image/logo.png" alt="zini's Devlog"></a>
+        
+        <a class="menu-item left-menu" href="/archives">Posts</a>
+        
+        <a class="menu-item left-menu" href="/category">Categories</a>
+        
+        <a class="menu-item left-menu" href="/tag">Tags</a>
+        
+<!--
+        <input id="switch_default" type="checkbox" class="switch_default" />
+        <label for="switch_default" class="toggleBtn" style="margin-left: 0px;"></label>
+-->
+      </div>
+      <div class="menu navbar-right">
+        <!--mynav-->
+        <div id="mynav-container">
+        
+        <a class="menu-item" href="/categories/javascript"><img class="menu-ico" src="/image/icons/js.png" alt="Javascript"></a>
+        
+        <a class="menu-item" href="/categories/nodejs"><img class="menu-ico" src="/image/icons/node.png" alt="Node"></a>
+        
+        <a class="menu-item" href="/categories/ReactJS"><img class="menu-ico" src="/image/icons/react.png" alt="React"></a>
+        
+        <a class="menu-item" href="/categories/cloud/docker"><img class="menu-ico" src="/image/icons/docker.png" alt="Docker"></a>
+        
+        <a class="menu-item" href="/categories/cloud/kubernetes"><img class="menu-ico" src="/image/icons/k8s.png" alt="Kubernetes"></a>
+        
+        <a class="menu-item" href="/categories/algorithm"><img class="menu-ico" src="/image/icons/ps-code.png" alt="Algorithm"></a>
+        
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  
+  <nav class="navbar-mobile" id="nav-mobile">
+    <div class="container">
+      <div class="navbar-header">
+        <div>
+          <a id="blog_logo" href="/" style="color: #2d96bd;"><img class="logo-ico" src="/image/logo.png" alt="zini's Devlog"></a>
+        </div>
+        <div class="menu-toggle" onclick="mobileBtn()">&#9776; Menu</div>
+      </div>
+      <div class="menu" id="mobile-menu">
+       <div id="mobile-nav">
+        
+        <a class="menu-item" href="/archives">Posts</a>
+        
+        <a class="menu-item" href="/category">Categories</a>
+        
+        <a class="menu-item" href="/tag">Tags</a>
+        
+          </div>
+        <div id="mobile-mynav">
+        
+        <a class="menu-item" href="/categories/javascript"><img class="menu-ico" src="/image/icons/js.png" alt="Javascript"></a>
+        
+        <a class="menu-item" href="/categories/nodejs"><img class="menu-ico" src="/image/icons/node.png" alt="Node"></a>
+        
+        <a class="menu-item" href="/categories/ReactJS"><img class="menu-ico" src="/image/icons/react.png" alt="React"></a>
+        
+        <a class="menu-item" href="/categories/cloud/docker"><img class="menu-ico" src="/image/icons/docker.png" alt="Docker"></a>
+        
+        <a class="menu-item" href="/categories/cloud/kubernetes"><img class="menu-ico" src="/image/icons/k8s.png" alt="Kubernetes"></a>
+        
+        <a class="menu-item" href="/categories/algorithm"><img class="menu-ico" src="/image/icons/ps-code.png" alt="Algorithm"></a>
+        
+          </div>
+      </div>
+    </div>
+  </nav>
+</header>
+<script>
+  var mobileBtn = function f() {
+    var toggleMenu = document.getElementsByClassName("menu-toggle")[0];
+    var mobileMenu = document.getElementById("mobile-menu");
+    if (toggleMenu.classList.contains("active")) {
+      toggleMenu.classList.remove("active");
+      mobileMenu.classList.remove("active");
+    } else {
+      toggleMenu.classList.add("active");
+      mobileMenu.classList.add("active");
+    }
+  };
+</script>
+
+        <div class="main">
+            <div class="container">
+    
+    
+        <div class="post-toc">
+    <div class="tocbot-list">
+    </div>
+    <div class="tocbot-list-menu">
+        <a class="tocbot-toc-expand" onclick="expand_toc()">Expand All</a>
+        <a onclick="go_top()">Top</a>
+        <a onclick="go_bottom()">Bottom</a>
+    </div>
+</div>
+
+<script>
+    document.ready(
+        function () {
+            tocbot.init({
+                tocSelector: '.tocbot-list',
+                contentSelector: '.post-content',
+                headingSelector: 'h1, h2, h3, h4, h5',
+                collapseDepth: 1,
+                orderedList: false,
+                scrollSmooth: true,
+            })
+        }
+    )
+
+    function expand_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 6,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "collapse_toc()");
+        b.innerHTML = "Collapse all"
+    }
+
+    function collapse_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 1,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "expand_toc()");
+        b.innerHTML = "Expand all"
+    }
+
+    function go_top() {
+        window.scrollTo(0, 0);
+    }
+
+    function go_bottom() {
+        window.scrollTo(0, document.body.scrollHeight);
+    }
+
+</script>
+    
+
+    
+    <article class="post-wrap">
+        <header class="post-header">
+            <h1 class="post-title">Node.js 심화 공부와 졸업작품 리팩토링 계획</h1>
+            
+                <div class="post-meta">
+                    
+                        Author: <a itemprop="author" rel="author" href="/">zini</a>
+                    
+
+                    
+                        <span class="post-time">
+                        Date: <a href="#">October 4, 2020&nbsp;&nbsp;15:58:35</a>
+                        </span>
+                    
+                    
+                        <span class="post-category">
+                    Category:
+                            
+                                <a href="/categories/nodejs/">nodejs</a>
+                            
+                        </span>
+                    
+                </div>
+            
+        </header>
+
+        <div class="post-content">
+            <h2 id="추석-기념-Node-js-심화-공부"><a href="#추석-기념-Node-js-심화-공부" class="headerlink" title="추석 기념(?) Node.js 심화 공부"></a>추석 기념(?) Node.js 심화 공부</h2><p>코로나때문에 추석에 고향을 가지 않았다. 보다 알찬 추석을 위해 그동안 하고 싶었던 졸업작품 리팩토링이 떠올랐다. 무턱대고 하기에는 확신이 없어서, Node.js와 Express 관련 강의를 처음부터 끝까지 동영상을 100개정도 본 것 같다. 아는 것도 많았지만 반성할 점 투성이었다. 지금까지 졸업 작품의 코드가 되게 바보같다는 생각을 했다.</p>
+<h2 id="졸업작품-셀프-코드리뷰-그리고-반성"><a href="#졸업작품-셀프-코드리뷰-그리고-반성" class="headerlink" title="졸업작품 셀프 코드리뷰 그리고 반성"></a>졸업작품 셀프 코드리뷰 그리고 반성</h2><h3 id="REST-API-미준수"><a href="#REST-API-미준수" class="headerlink" title="REST API 미준수"></a>REST API 미준수</h3><p>우선 REST API를 제대로 준수하지 않았다. 예를 들어 회원가입을 굳이 GET 요청은 <code>/register</code>로, POST 요청은 <code>/reg_submit</code>으로 하는 등, CRUD 요청을 한 URL에서 라우터의 속성만 바꿔서 작성하면 될 것을 뒤에 <code>submit</code>이라는 말을 붙여 불필요하게 만들었다는 것이다.</p>
+<h3 id="주먹구구식-app-js"><a href="#주먹구구식-app-js" class="headerlink" title="주먹구구식 app.js"></a>주먹구구식 app.js</h3><p><img src="/images/2020-10-04-16-10-36.png"></p>
+<p>모든 라우터와 익스프레스 설정이 포함된 <code>app.js</code>도 엉망이다. <code>server.js</code>로 분리하여 서버에 대한 설정(미들웨어 등)을 하고 각 대분류에 대한 컨트롤러 파일을 따로 만들었다면 유지보수가 훨씬 수월한 코드가 만들어졌을텐데, 지금의 코드는 주먹구구식이었다. 그리고 서버에 대한 코드를 class화 한다면 인스턴스 관점에서의 서버 접속 관리를 할 수 있다. 구조에 대한 전체적인 수정이 필요하다..</p>
+<h3 id="바보같은-미들웨어-처리"><a href="#바보같은-미들웨어-처리" class="headerlink" title="바보같은 미들웨어 처리"></a>바보같은 미들웨어 처리</h3><p>지금 만드는 서비스는 기본적으로 로그인이 되어 있어야 동작한다. 그래서 모든 라우터에는</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (req.session.user) &#123;</span><br><span class="line">  <span class="comment">// 로그인이 되어 있을 때</span></span><br><span class="line">&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">  <span class="comment">// 로그인으로 넘기기</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>이 로그인 확인 로직이 기본적으로 처음에 들어간다. 사실 <code>checkLogined</code> 함수를 따로 만들어서 미들웨어로 <code>next()</code> 처리만 해주면 똑같은 코드를 복사해서 쓰는 어리석은 짓은 하지 않아도 됐었다.</p>
+<h3 id="레이아웃이-없는-뷰"><a href="#레이아웃이-없는-뷰" class="headerlink" title="레이아웃이 없는 뷰"></a>레이아웃이 없는 뷰</h3><p>프론트엔드 단에서는 <code>ejs</code> 템플릿 엔진을 사용하고 있는데 별도의 레이아웃을 사용하지 않아서 내비게이션 바같은 상단에 고정에 들어가는 항목들이 모든 html 파일에 포함되어 있다. 당연히 내비게이션 바의 코드를 수정하려면 모든 html을 수정해야 한다. 레이아웃 뷰를 도입했다면 이런 비효율적인 행위를 하지 않아도 됐었다.</p>
+<h2 id="리팩토링-계획"><a href="#리팩토링-계획" class="headerlink" title="리팩토링 계획"></a>리팩토링 계획</h2><p>생각보다 리팩토링할 내용이 너무 많다. 위에서 나온 4가지 큰 문제를 수정할 계획인데, 일단 서버 사이드의 코드부터 뜯어 고치고 프론트 사이드에 레이아웃을 적용할 생각이다.</p>
+<ol>
+<li>app.js, server.js 분리, class화</li>
+<li>미들웨어 처리</li>
+<li>라우터에 MVC 패턴 도입, REST API 준수</li>
+<li>짜잘한 코드 수정 (함수 세분화)</li>
+<li>레이아웃 뷰 사용하기</li>
+</ol>
+<p>위 순서대로 차근차근 리팩토링을 할 계획이다. 이번 졸업작품에서 제대로 된 코드를 작성한다면 다음 프로젝트에서는 이런 번거로운 리팩토링은 하지 않아도 될 기대를 한다. 물론 완벽한 리팩토링이란 것은 없지만, 현재의 코드에 안주하는 개발자는 발전 가능성이 없다는 것을 잘 알고 있기에 더 완벽한 코드를 지향하려 한다.</p>
+
+        </div>
+
+        
+            <section class="post-copyright">
+                
+                
+                
+                
+
+            </section>
+        
+        <section class="post_disqus">
+            <div id="disqus_thread"></div>
+            <script>
+            
+            /**
+            *  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+            *  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables*/
+            /*
+            var disqus_config = function () {
+            this.page.url = PAGE_URL;  // Replace PAGE_URL with your page's canonical URL variable
+            this.page.identifier = PAGE_IDENTIFIER; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+            };
+            */
+            (function() { // DON'T EDIT BELOW THIS LINE
+            var d = document, s = d.createElement('script');
+            s.src = 'https://zinirun.disqus.com/embed.js';
+            s.setAttribute('data-timestamp', +new Date());
+            (d.head || d.body).appendChild(s);
+            })();
+            </script>
+            <noscript>Please enable JavaScript to view the <a target="_blank" rel="external nofollow noopener noreferrer" href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+        </section>
+        <section class="post-tags">
+            <div>
+                <span>Tag(s):</span>
+                <span class="tag">
+                    
+                    
+                        <a href="/tags/capstone-design/"># capstone design</a>
+                    
+                        <a href="/tags/homes/"># homes</a>
+                    
+                        <a href="/tags/nodejs/"># nodejs</a>
+                    
+                        <a href="/tags/express/"># express</a>
+                    
+                        <a href="/tags/refactoring/"># refactoring</a>
+                    
+                        
+                </span>
+            </div>
+            <div>
+                <a href="javascript:window.history.back();">back</a>
+                <span>· </span>
+                <a href="/">home</a>
+            </div>
+        </section>
+        <section class="post-nav">
+            
+            
+            <a class="next" rel="next" href="/2020/09/28/capstone-design-review-1/">졸업작품을 하면서 - 첫번째 회고</a>
+            
+        </section>
+
+
+    </article>
+</div>
+
+        </div>
+        <footer id="footer" class="footer">
+  <div class="copyright">
+    <span>© zini | Powered by
+      <a href="https://hexo.io" target="_blank" rel="external nofollow noopener noreferrer">Hexo</a>
+  </span></div>
+</footer>
+
+    </div>
+</body>
+</html>

@@ -3,15 +3,36 @@
 
 
     <url>
+        <loc>https://zinirun.github.io/tags/refactoring/</loc>
+        <lastmod>2020-10-04T07:38:22.971Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
+        <loc>https://zinirun.github.io/tags/express/</loc>
+        <lastmod>2020-10-04T07:38:22.971Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
+        <loc>https://zinirun.github.io/tags/nodejs/</loc>
+        <lastmod>2020-10-04T07:38:22.971Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
         <loc>https://zinirun.github.io/tags/homes/</loc>
-        <lastmod>2020-09-28T06:03:12.864Z</lastmod>
+        <lastmod>2020-10-04T07:38:22.971Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>
     </url>
 
     <url>
         <loc>https://zinirun.github.io/tags/capstone-design/</loc>
-        <lastmod>2020-09-28T06:03:12.864Z</lastmod>
+        <lastmod>2020-10-04T07:38:22.971Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>
     </url>
