@@ -3,6 +3,27 @@
 
 
     <url>
+        <loc>https://zinirun.github.io/tags/mysql/</loc>
+        <lastmod>2020-10-11T14:01:36.064Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
+        <loc>https://zinirun.github.io/tags/nodejs/</loc>
+        <lastmod>2020-10-11T14:01:36.064Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
+        <loc>https://zinirun.github.io/tags/docker/</loc>
+        <lastmod>2020-10-11T14:01:36.064Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
         <loc>https://zinirun.github.io/tags/https/</loc>
         <lastmod>2020-10-09T08:39:06.381Z</lastmod>
         <changefreq>weekly</changefreq>
@@ -11,13 +32,6 @@
 
     <url>
         <loc>https://zinirun.github.io/tags/express/</loc>
-        <lastmod>2020-10-09T08:39:06.381Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.2</priority>
-    </url>
-
-    <url>
-        <loc>https://zinirun.github.io/tags/nodejs/</loc>
         <lastmod>2020-10-09T08:39:06.381Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>
@@ -74,13 +88,6 @@
 
     <url>
         <loc>https://zinirun.github.io/tags/cloud/</loc>
-        <lastmod>2020-09-18T13:30:48.429Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.2</priority>
-    </url>
-
-    <url>
-        <loc>https://zinirun.github.io/tags/docker/</loc>
         <lastmod>2020-09-18T13:30:48.429Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>

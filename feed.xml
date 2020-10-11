@@ -6,7 +6,7 @@
   <link href="https://zinirun.github.io/feed.xml" rel="self"/>
   
   <link href="https://zinirun.github.io/"/>
-  <updated>2020-10-09T08:39:06.381Z</updated>
+  <updated>2020-10-11T14:01:36.064Z</updated>
   <id>https://zinirun.github.io/</id>
   
   <author>
@@ -15,6 +15,34 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Node.js - MySQL timezone 삽질기</title>
+    <link href="https://zinirun.github.io/2020/10/11/nodejs-mysql-timezone/"/>
+    <id>https://zinirun.github.io/2020/10/11/nodejs-mysql-timezone/</id>
+    <published>2020-10-11T08:54:18.000Z</published>
+    <updated>2020-10-11T14:01:36.064Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="제-컴에선-되는데요"><a href="#제-컴에선-되는데요" class="headerlink" title="제 컴에선 되는데요"></a>제 컴에선 되는데요</h2><p>개발자들간의 대화에서 자주 나오는 변명이다. 지금 고군분투하고 있는 졸업작품에서 뼈저리게 느껴지는 말이다. 테스트 환경(로컬)과 운영 환경이 정말 다르다. localhost에선 잘만 되던 것이 도커로 서버에 배포하면 기대와 정말 다르다. 이번 문제는 도커로 배포된 MySQL 컨테이너의 시간대가 <code>UTC</code>로 설정되어 있어서 발생했다.</p><h2 id="삽질의-시작"><a href="#삽질의-시작" class="headerlink" title="삽질의 시작"></a>삽질의 시작</h2><p>백엔드(Node)에서 DB에 대한 config를 수정해야겠다 싶어서 구글링하다가 <a href="https://lemontia.tistory.com/873">비슷한 문제에 대한 해결방법</a>을 찾았다. Sequalize를 사용하지는 않지만 MySQL 설정에 대한 방법은 동일하겠다 싶었다.</p><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">module</span>.exports = &#123;</span><br><span class="line">  connectionLimit: <span class="number">30</span>,</span><br><span class="line">  host: process.env.DATABASE_HOST,</span><br><span class="line">  user: <span class="string">&quot;root&quot;</span>,</span><br><span class="line">  password,</span><br><span class="line">  database,</span><br><span class="line">  dateStrings: <span class="string">&quot;date&quot;</span>,</span><br><span class="line">  charset: <span class="string">&quot;utf8mb4&quot;</span>,</span><br><span class="line">  debug: <span class="literal">false</span>,</span><br><span class="line">  insecureAuth: <span class="literal">true</span>,</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure><p>이 config를</p><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">module</span>.exports = &#123;</span><br><span class="line">  connectionLimit: <span class="number">30</span>,</span><br><span class="line">  host: process.env.DATABASE_HOST,</span><br><span class="line">  user: <span class="string">&quot;root&quot;</span>,</span><br><span class="line">  password,</span><br><span class="line">  database,</span><br><span class="line">  timezone: <span class="string">&quot;Asia/Seoul&quot;</span>,</span><br><span class="line">  dateStrings: <span class="literal">true</span>,</span><br><span class="line">  typeCast: <span class="literal">true</span>,</span><br><span class="line">  charset: <span class="string">&quot;utf8mb4&quot;</span>,</span><br><span class="line">  debug: <span class="literal">false</span>,</span><br><span class="line">  insecureAuth: <span class="literal">true</span>,</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure><p>이렇게 바꿨다. 배포해보니 결과는 똑같았다.</p><p><img src="/images/2020-10-11-22-55-06.png"></p><p>9시간 전으로 타임스탬프가 찍힌다.. <code>timezone: &#39;+09:00&#39;</code>으로 설정해도 먹히지 않았다. 대체 왜 이러는걸까 생각하다가 도커로 배포한 MySQL에서 직접 <code>select current_timestamp()</code>를 찍어봐야겠다 생각했다.</p><p>그러니 문제의 timezone과 동일한 시간이 출력되어서 데이터베이스의 timezone만 바꾸면 되겠다고 생각했다. (여기서 해결한 줄 알았다)</p><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SET</span> <span class="keyword">time_zone</span> = <span class="string">&#x27;Asia/Seoul&#x27;</span>;</span><br></pre></td></tr></table></figure><p>이제 현재시간도 정상적으로 찍힌다.</p><p>그런데 배포했는데 또 안된다. 9시간 전으로 (UTC 시간으로) 찍힌다.</p><h2 id="해결-방법"><a href="#해결-방법" class="headerlink" title="해결 방법"></a>해결 방법</h2><p>데이터베이스에서 timezone을 설정하는 방법은 맞았다. 하지만 데이터베이스 컨테이너 내 모든 DB의 Global 값을 설정해야 모든 테이블에 대해 timezone이 정상적으로 적용되는 것이었다.</p><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SET</span> <span class="keyword">GLOBAL</span> <span class="keyword">time_zone</span> = <span class="string">&#x27;Asia/Seoul&#x27;</span>;</span><br></pre></td></tr></table></figure><p><img src="/images/2020-10-11-22-59-39.png"></p><p>이제 정상적으로 찍힌다. 사실 이 설정들을 바꾸는 건 어렵지 않은데, 아무리 배포 자동화가 되어 있어도 깃에 푸시하고 서버에 접속해서 스크립트를 실행하면 몇 초만에 끝나는 것도 아니라서 꽤 번거로웠다. 로컬 환경에서 배포 환경 기준으로 테스트할 수 있는 방법이 있으면 좋겠다..</p>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;h2 id=&quot;제-컴에선-되는데요&quot;&gt;&lt;a href=&quot;#제-컴에선-되는데요&quot; class=&quot;headerlink&quot; title=&quot;제 컴에선 되는데요&quot;&gt;&lt;/a&gt;제 컴에선 되는데요&lt;/h2&gt;&lt;p&gt;개발자들간의 대화에서 자주 나오는 변명이다. 지금 고군분투하고 있는 </summary>
+      
+    
+    
+    
+    <category term="nodejs" scheme="https://zinirun.github.io/categories/nodejs/"/>
+    
+    
+    <category term="docker" scheme="https://zinirun.github.io/tags/docker/"/>
+    
+    <category term="nodejs" scheme="https://zinirun.github.io/tags/nodejs/"/>
+    
+    <category term="mysql" scheme="https://zinirun.github.io/tags/mysql/"/>
+    
+  </entry>
   
   <entry>
     <title>Node.js - HTTPS 서버 구축하기</title>
@@ -539,30 +567,6 @@
     <category term="javascript" scheme="https://zinirun.github.io/tags/javascript/"/>
     
     <category term="VanillaJS" scheme="https://zinirun.github.io/tags/VanillaJS/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Netlify Custom Domain 설정하기 (with Namecheap)</title>
-    <link href="https://zinirun.github.io/2020/08/31/netlify-custom-domain/"/>
-    <id>https://zinirun.github.io/2020/08/31/netlify-custom-domain/</id>
-    <published>2020-08-31T06:48:27.000Z</published>
-    <updated>2020-08-31T07:17:20.397Z</updated>
-    
-    <content type="html"><![CDATA[<p>어제 내 프로필 사이트를 하나 만들었다. Github Pages를 사용해서 배포했는데 아무리 봐도 주소 <code>zinirun.github.io/zini-profile</code>은 너무나도 길었고 <code>zinirun.github.io</code>는 현재 블로그의 레파지토리로 쓰고 있어서 프로젝트 페이지를 커스텀 도메인으로 설정할 수 있나 찾아봤는데 내가 못 찾는건지, 방법이 없었다.</p><p>그래서 네트리파이로 배포하고 커스텀 도메인을 설정했다.</p><h3 id="Netlify-설정"><a href="#Netlify-설정" class="headerlink" title="Netlify 설정"></a>Netlify 설정</h3><p><img src="/images/2020-08-31-15-52-11.png"></p><p>네트리파이에 배포한 본인의 앱 설정에는 <strong>Domain management</strong>가 있다. 들어가면</p><p><img src="/images/2020-08-31-15-53-16.png"></p><p>이렇게 <strong>Custom Domains</strong>를 설정하는 영역이 있는데 소유한 주소를 입력한다.</p><h3 id="Domain-Nameserver-설정"><a href="#Domain-Nameserver-설정" class="headerlink" title="Domain Nameserver 설정"></a>Domain Nameserver 설정</h3><p>그러면 1단계를 넘어가고 2단계에서 Name Server를 등록하라고 한다. 나는 <a href="https://namecheap.com/">Namecheap</a> 주소를 대여받고 있어서 도메인 설정에 들어갔는데, 다른 주소 대여 서비스도 Custom DNS를 지원할 것이니 잘 찾아보면 Name Server 설정하는 영역이 있을 것이다.</p><p><img src="/images/2020-08-31-15-56-07.png"></p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">dns1.p05.nsone.net</span><br><span class="line">dns2.p05.nsone.net</span><br><span class="line">dns3.p05.nsone.net</span><br><span class="line">dns4.p05.nsone.net</span><br></pre></td></tr></table></figure><p>이 4개를 모두 등록해주면 된다. 하지만 본인의 도메인에 DNS가 정상적으로 등록되려면 하루정도의 시간이 걸린다. DNS를 정상적으로 등록했다면 네트리파이에서 검증 단계를 모두 마친 후 커스텀 도메인을 사용할 수 있다.</p>]]></content>
-    
-    
-      
-      
-    <summary type="html">&lt;p&gt;어제 내 프로필 사이트를 하나 만들었다. Github Pages를 사용해서 배포했는데 아무리 봐도 주소 &lt;code&gt;zinirun.github.io/zini-profile&lt;/code&gt;은 너무나도 길었고 &lt;code&gt;zinirun.github.io&lt;/</summary>
-      
-    
-    
-    
-    <category term="Etc" scheme="https://zinirun.github.io/categories/Etc/"/>
-    
-    
-    <category term="netlify" scheme="https://zinirun.github.io/tags/netlify/"/>
     
   </entry>
   
