@@ -8,6 +8,14 @@
     </url>
 
     <url>
+        <loc>https://zinirun.github.io/2020/10/12/sqld-38-result/</loc>
+        <lastmod>2020-10-12T00:15:59.405Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
         <loc>https://zinirun.github.io/2020/10/11/nodejs-mysql-timezone/</loc>
         <lastmod>2020-10-11T14:01:36.064Z</lastmod>
         <changefreq>weekly</changefreq>

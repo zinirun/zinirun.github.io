@@ -3,6 +3,13 @@
 
 
     <url>
+        <loc>https://zinirun.github.io/tags/sqld/</loc>
+        <lastmod>2020-10-12T00:15:59.405Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
         <loc>https://zinirun.github.io/tags/mysql/</loc>
         <lastmod>2020-10-11T14:01:36.064Z</lastmod>
         <changefreq>weekly</changefreq>
@@ -138,13 +145,6 @@
     <url>
         <loc>https://zinirun.github.io/tags/chrome/</loc>
         <lastmod>2020-09-07T07:20:32.943Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.2</priority>
-    </url>
-
-    <url>
-        <loc>https://zinirun.github.io/tags/sqld/</loc>
-        <lastmod>2020-09-05T07:55:03.056Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>
     </url>

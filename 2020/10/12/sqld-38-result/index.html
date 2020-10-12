@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
 <meta http-equiv="X-UA-Compatible" content="ie=edge">
-<link rel="canonical" href="https://zinirun.github.io/2020/10/11/nodejs-mysql-timezone/">
+<link rel="canonical" href="https://zinirun.github.io/2020/10/12/sqld-38-result/">
 
 
 <link rel="stylesheet" href="//fonts.googleapis.com/earlyaccess/notosanskr.css">
@@ -18,7 +18,7 @@
 
 
 
-<title>Node.js - MySQL timezone 삽질기 | zinirun</title>
+<title>SQLD 38회 결과 (국가공인 SQL 개발자 자격증) | zinirun</title>
 
 
 
@@ -223,7 +223,7 @@
     
     <article class="post-wrap">
         <header class="post-header">
-            <h1 class="post-title">Node.js - MySQL timezone 삽질기</h1>
+            <h1 class="post-title">SQLD 38회 결과 (국가공인 SQL 개발자 자격증)</h1>
             
                 <div class="post-meta">
                     
@@ -232,14 +232,14 @@
 
                     
                         <span class="post-time">
-                        Date: <a href="#">October 11, 2020&nbsp;&nbsp;17:54:18</a>
+                        Date: <a href="#">October 12, 2020&nbsp;&nbsp;9:08:42</a>
                         </span>
                     
                     
                         <span class="post-category">
                     Category:
                             
-                                <a href="/categories/nodejs/">nodejs</a>
+                                <a href="/categories/Etc/">Etc</a>
                             
                         </span>
                     
@@ -248,26 +248,8 @@
         </header>
 
         <div class="post-content">
-            <h2 id="제-컴에선-되는데요"><a href="#제-컴에선-되는데요" class="headerlink" title="제 컴에선 되는데요"></a>제 컴에선 되는데요</h2><p>개발자들간의 대화에서 자주 나오는 변명이다. 지금 고군분투하고 있는 졸업작품에서 뼈저리게 느껴지는 말이다. 테스트 환경(로컬)과 운영 환경이 정말 다르다. localhost에선 잘만 되던 것이 도커로 서버에 배포하면 기대와 정말 다르다. 이번 문제는 도커로 배포된 MySQL 컨테이너의 시간대가 <code>UTC</code>로 설정되어 있어서 발생했다.</p>
-<h2 id="삽질의-시작"><a href="#삽질의-시작" class="headerlink" title="삽질의 시작"></a>삽질의 시작</h2><p>백엔드(Node)에서 DB에 대한 config를 수정해야겠다 싶어서 구글링하다가 <a target="_blank" rel="external nofollow noopener noreferrer" href="https://lemontia.tistory.com/873">비슷한 문제에 대한 해결방법</a>을 찾았다. Sequalize를 사용하지는 않지만 MySQL 설정에 대한 방법은 동일하겠다 싶었다.</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">module</span>.exports = &#123;</span><br><span class="line">  connectionLimit: <span class="number">30</span>,</span><br><span class="line">  host: process.env.DATABASE_HOST,</span><br><span class="line">  user: <span class="string">&quot;root&quot;</span>,</span><br><span class="line">  password,</span><br><span class="line">  database,</span><br><span class="line">  dateStrings: <span class="string">&quot;date&quot;</span>,</span><br><span class="line">  charset: <span class="string">&quot;utf8mb4&quot;</span>,</span><br><span class="line">  debug: <span class="literal">false</span>,</span><br><span class="line">  insecureAuth: <span class="literal">true</span>,</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-
-<p>이 config를</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">module</span>.exports = &#123;</span><br><span class="line">  connectionLimit: <span class="number">30</span>,</span><br><span class="line">  host: process.env.DATABASE_HOST,</span><br><span class="line">  user: <span class="string">&quot;root&quot;</span>,</span><br><span class="line">  password,</span><br><span class="line">  database,</span><br><span class="line">  timezone: <span class="string">&quot;Asia/Seoul&quot;</span>,</span><br><span class="line">  dateStrings: <span class="literal">true</span>,</span><br><span class="line">  typeCast: <span class="literal">true</span>,</span><br><span class="line">  charset: <span class="string">&quot;utf8mb4&quot;</span>,</span><br><span class="line">  debug: <span class="literal">false</span>,</span><br><span class="line">  insecureAuth: <span class="literal">true</span>,</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-
-<p>이렇게 바꿨다. 배포해보니 결과는 똑같았다.</p>
-<p><img src="/images/2020-10-11-22-55-06.png"></p>
-<p>9시간 전으로 타임스탬프가 찍힌다.. <code>timezone: &#39;+09:00&#39;</code>으로 설정해도 먹히지 않았다. 대체 왜 이러는걸까 생각하다가 도커로 배포한 MySQL에서 직접 <code>select current_timestamp()</code>를 찍어봐야겠다 생각했다.</p>
-<p>그러니 문제의 timezone과 동일한 시간이 출력되어서 데이터베이스의 timezone만 바꾸면 되겠다고 생각했다. (여기서 해결한 줄 알았다)</p>
-<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SET</span> <span class="keyword">time_zone</span> = <span class="string">&#x27;Asia/Seoul&#x27;</span>;</span><br></pre></td></tr></table></figure>
-
-<p>이제 현재시간도 정상적으로 찍힌다.</p>
-<p>그런데 배포했는데 또 안된다. 9시간 전으로 (UTC 시간으로) 찍힌다.</p>
-<h2 id="해결-방법"><a href="#해결-방법" class="headerlink" title="해결 방법"></a>해결 방법</h2><p>데이터베이스에서 timezone을 설정하는 방법은 맞았다. 하지만 데이터베이스 컨테이너 내 모든 DB의 Global 값을 설정해야 모든 테이블에 대해 timezone이 정상적으로 적용되는 것이었다.</p>
-<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SET</span> <span class="keyword">GLOBAL</span> <span class="keyword">time_zone</span> = <span class="string">&#x27;Asia/Seoul&#x27;</span>;</span><br></pre></td></tr></table></figure>
-
-<p><img src="/images/2020-10-11-22-59-39.png"></p>
-<p>이제 정상적으로 찍힌다. 사실 이 설정들을 바꾸는 건 어렵지 않은데, 아무리 배포 자동화가 되어 있어도 깃에 푸시하고 서버에 접속해서 스크립트를 실행하면 몇 초만에 끝나는 것도 아니라서 꽤 번거로웠다. 로컬 환경에서 배포 환경 기준으로 테스트할 수 있는 방법이 있으면 좋겠다..</p>
+            <h2 id="합격"><a href="#합격" class="headerlink" title="합격"></a>합격</h2><p><img src="/images/2020-10-12-09-10-48.png"></p>
+<p>SQLD 사이트가 결과 발표 날에 마비되어 뒤늦게 확인했다. 결과는 합격! 순공시간 하루 정도에 좋은 결과를 얻었다. 자격증보다 프로젝트 하나가 낫다고 생각하지만 공부하는 머리도 돌릴겸 재미로 자격증 하나씩 따는건 재미있다. 오라클 자격증도 따보고 싶은데 터무니없이 비싸기도 하고 그 시간에 하둡이나 카프카를 공부해보고 싶기도 하다.</p>
 
         </div>
 
@@ -308,11 +290,7 @@
                 <span class="tag">
                     
                     
-                        <a href="/tags/docker/"># docker</a>
-                    
-                        <a href="/tags/nodejs/"># nodejs</a>
-                    
-                        <a href="/tags/mysql/"># mysql</a>
+                        <a href="/tags/sqld/"># sqld</a>
                     
                         
                 </span>
@@ -325,10 +303,8 @@
         </section>
         <section class="post-nav">
             
-                <a class="prev" rel="prev" href="/2020/10/12/sqld-38-result/">SQLD 38회 결과 (국가공인 SQL 개발자 자격증)</a>
             
-            
-            <a class="next" rel="next" href="/2020/10/07/nodejs-https-server/">Node.js - HTTPS 서버 구축하기</a>
+            <a class="next" rel="next" href="/2020/10/11/nodejs-mysql-timezone/">Node.js - MySQL timezone 삽질기</a>
             
         </section>
 
