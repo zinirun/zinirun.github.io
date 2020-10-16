@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+<link rel="canonical" href="https://zinirun.github.io/2020/10/16/node-better-express-app/">
+
+
+<link rel="stylesheet" href="//fonts.googleapis.com/earlyaccess/notosanskr.css">
+
+
+    <meta name="author" content="zini">
+
+
+    <meta name="subtitle" content="tech blog by Zini">
+
+
+
+
+<title>Node.js - 좀 더 바람직하게 Express 서버 여는 법 | zinirun</title>
+
+
+
+    <link rel="icon" href="/favicon.png">
+
+
+
+
+    <!-- stylesheets list from _config.yml -->
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+
+
+
+    <!-- scripts list from _config.yml -->
+    
+    <script src="/js/script.js"></script>
+    
+    <script src="/js/tocbot.min.js"></script>
+    
+
+
+
+    
+    
+        
+    
+
+
+
+<script>
+	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+		(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+			m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+	ga('create', 'UA-175983012-1', 'auto');
+	ga('send', 'pageview');
+</script>
+
+<meta name="generator" content="Hexo 5.0.2"><link rel="alternate" href="/feed.xml" title="zinirun" type="application/atom+xml">
+</head>
+<body>
+    <div class="wrapper">
+        <header>
+  <nav class="navbar">
+    <div class="container">
+      <div class="navbar-header header-logo" style="font-size: 13pt; font-weight: 600;">
+        <a id="blog_logo" href="/" style="color: #2d96bd;"><img class="logo-ico spin circle" src="/image/logo.png" alt="zini's Devlog"></a>
+        
+        <a class="menu-item left-menu" href="/archives">Posts</a>
+        
+        <a class="menu-item left-menu" href="/category">Categories</a>
+        
+        <a class="menu-item left-menu" href="/tag">Tags</a>
+        
+<!--
+        <input id="switch_default" type="checkbox" class="switch_default" />
+        <label for="switch_default" class="toggleBtn" style="margin-left: 0px;"></label>
+-->
+      </div>
+      <div class="menu navbar-right">
+        <!--mynav-->
+        <div id="mynav-container">
+        
+        <a class="menu-item" href="/categories/javascript"><img class="menu-ico" src="/image/icons/js.png" alt="Javascript"></a>
+        
+        <a class="menu-item" href="/categories/nodejs"><img class="menu-ico" src="/image/icons/node.png" alt="Node"></a>
+        
+        <a class="menu-item" href="/categories/ReactJS"><img class="menu-ico" src="/image/icons/react.png" alt="React"></a>
+        
+        <a class="menu-item" href="/categories/cloud/docker"><img class="menu-ico" src="/image/icons/docker.png" alt="Docker"></a>
+        
+        <a class="menu-item" href="/categories/cloud/kubernetes"><img class="menu-ico" src="/image/icons/k8s.png" alt="Kubernetes"></a>
+        
+        <a class="menu-item" href="/categories/algorithm"><img class="menu-ico" src="/image/icons/ps-code.png" alt="Algorithm"></a>
+        
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  
+  <nav class="navbar-mobile" id="nav-mobile">
+    <div class="container">
+      <div class="navbar-header">
+        <div>
+          <a id="blog_logo" href="/" style="color: #2d96bd;"><img class="logo-ico" src="/image/logo.png" alt="zini's Devlog"></a>
+        </div>
+        <div class="menu-toggle" onclick="mobileBtn()">&#9776; Menu</div>
+      </div>
+      <div class="menu" id="mobile-menu">
+       <div id="mobile-nav">
+        
+        <a class="menu-item" href="/archives">Posts</a>
+        
+        <a class="menu-item" href="/category">Categories</a>
+        
+        <a class="menu-item" href="/tag">Tags</a>
+        
+          </div>
+        <div id="mobile-mynav">
+        
+        <a class="menu-item" href="/categories/javascript"><img class="menu-ico" src="/image/icons/js.png" alt="Javascript"></a>
+        
+        <a class="menu-item" href="/categories/nodejs"><img class="menu-ico" src="/image/icons/node.png" alt="Node"></a>
+        
+        <a class="menu-item" href="/categories/ReactJS"><img class="menu-ico" src="/image/icons/react.png" alt="React"></a>
+        
+        <a class="menu-item" href="/categories/cloud/docker"><img class="menu-ico" src="/image/icons/docker.png" alt="Docker"></a>
+        
+        <a class="menu-item" href="/categories/cloud/kubernetes"><img class="menu-ico" src="/image/icons/k8s.png" alt="Kubernetes"></a>
+        
+        <a class="menu-item" href="/categories/algorithm"><img class="menu-ico" src="/image/icons/ps-code.png" alt="Algorithm"></a>
+        
+          </div>
+      </div>
+    </div>
+  </nav>
+</header>
+<script>
+  var mobileBtn = function f() {
+    var toggleMenu = document.getElementsByClassName("menu-toggle")[0];
+    var mobileMenu = document.getElementById("mobile-menu");
+    if (toggleMenu.classList.contains("active")) {
+      toggleMenu.classList.remove("active");
+      mobileMenu.classList.remove("active");
+    } else {
+      toggleMenu.classList.add("active");
+      mobileMenu.classList.add("active");
+    }
+  };
+</script>
+
+        <div class="main">
+            <div class="container">
+    
+    
+        <div class="post-toc">
+    <div class="tocbot-list">
+    </div>
+    <div class="tocbot-list-menu">
+        <a class="tocbot-toc-expand" onclick="expand_toc()">Expand All</a>
+        <a onclick="go_top()">Top</a>
+        <a onclick="go_bottom()">Bottom</a>
+    </div>
+</div>
+
+<script>
+    document.ready(
+        function () {
+            tocbot.init({
+                tocSelector: '.tocbot-list',
+                contentSelector: '.post-content',
+                headingSelector: 'h1, h2, h3, h4, h5',
+                collapseDepth: 1,
+                orderedList: false,
+                scrollSmooth: true,
+            })
+        }
+    )
+
+    function expand_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 6,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "collapse_toc()");
+        b.innerHTML = "Collapse all"
+    }
+
+    function collapse_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 1,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "expand_toc()");
+        b.innerHTML = "Expand all"
+    }
+
+    function go_top() {
+        window.scrollTo(0, 0);
+    }
+
+    function go_bottom() {
+        window.scrollTo(0, document.body.scrollHeight);
+    }
+
+</script>
+    
+
+    
+    <article class="post-wrap">
+        <header class="post-header">
+            <h1 class="post-title">Node.js - 좀 더 바람직하게 Express 서버 여는 법</h1>
+            
+                <div class="post-meta">
+                    
+                        Author: <a itemprop="author" rel="author" href="/">zini</a>
+                    
+
+                    
+                        <span class="post-time">
+                        Date: <a href="#">October 16, 2020&nbsp;&nbsp;23:24:09</a>
+                        </span>
+                    
+                    
+                        <span class="post-category">
+                    Category:
+                            
+                                <a href="/categories/nodejs/">nodejs</a>
+                            
+                        </span>
+                    
+                </div>
+            
+        </header>
+
+        <div class="post-content">
+            <h2 id="바람직한-코드"><a href="#바람직한-코드" class="headerlink" title="바람직한 코드"></a>바람직한 코드</h2><p>이전부터 Node.js로 작고 큰 프로젝트들을 해왔지만 뚜렷한 코드 작성의 방향없이 생각나는 대로 집어 쓰는 경우가 많았다. “되기만 하면 된다”는 생각을 버려야 한다. 난 요즘 코드를 작성할 때 내가 만든 프로그램이 오픈소스가 되었을 때 사람들에게 당당하게 보여줄 수 있는 코드를 쓰려 노력하고 있다.</p>
+<p>노드로 서버를 구축하면 항상 쓰는 Express 작성 방식부터가 엉망이었다. 처음에 책에서 하란 대로 하는데 되니까 그저 서버가 돌아가는 것에 만족하고 사용해왔다가, 여러 강의와 오픈 소스들을 살펴보니 Express 서버(app) 자체를 Class화하여 효율적으로 관리할 수 있는 방법이 있었다.</p>
+<h2 id="이전의-주먹구구식-Express"><a href="#이전의-주먹구구식-Express" class="headerlink" title="이전의 주먹구구식 Express"></a>이전의 주먹구구식 Express</h2><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> express = <span class="built_in">require</span>(<span class="string">&quot;express&quot;</span>);</span><br><span class="line"><span class="keyword">var</span> app = express();</span><br><span class="line"><span class="keyword">var</span> http = <span class="built_in">require</span>(<span class="string">&quot;http&quot;</span>).createServer(app);</span><br><span class="line"><span class="keyword">var</span> path = <span class="built_in">require</span>(<span class="string">&quot;path&quot;</span>),</span><br><span class="line">  bodyParser = <span class="built_in">require</span>(<span class="string">&quot;body-parser&quot;</span>),</span><br><span class="line">  cookieParser = <span class="built_in">require</span>(<span class="string">&quot;cookie-parser&quot;</span>),</span><br><span class="line">  <span class="keyword">static</span> = <span class="built_in">require</span>(<span class="string">&quot;serve-static&quot;</span>),</span><br><span class="line">  errorHandler = <span class="built_in">require</span>(<span class="string">&quot;errorhandler&quot;</span>),</span><br><span class="line">  expressErrorHandler = <span class="built_in">require</span>(<span class="string">&quot;express-error-handler&quot;</span>),</span><br><span class="line">  expressSession = <span class="built_in">require</span>(<span class="string">&quot;express-session&quot;</span>),</span><br><span class="line">  ejs = <span class="built_in">require</span>(<span class="string">&quot;ejs&quot;</span>),</span><br><span class="line">  fs = <span class="built_in">require</span>(<span class="string">&quot;fs&quot;</span>),</span><br><span class="line">  url = <span class="built_in">require</span>(<span class="string">&quot;url&quot;</span>),</span><br><span class="line">  cors = <span class="built_in">require</span>(<span class="string">&quot;cors&quot;</span>);</span><br><span class="line"></span><br><span class="line">app.set(<span class="string">&quot;port&quot;</span>, process.env.PORT || <span class="number">3000</span>);</span><br><span class="line">app.use(express.json());</span><br><span class="line">app.use(bodyParser.json());</span><br><span class="line">app.use(</span><br><span class="line">  bodyParser.urlencoded(&#123;</span><br><span class="line">    extended: <span class="literal">true</span>,</span><br><span class="line">  &#125;)</span><br><span class="line">);</span><br><span class="line">app.use(<span class="string">&quot;/public&quot;</span>, express.static(__dirname + <span class="string">&quot;/public&quot;</span>));</span><br><span class="line">app.use(cookieParser());</span><br><span class="line">app.use(</span><br><span class="line">  expressSession(&#123;</span><br><span class="line">    secret: <span class="string">&quot;my key&quot;</span>,</span><br><span class="line">    resave: <span class="literal">true</span>,</span><br><span class="line">    saveUninitialized: <span class="literal">true</span>,</span><br><span class="line">  &#125;)</span><br><span class="line">);</span><br><span class="line">app.use(cors());</span><br><span class="line"><span class="keyword">var</span> router = express.Router();</span><br><span class="line"></span><br><span class="line"><span class="comment">// 404 에러 페이지 처리</span></span><br><span class="line"><span class="keyword">var</span> errorHandler = expressErrorHandler(&#123;</span><br><span class="line">  <span class="keyword">static</span>: &#123;</span><br><span class="line">    <span class="number">404</span>: <span class="string">&quot;./public/404.html&quot;</span>,</span><br><span class="line">  &#125;,</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">app.use(expressErrorHandler.httpError(<span class="number">404</span>));</span><br><span class="line">app.use(errorHandler);</span><br><span class="line"></span><br><span class="line">http.listen(app.get(<span class="string">&quot;port&quot;</span>), <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">&quot;server started - port: &quot;</span> + app.get(<span class="string">&quot;port&quot;</span>));</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<p>가관이지만, 사실 이 형편없는 코드만으로도 서버는 정상적으로 돌아간다. 하지만 내가 노드를 쓰는 사람을 뽑는 채용 담당자라면 미들웨어가 이렇게 엉켜있고 재선언할 리 없는 변수나 라이브러리를 <code>var</code>로 남발하는 등의 엉성한 코드를 쓰는 사람에게 프로젝트를 믿고 맡길 수는 없을 것 같다.</p>
+<h2 id="보다-나은-Express"><a href="#보다-나은-Express" class="headerlink" title="보다 나은 Express"></a>보다 나은 Express</h2><p>먼저 <code>app.js</code>를 <code>server.js</code>, <code>app.js</code>로 분할한다. (이름은 상관없다)</p>
+<p>Express 관련 코드를 <code>app</code>에 담고, 그 <code>app</code>을 <code>http</code>와 <code>https</code>로 오픈할 <code>server</code> 소스로 나누어 작성한다.</p>
+<p>먼저 <code>app.js</code>를 보자.</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> express = <span class="built_in">require</span>(<span class="string">&quot;express&quot;</span>);</span><br><span class="line"><span class="keyword">const</span> bodyParser = <span class="built_in">require</span>(<span class="string">&quot;body-parser&quot;</span>);</span><br><span class="line"><span class="keyword">const</span> cookieParser = <span class="built_in">require</span>(<span class="string">&quot;cookie-parser&quot;</span>);</span><br><span class="line"><span class="keyword">const</span> expressSession = <span class="built_in">require</span>(<span class="string">&quot;express-session&quot;</span>);</span><br><span class="line"><span class="keyword">const</span> cors = <span class="built_in">require</span>(<span class="string">&quot;cors&quot;</span>);</span><br><span class="line"><span class="keyword">const</span> logger = <span class="built_in">require</span>(<span class="string">&quot;morgan&quot;</span>);</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">App</span> </span>&#123;</span><br><span class="line">  <span class="keyword">constructor</span>() &#123;</span><br><span class="line">    <span class="built_in">this</span>.app = express();</span><br><span class="line">    <span class="built_in">this</span>.setViewEngine();</span><br><span class="line">    <span class="built_in">this</span>.setMiddleWare();</span><br><span class="line">    <span class="built_in">this</span>.setStatic();</span><br><span class="line">    <span class="built_in">this</span>.setLocals();</span><br><span class="line">    <span class="built_in">this</span>.getRouting();</span><br><span class="line">    <span class="built_in">this</span>.errorHandler();</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  setMiddleWare() &#123;</span><br><span class="line">    <span class="comment">// HTTP -&gt; HTTPS Redirection</span></span><br><span class="line">    <span class="built_in">this</span>.app.use(<span class="function">(<span class="params">req, res, next</span>) =&gt;</span> &#123;</span><br><span class="line">      <span class="keyword">if</span> (req.secure) &#123;</span><br><span class="line">        next();</span><br><span class="line">      &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="keyword">const</span> to = <span class="string">`https://<span class="subst">$&#123;req.hostname&#125;</span><span class="subst">$&#123;req.url&#125;</span>`</span>;</span><br><span class="line">        res.redirect(to);</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;);</span><br><span class="line">    <span class="built_in">this</span>.app.use(logger(<span class="string">&quot;dev&quot;</span>));</span><br><span class="line">    <span class="built_in">this</span>.app.use(bodyParser.json());</span><br><span class="line">    <span class="built_in">this</span>.app.use(bodyParser.urlencoded(&#123; <span class="attr">extended</span>: <span class="literal">false</span> &#125;));</span><br><span class="line">    <span class="built_in">this</span>.app.use(cookieParser());</span><br><span class="line">    <span class="built_in">this</span>.app.use(</span><br><span class="line">      expressSession(&#123;</span><br><span class="line">        secret: <span class="string">&quot;my key&quot;</span>,</span><br><span class="line">        resave: <span class="literal">true</span>,</span><br><span class="line">        saveUninitialized: <span class="literal">true</span>,</span><br><span class="line">      &#125;)</span><br><span class="line">    );</span><br><span class="line">    <span class="built_in">this</span>.app.use(cors());</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  setViewEngine() &#123;</span><br><span class="line">    <span class="built_in">this</span>.app.set(<span class="string">&quot;view engine&quot;</span>, <span class="string">&quot;ejs&quot;</span>);</span><br><span class="line">    <span class="built_in">this</span>.app.set(<span class="string">&quot;views&quot;</span>, <span class="string">&quot;./public&quot;</span>);</span><br><span class="line">    <span class="built_in">this</span>.app.engine(<span class="string">&quot;html&quot;</span>, <span class="built_in">require</span>(<span class="string">&quot;ejs&quot;</span>).renderFile);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  setStatic() &#123;</span><br><span class="line">    <span class="built_in">this</span>.app.use(<span class="string">&quot;/public&quot;</span>, express.static(__dirname + <span class="string">&quot;/public&quot;</span>));</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  setLocals() &#123;</span><br><span class="line">    <span class="built_in">this</span>.app.use(<span class="function">(<span class="params">req, res, next</span>) =&gt;</span> &#123;</span><br><span class="line">      <span class="built_in">this</span>.app.locals.isLogin = <span class="literal">true</span>;</span><br><span class="line">      next();</span><br><span class="line">    &#125;);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  getRouting() &#123;</span><br><span class="line">    <span class="built_in">this</span>.app.use(<span class="built_in">require</span>(<span class="string">&quot;./controllers&quot;</span>));</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  errorHandler() &#123;</span><br><span class="line">    <span class="built_in">this</span>.app.use(<span class="function">(<span class="params">req, res, _</span>) =&gt;</span> &#123;</span><br><span class="line">      res.status(<span class="number">404</span>).render(<span class="string">&quot;404.html&quot;</span>);</span><br><span class="line">    &#125;);</span><br><span class="line"></span><br><span class="line">    <span class="built_in">this</span>.app.use(<span class="function">(<span class="params">err, req, res, _</span>) =&gt;</span> &#123;</span><br><span class="line">      res.status(<span class="number">500</span>).render(<span class="string">&quot;500.html&quot;</span>);</span><br><span class="line">    &#125;);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="built_in">module</span>.exports = <span class="keyword">new</span> App().app;</span><br></pre></td></tr></table></figure>
+
+<p>코드만 봐도 Express에서 미들웨어를 설정하는지, 뷰엔진을 설정하는지, 라우터를 설정하는지, 에러핸들링을 하는지 알 수 있다. 만약에 미들웨어를 추가할 일이 생겼다면 <code>setMiddleware()</code>를 보고 여기가 미들웨어 넣는 자리구나하고 넣으면 된다.</p>
+<p>이 Express app을 Class로 관리하면 또 다른 장점이 있는데, 서버 앱을 하나의 인스턴스로 관리할 수 있다. 비동기식 실행과 스레딩의 장점으로 노드를 CDN 서버 등으로 많이 활용하는데 접속된 인스턴스가 몇 개인지 관리하거나 접속 인스턴스의 갯수 제한을 두는 등의 작업을 편하게 할 수 있다.</p>
+<p>이제 이 app을 기반으로 서버를 열면 된다. <code>server.js</code>를 보자.</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> app = <span class="built_in">require</span>(<span class="string">&quot;./app.js&quot;</span>);</span><br><span class="line"><span class="keyword">const</span> https = <span class="built_in">require</span>(<span class="string">&quot;https&quot;</span>);</span><br><span class="line"><span class="keyword">const</span> options = <span class="built_in">require</span>(<span class="string">&quot;./config/pem_config&quot;</span>).options;</span><br><span class="line"><span class="keyword">const</span> httpPort = <span class="number">80</span>;</span><br><span class="line"><span class="keyword">const</span> httpsPort = <span class="number">443</span>;</span><br><span class="line"></span><br><span class="line">https.createServer(options, app).listen(httpsPort, <span class="function">() =&gt;</span> &#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">`HTTPS: Express listening on port <span class="subst">$&#123;httpsPort&#125;</span>`</span>);</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">app.listen(httpPort, <span class="function">() =&gt;</span> &#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">`HTTP: Express listening on port <span class="subst">$&#123;httpPort&#125;</span>`</span>);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<p>작성해놓은 app을 불러와서 <code>http</code>와 <code>https</code> 모두로 열어주면 된다. 당연히 <code>https</code>는 발급한 SSL 인증서 정보를 같이 넣어주어야 한다. SSL 인증서로 https 서버를 구축하는 방법은 <a href="https://zinirun.github.io/2020/10/07/nodejs-https-server/">여기</a>에 포스팅해두었다. 학습용으로 만드는 토이 프로젝트가 아닌 이상 배포시에는 https를 당연히 지원해야 한다. 그래서 위에 <code>app.js</code>에는 http 접속을 https로 리다이렉트하는 미들웨어가 작성되어 있다.</p>
+<p>이 방법이 완벽한 방법은 아닐 수 있다. 분명 더 세세하게 분리되어 있거나, 다른 좋은 방법으로 express 서버를 관리하는 방법도 많을 것이다. 중요한 것은 질 나쁜 코드를 작성하는 것을 끊임없이 지양하는 것에 있다고 생각한다.</p>
+
+        </div>
+
+        
+            <section class="post-copyright">
+                
+                
+                
+                
+
+            </section>
+        
+        <section class="post_disqus">
+            <div id="disqus_thread"></div>
+            <script>
+            
+            /**
+            *  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+            *  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables*/
+            /*
+            var disqus_config = function () {
+            this.page.url = PAGE_URL;  // Replace PAGE_URL with your page's canonical URL variable
+            this.page.identifier = PAGE_IDENTIFIER; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+            };
+            */
+            (function() { // DON'T EDIT BELOW THIS LINE
+            var d = document, s = d.createElement('script');
+            s.src = 'https://zinirun.disqus.com/embed.js';
+            s.setAttribute('data-timestamp', +new Date());
+            (d.head || d.body).appendChild(s);
+            })();
+            </script>
+            <noscript>Please enable JavaScript to view the <a target="_blank" rel="external nofollow noopener noreferrer" href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+        </section>
+        <section class="post-tags">
+            <div>
+                <span>Tag(s):</span>
+                <span class="tag">
+                    
+                    
+                        <a href="/tags/nodejs/"># nodejs</a>
+                    
+                        <a href="/tags/express/"># express</a>
+                    
+                        <a href="/tags/https/"># https</a>
+                    
+                        
+                </span>
+            </div>
+            <div>
+                <a href="javascript:window.history.back();">back</a>
+                <span>· </span>
+                <a href="/">home</a>
+            </div>
+        </section>
+        <section class="post-nav">
+            
+            
+            <a class="next" rel="next" href="/2020/10/12/sqld-38-result/">SQLD 38회 결과 (국가공인 SQL 개발자 자격증)</a>
+            
+        </section>
+
+
+    </article>
+</div>
+
+        </div>
+        <footer id="footer" class="footer">
+  <div class="copyright">
+    <span>© zini | Powered by
+      <a href="https://hexo.io" target="_blank" rel="external nofollow noopener noreferrer">Hexo</a>
+  </span></div>
+</footer>
+
+    </div>
+</body>
+</html>
