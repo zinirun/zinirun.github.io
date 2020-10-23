@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+<link rel="canonical" href="https://zinirun.github.io/2020/10/23/database-index/">
+
+
+<link rel="stylesheet" href="//fonts.googleapis.com/earlyaccess/notosanskr.css">
+
+
+    <meta name="author" content="zini">
+
+
+    <meta name="subtitle" content="tech blog by Zini">
+
+
+
+
+<title>클러스터 인덱스 vs 넌클러스터 인덱스 | zinirun</title>
+
+
+
+    <link rel="icon" href="/favicon.png">
+
+
+
+
+    <!-- stylesheets list from _config.yml -->
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+
+
+
+    <!-- scripts list from _config.yml -->
+    
+    <script src="/js/script.js"></script>
+    
+    <script src="/js/tocbot.min.js"></script>
+    
+
+
+
+    
+    
+        
+    
+
+
+
+<script>
+	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+		(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+			m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+	ga('create', 'UA-175983012-1', 'auto');
+	ga('send', 'pageview');
+</script>
+
+<meta name="generator" content="Hexo 5.0.2"><link rel="alternate" href="/feed.xml" title="zinirun" type="application/atom+xml">
+</head>
+<body>
+    <div class="wrapper">
+        <header>
+  <nav class="navbar">
+    <div class="container">
+      <div class="navbar-header header-logo" style="font-size: 13pt; font-weight: 600;">
+        <a id="blog_logo" href="/" style="color: #2d96bd;"><img class="logo-ico spin circle" src="/image/logo.png" alt="zini's Devlog"></a>
+        
+        <a class="menu-item left-menu" href="/archives">Posts</a>
+        
+        <a class="menu-item left-menu" href="/category">Categories</a>
+        
+        <a class="menu-item left-menu" href="/tag">Tags</a>
+        
+<!--
+        <input id="switch_default" type="checkbox" class="switch_default" />
+        <label for="switch_default" class="toggleBtn" style="margin-left: 0px;"></label>
+-->
+      </div>
+      <div class="menu navbar-right">
+        <!--mynav-->
+        <div id="mynav-container">
+        
+        <a class="menu-item" href="/categories/javascript"><img class="menu-ico" src="/image/icons/js.png" alt="Javascript"></a>
+        
+        <a class="menu-item" href="/categories/nodejs"><img class="menu-ico" src="/image/icons/node.png" alt="Node"></a>
+        
+        <a class="menu-item" href="/categories/ReactJS"><img class="menu-ico" src="/image/icons/react.png" alt="React"></a>
+        
+        <a class="menu-item" href="/categories/cloud/docker"><img class="menu-ico" src="/image/icons/docker.png" alt="Docker"></a>
+        
+        <a class="menu-item" href="/categories/cloud/kubernetes"><img class="menu-ico" src="/image/icons/k8s.png" alt="Kubernetes"></a>
+        
+        <a class="menu-item" href="/categories/algorithm"><img class="menu-ico" src="/image/icons/ps-code.png" alt="Algorithm"></a>
+        
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  
+  <nav class="navbar-mobile" id="nav-mobile">
+    <div class="container">
+      <div class="navbar-header">
+        <div>
+          <a id="blog_logo" href="/" style="color: #2d96bd;"><img class="logo-ico" src="/image/logo.png" alt="zini's Devlog"></a>
+        </div>
+        <div class="menu-toggle" onclick="mobileBtn()">&#9776; Menu</div>
+      </div>
+      <div class="menu" id="mobile-menu">
+       <div id="mobile-nav">
+        
+        <a class="menu-item" href="/archives">Posts</a>
+        
+        <a class="menu-item" href="/category">Categories</a>
+        
+        <a class="menu-item" href="/tag">Tags</a>
+        
+          </div>
+        <div id="mobile-mynav">
+        
+        <a class="menu-item" href="/categories/javascript"><img class="menu-ico" src="/image/icons/js.png" alt="Javascript"></a>
+        
+        <a class="menu-item" href="/categories/nodejs"><img class="menu-ico" src="/image/icons/node.png" alt="Node"></a>
+        
+        <a class="menu-item" href="/categories/ReactJS"><img class="menu-ico" src="/image/icons/react.png" alt="React"></a>
+        
+        <a class="menu-item" href="/categories/cloud/docker"><img class="menu-ico" src="/image/icons/docker.png" alt="Docker"></a>
+        
+        <a class="menu-item" href="/categories/cloud/kubernetes"><img class="menu-ico" src="/image/icons/k8s.png" alt="Kubernetes"></a>
+        
+        <a class="menu-item" href="/categories/algorithm"><img class="menu-ico" src="/image/icons/ps-code.png" alt="Algorithm"></a>
+        
+          </div>
+      </div>
+    </div>
+  </nav>
+</header>
+<script>
+  var mobileBtn = function f() {
+    var toggleMenu = document.getElementsByClassName("menu-toggle")[0];
+    var mobileMenu = document.getElementById("mobile-menu");
+    if (toggleMenu.classList.contains("active")) {
+      toggleMenu.classList.remove("active");
+      mobileMenu.classList.remove("active");
+    } else {
+      toggleMenu.classList.add("active");
+      mobileMenu.classList.add("active");
+    }
+  };
+</script>
+
+        <div class="main">
+            <div class="container">
+    
+    
+        <div class="post-toc">
+    <div class="tocbot-list">
+    </div>
+    <div class="tocbot-list-menu">
+        <a class="tocbot-toc-expand" onclick="expand_toc()">Expand All</a>
+        <a onclick="go_top()">Top</a>
+        <a onclick="go_bottom()">Bottom</a>
+    </div>
+</div>
+
+<script>
+    document.ready(
+        function () {
+            tocbot.init({
+                tocSelector: '.tocbot-list',
+                contentSelector: '.post-content',
+                headingSelector: 'h1, h2, h3, h4, h5',
+                collapseDepth: 1,
+                orderedList: false,
+                scrollSmooth: true,
+            })
+        }
+    )
+
+    function expand_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 6,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "collapse_toc()");
+        b.innerHTML = "Collapse all"
+    }
+
+    function collapse_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 1,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "expand_toc()");
+        b.innerHTML = "Expand all"
+    }
+
+    function go_top() {
+        window.scrollTo(0, 0);
+    }
+
+    function go_bottom() {
+        window.scrollTo(0, document.body.scrollHeight);
+    }
+
+</script>
+    
+
+    
+    <article class="post-wrap">
+        <header class="post-header">
+            <h1 class="post-title">클러스터 인덱스 vs 넌클러스터 인덱스</h1>
+            
+                <div class="post-meta">
+                    
+                        Author: <a itemprop="author" rel="author" href="/">zini</a>
+                    
+
+                    
+                        <span class="post-time">
+                        Date: <a href="#">October 23, 2020&nbsp;&nbsp;9:11:37</a>
+                        </span>
+                    
+                    
+                        <span class="post-category">
+                    Category:
+                            
+                                <a href="/categories/database/">database</a>
+                            
+                        </span>
+                    
+                </div>
+            
+        </header>
+
+        <div class="post-content">
+            <p>학과 공부와 시험을 준비하다가 클러스터 인덱스와 넌클러스터 인덱스를 정리해 본다.</p>
+<h2 id="개념"><a href="#개념" class="headerlink" title="개념"></a>개념</h2><p>영어 사전을 생각해보자. 기본적으로 A~Z 알파벳 순으로 책 자체가 정렬되어 있다. 이건 <strong>클러스터 인덱스</strong>이다. 사전 마지막에는 “색인”이 있는데, 필요한 단어를 찾고, 거기에 적힌 페이지로 간다. 이게 <strong>넌클러스터 인덱스</strong>이다.</p>
+<h3 id="클러스터-인덱스"><a href="#클러스터-인덱스" class="headerlink" title="클러스터 인덱스"></a>클러스터 인덱스</h3><ul>
+<li>테이블 당 1개만 허용</li>
+<li>기본 키 설정시 자동으로 만들어짐</li>
+<li>테이블 자체가 인덱스 (클러스터 인덱스를 기준으로 테이블을 정렬하기 때문에 인덱스 페이지가 없다)</li>
+<li>데이터 입력, 수정, 삭제 시 항상 정렬을 유지함</li>
+<li>기본적으로 접근 성능이 좋음</li>
+</ul>
+<h3 id="넌클러스터-인덱스"><a href="#넌클러스터-인덱스" class="headerlink" title="넌클러스터 인덱스"></a>넌클러스터 인덱스</h3><ul>
+<li>테이블 당 최대 240개 생성 가능</li>
+<li>인덱스 페이지를 별도로 저장</li>
+<li>테이블 자체는 정렬되지 않고, 인덱스 페이지에만 정렬</li>
+<li>성능 증가는 정말 “Case By Case”</li>
+</ul>
+<p>부가적으로 설명하자면, <strong>클러스터 인덱스</strong>는 항상 정렬을 유지하기 때문에 기본적으로 성능이 보장된다. AUTO_INCREMENT 같은 id에 클러스터 인덱스가 있어도 조회 성능이 향상된다. 하지만 테이블을 정렬 상태로 유지해야하므로 데이터를 입력, 수정, 삭제하는 경우에 즉각 정렬이 일어나기 때문에 느려진다. Trade Off라고 생각하면 된다. 따라서 DML 작업이 자주 일어나는 테이블에 클러스터 인덱스는 정말 신중하게 결정해야 한다.</p>
+<p><strong>넌클러스터 인덱스</strong>는 DML 작업이 일어나도 괜찮다. 별도의 인덱스 페이지가 있기 때문에 테이블 전체를 정렬하는 것보다 훨씬 낫다. 하지만 어디에 넌클러스터 인덱스를 걸어야 할 지는 정말 신중해야 한다. 바보같이 걸면 성능도 바보가 된다. 인덱스가 없는 것보다 느려질 수도 있다.</p>
+<h2 id="활용"><a href="#활용" class="headerlink" title="활용"></a>활용</h2><h3 id="클러스터-인덱스-1"><a href="#클러스터-인덱스-1" class="headerlink" title="클러스터 인덱스"></a>클러스터 인덱스</h3><p>쿼리를 기준으로 예를 들면,</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> <span class="keyword">year</span>(hire_date), <span class="keyword">count</span>(*)</span><br><span class="line"><span class="keyword">FROM</span> employees </span><br><span class="line"><span class="keyword">WHERE</span> hire_date &gt;= <span class="string">&#x27;1997-01-01&#x27;</span></span><br><span class="line"><span class="keyword">GROUP</span> <span class="keyword">BY</span> <span class="keyword">year</span>(hire_date); </span><br></pre></td></tr></table></figure>
+
+<p>조건절에 <code>hire_date</code>가 있고, 범위 탐색이다. 이 경우 <code>hire_date</code>에 클러스터 인덱스를 보여하면 성능이 엄청나게 향상된다. 여기서 WHERE 절만 빼보자.</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> <span class="keyword">year</span>(hire_date), <span class="keyword">count</span>(*)</span><br><span class="line"><span class="keyword">FROM</span> employees </span><br><span class="line"><span class="keyword">GROUP</span> <span class="keyword">BY</span> <span class="keyword">year</span>(hire_date); </span><br></pre></td></tr></table></figure>
+
+<p>여기서 마찬가지로 <code>hire_date</code>에 클러스터 인덱스를 건다면? 성능 향상에 도움이 안되거나, 데이터가 많아지는 경우 오히려 느려진다. 스캔 방식을 생각해야 한다. 클러스터 인덱스가 없는 경우 기본적으로 Heap 테이블 스캔이 이루어진다. 클러스터 인덱스가 있는 경우에는 클러스터 인덱스 스캔이 이루어진다. 하지만 조건절이 없으므로 무식하게 다 읽는건 Heap 테이블 스캔이 빠르다.</p>
+<h3 id="넌클러스터-인덱스-1"><a href="#넌클러스터-인덱스-1" class="headerlink" title="넌클러스터 인덱스"></a>넌클러스터 인덱스</h3><p>위의 예시와 같은 쿼리이다.</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> <span class="keyword">year</span>(hire_date), <span class="keyword">count</span>(*)</span><br><span class="line"><span class="keyword">FROM</span> employees </span><br><span class="line"><span class="keyword">WHERE</span> hire_date &gt;= <span class="string">&#x27;1997-01-01&#x27;</span></span><br><span class="line"><span class="keyword">GROUP</span> <span class="keyword">BY</span> <span class="keyword">year</span>(hire_date); </span><br></pre></td></tr></table></figure>
+
+<p>여기서 <code>hire_date</code>에 넌클러스터 인덱스를 건다면? 놀랍게도 클러스터 인덱스를 걸었을 때보다 더 빠르다. 이 경우 때문에 구글링을 2시간은 한 것 같다. 내가 내린 결론은, 넌클러스터 인덱스가 탐색 범위에 포함되었기 때문에 옵티마이저에서는 인덱스 스캔이 아닌 <strong>Non-Clustered Index Seek</strong> 방식을 선택한다. Index Scan은 인덱스의 모든 행을 인덱스 순서로 읽는 반면에, Index Seek은 필터 기준에 따라 일치하는 행이나 한정된 행만 찾으려고 리프 노드를 거치기 때문에 논리적 읽기 수가 훨씬 감소한다.(고 한다)</p>
+<p>하지만 포인트 쿼리인지 범위 쿼리인지, 범위 쿼리라면 조건절의 탐색 범위는 얼마나인지에 따라서 경우가 달라진다. 결국 실무에서 클러스터링 최적화를 위해서는 테스트를 거친 후 적용해야 하고, 클러스터 인덱스를 걸 때는 인덱스를 거는 행동만으로 데이터 정렬에 비용이 소요되므로 신중하게 결정해야 한다.</p>
+
+        </div>
+
+        
+            <section class="post-copyright">
+                
+                
+                
+                
+
+            </section>
+        
+        <section class="post_disqus">
+            <div id="disqus_thread"></div>
+            <script>
+            
+            /**
+            *  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+            *  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables*/
+            /*
+            var disqus_config = function () {
+            this.page.url = PAGE_URL;  // Replace PAGE_URL with your page's canonical URL variable
+            this.page.identifier = PAGE_IDENTIFIER; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+            };
+            */
+            (function() { // DON'T EDIT BELOW THIS LINE
+            var d = document, s = d.createElement('script');
+            s.src = 'https://zinirun.disqus.com/embed.js';
+            s.setAttribute('data-timestamp', +new Date());
+            (d.head || d.body).appendChild(s);
+            })();
+            </script>
+            <noscript>Please enable JavaScript to view the <a target="_blank" rel="external nofollow noopener noreferrer" href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+        </section>
+        <section class="post-tags">
+            <div>
+                <span>Tag(s):</span>
+                <span class="tag">
+                    
+                    
+                        <a href="/tags/database/"># database</a>
+                    
+                        <a href="/tags/index/"># index</a>
+                    
+                        <a href="/tags/clustered-index/"># clustered index</a>
+                    
+                        <a href="/tags/nonclustered-index/"># nonclustered index</a>
+                    
+                        <a href="/tags/sql/"># sql</a>
+                    
+                        
+                </span>
+            </div>
+            <div>
+                <a href="javascript:window.history.back();">back</a>
+                <span>· </span>
+                <a href="/">home</a>
+            </div>
+        </section>
+        <section class="post-nav">
+            
+            
+            <a class="next" rel="next" href="/2020/10/16/node-better-express-app/">Node.js - 좀 더 바람직하게 Express 서버 여는 법</a>
+            
+        </section>
+
+
+    </article>
+</div>
+
+        </div>
+        <footer id="footer" class="footer">
+  <div class="copyright">
+    <span>© zini | Powered by
+      <a href="https://hexo.io" target="_blank" rel="external nofollow noopener noreferrer">Hexo</a>
+  </span></div>
+</footer>
+
+    </div>
+</body>
+</html>
