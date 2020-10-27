@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+<link rel="canonical" href="https://zinirun.github.io/2020/10/27/graphql-crud-sample/">
+
+
+<link rel="stylesheet" href="//fonts.googleapis.com/earlyaccess/notosanskr.css">
+
+
+    <meta name="author" content="zini">
+
+
+    <meta name="subtitle" content="tech blog by Zini">
+
+
+
+
+<title>Node.js - GraphQL로 CRUD 만들기 | zinirun</title>
+
+
+
+    <link rel="icon" href="/favicon.png">
+
+
+
+
+    <!-- stylesheets list from _config.yml -->
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+
+
+
+    <!-- scripts list from _config.yml -->
+    
+    <script src="/js/script.js"></script>
+    
+    <script src="/js/tocbot.min.js"></script>
+    
+
+
+
+    
+    
+        
+    
+
+
+
+<script>
+	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+		(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+			m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+	ga('create', 'UA-175983012-1', 'auto');
+	ga('send', 'pageview');
+</script>
+
+<meta name="generator" content="Hexo 5.0.2"><link rel="alternate" href="/feed.xml" title="zinirun" type="application/atom+xml">
+</head>
+<body>
+    <div class="wrapper">
+        <header>
+  <nav class="navbar">
+    <div class="container">
+      <div class="navbar-header header-logo" style="font-size: 13pt; font-weight: 600;">
+        <a id="blog_logo" href="/" style="color: #2d96bd;"><img class="logo-ico spin circle" src="/image/logo.png" alt="zini's Devlog"></a>
+        
+        <a class="menu-item left-menu" href="/archives">Posts</a>
+        
+        <a class="menu-item left-menu" href="/category">Categories</a>
+        
+        <a class="menu-item left-menu" href="/tag">Tags</a>
+        
+<!--
+        <input id="switch_default" type="checkbox" class="switch_default" />
+        <label for="switch_default" class="toggleBtn" style="margin-left: 0px;"></label>
+-->
+      </div>
+      <div class="menu navbar-right">
+        <!--mynav-->
+        <div id="mynav-container">
+        
+        <a class="menu-item" href="/categories/javascript"><img class="menu-ico" src="/image/icons/js.png" alt="Javascript"></a>
+        
+        <a class="menu-item" href="/categories/nodejs"><img class="menu-ico" src="/image/icons/node.png" alt="Node"></a>
+        
+        <a class="menu-item" href="/categories/ReactJS"><img class="menu-ico" src="/image/icons/react.png" alt="React"></a>
+        
+        <a class="menu-item" href="/categories/cloud/docker"><img class="menu-ico" src="/image/icons/docker.png" alt="Docker"></a>
+        
+        <a class="menu-item" href="/categories/cloud/kubernetes"><img class="menu-ico" src="/image/icons/k8s.png" alt="Kubernetes"></a>
+        
+        <a class="menu-item" href="/categories/algorithm"><img class="menu-ico" src="/image/icons/ps-code.png" alt="Algorithm"></a>
+        
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  
+  <nav class="navbar-mobile" id="nav-mobile">
+    <div class="container">
+      <div class="navbar-header">
+        <div>
+          <a id="blog_logo" href="/" style="color: #2d96bd;"><img class="logo-ico" src="/image/logo.png" alt="zini's Devlog"></a>
+        </div>
+        <div class="menu-toggle" onclick="mobileBtn()">&#9776; Menu</div>
+      </div>
+      <div class="menu" id="mobile-menu">
+       <div id="mobile-nav">
+        
+        <a class="menu-item" href="/archives">Posts</a>
+        
+        <a class="menu-item" href="/category">Categories</a>
+        
+        <a class="menu-item" href="/tag">Tags</a>
+        
+          </div>
+        <div id="mobile-mynav">
+        
+        <a class="menu-item" href="/categories/javascript"><img class="menu-ico" src="/image/icons/js.png" alt="Javascript"></a>
+        
+        <a class="menu-item" href="/categories/nodejs"><img class="menu-ico" src="/image/icons/node.png" alt="Node"></a>
+        
+        <a class="menu-item" href="/categories/ReactJS"><img class="menu-ico" src="/image/icons/react.png" alt="React"></a>
+        
+        <a class="menu-item" href="/categories/cloud/docker"><img class="menu-ico" src="/image/icons/docker.png" alt="Docker"></a>
+        
+        <a class="menu-item" href="/categories/cloud/kubernetes"><img class="menu-ico" src="/image/icons/k8s.png" alt="Kubernetes"></a>
+        
+        <a class="menu-item" href="/categories/algorithm"><img class="menu-ico" src="/image/icons/ps-code.png" alt="Algorithm"></a>
+        
+          </div>
+      </div>
+    </div>
+  </nav>
+</header>
+<script>
+  var mobileBtn = function f() {
+    var toggleMenu = document.getElementsByClassName("menu-toggle")[0];
+    var mobileMenu = document.getElementById("mobile-menu");
+    if (toggleMenu.classList.contains("active")) {
+      toggleMenu.classList.remove("active");
+      mobileMenu.classList.remove("active");
+    } else {
+      toggleMenu.classList.add("active");
+      mobileMenu.classList.add("active");
+    }
+  };
+</script>
+
+        <div class="main">
+            <div class="container">
+    
+    
+        <div class="post-toc">
+    <div class="tocbot-list">
+    </div>
+    <div class="tocbot-list-menu">
+        <a class="tocbot-toc-expand" onclick="expand_toc()">Expand All</a>
+        <a onclick="go_top()">Top</a>
+        <a onclick="go_bottom()">Bottom</a>
+    </div>
+</div>
+
+<script>
+    document.ready(
+        function () {
+            tocbot.init({
+                tocSelector: '.tocbot-list',
+                contentSelector: '.post-content',
+                headingSelector: 'h1, h2, h3, h4, h5',
+                collapseDepth: 1,
+                orderedList: false,
+                scrollSmooth: true,
+            })
+        }
+    )
+
+    function expand_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 6,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "collapse_toc()");
+        b.innerHTML = "Collapse all"
+    }
+
+    function collapse_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 1,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "expand_toc()");
+        b.innerHTML = "Expand all"
+    }
+
+    function go_top() {
+        window.scrollTo(0, 0);
+    }
+
+    function go_bottom() {
+        window.scrollTo(0, document.body.scrollHeight);
+    }
+
+</script>
+    
+
+    
+    <article class="post-wrap">
+        <header class="post-header">
+            <h1 class="post-title">Node.js - GraphQL로 CRUD 만들기</h1>
+            
+                <div class="post-meta">
+                    
+                        Author: <a itemprop="author" rel="author" href="/">zini</a>
+                    
+
+                    
+                        <span class="post-time">
+                        Date: <a href="#">October 27, 2020&nbsp;&nbsp;16:16:15</a>
+                        </span>
+                    
+                    
+                        <span class="post-category">
+                    Category:
+                            
+                                <a href="/categories/nodejs/">nodejs</a>
+                            
+                                <a href="/categories/nodejs/graphql/">graphql</a>
+                            
+                        </span>
+                    
+                </div>
+            
+        </header>
+
+        <div class="post-content">
+            <h2 id="REST-API-VS-GraphQL"><a href="#REST-API-VS-GraphQL" class="headerlink" title="REST API VS GraphQL"></a>REST API VS GraphQL</h2><p>REST API로만 벡엔드 서버 API를 구현한 나로서는 굳이 GraphQL이란 것을 알아야할까 싶었다. 이 생각은 GraphQL로 간단한 프로젝트를 만들어 보며 완전히 바뀌게 되었다.</p>
+<div class="video-container"><iframe src="https://www.youtube.com/embed/EkWI6Ru8lFQ" frameborder="0" loading="lazy" allowfullscreen></iframe></div>
+
+<p>11분동안 정말 재밌게 설명해주신 유튜버가 있어 REST와 GraphQL에 대한 긴 설명은 이것으로 대체한다.</p>
+<p>뭘 써야할 지 모르겠다면 GraphQL, Rest API 모두 만들어서 필요한 작업마다 다르게 써먹으면 된다. 일반적으로 파일 전송같은 경우 RESTful이 더 유리하다고 하고, CRUD 작업이 대부분이라면 GraphQL이 훨씬 편하다.</p>
+<h2 id="Node-js에서-GraphQL-구축하기"><a href="#Node-js에서-GraphQL-구축하기" class="headerlink" title="Node.js에서 GraphQL 구축하기"></a>Node.js에서 GraphQL 구축하기</h2><p>우선 express에서 GraphQL을 사용하기 위해 관련 패키지를 설치한다. (물론 express 세팅은 끝난 가정하이다)</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ yarn add graphql</span><br><span class="line">$ yarn add express-graphql</span><br></pre></td></tr></table></figure>
+
+<p>간단하게 GraphQL은 스키마 + 리졸버로 구성된다. 스키마 안에 변수나 함수를 정의하고, 리졸버에서 함수를 구현하면 된다.</p>
+<p>우선 스키마를 정의하자. 나는 모듈화를 위해 파일을 용도에 맞게 쪼개서 쓰기로 했다.</p>
+<h3 id="스키마-만들기"><a href="#스키마-만들기" class="headerlink" title="스키마 만들기"></a>스키마 만들기</h3><p><code>schema.js</code></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> &#123; buildSchema &#125; = <span class="built_in">require</span>(<span class="string">&#x27;graphql&#x27;</span>);</span><br><span class="line"></span><br><span class="line"><span class="built_in">module</span>.exports = buildSchema(<span class="string">`</span></span><br><span class="line"><span class="string">    input ProductInput &#123;</span></span><br><span class="line"><span class="string">    name: String,</span></span><br><span class="line"><span class="string">    price: Int,</span></span><br><span class="line"><span class="string">    description: String</span></span><br><span class="line"><span class="string">    &#125;</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">    type Product &#123;</span></span><br><span class="line"><span class="string">        id: ID!,</span></span><br><span class="line"><span class="string">        name: String,</span></span><br><span class="line"><span class="string">        price: Int,</span></span><br><span class="line"><span class="string">        description: String</span></span><br><span class="line"><span class="string">    &#125;</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">    type Query &#123;</span></span><br><span class="line"><span class="string">        getProduct(id: ID!): Product</span></span><br><span class="line"><span class="string">    &#125;</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">    type Mutation &#123;</span></span><br><span class="line"><span class="string">        addProduct(input: ProductInput): Int</span></span><br><span class="line"><span class="string">    &#125;</span></span><br><span class="line"><span class="string">`</span>);</span><br></pre></td></tr></table></figure>
+
+<p>먼저 <code>type Query</code>와 <code>type Mutation</code>을 보자. 일반적으로 GET 작업은 Query로, POST 작업은 Mutation으로 정의한다.</p>
+<h4 id="Query"><a href="#Query" class="headerlink" title="Query"></a>Query</h4><p><code>getProduct</code>라는 함수는 <code>ID</code> 유형의 <code>id</code> 변수를 인자로 받고, <code>Product</code> 객체를 반환한다는 의미이다. (여기서 <code>ID</code>는 MySQL에서의 일반적인 PK로 생각하면 된다)</p>
+<p>이제 반환할 <code>Product</code> 객체에 뭐가 들었는지 <code>type Product</code>로 정의해주면 된다. 나만의 자료형을 만든다고 생각하면 쉽다.</p>
+<p>참고로 <code>!</code>가 붙은 변수는 무조건 해당 인자는 받아야 한다는 <code>required</code>의 의미와 비슷한 표시이다.</p>
+<h4 id="Mutation"><a href="#Mutation" class="headerlink" title="Mutation"></a>Mutation</h4><p><code>addProduct</code>는 말그대로 POST 메소드로 상품을 등록하는 함수이다. 입력값이 <code>ProductInput</code>으로 되어 있는데, <code>Product</code> type을 만들 때와 비슷하게 클라이언트의 입력 값을 미리 정의해둔 것이다. (일반적으로 뒤에 <code>Input</code>을 붙인다고 한다)</p>
+<h3 id="Resolver-만들기"><a href="#Resolver-만들기" class="headerlink" title="Resolver 만들기"></a>Resolver 만들기</h3><p>이제 <code>getProduct</code>와 <code>addProduct</code>의 함수를 구현하면 거의 끝이다.</p>
+<p><code>rootValue.js</code></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> products = <span class="built_in">require</span>(<span class="string">&#x27;./products&#x27;</span>);</span><br><span class="line"><span class="keyword">const</span> defaultProducts = <span class="built_in">require</span>(<span class="string">&#x27;./defaultProducts&#x27;</span>);</span><br><span class="line"></span><br><span class="line"><span class="built_in">module</span>.exports = &#123;</span><br><span class="line">    getProduct: <span class="function">(<span class="params">&#123; id &#125;</span>) =&gt;</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> products.find(<span class="function">(<span class="params">product</span>) =&gt;</span> product.id === <span class="built_in">parseInt</span>(id));</span><br><span class="line">    &#125;,</span><br><span class="line">    addProduct: <span class="function">(<span class="params">&#123; input &#125;</span>) =&gt;</span> &#123;</span><br><span class="line">        input.id = products.length === <span class="number">0</span> ? <span class="number">1</span> : products[products.length - <span class="number">1</span>].id + <span class="number">1</span>;</span><br><span class="line">        products.push(input);</span><br><span class="line">        <span class="keyword">return</span> input.id;</span><br><span class="line">    &#125;,</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<p>나는 <code>products</code>라는 데이터 배열을 모듈화하여 사용하였다. 스키마에서 선언한 인자를 그대로 받아 적절한 함수를 짜고, 미리 정해놓은 리턴 자료형대로 반환하면 된다.</p>
+<h3 id="Express로-라우팅하기"><a href="#Express로-라우팅하기" class="headerlink" title="Express로 라우팅하기"></a>Express로 라우팅하기</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">this</span>.app.use(</span><br><span class="line">            <span class="string">&#x27;/graphql&#x27;</span>,</span><br><span class="line">            graphqlHTTP(&#123;</span><br><span class="line">                schema,</span><br><span class="line">                rootValue,</span><br><span class="line">                graphiql: <span class="literal">true</span>, <span class="comment">// support GUI</span></span><br><span class="line">            &#125;),</span><br><span class="line">        );</span><br></pre></td></tr></table></figure>
+
+<p>이제 <code>/graphql</code>이라는 경로로 GraphQL API를 라우팅하면 모든 구축이 끝난다. 스키마는 <code>schema</code>로, 리졸버는 <code>rootValue</code>라는 값으로 받는다. (그렇기 때문에 난 파일 이름을 똑같이 만들었다) <code>graphiql</code>은 URL에서 <code>/graphql</code>로 접속했을 때 쿼리와 뮤테이션을 써볼 수 있는 GUI 환경을 제공한다. 당연히 보안을 위해 배포시에는 <code>graphiql</code>을 <code>false</code>로 세팅해야 한다.</p>
+<h2 id="클라이언트에서-데이터-주고-받기"><a href="#클라이언트에서-데이터-주고-받기" class="headerlink" title="클라이언트에서 데이터 주고 받기"></a>클라이언트에서 데이터 주고 받기</h2><p>이제 쿼리와 뮤테이션을 각각 GET, POST 요청으로 데이터를 주고 받을 수 있다. <code>fetch</code>, <code>axios</code> 등 방법은 많은데 <code>fetch</code>는 브라우저 호환에 문제가 있다고 하여 <code>axios</code>를 사용하기로 했다.</p>
+<h3 id="GET-요청"><a href="#GET-요청" class="headerlink" title="GET 요청"></a>GET 요청</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> apiUri = <span class="string">&#x27;http://localhost:3000/graphql&#x27;</span>;</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">getProduct</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    axios</span><br><span class="line">        .get(apiUri, &#123;</span><br><span class="line">            params: &#123;</span><br><span class="line">                query: <span class="string">`&#123;getProduct(id : <span class="subst">$&#123;pid.value&#125;</span>) &#123;id price name description&#125;&#125;`</span>,</span><br><span class="line">            &#125;,</span><br><span class="line">        &#125;)</span><br><span class="line">        .then(<span class="function">(<span class="params">result</span>) =&gt;</span> &#123;</span><br><span class="line">            <span class="built_in">console</span>.log(result)</span><br><span class="line">        &#125;)</span><br><span class="line">        .catch(<span class="function">(<span class="params">err</span>) =&gt;</span> &#123;</span><br><span class="line">            <span class="built_in">console</span>.log(err);</span><br><span class="line">        &#125;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>스키마에서 짜놓은 형식대로 쿼리를 GET으로 넘기면 된다. axios 자체적으로 promise를 지원하기 때문에 then, catch를 사용하면 에러 핸들링이 수월하다. 이제 <code>result</code>를 가지고 데이터를 가공하여 클라이언트에게 제공할 수 있다.</p>
+<h3 id="POST-요청"><a href="#POST-요청" class="headerlink" title="POST 요청"></a>POST 요청</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">postProduct</span>(<span class="params">e</span>) </span>&#123;</span><br><span class="line">    axios</span><br><span class="line">        .post(apiUri, &#123;</span><br><span class="line">            query: <span class="string">&#x27;mutation addProduct($input: ProductInput) &#123; addProduct(input: $input)&#125;&#x27;</span>,</span><br><span class="line">            variables: &#123;</span><br><span class="line">                input: &#123;</span><br><span class="line">                    price: <span class="built_in">parseInt</span>(<span class="built_in">this</span>.price.value),</span><br><span class="line">                    name: <span class="built_in">String</span>(<span class="built_in">this</span>.name.value),</span><br><span class="line">                    description: <span class="built_in">String</span>(<span class="built_in">this</span>.description.value),</span><br><span class="line">                &#125;,</span><br><span class="line">            &#125;,</span><br><span class="line">            operationName: <span class="literal">null</span>,</span><br><span class="line">        &#125;)</span><br><span class="line">        .then(<span class="function">(<span class="params">result</span>) =&gt;</span> &#123;</span><br><span class="line">            <span class="built_in">console</span>.log(result);</span><br><span class="line">        &#125;)</span><br><span class="line">        .catch(<span class="function">(<span class="params">err</span>) =&gt;</span> &#123;</span><br><span class="line">            <span class="built_in">console</span>.log(err);</span><br><span class="line">        &#125;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>GET과 방식은 거의 똑같은데, POST 메소드이므로 <code>params</code>가 아닌 <code>query</code>를 넘긴다. <code>$</code>를 사용하여 변수를 <code>variables</code>로 빼서 사용할 수도 있고, 백틱을 사용해서 하드코딩해도 상관은 없다.</p>
+<h2 id="매력적인-GraphQL"><a href="#매력적인-GraphQL" class="headerlink" title="매력적인 GraphQL"></a>매력적인 GraphQL</h2><p>사실 기존의 서버 API를 바꾸는 것은 많은 시간과 노력이 든다. 하지만 REST API와 GraphQL를 한번에 사용할 수도 있으므로 클라이언트(프론트엔드) 부분만 살짝 손대주면 나중을 생각할 때 훨씬 간결한 CRUD 환경을 구축할 수 있다. 현재도 폭발적인 인기를 받아 많은 발전이 이뤄지고 있다고 한다.</p>
+<p>GraphQL의 CRUD 작업을 시뮬레이션할 수 있는 서비스 <code>graphql-crud-demo</code> 를 개발했는데, 다음 글에 포스팅해보겠다.</p>
+
+        </div>
+
+        
+            <section class="post-copyright">
+                
+                
+                
+                
+
+            </section>
+        
+        <section class="post_disqus">
+            <div id="disqus_thread"></div>
+            <script>
+            
+            /**
+            *  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+            *  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables*/
+            /*
+            var disqus_config = function () {
+            this.page.url = PAGE_URL;  // Replace PAGE_URL with your page's canonical URL variable
+            this.page.identifier = PAGE_IDENTIFIER; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+            };
+            */
+            (function() { // DON'T EDIT BELOW THIS LINE
+            var d = document, s = d.createElement('script');
+            s.src = 'https://zinirun.disqus.com/embed.js';
+            s.setAttribute('data-timestamp', +new Date());
+            (d.head || d.body).appendChild(s);
+            })();
+            </script>
+            <noscript>Please enable JavaScript to view the <a target="_blank" rel="external nofollow noopener noreferrer" href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+        </section>
+        <section class="post-tags">
+            <div>
+                <span>Tag(s):</span>
+                <span class="tag">
+                    
+                    
+                        <a href="/tags/nodejs/"># nodejs</a>
+                    
+                        <a href="/tags/graphql/"># graphql</a>
+                    
+                        
+                </span>
+            </div>
+            <div>
+                <a href="javascript:window.history.back();">back</a>
+                <span>· </span>
+                <a href="/">home</a>
+            </div>
+        </section>
+        <section class="post-nav">
+            
+            
+            <a class="next" rel="next" href="/2020/10/23/database-index/">클러스터 인덱스 vs 넌클러스터 인덱스</a>
+            
+        </section>
+
+
+    </article>
+</div>
+
+        </div>
+        <footer id="footer" class="footer">
+  <div class="copyright">
+    <span>© zini | Powered by
+      <a href="https://hexo.io" target="_blank" rel="external nofollow noopener noreferrer">Hexo</a>
+  </span></div>
+</footer>
+
+    </div>
+</body>
+</html>
