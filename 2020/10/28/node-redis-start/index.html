@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
 <meta http-equiv="X-UA-Compatible" content="ie=edge">
-<link rel="canonical" href="https://zinirun.github.io/2020/10/27/graphql-crud-demo/">
+<link rel="canonical" href="https://zinirun.github.io/2020/10/28/node-redis-start/">
 
 
 <link rel="stylesheet" href="//fonts.googleapis.com/earlyaccess/notosanskr.css">
@@ -18,7 +18,7 @@
 
 
 
-<title>GraphQL 시뮬레이터, graphql-crud-demo 제작기 | zinirun</title>
+<title>Redis, Node.js에서 시작하기 | zinirun</title>
 
 
 
@@ -223,7 +223,7 @@
     
     <article class="post-wrap">
         <header class="post-header">
-            <h1 class="post-title">GraphQL 시뮬레이터, graphql-crud-demo 제작기</h1>
+            <h1 class="post-title">Redis, Node.js에서 시작하기</h1>
             
                 <div class="post-meta">
                     
@@ -232,7 +232,7 @@
 
                     
                         <span class="post-time">
-                        Date: <a href="#">October 27, 2020&nbsp;&nbsp;16:52:22</a>
+                        Date: <a href="#">October 28, 2020&nbsp;&nbsp;1:06:03</a>
                         </span>
                     
                     
@@ -241,7 +241,7 @@
                             
                                 <a href="/categories/nodejs/">nodejs</a>
                             
-                                <a href="/categories/nodejs/graphql/">graphql</a>
+                                <a href="/categories/nodejs/redis/">redis</a>
                             
                         </span>
                     
@@ -250,53 +250,40 @@
         </header>
 
         <div class="post-content">
-            <p>시험 기간에 머리 식힐 겸(?) 만들어 본 간단한 GraphQL 시뮬레이터를 만들었다. GraphQL 자체가 간결해서 그런지 순 제작시간은 5시간정도 걸린 것 같다.</p>
-<p>그럴듯한 Readme 마크다운도 만들었는데, 설명은 이것으로 대체한다. 세부적인 CRUD API 구축 방법은 <a href="https://zinirun.github.io/2020/10/27/graphql-crud-sample/">이전 포스팅 - GraphQL로 CRUD 만들기</a>에서 볼 수 있다.</p>
-<blockquote>
-<p><a target="_blank" rel="external nofollow noopener noreferrer" href="https://gql-crud.herokuapp.com/">여기</a>에서 샘플을 볼 수 있다. 헤로쿠로 호스팅해서 초반 로딩 속도는 조금 걸린다.</p>
-</blockquote>
-<h1 id="graphql-crud-demo"><a href="#graphql-crud-demo" class="headerlink" title="graphql-crud-demo"></a>graphql-crud-demo</h1><p>GraphQL CRUD Operations in Node.js, Axios, VanillaJS</p>
-<img src="https://github.com/zinirun/graphql-crud-demo/blob/main/img/readme.png?raw=true" alt="gql-crud-page-sample">
+            <h2 id="Redis-시작하기"><a href="#Redis-시작하기" class="headerlink" title="Redis 시작하기"></a>Redis 시작하기</h2><p>노드에서 Redis 기반의 캐싱을 해보고 싶어서 기본적으로 노드 환경에서 Redis에 연결하고, 데이터를 써보고 읽는 것부터 해보기로 했다.</p>
+<p>우선 Redis의 데이터 타입에는 Strings, Lists, Sets, Hashes가 있다. 각각 읽거나 쓰는 방법이 다르지만 정말 간단하다.</p>
+<h2 id="Redis-환경-구축하기"><a href="#Redis-환경-구축하기" class="headerlink" title="Redis 환경 구축하기"></a>Redis 환경 구축하기</h2><p>Windows는 공식적으로 지원하지 않는다고 한다. Microsoft에서 관리하는 윈도우용 redis가 있지만 깔끔한 환경을 바로 세팅하기 위해서 Docker 기반의 Redis를 사용하기로 했다.</p>
+<p>먼저 호스트 PC에서 Docker Terminal를 실행한다.</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker run --name redis-db -d -p 6379:6379 redis</span><br></pre></td></tr></table></figure>
 
-<h2 id="Start"><a href="#Start" class="headerlink" title="Start"></a>Start</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ git <span class="built_in">clone</span> https://github.com/zinirun/graphql-crud-demo</span><br><span class="line">$ <span class="built_in">cd</span> ./graphql-crud-demo</span><br><span class="line">$ npm install <span class="comment"># yarn install</span></span><br></pre></td></tr></table></figure>
+<p>이제 redis 이미지를 pull하고 컨테이너로 실행한다. <code>docker ps</code>로 실행된 것을 확인해보자.</p>
+<p><img src="/images/2020-10-28-01-14-22.png"></p>
+<p>이제 컨테이너에 접속한다.</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker <span class="built_in">exec</span> -it redis-db /bin/bash</span><br></pre></td></tr></table></figure>
 
-<h2 id="Operations"><a href="#Operations" class="headerlink" title="Operations"></a>Operations</h2><h3 id="Create"><a href="#Create" class="headerlink" title="Create"></a>Create</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">mutation addProduct($input: ProductInput) &#123;</span><br><span class="line">    addProduct(input: $input)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>redis 컨테이너로 접속했다. 이제 터미널에 <code>redis-cli</code>를 입력하면 redis를 사용할 수 있다.</p>
+<h2 id="Node-js와-Redis-연동하기"><a href="#Node-js와-Redis-연동하기" class="headerlink" title="Node.js와 Redis 연동하기"></a>Node.js와 Redis 연동하기</h2><p>먼저 Redis npm을 먼저 설치한다.</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yarn add redis <span class="comment"># npm install redis</span></span><br></pre></td></tr></table></figure>
 
-<h3 id="Read"><a href="#Read" class="headerlink" title="Read"></a>Read</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#123; getProduct(id : ?) &#123; id price name description&#125; &#125;</span><br></pre></td></tr></table></figure>
+<p>이제 js 파일을 작성해보자.</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> redis = <span class="built_in">require</span>(<span class="string">&quot;redis&quot;</span>);</span><br><span class="line"><span class="keyword">const</span> client = redis.createClient();</span><br><span class="line"></span><br><span class="line">client.on(<span class="string">&quot;error&quot;</span>, <span class="function">(<span class="params">err</span>) =&gt;</span> &#123;</span><br><span class="line">  <span class="built_in">console</span>.error(err);</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">client.on(<span class="string">&quot;ready&quot;</span>, <span class="function">() =&gt;</span> &#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">&quot;Redis is ready&quot;</span>);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
 
-<h3 id="Update"><a href="#Update" class="headerlink" title="Update"></a>Update</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">mutation updateProduct($id: ID!, $input: ProductInput!)&#123;</span><br><span class="line">    updateProduct(id: $id, <span class="attr">input</span>: $input)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="connection-to-127-0-0-1-6379-failed-connect-ECONNREFUSED"><a href="#connection-to-127-0-0-1-6379-failed-connect-ECONNREFUSED" class="headerlink" title="connection to 127.0.0.1:6379 failed - connect ECONNREFUSED"></a><code>connection to 127.0.0.1:6379 failed - connect ECONNREFUSED</code></h3><p>사실 여기서 애를 많이 먹었다. 호스트의 Docker로 실행한 컨테이너의 IP로 접속을 못 하는 것 같았는데, 알고보니 Docker Machine의 IP로 접속해야 했다. 일반적인 접속 방법은 위와 같지만 호스트 환경의 도커에서 실습하는 경우 IP를 직접 설정해줘야 한다.</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> redisHost = <span class="string">&quot;192.168.99.100&quot;</span>;</span><br><span class="line"><span class="keyword">const</span> client = redis.createClient(<span class="number">6379</span>, redisHost);</span><br></pre></td></tr></table></figure>
 
-<h3 id="Delete"><a href="#Delete" class="headerlink" title="Delete"></a>Delete</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">mutation deleteProduct&#123;</span><br><span class="line">    deleteProduct(id: $&#123;id&#125;)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>이제 잘 접속된다.</p>
+<h2 id="Redis에-값-쓰고-불러오기"><a href="#Redis에-값-쓰고-불러오기" class="headerlink" title="Redis에 값 쓰고 불러오기"></a>Redis에 값 쓰고 불러오기</h2><p><code>client</code>에 redis의 클라이언트를 정의해놨으므로 이제 <code>client</code>에서 redis 명령어를 그대로 사용할 수 있다.</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">fruit &#123;</span><br><span class="line">    lemon: <span class="number">5000</span>,</span><br><span class="line">    green: <span class="number">2000</span>,</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-<h3 id="Also-supports"><a href="#Also-supports" class="headerlink" title="Also supports"></a>Also supports</h3><ul>
-<li>Get all items</li>
-<li>Debouncing Search (customized timer)</li>
-<li>Set data-set default</li>
-</ul>
-<h2 id="Structure"><a href="#Structure" class="headerlink" title="Structure"></a>Structure</h2><ul>
-<li>GraphQL Server<ul>
-<li><code>/src/schema.js</code> - Build-Schema defined</li>
-<li><code>/src/rootValue.js</code> - Mutations and queries implemented</li>
-<li><code>/src/products.js</code> - Shared data accessed from gql</li>
-<li><code>/src/defaultProducts.js</code> - Default data-set</li>
-</ul>
-</li>
-<li>Express<ul>
-<li><code>/app.js</code> - Express instance defined</li>
-<li><code>/server.js</code> - Server started from <code>/app.js</code></li>
-</ul>
-</li>
-<li>Client<ul>
-<li><code>/static/mod.js</code> - DOM Initialized, all events added</li>
-<li><code>/static/crud.js</code> - Events implemented</li>
-<li><code>/static/graphiql.js</code> - Iframe for GraphiQL(GUI)</li>
-</ul>
-</li>
-</ul>
-<p>Hard-coded dataset <code>/src/defaultProducts.js</code> can be replaced by with Redis, etc…</p>
-<blockquote>
-<p>사실 만들고 아무 생각 없이 Netlify로 만들다가 왜 안되나 했는데 저번에 그렇게 삽질했던 “Netlify는 정적 호스팅을 위한 서비스”라는게 떠올라서 부랴부랴 헤로쿠로 배포했다. 리액트를 조금 더 배워 React + Apollo + GraphQL + Redis 서비스를 배포해 봐야겠다.</p>
-</blockquote>
+<p>이 Hash 값을 redis에 저장해보자. Redis에서 Hash를 저장하는 명령어인 <code>hmset</code>을 그대로 사용한다.</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">client.hmset(<span class="string">&quot;fruit&quot;</span>, &#123;</span><br><span class="line">  lemon: <span class="number">5000</span>,</span><br><span class="line">  green: <span class="number">2000</span>,</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<p>이제 이 값을 가져와보자. Hash 데이터의 전체 값을 가져올 수 있는 <code>hgetall</code> 명령어를 사용하면 된다.</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">client.hgetall(<span class="string">&quot;fruit&quot;</span>, <span class="function">(<span class="params">err, res</span>) =&gt;</span> &#123;</span><br><span class="line">  <span class="built_in">console</span>.log(res);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<p><img src="/images/2020-10-28-01-23-37.png"></p>
+<p>실행하면, 값이 잘 출력된다.</p>
+<p>명령어마다 어떤 콜백이 나오는지 모르면 <a target="_blank" rel="external nofollow noopener noreferrer" href="https://www.npmjs.com/package/redis">npmjs</a> 공식 문서가 잘 되어 있으니, 참조하면 된다.</p>
+<p>(정말) 간단하게 Redis를 Node에서 다뤄봤는데, 이제 세션 스토어나 캐싱을 해볼 생각이다.</p>
 
         </div>
 
@@ -337,9 +324,11 @@
                 <span class="tag">
                     
                     
+                        <a href="/tags/docker/"># docker</a>
+                    
                         <a href="/tags/nodejs/"># nodejs</a>
                     
-                        <a href="/tags/graphql/"># graphql</a>
+                        <a href="/tags/redis/"># redis</a>
                     
                         
                 </span>
@@ -352,10 +341,8 @@
         </section>
         <section class="post-nav">
             
-                <a class="prev" rel="prev" href="/2020/10/28/node-redis-start/">Redis, Node.js에서 시작하기</a>
             
-            
-            <a class="next" rel="next" href="/2020/10/27/graphql-crud-sample/">Node.js - GraphQL로 CRUD 만들기</a>
+            <a class="next" rel="next" href="/2020/10/27/graphql-crud-demo/">GraphQL 시뮬레이터, graphql-crud-demo 제작기</a>
             
         </section>
 
