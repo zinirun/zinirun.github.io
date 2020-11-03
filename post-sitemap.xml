@@ -8,6 +8,14 @@
     </url>
 
     <url>
+        <loc>https://zinirun.github.io/2020/11/03/react-cors-proxy/</loc>
+        <lastmod>2020-11-03T08:26:34.237Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
         <loc>https://zinirun.github.io/2020/10/28/node-cors/</loc>
         <lastmod>2020-10-28T04:27:38.441Z</lastmod>
         <changefreq>weekly</changefreq>

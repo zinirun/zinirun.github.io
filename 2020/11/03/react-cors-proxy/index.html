@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
 <meta http-equiv="X-UA-Compatible" content="ie=edge">
-<link rel="canonical" href="https://zinirun.github.io/2020/10/28/node-cors/">
+<link rel="canonical" href="https://zinirun.github.io/2020/11/03/react-cors-proxy/">
 
 
 <link rel="stylesheet" href="//fonts.googleapis.com/earlyaccess/notosanskr.css">
@@ -18,7 +18,7 @@
 
 
 
-<title>CORS에 대하여 | zinirun</title>
+<title>React CORS 이슈 해결 (XMLHttpRequest.handleError) | zinirun</title>
 
 
 
@@ -157,73 +157,11 @@
             <div class="container">
     
     
-        <div class="post-toc">
-    <div class="tocbot-list">
-    </div>
-    <div class="tocbot-list-menu">
-        <a class="tocbot-toc-expand" onclick="expand_toc()">Expand All</a>
-        <a onclick="go_top()">Top</a>
-        <a onclick="go_bottom()">Bottom</a>
-    </div>
-</div>
-
-<script>
-    document.ready(
-        function () {
-            tocbot.init({
-                tocSelector: '.tocbot-list',
-                contentSelector: '.post-content',
-                headingSelector: 'h1, h2, h3, h4, h5',
-                collapseDepth: 1,
-                orderedList: false,
-                scrollSmooth: true,
-            })
-        }
-    )
-
-    function expand_toc() {
-        var b = document.querySelector(".tocbot-toc-expand");
-        tocbot.init({
-            tocSelector: '.tocbot-list',
-            contentSelector: '.post-content',
-            headingSelector: 'h1, h2, h3, h4, h5',
-            collapseDepth: 6,
-            orderedList: false,
-            scrollSmooth: true,
-        });
-        b.setAttribute("onclick", "collapse_toc()");
-        b.innerHTML = "Collapse all"
-    }
-
-    function collapse_toc() {
-        var b = document.querySelector(".tocbot-toc-expand");
-        tocbot.init({
-            tocSelector: '.tocbot-list',
-            contentSelector: '.post-content',
-            headingSelector: 'h1, h2, h3, h4, h5',
-            collapseDepth: 1,
-            orderedList: false,
-            scrollSmooth: true,
-        });
-        b.setAttribute("onclick", "expand_toc()");
-        b.innerHTML = "Expand all"
-    }
-
-    function go_top() {
-        window.scrollTo(0, 0);
-    }
-
-    function go_bottom() {
-        window.scrollTo(0, document.body.scrollHeight);
-    }
-
-</script>
-    
 
     
     <article class="post-wrap">
         <header class="post-header">
-            <h1 class="post-title">CORS에 대하여</h1>
+            <h1 class="post-title">React CORS 이슈 해결 (XMLHttpRequest.handleError)</h1>
             
                 <div class="post-meta">
                     
@@ -232,14 +170,14 @@
 
                     
                         <span class="post-time">
-                        Date: <a href="#">October 28, 2020&nbsp;&nbsp;13:08:06</a>
+                        Date: <a href="#">November 3, 2020&nbsp;&nbsp;17:19:12</a>
                         </span>
                     
                     
                         <span class="post-category">
                     Category:
                             
-                                <a href="/categories/nodejs/">nodejs</a>
+                                <a href="/categories/ReactJS/">ReactJS</a>
                             
                         </span>
                     
@@ -248,22 +186,15 @@
         </header>
 
         <div class="post-content">
-            <h2 id="CORS"><a href="#CORS" class="headerlink" title="CORS"></a>CORS</h2><p>CORS(Cross Origin Resource Sharing)는 도메인/포트가 다른 서버의 자원을 요청하는 메커니즘이다. 일반적인 환경에서는 동일 출처 정책(same-origin policy)때문에 CORS 상황이 발생하면 브라우저에서 데이터 요청을 보안 목적으로 차단한다.</p>
-<blockquote>
-<p>동일 출처 정책(same-origin policy)은 어떤 출처에서 불러온 문서나 스크립트가 다른 출처에서 가져온 리소스와 상호작용하는 것을 제한하는 중요한 보안 방식입니다. 동일 출처 정책은 잠재적으로 해로울 수 있는 문서를 분리함으로써 공격받을 수 있는 경로를 줄여줍니다. - <a target="_blank" rel="external nofollow noopener noreferrer" href="https://developer.mozilla.org/ko/docs/Web/Security/Same-origin_policy">MDN Web Docs</a></p>
-</blockquote>
-<h2 id="노드에서-해결하기"><a href="#노드에서-해결하기" class="headerlink" title="노드에서 해결하기"></a>노드에서 해결하기</h2><p>노드 서버 환경에서는 CORS 미들웨어를 사용하여 간단하게 CORS를 조정할 수 있다.</p>
-<p>먼저 cors npm을 설치한다.</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ yarn add cors <span class="comment"># npm install cors --save</span></span><br></pre></td></tr></table></figure>
+            <p>현재 프론트엔드(React), 벡엔드(Node)를 분리하여 프로젝트를 진행중에 있다. 그래서 당연히 포트가 다르다. 나는 노드측에서 CORS 설정을 해두었기에 프론트엔드 단에서는 별 다른 설정이 필요없다고 생각했다.</p>
+<p>그러나 노드의 응답을 리액트에서 받지 못하는 것 같았고, XMLHttpRequest 에러가 발생했다.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">at createError (createError.js)</span><br><span class="line">at XMLHttpRequest.handleError (xhr.js)</span><br></pre></td></tr></table></figure>
 
-<p>이제 express의 미들웨어로 cors를 등록하면 된다.</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> express = <span class="built_in">require</span>(<span class="string">&#x27;express&#x27;</span>);</span><br><span class="line"><span class="keyword">const</span> cors = <span class="built_in">require</span>(<span class="string">&#x27;cors&#x27;</span>);</span><br><span class="line"><span class="keyword">const</span> app = express();</span><br><span class="line"></span><br><span class="line">app.use(cors()); <span class="comment">// CORS Middleware 추가</span></span><br></pre></td></tr></table></figure>
+<p>확인 후 알아낸 것은, React에서도 cors에 대한 설정이 필요하다는 것이다. 프록시 설정으로 간단하게 해결할 수 있다.</p>
+<p>React의 <code>package.json</code>에</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  <span class="attr">&quot;name&quot;</span>: <span class="string">&quot;lazy-dolphin&quot;</span>,</span><br><span class="line">  <span class="attr">&quot;version&quot;</span>: <span class="string">&quot;0.1.0&quot;</span>,</span><br><span class="line">  <span class="attr">&quot;private&quot;</span>: <span class="literal">true</span>,</span><br><span class="line">  <span class="attr">&quot;proxy&quot;</span>: <span class="string">&quot;http://localhost:4000&quot;</span>, <span class="comment">// Proxy 추가</span></span><br><span class="line">  <span class="attr">&quot;dependencies&quot;</span>: &#123;</span><br></pre></td></tr></table></figure>
 
-<p>위와 같이 CORS 미들웨어를 적용하면 모든 Cross Domain 요청에 대해 허가하게 된다. 로컬 테스트 환경이라면 괜찮겠지만, 배포 환경에서는 보안적으로 취약해지게 된다.</p>
-<p>그러면 CORS 요청에 대한 허가 도메인을 정해주고, 그 옵션으로 cors를 추가하면 된다.</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> corsOption = &#123;</span><br><span class="line">    origin: <span class="string">&#x27;https://zini.run&#x27;</span>, <span class="comment">// 허가 도메인</span></span><br><span class="line">    credentials: <span class="literal">true</span>,</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">app.use(cors(corsOption));</span><br></pre></td></tr></table></figure>
-
-<p>크로스 도메인에 대한 정보만 적절하게 조정한다면 CORS 보안 문제는 일어나지 않을 것이다.</p>
+<p><code>proxy</code>에 노드의 주소를 추가하면 된다. 프록시를 설정하면 REST 요청을 보낼 때 <code>http://localhost:4000/signup</code>이 아닌 <code>/signup</code>으로 요청해도 알아서 프록시 서버로 데이터를 주고 받으니까 편리하다.</p>
 
         </div>
 
@@ -304,9 +235,9 @@
                 <span class="tag">
                     
                     
-                        <a href="/tags/nodejs/"># nodejs</a>
+                        <a href="/tags/javascript/"># javascript</a>
                     
-                        <a href="/tags/cors/"># cors</a>
+                        <a href="/tags/react/"># react</a>
                     
                         
                 </span>
@@ -319,10 +250,8 @@
         </section>
         <section class="post-nav">
             
-                <a class="prev" rel="prev" href="/2020/11/03/react-cors-proxy/">React CORS 이슈 해결 (XMLHttpRequest.handleError)</a>
             
-            
-            <a class="next" rel="next" href="/2020/10/28/node-redis-start/">Redis, Node.js에서 시작하기</a>
+            <a class="next" rel="next" href="/2020/10/28/node-cors/">CORS에 대하여</a>
             
         </section>
 
