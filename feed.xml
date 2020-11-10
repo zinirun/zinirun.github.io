@@ -6,7 +6,7 @@
   <link href="https://zinirun.github.io/feed.xml" rel="self"/>
   
   <link href="https://zinirun.github.io/"/>
-  <updated>2020-11-03T08:26:34.237Z</updated>
+  <updated>2020-11-10T12:44:17.181Z</updated>
   <id>https://zinirun.github.io/</id>
   
   <author>
@@ -15,6 +15,34 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>React Apollo Client에서 데이터가 섞이는 오류 해결(GraphQL)</title>
+    <link href="https://zinirun.github.io/2020/11/10/react-apollo-graphql-data-mixed/"/>
+    <id>https://zinirun.github.io/2020/11/10/react-apollo-graphql-data-mixed/</id>
+    <published>2020-11-10T12:36:00.000Z</published>
+    <updated>2020-11-10T12:44:17.181Z</updated>
+    
+    <content type="html"><![CDATA[<p>한 화면에서 다수의 컴포넌트가 모두 같은 GraphQL Query를 실행할 때 데이터가 섞이는 오류가 있었다. 처음에는 벡엔드 (<code>Node.js + GraphQL Server</code>)와 동기적으로 데이터를 주고 받을 수 없어서 그런 것 같았는데, 코드 상의 문제는 없었다.</p><p>구글링끝에 답을 찾았다. Apollo Client의 캐싱 오류였고, 클라이언트측 쿼리(gql)에 <code>__typename @skip(if: true)</code>를 붙여주면 된다.</p><p>어디에 붙이냐면, 예를 들어</p><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">query getRoutine($id: ID!) &#123;</span><br><span class="line">        getRoutine(id: $id) &#123;</span><br><span class="line">            day</span><br><span class="line">            dayName</span><br><span class="line">            tasks &#123;</span><br><span class="line">                id</span><br><span class="line">                name</span><br><span class="line">                time</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure><p>나는 다음과 같은 쿼리를 동시에 요청할 때 데이터가 섞였는데,</p><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">query getRoutine($id: ID!) &#123;</span><br><span class="line">        getRoutine(id: $id) &#123;</span><br><span class="line">            __typename @skip(<span class="keyword">if</span>: <span class="literal">true</span>)</span><br><span class="line">            day</span><br><span class="line">            dayName</span><br><span class="line">            tasks &#123;</span><br><span class="line">                id</span><br><span class="line">                __typename @skip(<span class="keyword">if</span>: <span class="literal">true</span>)</span><br><span class="line">                name</span><br><span class="line">                time</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure><p>위를 참고하여 <code>id</code>를 조회한다면 id 밑에 넣던지, <code>id</code>를 조회하지 않는다면 그냥 제일 위에 넣으면 된다.</p><blockquote><p>출처 <a href="https://stackoverflow.com/questions/53272112/apollo-is-mixing-results-from-a-graphql-query-in-react">stackoverflow</a></p></blockquote>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;p&gt;한 화면에서 다수의 컴포넌트가 모두 같은 GraphQL Query를 실행할 때 데이터가 섞이는 오류가 있었다. 처음에는 벡엔드 (&lt;code&gt;Node.js + GraphQL Server&lt;/code&gt;)와 동기적으로 데이터를 주고 받을 수 없어서 그런</summary>
+      
+    
+    
+    
+    <category term="ReactJS" scheme="https://zinirun.github.io/categories/ReactJS/"/>
+    
+    
+    <category term="react" scheme="https://zinirun.github.io/tags/react/"/>
+    
+    <category term="graphql" scheme="https://zinirun.github.io/tags/graphql/"/>
+    
+    <category term="apollo" scheme="https://zinirun.github.io/tags/apollo/"/>
+    
+  </entry>
   
   <entry>
     <title>React CORS 이슈 해결 (XMLHttpRequest.handleError)</title>
@@ -541,34 +569,6 @@
     
     
     <category term="javascript" scheme="https://zinirun.github.io/tags/javascript/"/>
-    
-    <category term="VanillaJS" scheme="https://zinirun.github.io/tags/VanillaJS/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Javascript 30 - Day 22 Follow Along Link Highlighter</title>
-    <link href="https://zinirun.github.io/2020/09/10/js-course30-22/"/>
-    <id>https://zinirun.github.io/2020/09/10/js-course30-22/</id>
-    <published>2020-09-10T04:34:27.000Z</published>
-    <updated>2020-09-10T05:33:00.043Z</updated>
-    
-    <content type="html"><![CDATA[<h2 id="Day-22-Follow-Along-Link-Highlighter"><a href="#Day-22-Follow-Along-Link-Highlighter" class="headerlink" title="Day 22 - Follow Along Link Highlighter"></a>Day 22 - Follow Along Link Highlighter</h2><div class="video-container"><iframe src="https://www.youtube.com/embed/POP_qri7RA8" frameborder="0" loading="lazy" allowfullscreen></iframe></div><p><img src="/images/2020-09-10-13-36-16.png"></p><p>디자인적으로 잘 갖춰진 웹을 돌아다니다 보면 메뉴의 요소들에 마우스를 이동할 때 <code>hover</code> 효과가 끊어지는 효과가 아닌 부드러운 배경의 이동을 사용하는 경우가 있다.</p><p>이번 과제는 상단 메뉴뿐만 아니라 페이지 전체에서 스크롤을 해도 모든 <code>&lt;a&gt;</code> 태그에 그런 효과를 주며 마우스를 이동할 때 마다 흰 배경이 따라다니게 구현하는 것을 목적으로 한다.</p><h2 id="CSS-이해하기"><a href="#CSS-이해하기" class="headerlink" title="CSS 이해하기"></a>CSS 이해하기</h2><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/* highlight는 span 객체 */</span></span><br><span class="line"><span class="selector-class">.highlight</span> &#123;</span><br><span class="line">  <span class="attribute">transition</span>: all <span class="number">0.2s</span>;</span><br><span class="line">  <span class="attribute">border-bottom</span>: <span class="number">2px</span> solid white;</span><br><span class="line">  <span class="attribute">position</span>: absolute;</span><br><span class="line">  <span class="attribute">top</span>: <span class="number">0</span>;</span><br><span class="line">  <span class="attribute">background</span>: white;</span><br><span class="line">  <span class="attribute">left</span>: <span class="number">0</span>;</span><br><span class="line">  <span class="attribute">z-index</span>: -<span class="number">1</span>;</span><br><span class="line">  <span class="attribute">border-radius</span>: <span class="number">20px</span>;</span><br><span class="line">  <span class="attribute">display</span>: block;</span><br><span class="line">  <span class="attribute">box-shadow</span>: <span class="number">0</span> <span class="number">0</span> <span class="number">10px</span> <span class="built_in">rgba</span>(<span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0.2</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><p>미리 작성된 css를 보면 <code>absolute</code> 위치 속성과 <code>z-index: -1</code>을 적용했다. 객체의 절대적인 위치 값과 화면의 가로, 세로 값을 이용할 것이기 때문이다. <code>transition: all 0.2s;</code>는 객체에서 css의 변화가 일어날 때 모든 효과 변화에 대해 0.2초 간격의 부드러운 변환을 제공한다.</p><p>사실 이런 것들이 css에서 암기보다는 이해에 가깝다고 생각한다. 외우지 않아도 된다는 말을 많이 하지만, 적어도 이런 효과를 어떤 로직으로 주어야 할 지는 알아야 구글에 뭐라고 검색해야 할 지라도 알기 때문이다.</p><h2 id="Script-작성"><a href="#Script-작성" class="headerlink" title="Script 작성"></a>Script 작성</h2><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">highlightLink</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">const</span> linkCoords = <span class="built_in">this</span>.getBoundingClientRect();</span><br><span class="line">  <span class="built_in">console</span>.log(linkCoords);</span><br><span class="line">  <span class="keyword">const</span> coords = &#123;</span><br><span class="line">    width: linkCoords.width,</span><br><span class="line">    height: linkCoords.height,</span><br><span class="line">    top: linkCoords.top + <span class="built_in">window</span>.scrollY,</span><br><span class="line">    left: linkCoords.left + <span class="built_in">window</span>.scrollX,</span><br><span class="line">  &#125;;</span><br><span class="line"></span><br><span class="line">  highlight.style.width = <span class="string">`<span class="subst">$&#123;coords.width&#125;</span>px`</span>;</span><br><span class="line">  highlight.style.height = <span class="string">`<span class="subst">$&#123;coords.height&#125;</span>px`</span>;</span><br><span class="line">  highlight.style.transform = <span class="string">`translate(<span class="subst">$&#123;coords.left&#125;</span>px, <span class="subst">$&#123;coords.top&#125;</span>px)`</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><p><code>getBoundingClientRect()</code>는 요소의 각종 좌표값이 들어있는 객체를 반환한다. 예를 들어 <code>getBoundingClientRect().top</code>은 Viewport의 시작지점을 기준으로 한 상대좌표 Y 값을 구할 수 있다.</p><p>그런데 이번 과제에서는 스크롤을 내려도 <code>highlight</code> 객체가 정확히 이동해야 하므로 <code>window.scrollX</code>, <code>window.scrollY</code>로 스크롤한 X, Y 값을 가져와서 더해주어야 정확한 요소의 위치에 객체가 이동한다.</p><p>이제 <code>a</code> 태그에 <code>mouseenter</code> 이벤트만 걸어주면 된다.</p><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">triggers.forEach(<span class="function">(<span class="params">a</span>) =&gt;</span> a.addEventListener(<span class="string">&quot;mouseenter&quot;</span>, highlightLink));</span><br></pre></td></tr></table></figure>]]></content>
-    
-    
-      
-      
-    <summary type="html">&lt;h2 id=&quot;Day-22-Follow-Along-Link-Highlighter&quot;&gt;&lt;a href=&quot;#Day-22-Follow-Along-Link-Highlighter&quot; class=&quot;headerlink&quot; title=&quot;Day 22 - Follow Alon</summary>
-      
-    
-    
-    
-    <category term="javascript" scheme="https://zinirun.github.io/categories/javascript/"/>
-    
-    
-    <category term="javascript" scheme="https://zinirun.github.io/tags/javascript/"/>
-    
-    <category term="javascript30" scheme="https://zinirun.github.io/tags/javascript30/"/>
     
     <category term="VanillaJS" scheme="https://zinirun.github.io/tags/VanillaJS/"/>
     
