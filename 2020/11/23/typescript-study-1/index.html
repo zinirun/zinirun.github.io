@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
 <meta http-equiv="X-UA-Compatible" content="ie=edge">
-<link rel="canonical" href="https://zinirun.github.io/2020/11/10/react-apollo-graphql-data-mixed/">
+<link rel="canonical" href="https://zinirun.github.io/2020/11/23/typescript-study-1/">
 
 
 <link rel="stylesheet" href="//fonts.googleapis.com/earlyaccess/notosanskr.css">
@@ -18,7 +18,7 @@
 
 
 
-<title>React Apollo Client에서 데이터가 섞이는 오류 해결(GraphQL) | zinirun</title>
+<title>Typescript를 시작하는 이유 | zinirun</title>
 
 
 
@@ -157,11 +157,73 @@
             <div class="container">
     
     
+        <div class="post-toc">
+    <div class="tocbot-list">
+    </div>
+    <div class="tocbot-list-menu">
+        <a class="tocbot-toc-expand" onclick="expand_toc()">Expand All</a>
+        <a onclick="go_top()">Top</a>
+        <a onclick="go_bottom()">Bottom</a>
+    </div>
+</div>
+
+<script>
+    document.ready(
+        function () {
+            tocbot.init({
+                tocSelector: '.tocbot-list',
+                contentSelector: '.post-content',
+                headingSelector: 'h1, h2, h3, h4, h5',
+                collapseDepth: 1,
+                orderedList: false,
+                scrollSmooth: true,
+            })
+        }
+    )
+
+    function expand_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 6,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "collapse_toc()");
+        b.innerHTML = "Collapse all"
+    }
+
+    function collapse_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 1,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "expand_toc()");
+        b.innerHTML = "Expand all"
+    }
+
+    function go_top() {
+        window.scrollTo(0, 0);
+    }
+
+    function go_bottom() {
+        window.scrollTo(0, document.body.scrollHeight);
+    }
+
+</script>
+    
 
     
     <article class="post-wrap">
         <header class="post-header">
-            <h1 class="post-title">React Apollo Client에서 데이터가 섞이는 오류 해결(GraphQL)</h1>
+            <h1 class="post-title">Typescript를 시작하는 이유</h1>
             
                 <div class="post-meta">
                     
@@ -170,14 +232,14 @@
 
                     
                         <span class="post-time">
-                        Date: <a href="#">November 10, 2020&nbsp;&nbsp;21:36:00</a>
+                        Date: <a href="#">November 23, 2020&nbsp;&nbsp;21:22:44</a>
                         </span>
                     
                     
                         <span class="post-category">
                     Category:
                             
-                                <a href="/categories/ReactJS/">ReactJS</a>
+                                <a href="/categories/typescript/">typescript</a>
                             
                         </span>
                     
@@ -186,18 +248,12 @@
         </header>
 
         <div class="post-content">
-            <p>한 화면에서 다수의 컴포넌트가 모두 같은 GraphQL Query를 실행할 때 데이터가 섞이는 오류가 있었다. 처음에는 벡엔드 (<code>Node.js + GraphQL Server</code>)와 동기적으로 데이터를 주고 받을 수 없어서 그런 것 같았는데, 코드 상의 문제는 없었다.</p>
-<p>구글링끝에 답을 찾았다. Apollo Client의 캐싱 오류였고, 클라이언트측 쿼리(gql)에 <code>__typename @skip(if: true)</code>를 붙여주면 된다.</p>
-<p>어디에 붙이냐면, 예를 들어</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">query getRoutine($id: ID!) &#123;</span><br><span class="line">        getRoutine(id: $id) &#123;</span><br><span class="line">            day</span><br><span class="line">            dayName</span><br><span class="line">            tasks &#123;</span><br><span class="line">                id</span><br><span class="line">                name</span><br><span class="line">                time</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
-
-<p>나는 다음과 같은 쿼리를 동시에 요청할 때 데이터가 섞였는데,</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">query getRoutine($id: ID!) &#123;</span><br><span class="line">        getRoutine(id: $id) &#123;</span><br><span class="line">            __typename @skip(<span class="keyword">if</span>: <span class="literal">true</span>)</span><br><span class="line">            day</span><br><span class="line">            dayName</span><br><span class="line">            tasks &#123;</span><br><span class="line">                id</span><br><span class="line">                __typename @skip(<span class="keyword">if</span>: <span class="literal">true</span>)</span><br><span class="line">                name</span><br><span class="line">                time</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
-
-<p>위를 참고하여 <code>id</code>를 조회한다면 id 밑에 넣던지, <code>id</code>를 조회하지 않는다면 그냥 제일 위에 넣으면 된다.</p>
-<blockquote>
-<p>출처 <a target="_blank" rel="external nofollow noopener noreferrer" href="https://stackoverflow.com/questions/53272112/apollo-is-mixing-results-from-a-graphql-query-in-react">stackoverflow</a></p>
-</blockquote>
+            <h2 id="Typescript-공부를-시작하는-이유"><a href="#Typescript-공부를-시작하는-이유" class="headerlink" title="Typescript 공부를 시작하는 이유"></a>Typescript 공부를 시작하는 이유</h2><p>Javascript를 몇 년을 써오면서 큰 불편함은 느끼지 못했다. 그래서 Typescript는 Javascript의 가려운 부분을 긁어준다는 말을 들어도 굳이 해야하나 싶었다.</p>
+<p>하지만 요즘 학교에서 발주한 대형 프로젝트(기술 스택은 크게 <code>Node.js</code>, <code>GraphQL</code>, <code>React</code>, <code>Apollo</code>를 사용한다)를 진행중에 타입스크립트 도입의 필요성을 느꼈다.  서버 사이드로나 클라이언트 사이드로나 자바스크립트를 사용하다 보니 모듈화된 함수가 인자로 어떤 타입을 받는지, 반환하는 값은 어떤 종류인지 찾으려고 파일들을 왔다갔다하다가, 결국 주석으로 input과 output의 값을 명시하는 작업을 하고 있다.</p>
+<p>주석으로 명시하더라도 사람은 늘 실수를 하고, 특히나 GraphQL에서의 타입 준수는 정말 중요하기 때문에 항상 실행해보고 나서 에러를 발견하기도 한다.</p>
+<p>그렇게 나는 타입스크립트 공부를 시작하기로 했다. <a target="_blank" rel="external nofollow noopener noreferrer" href="https://typescript-kr.github.io/">Typescript Handbook KR</a>에 정말 잘 정리되어 있으니, 교과서로 쓰기에도 충분할 것 같다.</p>
+<p>사실 배운 내용에 대해서 포스팅하려고 했는데, 핸드북(위 링크)에 정말 잘 나와있어서 이론을 적기 보다는 공부하다가 겪은 고난(?) 위주의 글을 적어볼 생각이다.</p>
+<p>지금은 기본적인 자료형과, 함수 선언, 인터페이스, 타입을 1시간도 채안되서 공부했는데, 새로운 언어를 배우는 것이 아니라서 자바스크립트를 어느정도 다룰 줄 안다면 정말 빠르게 배울 수 있다.</p>
 
         </div>
 
@@ -238,11 +294,7 @@
                 <span class="tag">
                     
                     
-                        <a href="/tags/react/"># react</a>
-                    
-                        <a href="/tags/graphql/"># graphql</a>
-                    
-                        <a href="/tags/apollo/"># apollo</a>
+                        <a href="/tags/typescript/"># typescript</a>
                     
                         
                 </span>
@@ -255,10 +307,8 @@
         </section>
         <section class="post-nav">
             
-                <a class="prev" rel="prev" href="/2020/11/23/typescript-study-1/">Typescript를 시작하는 이유</a>
             
-            
-            <a class="next" rel="next" href="/2020/11/03/react-cors-proxy/">React CORS 이슈 해결 (XMLHttpRequest.handleError)</a>
+            <a class="next" rel="next" href="/2020/11/10/react-apollo-graphql-data-mixed/">React Apollo Client에서 데이터가 섞이는 오류 해결(GraphQL)</a>
             
         </section>
 
