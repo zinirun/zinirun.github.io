@@ -86,9 +86,9 @@
     <category term="ReactJS" scheme="https://zinirun.github.io/categories/ReactJS/"/>
     
     
-    <category term="react" scheme="https://zinirun.github.io/tags/react/"/>
-    
     <category term="graphql" scheme="https://zinirun.github.io/tags/graphql/"/>
+    
+    <category term="react" scheme="https://zinirun.github.io/tags/react/"/>
     
     <category term="apollo" scheme="https://zinirun.github.io/tags/apollo/"/>
     
@@ -169,9 +169,9 @@
     <category term="redis" scheme="https://zinirun.github.io/categories/nodejs/redis/"/>
     
     
-    <category term="docker" scheme="https://zinirun.github.io/tags/docker/"/>
-    
     <category term="nodejs" scheme="https://zinirun.github.io/tags/nodejs/"/>
+    
+    <category term="docker" scheme="https://zinirun.github.io/tags/docker/"/>
     
     <category term="redis" scheme="https://zinirun.github.io/tags/redis/"/>
     
@@ -340,9 +340,9 @@
     <category term="nodejs" scheme="https://zinirun.github.io/categories/nodejs/"/>
     
     
-    <category term="docker" scheme="https://zinirun.github.io/tags/docker/"/>
-    
     <category term="nodejs" scheme="https://zinirun.github.io/tags/nodejs/"/>
+    
+    <category term="docker" scheme="https://zinirun.github.io/tags/docker/"/>
     
     <category term="mysql" scheme="https://zinirun.github.io/tags/mysql/"/>
     
