@@ -6,7 +6,7 @@
   <link href="https://zinirun.github.io/feed.xml" rel="self"/>
   
   <link href="https://zinirun.github.io/"/>
-  <updated>2020-12-03T11:49:30.717Z</updated>
+  <updated>2021-01-14T12:44:38.339Z</updated>
   <id>https://zinirun.github.io/</id>
   
   <author>
@@ -15,6 +15,30 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>이제와서 쓰는 2020년 회고</title>
+    <link href="https://zinirun.github.io/2021/01/14/remind-2020/"/>
+    <id>https://zinirun.github.io/2021/01/14/remind-2020/</id>
+    <published>2021-01-14T11:19:21.000Z</published>
+    <updated>2021-01-14T12:44:38.339Z</updated>
+    
+    <content type="html"><![CDATA[<h1 id="졸업을-준비할-시간"><a href="#졸업을-준비할-시간" class="headerlink" title="졸업을 준비할 시간"></a>졸업을 준비할 시간</h1><p>이제 학부생 4학년이 된다. 졸업이 다가오니 나중엔 내가 뭘 하고 있을지, 어떤 개발자로 살고 있을지, 많은 생각이 든다. 무언갈 배우고 그것으로 무언갈 만드는 것을 너무 좋아한 나머지 2020년은 정말 바쁘게 살았다. 내가 하고 싶은 프로젝트, 1차 졸업작품, 외주 프로젝트를 하면서 옛날보다 코드가 많이 성숙해진 것을 느낀다. 사실 이 2020년 회고는 깔끔하게 2020년 12월 31일에 쓰고 싶었는데 그때는 학교에서 외주를 받아서 프로젝트를 하고 있었고, 지금도 새로운 외주를 받아서 진행중인데 마침 시간이 남아서 쓸 수 있었다.</p><h2 id="2020년의-목표였던-것들"><a href="#2020년의-목표였던-것들" class="headerlink" title="2020년의 목표였던 것들"></a>2020년의 목표였던 것들</h2><p>욕심이 앞선 탓인지 2020년은 목표가 많았다.</p><ol><li>Node.js를 완전히 내 것으로 만들기</li><li>Docker Compose, Shell Script로 빌드 자동화</li><li>AWS</li><li>GraphQL</li><li>React</li><li>SQLD 자격증</li><li>Problem Solving (Python)</li><li>Go</li><li>Redis</li><li>Kubernetes</li><li>Github 블로그</li><li>학과 공부 4.0 이상 (1학년때 싼 똥을 치워야 한다)</li><li>토익</li></ol><p>목표가 과했지만 Go 언어, 쿠버네티스를 제외하고 모두 이룰 수 있었다. AWS는 공부하지 못했고, 학교에서 서버 스터디때 제공해준 NHN Toast Cloud를 사용해서 리눅스 기반 클라우드 환경을 공부할 수 있었다. (이뤘다는 말이 마스터했다는 말은 아니다, 내가 가늠한 목표만큼은 모두 움직였다) 처음에 이 목표를 어떻게 도전할까 고민하다가 생각한 것은, 바쁜 프로젝트 와중에 짬내서 따로 공부하기보단 진행하는 프로젝트에 내가 배우고 싶은 기술을 녹이는 것이었다.</p><p>노드와 GraphQL을 공부하다가 GraphQL에 빠져서 <a href="https://github.com/zinirun/graphql-crud-demo">GraphQL CRUD Demo</a> 시뮬레이터를 만들기도 하고, 학교에서 풀스택으로 외주받은 서비스를 개발하고 배포할때 도커 컴포즈와 쉘 스크립트로 빌드 자동화를 성공하기도 하고, MySQL의 속도가 답답해서 Redis 캐싱을 노드 서버에 도입했다. 토익은 개발의 범주는 벗어나지만 중간중간 머리식힐 겸 했고, 내 나름대로는 만족스러운 결과를 얻어서 졸업하려 한다.</p><p>그리고 정한 목표대로 배울 수 있는 것도 아니었는게, 2020년 초쯤 외주를 받아서 진행하다가 웹 앱을 만들어야 할 일이 있었는데, 그러다가 자연스럽게 React Native와 Expo를 경험하게 됐다.</p><h2 id="2020년을-함께한-프로젝트들"><a href="#2020년을-함께한-프로젝트들" class="headerlink" title="2020년을 함께한 프로젝트들"></a>2020년을 함께한 프로젝트들</h2><p>모든 프로젝트를 나열하기에는 너무 많고, 기억에 남는 프로젝트만 오래된 순으로 적어보려 한다.</p><h4 id="1-곰곰해온라인"><a href="#1-곰곰해온라인" class="headerlink" title="1. 곰곰해온라인"></a>1. 곰곰해온라인</h4><ul><li><code>Node.js</code> <code>Socket.io</code><blockquote><p><a href="https://github.com/zinirun/bearchain">Github</a></p></blockquote></li></ul><p><img src="/images/2021-01-14-20-49-27.png"><br><img src="/images/2021-01-14-20-50-01.png"></p><p>노드와 Socket.io를 사용한 끝말잇기 게임이다. 이 게임을 만들면서 노드에 많은 흥미를 느꼈고 본격적으로 노드를 벡엔드 언어로 깊이있게 공부하는 계기가 되었다. 사실 친구들끼리 PC방에 가던 내기를 할 때 쓰면 좋겠다는 아이디어가 종이 몇 장의 드래프트로, 그 드래프트가 본격적인 프로젝트가 되었다.</p><h4 id="2-피피"><a href="#2-피피" class="headerlink" title="2. 피피"></a>2. 피피</h4><ul><li><code>Python</code> <code>Flask</code> <code>OpenCV</code> <code>scikitlearn</code> <code>uwsgi</code> <code>Docker</code><blockquote><p><a href="https://github.com/zinirun/peepee-app">Github</a></p></blockquote></li></ul><p><img src="/images/2021-01-14-20-54-33.png"></p><p>서버 스터디를 하다가 제작한 일주일의 프로젝트, 피피였다. 변기 사진을 찍어 업로드하면 소변의 색으로 건강을 (어느정도) 판단해준다. 이때 OpenCV, Flask에 대한 경험이 전무해서 어려웠는데 어려운 사람 둘이서 머리를 쥐어짜서 만들어서 그런지 완성도있는 프로젝트를 만들 수 있었다.</p><h4 id="3-우리의-편지"><a href="#3-우리의-편지" class="headerlink" title="3. 우리의 편지"></a>3. 우리의 편지</h4><ul><li><code>Node.js</code> <code>MySQL</code> <code>EJS</code></li></ul><blockquote><p><a href="https://github.com/zinirun/our-letter">Github</a></p></blockquote><p><img src="https://github.com/zinirun/our-letter/raw/master/images/ourletter-1.gif"><br><img src="https://github.com/zinirun/our-letter/raw/master/images/ourletter-2.gif"></p><p>친구에게 의미있는 편지를 쓰고싶을 때가 있었는데, 같은 개발자인지라 카카오톡에서 유행하는 서비스처럼 서로를 알아야 편지를 읽을 수 있는 플랫폼을 만들어보면 어떨까해서 만든 프로젝트이다. (하지만 카페에서 만들다가 들켜서 계획은 무산되었고 울며 겨자먹기로 프로젝트를 끝냈다)</p><h4 id="4-BlueCheck"><a href="#4-BlueCheck" class="headerlink" title="4. BlueCheck"></a>4. BlueCheck</h4><ul><li><code>Node.js</code> <code>ToastCloud</code> <code>MySQL</code> <code>Docker</code> <code>Firebase</code> <code>React Native</code> <code>EJS</code></li></ul><blockquote><p><a href="https://play.google.com/store/apps/details?id=com.denebsoft.newbluecheck">Playstore</a></p></blockquote><p><img src="/images/2021-01-14-21-05-05.png"><br><img src="/images/2021-01-14-21-05-22.png"></p><p>노드를 사용한 첫 외주였다. 2명이서 만드는데 한 달이 안 걸린 것 같다. 실제 사용하는 것은 아니었고, 타대학 건축학과 학생들이 교수님과 함께 부탁한 웹 앱이다. 시연을 목적으로 만든 앱이었지만 기왕 만드는김에 제대로 만들어서 플레이스토어 배포도 연습할겸 사전 체험판으로 배포했다. 새벽까지 푸시알림 서비스를 구현하느라 진빠진 기억이 남는다. 프로젝트를 끝내고 FCM, Expo를 이용한 웹 앱에 도사가 된 것 같다.</p><h4 id="5-LMS-다운로더"><a href="#5-LMS-다운로더" class="headerlink" title="5. LMS 다운로더"></a>5. LMS 다운로더</h4><ul><li><code>Chrome-Extension</code> <code>Javascript</code><blockquote><p><a href="https://github.com/zinirun/LMSDownloader">Github</a></p></blockquote></li></ul><p><img src="/images/2021-01-14-21-13-07.png"><br><img src="/images/2021-01-14-21-13-22.png"><br><img src="/images/2021-01-14-21-16-06.png"></p><p>단국대학교 학생들을 위해 만든 이러닝 동영상 다운로더이다. 코로나 때문에 모든 강의는 온라인으로 진행되었는데, 이러닝 시스템이 참 뭐같은 탓에 복습하려고 하면 강의가 닫혀있고, 다 보지 않으면 뒤의 내용을 볼 수도 없어서 뭔가 크롬 확장 프로그램으로 만들 수 있겠다 싶어서 만들었는데, 생각보다 반응이 너무 뜨거웠다. 덕분에 학교에서 알게모르게 유명해지고 감사 쪽지를 과분하게 많이 받았다.</p><h4 id="6-홈즈"><a href="#6-홈즈" class="headerlink" title="6. 홈즈"></a>6. 홈즈</h4><ul><li><code>Node.js</code> <code>ToastCloud</code> <code>Redis</code> <code>MySQL</code> <code>Docker</code> <code>Firebase</code> <code>React Native</code> <code>EJS</code></li></ul><blockquote><p><a href="https://play.google.com/store/apps/details?id=com.nemobros.homes">Playstore</a></p></blockquote><p><img src="/images/2021-01-14-21-20-44.png"></p><p>첫 졸업작품이다. 우리 학교는 4학년 1학기, 4학년 2학기에 나누어 2개의 졸업작품(캡스톤디자인 프로젝트)을 진행하는데, 4학년 2학기때의 졸작을 땡겨서 했다. 4명이서 팀을 꾸렸고, 기간은 3달 정도였지만 1달이 채 되지않아 프로젝트를 끝냈다. 건물주, 관리인, 세입자 간에 발생하는 사회 문제를 서비스로 해결할 수 있을 것 같았다. 갈아 넣었다는 말은 이 프로젝트에 어울릴 듯 하다. 리더로서 “협업”, “효율적인 프로세스”이라는 텍스트에 대해 많은 생각을 했었다.</p><h4 id="7-단국대학교-서버관리시스템"><a href="#7-단국대학교-서버관리시스템" class="headerlink" title="7. 단국대학교 서버관리시스템"></a>7. 단국대학교 서버관리시스템</h4><ul><li><code>Node.js</code> <code>GraphQL</code> <code>SSH2</code> <code>React</code> <code>Apollo</code> <code>nginx</code> <code>Redis</code> <code>MySQL</code> <code>Docker-compose</code></li></ul><blockquote><p><a href="https://www.notion.so/45de2c8afbda4b25bc9f888924c15b7e">Notion</a></p></blockquote><p><img src="/images/2021-01-14-21-31-32.png"></p><p>단국대학교에서 수주한 프로젝트인데, 서버 스터디에서 연이 닿은 교수님이 마음 맞는 친구 2명을 알아서 구해서 해보면 어떻겠냐고 했고 그렇게 “팀 하모니카”라는 이름을 정하고 두번째 팀 리더를 수행하게 되었다. 새로운 기술들을 많이 접할 수 있었고, 단기간에 많이 발전했다. 4달 정도로 잡았던 프로젝트 기간은 1달이 안되어서 마무리되었다. 원래는 사용자들이 예약하고 반납하는 것을 자동화하는 시스템이었는데, 욕심이 나아가서 실제 서버에 웹 콘솔에서 SSH2를 통해 원격 작업을 요청할 수 있고, 그럴듯한 서버 모니터링 콘솔 역할을 수행할 수 있도록 구현하였다.</p><p>이렇게 2020년이 바쁘게 지나갔다. 지인들은 숨쉴 틈은 있냐고 하는데 숨은 잘 쉬었고, 지인들과 의미있는 시간도 많이 보낸 한 해였다.</p><h2 id="2021년은"><a href="#2021년은" class="headerlink" title="2021년은"></a>2021년은</h2><p>지금도 여러 대학에서 사용하는 학점교류시스템을 외주로 받아서 구축하고 있다. 리더의 진도가 빠른 편인데 잘 따라와주는 팀원에게 고맙다. “다 하고 맘편하게 놀자”라는 말을 하루에 한번씩 한다. 사실 코로나때문에 놀러갈 곳도 없어서 작업실에서 영화보면서 야식이나 먹을 것 같다.</p><h4 id="2021년의-목표"><a href="#2021년의-목표" class="headerlink" title="2021년의 목표"></a>2021년의 목표</h4><p>2021년의 목표는 2020년보다는 적지만 좀 더 고도화된 공부를 할까 한다.</p><ol><li>Typescript</li><li>Go</li><li>Problem Solving</li><li>AWS</li><li>Kubernetes</li></ol><p>타입스크립트에 한번 빠지면 자바스크립트로 못 돌아간다는 말에 한번 발 담가보고 앞으로의 프로젝트에는 Typescript를 적용해보고 싶고, AWS와 쿠버네티스, Go는 밀린 과제이지만 제대로 경험해보고 싶다. 후회없는 2020년을 살았으니 열심히 달려서 대학 4년을 후회없이 마무리해야겠다.</p>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;h1 id=&quot;졸업을-준비할-시간&quot;&gt;&lt;a href=&quot;#졸업을-준비할-시간&quot; class=&quot;headerlink&quot; title=&quot;졸업을 준비할 시간&quot;&gt;&lt;/a&gt;졸업을 준비할 시간&lt;/h1&gt;&lt;p&gt;이제 학부생 4학년이 된다. 졸업이 다가오니 나중엔 내가 뭘 하고 있</summary>
+      
+    
+    
+    
+    <category term="Etc" scheme="https://zinirun.github.io/categories/Etc/"/>
+    
+    
+    <category term="2020" scheme="https://zinirun.github.io/tags/2020/"/>
+    
+  </entry>
   
   <entry>
     <title>Redux 도입이 필요해진 이유</title>
@@ -431,27 +455,6 @@
     <category term="express" scheme="https://zinirun.github.io/tags/express/"/>
     
     <category term="refactoring" scheme="https://zinirun.github.io/tags/refactoring/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>search-algorithm-1</title>
-    <link href="https://zinirun.github.io/2020/10/01/search-algorithm-1/"/>
-    <id>https://zinirun.github.io/2020/10/01/search-algorithm-1/</id>
-    <published>2020-10-01T10:17:00.000Z</published>
-    <updated>2020-10-21T05:19:35.634Z</updated>
-    
-    <content type="html"><![CDATA[<p><a href="https://m.blog.naver.com/ndb796/220578642298">좋은 자료</a>가 있어서 공유한다.</p><p>​1. Greedy Best-First Search<br>2. A* Search<br>3. Memory-Bounded Heuristic Search</p><p>이 중에서 가장 유용해서 실제로 매우 많이 사용되고, 중요한 것이 바로 A* Search입니다.</p><p>솔직히 말씀드리자면 공부할 시간이 없으신 분들은 A* Search만 알고 넘어가도 괜찮을 것 같습니다.</p><p>또한 한가지 더 알고 계시면 좋은 점은 바로 이 모든 Heuristic Search 알고리즘은 ‘길 찾기 알고리즘’으로 많이 사용된다는 것입니다.</p><p>다음 지도를 이번 강좌에서도 사용하겠습니다.</p><ol><li>Greedy Best-First Search</li></ol><p>Greedy는 ‘탐욕스러운’이라는 의미를 가지고 있습니다.</p><p>어떻게 보면 단순하다는 의미를 내포하고 있다고 봐도 됩니다.</p><p>여기서는 평가 함수를 오직 휴리스틱 함수로만 구성합니다.</p><p>즉, F(n) = H(n)입니다.</p><p>여기서 이 H(n)를 어떻게 설정하냐에 따라서 알고리즘의 질이 바뀌는데요.</p><p>흔히 길찾기에서는 이 H(n)를 현재 노드와 목표 노드 사이의 직선 거리로 확인합니다.</p><p>즉, 이 Heuristic Search 알고리즘들과 기존의 Blind Search의</p><p>다른 점은 바로 목표 노드의 위치를 알 고 있다는 사실입니다.</p><p>이 목표 노드의 위치를 알고 있다는 사실은 바로 경험적 근거가 되겠지요?</p><p>그 경험적 근거를 바로 문자 그대로 Heuristic(경험적인)으로 받아들이시면 됩니다.</p><p>그리고 쉽게 이 Heuristic Search 알고리즘의 예시들은 ‘길찾기’라고 생각하고 학습하시면 됩니다.</p><p>또한 실제로 아주 많은 장애물을 효과적으로 건너가서 길을 찾는 프로그램들이</p><p>사용하는 알고리즘이 바로 Heuristic Search 알고리즘이기 때문입니다.</p><p>직선 거리 Straight-Line-Distance(SLD)가 휴리스틱을 결정한다고 하였으면</p><p>실제로 Arad라는 도시에서 Bucharest라는 도시로 이동하는 과정을 보겠습니다.</p><p>위 사진은 각각의 도시에서 Bucharest로 이르는 직선 거리를 보여줍니다.</p><p>이를 통해서 Tree-Based Search를 하면 다음과 같습니다.</p><p>아주 직관적인 그림이기 때문에 이해하시기 쉬울 것입니다.</p><p>다만 여기서 고려할 점은 Arad에서 Sibiu 노드를 확장했을 때 Child Node로 Arad가 또 있는 것을 볼 수 있습니다.</p><p>만약에 여기서 다시 Arad로 들어가는 경우가 생긴다면 아주 충격적인 결과가 벌어지겠죠. 무한 반복입니다.</p><p>그렇기 때문에 Node를 Expand할 때 자신의 조상 노드들을 확인해서 이미 나온 Node라면 Discarding 해주면 됩니다.</p><p>● Evaluation</p><p>Complete : No<br>Optimal : No<br>Time &amp; Space Complexity : O(b^m)</p><p>But, 휴리스틱 함수를 잘만 짤 수 있다면 이 복잡도를 줄여나갈 수 있습니다.</p><p>또한 Graph Search에 근거한다면 Search Space가 유한한 경우에 한정하여</p><p>Complete하다는 결과를 낼 수 있습니다. 또한 최적은 아니더라도 Solution을 찾을 수 있겠죠.</p><ol><li>A* Search</li></ol><p>Best-First Search 중에서 가장 잘 알려진 Search 방법인 이 A* Search는 H(n)뿐 아니라 G(n)도 사용합니다.</p><p>즉, F(n) = G(n) + H(n)이라고 할 수 있습니다. 다만 여기서 G(n)가 의미하는 바는 바로 Start Node에서</p><p>현재까지 걸린 Path Cost가 되겠습니다. 또한 H(n)는 현재 State에서 Goal State까지의 가장 빠른 길입니다.</p><p>따라서 이 F(n)는 n을 통한 Solution 중 가장 적은 비용을 추정하는 방법이라고 할 수 있습니다.</p><p>결과적으로 이 A* Search는 Optimal하고 Complete합니다.</p><p>이 알고리즘 자체는 Uniform-Cost Search와 큰 차이가 없습니다.</p><p>다만 A*에서는 G대신 G + H를 사용할 뿐이지요.</p><p>따라서 가장 중요한 것은 당연히 H(n) 함수입니다.</p><p>정확히 어떤 휴리스틱을 사용할 것이냐가 관건이죠.</p><p>Goal State를 아주 최적의 해를 통해서 만족시키는 것이 목표이다.</p><p>결론으로,</p><p>f(n)은 n을 통한 solution 중 가장 적은 비용을 추정하는 방법이다. 결과적으로 A* 알고리즘은 Optimal하고 Complete하다고 볼 수 있다. 최적의 경로를 찾기 위해 필요한 것은 당연히 h(n)이다. h(n)이 0이라면 무한 루프에 빠지는 경우가 생길 수 있다.<br>h(n)을 사용하여 정확히 어떤 휴리스틱을 사용할 것인지 정하고 탐색을 진행하는 것이 알고리즘의 최적의 경로를 찾아낼 수 있는 방법이다.</p>]]></content>
-    
-    
-      
-      
-    <summary type="html">&lt;p&gt;&lt;a href=&quot;https://m.blog.naver.com/ndb796/220578642298&quot;&gt;좋은 자료&lt;/a&gt;가 있어서 공유한다.&lt;/p&gt;
-&lt;p&gt;​1. Greedy Best-First Search&lt;br&gt;2. A* Search&lt;br&gt;3. Mem</summary>
-      
-    
-    
-    
     
   </entry>
   

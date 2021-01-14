@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+<link rel="canonical" href="https://zinirun.github.io/2021/01/14/remind-2020/">
+
+
+<link rel="stylesheet" href="//fonts.googleapis.com/earlyaccess/notosanskr.css">
+
+
+    <meta name="author" content="zini">
+
+
+    <meta name="subtitle" content="tech blog by Zini">
+
+
+
+
+<title>이제와서 쓰는 2020년 회고 | zinirun</title>
+
+
+
+    <link rel="icon" href="/favicon.png">
+
+
+
+
+    <!-- stylesheets list from _config.yml -->
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+
+
+
+    <!-- scripts list from _config.yml -->
+    
+    <script src="/js/script.js"></script>
+    
+    <script src="/js/tocbot.min.js"></script>
+    
+
+
+
+    
+    
+        
+    
+
+
+
+<script>
+	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+		(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+			m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+	ga('create', 'UA-175983012-1', 'auto');
+	ga('send', 'pageview');
+</script>
+
+<meta name="generator" content="Hexo 5.0.2"><link rel="alternate" href="/feed.xml" title="zinirun" type="application/atom+xml">
+</head>
+<body>
+    <div class="wrapper">
+        <header>
+  <nav class="navbar">
+    <div class="container">
+      <div class="navbar-header header-logo" style="font-size: 13pt; font-weight: 600;">
+        <a id="blog_logo" href="/" style="color: #2d96bd;"><img class="logo-ico spin circle" src="/image/logo.png" alt="zini's Devlog"></a>
+        
+        <a class="menu-item left-menu" href="/archives">Posts</a>
+        
+        <a class="menu-item left-menu" href="/category">Categories</a>
+        
+        <a class="menu-item left-menu" href="/tag">Tags</a>
+        
+<!--
+        <input id="switch_default" type="checkbox" class="switch_default" />
+        <label for="switch_default" class="toggleBtn" style="margin-left: 0px;"></label>
+-->
+      </div>
+      <div class="menu navbar-right">
+        <!--mynav-->
+        <div id="mynav-container">
+        
+        <a class="menu-item" href="/categories/javascript"><img class="menu-ico" src="/image/icons/javascript.png" alt="Javascript"></a>
+        
+        <a class="menu-item" href="/categories/typescript"><img class="menu-ico" src="/image/icons/typescript.png" alt="Typescript"></a>
+        
+        <a class="menu-item" href="/categories/nodejs"><img class="menu-ico" src="/image/icons/node.png" alt="Node"></a>
+        
+        <a class="menu-item" href="/categories/ReactJS"><img class="menu-ico" src="/image/icons/react.png" alt="React"></a>
+        
+        <a class="menu-item" href="/categories/redux"><img class="menu-ico" src="/image/icons/redux.png" alt="Redux"></a>
+        
+        <a class="menu-item" href="/categories/cloud/docker"><img class="menu-ico" src="/image/icons/dockernew.png" alt="Docker"></a>
+        
+        <a class="menu-item" href="/categories/cloud/kubernetes"><img class="menu-ico" src="/image/icons/k8s.png" alt="Kubernetes"></a>
+        
+        <a class="menu-item" href="/categories/algorithm"><img class="menu-ico" src="/image/icons/ps-code.png" alt="Algorithm"></a>
+        
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  
+  <nav class="navbar-mobile" id="nav-mobile">
+    <div class="container">
+      <div class="navbar-header">
+        <div>
+          <a id="blog_logo" href="/" style="color: #2d96bd;"><img class="logo-ico" src="/image/logo.png" alt="zini's Devlog"></a>
+        </div>
+        <div class="menu-toggle" onclick="mobileBtn()">&#9776; Menu</div>
+      </div>
+      <div class="menu" id="mobile-menu">
+       <div id="mobile-nav">
+        
+        <a class="menu-item" href="/archives">Posts</a>
+        
+        <a class="menu-item" href="/category">Categories</a>
+        
+        <a class="menu-item" href="/tag">Tags</a>
+        
+          </div>
+        <div id="mobile-mynav">
+        
+        <a class="menu-item" href="/categories/javascript"><img class="menu-ico" src="/image/icons/javascript.png" alt="Javascript"></a>
+        
+        <a class="menu-item" href="/categories/typescript"><img class="menu-ico" src="/image/icons/typescript.png" alt="Typescript"></a>
+        
+        <a class="menu-item" href="/categories/nodejs"><img class="menu-ico" src="/image/icons/node.png" alt="Node"></a>
+        
+        <a class="menu-item" href="/categories/ReactJS"><img class="menu-ico" src="/image/icons/react.png" alt="React"></a>
+        
+        <a class="menu-item" href="/categories/redux"><img class="menu-ico" src="/image/icons/redux.png" alt="Redux"></a>
+        
+        <a class="menu-item" href="/categories/cloud/docker"><img class="menu-ico" src="/image/icons/dockernew.png" alt="Docker"></a>
+        
+        <a class="menu-item" href="/categories/cloud/kubernetes"><img class="menu-ico" src="/image/icons/k8s.png" alt="Kubernetes"></a>
+        
+        <a class="menu-item" href="/categories/algorithm"><img class="menu-ico" src="/image/icons/ps-code.png" alt="Algorithm"></a>
+        
+          </div>
+      </div>
+    </div>
+  </nav>
+</header>
+<script>
+  var mobileBtn = function f() {
+    var toggleMenu = document.getElementsByClassName("menu-toggle")[0];
+    var mobileMenu = document.getElementById("mobile-menu");
+    if (toggleMenu.classList.contains("active")) {
+      toggleMenu.classList.remove("active");
+      mobileMenu.classList.remove("active");
+    } else {
+      toggleMenu.classList.add("active");
+      mobileMenu.classList.add("active");
+    }
+  };
+</script>
+
+        <div class="main">
+            <div class="container">
+    
+    
+        <div class="post-toc">
+    <div class="tocbot-list">
+    </div>
+    <div class="tocbot-list-menu">
+        <a class="tocbot-toc-expand" onclick="expand_toc()">Expand All</a>
+        <a onclick="go_top()">Top</a>
+        <a onclick="go_bottom()">Bottom</a>
+    </div>
+</div>
+
+<script>
+    document.ready(
+        function () {
+            tocbot.init({
+                tocSelector: '.tocbot-list',
+                contentSelector: '.post-content',
+                headingSelector: 'h1, h2, h3, h4, h5',
+                collapseDepth: 1,
+                orderedList: false,
+                scrollSmooth: true,
+            })
+        }
+    )
+
+    function expand_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 6,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "collapse_toc()");
+        b.innerHTML = "Collapse all"
+    }
+
+    function collapse_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 1,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "expand_toc()");
+        b.innerHTML = "Expand all"
+    }
+
+    function go_top() {
+        window.scrollTo(0, 0);
+    }
+
+    function go_bottom() {
+        window.scrollTo(0, document.body.scrollHeight);
+    }
+
+</script>
+    
+
+    
+    <article class="post-wrap">
+        <header class="post-header">
+            <h1 class="post-title">이제와서 쓰는 2020년 회고</h1>
+            
+                <div class="post-meta">
+                    
+                        Author: <a itemprop="author" rel="author" href="/">zini</a>
+                    
+
+                    
+                        <span class="post-time">
+                        Date: <a href="#">January 14, 2021&nbsp;&nbsp;20:19:21</a>
+                        </span>
+                    
+                    
+                        <span class="post-category">
+                    Category:
+                            
+                                <a href="/categories/Etc/">Etc</a>
+                            
+                        </span>
+                    
+                </div>
+            
+        </header>
+
+        <div class="post-content">
+            <h1 id="졸업을-준비할-시간"><a href="#졸업을-준비할-시간" class="headerlink" title="졸업을 준비할 시간"></a>졸업을 준비할 시간</h1><p>이제 학부생 4학년이 된다. 졸업이 다가오니 나중엔 내가 뭘 하고 있을지, 어떤 개발자로 살고 있을지, 많은 생각이 든다. 무언갈 배우고 그것으로 무언갈 만드는 것을 너무 좋아한 나머지 2020년은 정말 바쁘게 살았다. 내가 하고 싶은 프로젝트, 1차 졸업작품, 외주 프로젝트를 하면서 옛날보다 코드가 많이 성숙해진 것을 느낀다. 사실 이 2020년 회고는 깔끔하게 2020년 12월 31일에 쓰고 싶었는데 그때는 학교에서 외주를 받아서 프로젝트를 하고 있었고, 지금도 새로운 외주를 받아서 진행중인데 마침 시간이 남아서 쓸 수 있었다.</p>
+<h2 id="2020년의-목표였던-것들"><a href="#2020년의-목표였던-것들" class="headerlink" title="2020년의 목표였던 것들"></a>2020년의 목표였던 것들</h2><p>욕심이 앞선 탓인지 2020년은 목표가 많았다.</p>
+<ol>
+<li>Node.js를 완전히 내 것으로 만들기</li>
+<li>Docker Compose, Shell Script로 빌드 자동화</li>
+<li>AWS</li>
+<li>GraphQL</li>
+<li>React</li>
+<li>SQLD 자격증</li>
+<li>Problem Solving (Python)</li>
+<li>Go</li>
+<li>Redis</li>
+<li>Kubernetes</li>
+<li>Github 블로그</li>
+<li>학과 공부 4.0 이상 (1학년때 싼 똥을 치워야 한다)</li>
+<li>토익</li>
+</ol>
+<p>목표가 과했지만 Go 언어, 쿠버네티스를 제외하고 모두 이룰 수 있었다. AWS는 공부하지 못했고, 학교에서 서버 스터디때 제공해준 NHN Toast Cloud를 사용해서 리눅스 기반 클라우드 환경을 공부할 수 있었다. (이뤘다는 말이 마스터했다는 말은 아니다, 내가 가늠한 목표만큼은 모두 움직였다) 처음에 이 목표를 어떻게 도전할까 고민하다가 생각한 것은, 바쁜 프로젝트 와중에 짬내서 따로 공부하기보단 진행하는 프로젝트에 내가 배우고 싶은 기술을 녹이는 것이었다.</p>
+<p>노드와 GraphQL을 공부하다가 GraphQL에 빠져서 <a target="_blank" rel="external nofollow noopener noreferrer" href="https://github.com/zinirun/graphql-crud-demo">GraphQL CRUD Demo</a> 시뮬레이터를 만들기도 하고, 학교에서 풀스택으로 외주받은 서비스를 개발하고 배포할때 도커 컴포즈와 쉘 스크립트로 빌드 자동화를 성공하기도 하고, MySQL의 속도가 답답해서 Redis 캐싱을 노드 서버에 도입했다. 토익은 개발의 범주는 벗어나지만 중간중간 머리식힐 겸 했고, 내 나름대로는 만족스러운 결과를 얻어서 졸업하려 한다.</p>
+<p>그리고 정한 목표대로 배울 수 있는 것도 아니었는게, 2020년 초쯤 외주를 받아서 진행하다가 웹 앱을 만들어야 할 일이 있었는데, 그러다가 자연스럽게 React Native와 Expo를 경험하게 됐다.</p>
+<h2 id="2020년을-함께한-프로젝트들"><a href="#2020년을-함께한-프로젝트들" class="headerlink" title="2020년을 함께한 프로젝트들"></a>2020년을 함께한 프로젝트들</h2><p>모든 프로젝트를 나열하기에는 너무 많고, 기억에 남는 프로젝트만 오래된 순으로 적어보려 한다.</p>
+<h4 id="1-곰곰해온라인"><a href="#1-곰곰해온라인" class="headerlink" title="1. 곰곰해온라인"></a>1. 곰곰해온라인</h4><ul>
+<li><code>Node.js</code> <code>Socket.io</code><blockquote>
+<p><a target="_blank" rel="external nofollow noopener noreferrer" href="https://github.com/zinirun/bearchain">Github</a></p>
+</blockquote>
+</li>
+</ul>
+<p><img src="/images/2021-01-14-20-49-27.png"><br><img src="/images/2021-01-14-20-50-01.png"></p>
+<p>노드와 Socket.io를 사용한 끝말잇기 게임이다. 이 게임을 만들면서 노드에 많은 흥미를 느꼈고 본격적으로 노드를 벡엔드 언어로 깊이있게 공부하는 계기가 되었다. 사실 친구들끼리 PC방에 가던 내기를 할 때 쓰면 좋겠다는 아이디어가 종이 몇 장의 드래프트로, 그 드래프트가 본격적인 프로젝트가 되었다.</p>
+<h4 id="2-피피"><a href="#2-피피" class="headerlink" title="2. 피피"></a>2. 피피</h4><ul>
+<li><code>Python</code> <code>Flask</code> <code>OpenCV</code> <code>scikitlearn</code> <code>uwsgi</code> <code>Docker</code><blockquote>
+<p><a target="_blank" rel="external nofollow noopener noreferrer" href="https://github.com/zinirun/peepee-app">Github</a></p>
+</blockquote>
+</li>
+</ul>
+<p><img src="/images/2021-01-14-20-54-33.png"></p>
+<p>서버 스터디를 하다가 제작한 일주일의 프로젝트, 피피였다. 변기 사진을 찍어 업로드하면 소변의 색으로 건강을 (어느정도) 판단해준다. 이때 OpenCV, Flask에 대한 경험이 전무해서 어려웠는데 어려운 사람 둘이서 머리를 쥐어짜서 만들어서 그런지 완성도있는 프로젝트를 만들 수 있었다.</p>
+<h4 id="3-우리의-편지"><a href="#3-우리의-편지" class="headerlink" title="3. 우리의 편지"></a>3. 우리의 편지</h4><ul>
+<li><code>Node.js</code> <code>MySQL</code> <code>EJS</code></li>
+</ul>
+<blockquote>
+<p><a target="_blank" rel="external nofollow noopener noreferrer" href="https://github.com/zinirun/our-letter">Github</a></p>
+</blockquote>
+<p><img src="https://github.com/zinirun/our-letter/raw/master/images/ourletter-1.gif"><br><img src="https://github.com/zinirun/our-letter/raw/master/images/ourletter-2.gif"></p>
+<p>친구에게 의미있는 편지를 쓰고싶을 때가 있었는데, 같은 개발자인지라 카카오톡에서 유행하는 서비스처럼 서로를 알아야 편지를 읽을 수 있는 플랫폼을 만들어보면 어떨까해서 만든 프로젝트이다. (하지만 카페에서 만들다가 들켜서 계획은 무산되었고 울며 겨자먹기로 프로젝트를 끝냈다)</p>
+<h4 id="4-BlueCheck"><a href="#4-BlueCheck" class="headerlink" title="4. BlueCheck"></a>4. BlueCheck</h4><ul>
+<li><code>Node.js</code> <code>ToastCloud</code> <code>MySQL</code> <code>Docker</code> <code>Firebase</code> <code>React Native</code> <code>EJS</code></li>
+</ul>
+<blockquote>
+<p><a target="_blank" rel="external nofollow noopener noreferrer" href="https://play.google.com/store/apps/details?id=com.denebsoft.newbluecheck">Playstore</a></p>
+</blockquote>
+<p><img src="/images/2021-01-14-21-05-05.png"><br><img src="/images/2021-01-14-21-05-22.png"></p>
+<p>노드를 사용한 첫 외주였다. 2명이서 만드는데 한 달이 안 걸린 것 같다. 실제 사용하는 것은 아니었고, 타대학 건축학과 학생들이 교수님과 함께 부탁한 웹 앱이다. 시연을 목적으로 만든 앱이었지만 기왕 만드는김에 제대로 만들어서 플레이스토어 배포도 연습할겸 사전 체험판으로 배포했다. 새벽까지 푸시알림 서비스를 구현하느라 진빠진 기억이 남는다. 프로젝트를 끝내고 FCM, Expo를 이용한 웹 앱에 도사가 된 것 같다.</p>
+<h4 id="5-LMS-다운로더"><a href="#5-LMS-다운로더" class="headerlink" title="5. LMS 다운로더"></a>5. LMS 다운로더</h4><ul>
+<li><code>Chrome-Extension</code> <code>Javascript</code><blockquote>
+<p><a target="_blank" rel="external nofollow noopener noreferrer" href="https://github.com/zinirun/LMSDownloader">Github</a></p>
+</blockquote>
+</li>
+</ul>
+<p><img src="/images/2021-01-14-21-13-07.png"><br><img src="/images/2021-01-14-21-13-22.png"><br><img src="/images/2021-01-14-21-16-06.png"></p>
+<p>단국대학교 학생들을 위해 만든 이러닝 동영상 다운로더이다. 코로나 때문에 모든 강의는 온라인으로 진행되었는데, 이러닝 시스템이 참 뭐같은 탓에 복습하려고 하면 강의가 닫혀있고, 다 보지 않으면 뒤의 내용을 볼 수도 없어서 뭔가 크롬 확장 프로그램으로 만들 수 있겠다 싶어서 만들었는데, 생각보다 반응이 너무 뜨거웠다. 덕분에 학교에서 알게모르게 유명해지고 감사 쪽지를 과분하게 많이 받았다.</p>
+<h4 id="6-홈즈"><a href="#6-홈즈" class="headerlink" title="6. 홈즈"></a>6. 홈즈</h4><ul>
+<li><code>Node.js</code> <code>ToastCloud</code> <code>Redis</code> <code>MySQL</code> <code>Docker</code> <code>Firebase</code> <code>React Native</code> <code>EJS</code></li>
+</ul>
+<blockquote>
+<p><a target="_blank" rel="external nofollow noopener noreferrer" href="https://play.google.com/store/apps/details?id=com.nemobros.homes">Playstore</a></p>
+</blockquote>
+<p><img src="/images/2021-01-14-21-20-44.png"></p>
+<p>첫 졸업작품이다. 우리 학교는 4학년 1학기, 4학년 2학기에 나누어 2개의 졸업작품(캡스톤디자인 프로젝트)을 진행하는데, 4학년 2학기때의 졸작을 땡겨서 했다. 4명이서 팀을 꾸렸고, 기간은 3달 정도였지만 1달이 채 되지않아 프로젝트를 끝냈다. 건물주, 관리인, 세입자 간에 발생하는 사회 문제를 서비스로 해결할 수 있을 것 같았다. 갈아 넣었다는 말은 이 프로젝트에 어울릴 듯 하다. 리더로서 “협업”, “효율적인 프로세스”이라는 텍스트에 대해 많은 생각을 했었다.</p>
+<h4 id="7-단국대학교-서버관리시스템"><a href="#7-단국대학교-서버관리시스템" class="headerlink" title="7. 단국대학교 서버관리시스템"></a>7. 단국대학교 서버관리시스템</h4><ul>
+<li><code>Node.js</code> <code>GraphQL</code> <code>SSH2</code> <code>React</code> <code>Apollo</code> <code>nginx</code> <code>Redis</code> <code>MySQL</code> <code>Docker-compose</code></li>
+</ul>
+<blockquote>
+<p><a target="_blank" rel="external nofollow noopener noreferrer" href="https://www.notion.so/45de2c8afbda4b25bc9f888924c15b7e">Notion</a></p>
+</blockquote>
+<p><img src="/images/2021-01-14-21-31-32.png"></p>
+<p>단국대학교에서 수주한 프로젝트인데, 서버 스터디에서 연이 닿은 교수님이 마음 맞는 친구 2명을 알아서 구해서 해보면 어떻겠냐고 했고 그렇게 “팀 하모니카”라는 이름을 정하고 두번째 팀 리더를 수행하게 되었다. 새로운 기술들을 많이 접할 수 있었고, 단기간에 많이 발전했다. 4달 정도로 잡았던 프로젝트 기간은 1달이 안되어서 마무리되었다. 원래는 사용자들이 예약하고 반납하는 것을 자동화하는 시스템이었는데, 욕심이 나아가서 실제 서버에 웹 콘솔에서 SSH2를 통해 원격 작업을 요청할 수 있고, 그럴듯한 서버 모니터링 콘솔 역할을 수행할 수 있도록 구현하였다.</p>
+<p>이렇게 2020년이 바쁘게 지나갔다. 지인들은 숨쉴 틈은 있냐고 하는데 숨은 잘 쉬었고, 지인들과 의미있는 시간도 많이 보낸 한 해였다.</p>
+<h2 id="2021년은"><a href="#2021년은" class="headerlink" title="2021년은"></a>2021년은</h2><p>지금도 여러 대학에서 사용하는 학점교류시스템을 외주로 받아서 구축하고 있다. 리더의 진도가 빠른 편인데 잘 따라와주는 팀원에게 고맙다. “다 하고 맘편하게 놀자”라는 말을 하루에 한번씩 한다. 사실 코로나때문에 놀러갈 곳도 없어서 작업실에서 영화보면서 야식이나 먹을 것 같다.</p>
+<h4 id="2021년의-목표"><a href="#2021년의-목표" class="headerlink" title="2021년의 목표"></a>2021년의 목표</h4><p>2021년의 목표는 2020년보다는 적지만 좀 더 고도화된 공부를 할까 한다.</p>
+<ol>
+<li>Typescript</li>
+<li>Go</li>
+<li>Problem Solving</li>
+<li>AWS</li>
+<li>Kubernetes</li>
+</ol>
+<p>타입스크립트에 한번 빠지면 자바스크립트로 못 돌아간다는 말에 한번 발 담가보고 앞으로의 프로젝트에는 Typescript를 적용해보고 싶고, AWS와 쿠버네티스, Go는 밀린 과제이지만 제대로 경험해보고 싶다. 후회없는 2020년을 살았으니 열심히 달려서 대학 4년을 후회없이 마무리해야겠다.</p>
+
+        </div>
+
+        
+            <section class="post-copyright">
+                
+                
+                
+                
+
+            </section>
+        
+        <section class="post_disqus">
+            <div id="disqus_thread"></div>
+            <script>
+            
+            /**
+            *  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+            *  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables*/
+            /*
+            var disqus_config = function () {
+            this.page.url = PAGE_URL;  // Replace PAGE_URL with your page's canonical URL variable
+            this.page.identifier = PAGE_IDENTIFIER; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+            };
+            */
+            (function() { // DON'T EDIT BELOW THIS LINE
+            var d = document, s = d.createElement('script');
+            s.src = 'https://zinirun.disqus.com/embed.js';
+            s.setAttribute('data-timestamp', +new Date());
+            (d.head || d.body).appendChild(s);
+            })();
+            </script>
+            <noscript>Please enable JavaScript to view the <a target="_blank" rel="external nofollow noopener noreferrer" href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+        </section>
+        <section class="post-tags">
+            <div>
+                <span>Tag(s):</span>
+                <span class="tag">
+                    
+                    
+                        <a href="/tags/2020/"># 2020</a>
+                    
+                        
+                </span>
+            </div>
+            <div>
+                <a href="javascript:window.history.back();">back</a>
+                <span>· </span>
+                <a href="/">home</a>
+            </div>
+        </section>
+        <section class="post-nav">
+            
+            
+            <a class="next" rel="next" href="/2020/12/03/redux-start/">Redux 도입이 필요해진 이유</a>
+            
+        </section>
+
+
+    </article>
+</div>
+
+        </div>
+        <footer id="footer" class="footer">
+  <div class="copyright">
+    <span>© zini | Powered by
+      <a href="https://hexo.io" target="_blank" rel="external nofollow noopener noreferrer">Hexo</a>
+  </span></div>
+</footer>
+
+    </div>
+</body>
+</html>
