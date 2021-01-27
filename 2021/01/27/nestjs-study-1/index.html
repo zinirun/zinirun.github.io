@@ -276,6 +276,9 @@
 <p>컨트롤러는 Express의 라우터 개념이다. 클라이언트의 Request를 받고 Response를 반환해준다. uri로 전달받은 요청을 프로바이더로 넘겨준다.</p>
 <h3 id="프로바이더-서비스"><a href="#프로바이더-서비스" class="headerlink" title="프로바이더 (서비스)"></a>프로바이더 (서비스)</h3><p><img src="/images/2021-01-27-22-20-05.png" alt="프로바이더의 구조"></p>
 <p>컨트롤러에서 받은 요청을 처리하는 비즈니스 로직을 정의하는 부분이다. Nest는 컨트롤러를 비즈니스 로직(서비스)와 구분짓고 싶어한다.</p>
+<blockquote>
+<p>Dependency Injection: 컨트롤러에서 서비스를 불러올 때 Nest가 서비스를 import하고 컨트롤러에 의존성을 주입(inject)하는 과정이다. 그래서 서비스에는 @Injectable() 데코레이터를 붙인다. 결국 컨트롤러에서 직접 import하지 않아도 된다.</p>
+</blockquote>
 <h2 id="generate-사용하기"><a href="#generate-사용하기" class="headerlink" title="generate 사용하기"></a>generate 사용하기</h2><p>Root 구조(<code>app.module</code>, <code>app.controller</code>, <code>app.service</code>)는 자동으로 초기에 잡아준다. 그러면 다른 파일은 직접 작성해야 할까? 사실 이 부분에서 감동이었다. 명령어 몇 자만 치면 내가 원하는 파일을 만들고, <code>.spec</code> 파일을 만들고(나중에 유닛 테스트시 필요한 파일이다), App Module(루트 모듈)에 자동으로 import도 시켜준다. (여기다가 vscode extension 중 auto import라는 툴을 같이 사용하면 코드 꼭대기에서 import… 를 직접 칠 일이 없다)</p>
 <h3 id="nest를-쳐보자"><a href="#nest를-쳐보자" class="headerlink" title="nest를 쳐보자"></a>nest를 쳐보자</h3><p><img src="/images/2021-01-27-22-27-49.png" alt="nest 명령어"></p>
 <p>쉘에 <code>nest</code>를 입력하면 generate 옵션들이 나온다. 위에서 말한 모듈, 컨트롤러, 서비스(프로바이더)가 목록에 있다. 이외에도 graphql 리졸버까지 자동으로 만들어준다.</p>
