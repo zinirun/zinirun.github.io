@@ -3,6 +3,20 @@
 
 
     <url>
+        <loc>https://zinirun.github.io/tags/gulpjs/</loc>
+        <lastmod>2021-01-27T11:50:44.573Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
+        <loc>https://zinirun.github.io/tags/nodejs/</loc>
+        <lastmod>2021-01-27T11:50:44.573Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
         <loc>https://zinirun.github.io/tags/typescript/</loc>
         <lastmod>2021-01-16T11:21:06.053Z</lastmod>
         <changefreq>weekly</changefreq>
@@ -32,13 +46,6 @@
 
     <url>
         <loc>https://zinirun.github.io/tags/crypto/</loc>
-        <lastmod>2020-12-02T06:57:25.577Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.2</priority>
-    </url>
-
-    <url>
-        <loc>https://zinirun.github.io/tags/nodejs/</loc>
         <lastmod>2020-12-02T06:57:25.577Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>

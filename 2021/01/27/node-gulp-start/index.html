@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
 <meta http-equiv="X-UA-Compatible" content="ie=edge">
-<link rel="canonical" href="https://zinirun.github.io/2021/01/16/typescript-study-2-tsconfig/">
+<link rel="canonical" href="https://zinirun.github.io/2021/01/27/node-gulp-start/">
 
 
 <link rel="stylesheet" href="//fonts.googleapis.com/earlyaccess/notosanskr.css">
@@ -18,7 +18,7 @@
 
 
 
-<title>Typescript - tsconfig 속성 | zinirun</title>
+<title>Gulp.js로 빌드 자동화하기 | zinirun</title>
 
 
 
@@ -231,7 +231,7 @@
     
     <article class="post-wrap">
         <header class="post-header">
-            <h1 class="post-title">Typescript - tsconfig 속성</h1>
+            <h1 class="post-title">Gulp.js로 빌드 자동화하기</h1>
             
                 <div class="post-meta">
                     
@@ -240,14 +240,16 @@
 
                     
                         <span class="post-time">
-                        Date: <a href="#">January 16, 2021&nbsp;&nbsp;20:19:59</a>
+                        Date: <a href="#">January 27, 2021&nbsp;&nbsp;20:41:10</a>
                         </span>
                     
                     
                         <span class="post-category">
                     Category:
                             
-                                <a href="/categories/typescript/">typescript</a>
+                                <a href="/categories/nodejs/">nodejs</a>
+                            
+                                <a href="/categories/nodejs/gulp/">gulp</a>
                             
                         </span>
                     
@@ -256,34 +258,66 @@
         </header>
 
         <div class="post-content">
-            <h2 id="tsc-명령어"><a href="#tsc-명령어" class="headerlink" title="tsc 명령어"></a>tsc 명령어</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tsc app.ts</span><br></pre></td></tr></table></figure>
+            <h1 id="Gulp-js로-빌드-자동화하기"><a href="#Gulp-js로-빌드-자동화하기" class="headerlink" title="Gulp.js로 빌드 자동화하기"></a>Gulp.js로 빌드 자동화하기</h1><h2 id="Gulp-js"><a href="#Gulp-js" class="headerlink" title="Gulp.js"></a>Gulp.js</h2><p>Node.js 프로젝트를 하면서 빌드, 개발 테스트에 귀찮을 때가 많다. 이런 귀찮음을 위해서 쓰는 도구가 <a href="gulpjs.com">Gulp.js</a>이다.</p>
+<p>사용하는 방법은 정말 간단하다. 자동화가 필요한 부분을 역할에 맞게 나눠서 “파이프”를 연결하고, “시리즈”로 묶어주면 된다. 전체적인 플로우는 이렇게 설명할 수 있지만, 중간에 막히면 공식 문서를 보거나 검색하면 충분히 나온다.</p>
+<h3 id="자동화-분배하기"><a href="#자동화-분배하기" class="headerlink" title="자동화 분배하기"></a>자동화 분배하기</h3><p>pug, scss, 이미지 파일, 자바스크립트 파일을 다뤘다. 일반적으로 Gulp 없이는 하나하나 코드를 줄이던지, 이미지를 압축하던지, 렌더링 템플릿을 변환하던지 따로 작업해야 한다. 각각의 작업에 필요한 일련의 과정을 <code>src</code>, <code>pipe</code>, <code>dest</code>를 이용하여 묶는다.</p>
+<h3 id="작업-만들기"><a href="#작업-만들기" class="headerlink" title="작업 만들기"></a>작업 만들기</h3><h4 id="src-pipe-dest"><a href="#src-pipe-dest" class="headerlink" title="src().pipe().dest()"></a>src().pipe().dest()</h4><p>기본적인 로직은 다음과 같다.</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> operation = <span class="function">() =&gt;</span> gulp.src(파일의 위치)</span><br><span class="line">                            .pipe(작업 수행)</span><br><span class="line">                            .dest(작업 수행 후 파일의 위치)</span><br></pre></td></tr></table></figure>
 
-<h3 id="타입스크립트-설정-파일-인식-기준"><a href="#타입스크립트-설정-파일-인식-기준" class="headerlink" title="타입스크립트 설정 파일 인식 기준"></a>타입스크립트 설정 파일 인식 기준</h3><p>tsc 명령어를 대상 파일을 지정하지 않고 실행하면 현재 폴더에 있는 타입스크립트 설정 파일을 기준으로 변환작업을 수행함. (현재 폴더에 tsconfig 파일이 없으면 상위 폴더로 검색해나감)</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">tsc -p 상대경로</span><br><span class="line">tsc -p .&#x2F;src</span><br></pre></td></tr></table></figure>
+<p>pug면 pug에 맞게, js면 js에 맞게 각각을 이러한 패턴으로 디자인할 수 있다. 직접 구현할 작업은 없을 정도로 gulp에 대한 플러그인이 잘 되어있다.</p>
+<h4 id="series"><a href="#series" class="headerlink" title="series"></a>series</h4><p>각각의 작업은 다음과 같이 시리즈로 묶는다.</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> prepare = gulp.series([operation1, operation2]);</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">const</span> dev = gulp.series([prepare, operation3]);</span><br></pre></td></tr></table></figure>
 
-<h2 id="tsconfig-속성"><a href="#tsconfig-속성" class="headerlink" title="tsconfig 속성"></a>tsconfig 속성</h2><h3 id="files"><a href="#files" class="headerlink" title="files"></a>files</h3><p>변환 명령어를 입력할 때마다 대상 파일의 경로를 지정하지 않고 미리 정의할 수 있음</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  &quot;files&quot;: [&quot;app.ts&quot;, &quot;.&#x2F;utils&#x2F;math.ts&quot;]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>export시 변수 이름 그대로 <code>gulp 변수이름</code>으로 시리즈의 작업을 수행할 수 있다. 위처럼 선언해놓은 시리즈를 시리즈 안에 삽입하는 것도 가능하다. 작업을 동시에 처리하고 싶다면 <code>series</code> 대신 <code>parallel</code>을 사용하면 된다.</p>
+<h4 id="watch"><a href="#watch" class="headerlink" title="watch"></a>watch</h4><p>작업 중 파일이 변경되었을 때의 작업도 설정할 수 있다.</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> watch = <span class="function">() =&gt;</span> &#123;</span><br><span class="line">    gulp.watch(<span class="string">&quot;인식할 파일(와일드카드 가능)&quot;</span>, 수행할 작업)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-<h3 id="include"><a href="#include" class="headerlink" title="include"></a>include</h3><p><code>files</code>와 같이 파일을 개별로 지정하지 않고 변환할 폴더를 지정할 수 있음</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  &quot;include&quot;: [&quot;src&#x2F;**&#x2F;*&quot;]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<blockquote>
-<p>와일드카드 패턴<br>*: 디렉터리 모든 파일<br>?: 디렉터리 내 파일 이름 중 한글자라도 맞으면<br>**: 하위 디렉터리 재귀적으로 접근</p>
-</blockquote>
-<h3 id="exclude"><a href="#exclude" class="headerlink" title="exclude"></a>exclude</h3><p>include와 반대, 변환하지 않을 폴더 경로</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  &quot;exclude&quot;: [&quot;node_modules&quot;]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>이 <code>watch</code> 변수도 똑같이 필요한 부분의 시리즈에 같이 묶어주면 된다.</p>
+<h3 id="gulp-plugins"><a href="#gulp-plugins" class="headerlink" title="gulp plugins"></a>gulp plugins</h3><p>거의 자동화할 모든 작업들은 플러그인이 만들어져 있다. npm, yarn으로 플러그인 설치 시 <code>--dev</code> 또는 <code>-D</code>를 옵션에 추가하여 개발환경 의존성에 추가한다.</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yarn add 플러그인이름 -D <span class="comment"># npm i 플러그인이름 -D</span></span><br></pre></td></tr></table></figure>
+
+<p>이번에 사용한 플러그인은 다음과 같다.</p>
 <ul>
-<li>그러나 node_modules 폴더의 @types 폴더는 컴파일에 포함함, 변경은 compilerOptions - typeRoots에서</li>
+<li>gulp-pug<ul>
+<li>pug 파일을 html 파일로 변환, 인덴트 압축</li>
 </ul>
-<h3 id="extends"><a href="#extends" class="headerlink" title="extends"></a>extends</h3><p>특정 tsconfig를 불러와서 추가할 수 있는 속성</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  &quot;extends&quot;: &quot;.&#x2F;config&#x2F;base&quot;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h3 id="target"><a href="#target" class="headerlink" title="target"></a>target</h3><p>자바스크립트로 변환되는 버전. es3, es5, es6, 가장 최신버전은 esnext</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  &quot;target&quot;: &quot;esnext&quot;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h3 id="lib"><a href="#lib" class="headerlink" title="lib"></a>lib</h3><p>타입스크립트를 자바스크립트로 컴파일할 때 포함할 라이브러리의 목록. 예를 들어 <code>async</code> 코드를 컴파일 할 때 <code>Promise</code> 객체가 필요하므로 아래와 같은 설정을 해야함.</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  &quot;lib&quot;: [&quot;es2015&quot;, &quot;dom&quot;, &quot;dom.iterable&quot;]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h3 id="allowJs"><a href="#allowJs" class="headerlink" title="allowJs"></a>allowJs</h3><p>컴파일할 때 자바스크립트 파일도 포함할지 설정. (점진적으로 타입스크립트를 적용할 때 사용하면 좋음)</p>
+</li>
+<li>del<ul>
+<li>파일, 디렉토리 삭제</li>
+</ul>
+</li>
+<li>gulp-webserver<ul>
+<li>간단한 테스트용 개발 서버 열기</li>
+</ul>
+</li>
+<li>gulp-image<ul>
+<li>이미지 압축 -&gt; 압축에는 시간이 다소 소요되기 때문에 watch 작업에 포함할 때는 신중하게 결정해야 한다.</li>
+</ul>
+</li>
+<li>gulp-sass<ul>
+<li>scss 파일을 css 파일로 변환</li>
+</ul>
+</li>
+<li>gulp-autoprefixer<ul>
+<li>css 파일을 브라우저 호환 옵션에 맞게 확장</li>
+</ul>
+</li>
+<li>gulp-csso<ul>
+<li>css 파일 코드 압축</li>
+</ul>
+</li>
+<li>gulp-bro (babelify, uglifyify)<ul>
+<li>간편하게 Babel로 호환성 변환, 코드 압축</li>
+</ul>
+</li>
+<li>gulp-gh-pages<ul>
+<li>Github Page 배포</li>
+</ul>
+</li>
+</ul>
+<blockquote>
+<p>나는 <a href="nomadcoders.co">노마드코더</a>에서 강의를 보았고, 단순 클론 코딩이 아닌 내 워크플로우에 적용할 수 있는 메커니즘을 배운 것 같다. 어느 정도 규모가 있는 프로젝트에 적용하면 잘 써먹을 수 있겠다.</p>
+</blockquote>
 
         </div>
 
@@ -324,7 +358,9 @@
                 <span class="tag">
                     
                     
-                        <a href="/tags/typescript/"># typescript</a>
+                        <a href="/tags/nodejs/"># nodejs</a>
+                    
+                        <a href="/tags/gulpjs/"># gulpjs</a>
                     
                         
                 </span>
@@ -337,10 +373,8 @@
         </section>
         <section class="post-nav">
             
-                <a class="prev" rel="prev" href="/2021/01/27/node-gulp-start/">Gulp.js로 빌드 자동화하기</a>
             
-            
-            <a class="next" rel="next" href="/2021/01/14/remind-2020/">이제와서 쓰는 2020년 회고</a>
+            <a class="next" rel="next" href="/2021/01/16/typescript-study-2-tsconfig/">Typescript - tsconfig 속성</a>
             
         </section>
 
