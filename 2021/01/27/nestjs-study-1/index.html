@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
 <meta http-equiv="X-UA-Compatible" content="ie=edge">
-<link rel="canonical" href="https://zinirun.github.io/2021/01/27/node-gulp-start/">
+<link rel="canonical" href="https://zinirun.github.io/2021/01/27/nestjs-study-1/">
 
 
 <link rel="stylesheet" href="//fonts.googleapis.com/earlyaccess/notosanskr.css">
@@ -18,7 +18,7 @@
 
 
 
-<title>Gulp.js로 빌드 자동화하기 | zinirun</title>
+<title>Nest.js 시작하기 | zinirun</title>
 
 
 
@@ -231,7 +231,7 @@
     
     <article class="post-wrap">
         <header class="post-header">
-            <h1 class="post-title">Gulp.js로 빌드 자동화하기</h1>
+            <h1 class="post-title">Nest.js 시작하기</h1>
             
                 <div class="post-meta">
                     
@@ -240,16 +240,14 @@
 
                     
                         <span class="post-time">
-                        Date: <a href="#">January 27, 2021&nbsp;&nbsp;20:41:10</a>
+                        Date: <a href="#">January 27, 2021&nbsp;&nbsp;22:00:55</a>
                         </span>
                     
                     
                         <span class="post-category">
                     Category:
                             
-                                <a href="/categories/nodejs/">nodejs</a>
-                            
-                                <a href="/categories/nodejs/gulp/">gulp</a>
+                                <a href="/categories/Nest-js/">Nest.js</a>
                             
                         </span>
                     
@@ -258,65 +256,36 @@
         </header>
 
         <div class="post-content">
-            <h2 id="Gulp-js"><a href="#Gulp-js" class="headerlink" title="Gulp.js"></a>Gulp.js</h2><p>Node.js 프로젝트를 하면서 빌드, 개발 테스트에 귀찮을 때가 많다. 이런 귀찮음을 위해서 쓰는 도구가 <a href="gulpjs.com">Gulp.js</a>이다.</p>
-<p>사용하는 방법은 정말 간단하다. 자동화가 필요한 부분을 역할에 맞게 나눠서 “파이프”를 연결하고, “시리즈”로 묶어주면 된다. 전체적인 플로우는 이렇게 설명할 수 있지만, 중간에 막히면 공식 문서를 보거나 검색하면 충분히 나온다.</p>
-<h3 id="자동화-분배하기"><a href="#자동화-분배하기" class="headerlink" title="자동화 분배하기"></a>자동화 분배하기</h3><p>pug, scss, 이미지 파일, 자바스크립트 파일을 다뤘다. 일반적으로 Gulp 없이는 하나하나 코드를 줄이던지, 이미지를 압축하던지, 렌더링 템플릿을 변환하던지 따로 작업해야 한다. 각각의 작업에 필요한 일련의 과정을 <code>src</code>, <code>pipe</code>, <code>dest</code>를 이용하여 묶는다.</p>
-<h3 id="작업-만들기"><a href="#작업-만들기" class="headerlink" title="작업 만들기"></a>작업 만들기</h3><h4 id="src-pipe-dest"><a href="#src-pipe-dest" class="headerlink" title="src().pipe().dest()"></a>src().pipe().dest()</h4><p>기본적인 로직은 다음과 같다.</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> operation = <span class="function">() =&gt;</span> gulp.src(파일의 위치)</span><br><span class="line">                            .pipe(작업 수행)</span><br><span class="line">                            .dest(작업 수행 후 파일의 위치)</span><br></pre></td></tr></table></figure>
+            <h2 id="Nest-js"><a href="#Nest-js" class="headerlink" title="Nest.js"></a>Nest.js</h2><blockquote>
+<p>Nest, Next, Nuxt… 이름은 비슷해보여도 서로 전혀 다른 프레임워크이다. 이름을 같은 자리에서 동시에 지었나</p>
+</blockquote>
+<p>Express만을 이용하여 Node.js 개발을 하다보면 다른 언어에서는 찾아볼 수 없는 자유에 취하다가, 모든 것을 개발자에게 맡기는 그 자유때문에 서비스의 규모가 커질수록 유지보수, 테스트가 어려워지고 코드도 난해해지기 일쑤다. 그래서 Typescript를 적용해서 Node.ts 환경으로 코드를 작성하면 훨씬 나아지지만, 초기 설정에는 시간과 비용이 든다. OOP(Object Oriented Programming)보다 Functional Programming에 익숙한 나는 타입스크립트를 적용한 환경에서도 모듈, 컨트롤러들의 배치와 구조를 결국 내 생각대로 짰어야 했다. 그 모든 비효율을 잡아주는 프레임워크가 <a target="_blank" rel="external nofollow noopener noreferrer" href="https://nestjs.com/">Nest.js</a>이다.</p>
+<p>이번에 Nest.js를 공부하면서 정말 1시간에 한번은 감탄한 것 같다. 대단할 정도로 구조를 잘 잡아주고, 테스트 파일(Jest)도 자동으로 생성해주고, import도 자동으로 해준다. 장점도 무궁무진하지만 소규모 프로젝트에는 시간, 비용이 역으로 들 수도 있으니 어느 정도 규모가 있는 프로젝트를 체계적으로 구축하고 싶을 때 망설임없이 사용해도 되겠다고 생각했다.</p>
+<h2 id="설치"><a href="#설치" class="headerlink" title="설치"></a>설치</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ npm i -g @nestjs/cli</span><br></pre></td></tr></table></figure>
 
-<p>pug면 pug에 맞게, js면 js에 맞게 각각을 이러한 패턴으로 디자인할 수 있다. 직접 구현할 작업은 없을 정도로 gulp에 대한 플러그인이 잘 되어있다.</p>
-<h4 id="series"><a href="#series" class="headerlink" title="series"></a>series</h4><p>각각의 작업은 다음과 같이 시리즈로 묶는다.</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> prepare = gulp.series([operation1, operation2]);</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">const</span> dev = gulp.series([prepare, operation3]);</span><br></pre></td></tr></table></figure>
+<p>설치는 npm global로 설치하면 된다. <code>yarn global add</code>는 설치가 되는 것처럼 보여도 문제가 생긴다. yarn 신봉자이지만 이번엔 npm으로 설치했다.</p>
+<h2 id="프로젝트-시작"><a href="#프로젝트-시작" class="headerlink" title="프로젝트 시작"></a>프로젝트 시작</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ nest new first-nest-project</span><br></pre></td></tr></table></figure>
 
-<p>export시 변수 이름 그대로 <code>gulp 변수이름</code>으로 시리즈의 작업을 수행할 수 있다. 위처럼 선언해놓은 시리즈를 시리즈 안에 삽입하는 것도 가능하다. 작업을 동시에 처리하고 싶다면 <code>series</code> 대신 <code>parallel</code>을 사용하면 된다.</p>
-<h4 id="watch"><a href="#watch" class="headerlink" title="watch"></a>watch</h4><p>작업 중 파일이 변경되었을 때의 작업도 설정할 수 있다.</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> watch = <span class="function">() =&gt;</span> &#123;</span><br><span class="line">    gulp.watch(<span class="string">&quot;인식할 파일(와일드카드 가능)&quot;</span>, 수행할 작업)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>프로젝트가 만들어지면 모든 초기 폴더와 파일들이 세팅된다. 대부분의 작업은 <code>src</code>에서 진행될 것이고, end-to-end 테스트에는 <code>test</code> 폴더 내부에서 작업할 것이다.</p>
+<p><code>src</code>의 구조는 다음과 같다.</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">├── src</span><br><span class="line">     ├── app.controller.ts</span><br><span class="line">     ├── app.service.ts</span><br><span class="line">     ├── app.module.ts</span><br><span class="line">     ├── main.ts</span><br></pre></td></tr></table></figure>
 
-<p>이 <code>watch</code> 변수도 똑같이 필요한 부분의 시리즈에 같이 묶어주면 된다.</p>
-<h3 id="gulp-plugins"><a href="#gulp-plugins" class="headerlink" title="gulp plugins"></a>gulp plugins</h3><p>거의 자동화할 모든 작업들은 플러그인이 만들어져 있다. npm, yarn으로 플러그인 설치 시 <code>--dev</code> 또는 <code>-D</code>를 옵션에 추가하여 개발환경 의존성에 추가한다.</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yarn add 플러그인이름 -D <span class="comment"># npm i 플러그인이름 -D</span></span><br></pre></td></tr></table></figure>
-
-<p>이번에 사용한 플러그인은 다음과 같다.</p>
-<ul>
-<li>gulp-pug<ul>
-<li>pug 파일을 html 파일로 변환, 인덴트 압축</li>
-</ul>
-</li>
-<li>del<ul>
-<li>파일, 디렉토리 삭제</li>
-</ul>
-</li>
-<li>gulp-webserver<ul>
-<li>간단한 테스트용 개발 서버 열기</li>
-</ul>
-</li>
-<li>gulp-image<ul>
-<li>이미지 압축 -&gt; 압축에는 시간이 다소 소요되기 때문에 watch 작업에 포함할 때는 신중하게 결정해야 한다.</li>
-</ul>
-</li>
-<li>gulp-sass<ul>
-<li>scss 파일을 css 파일로 변환</li>
-</ul>
-</li>
-<li>gulp-autoprefixer<ul>
-<li>css 파일을 브라우저 호환 옵션에 맞게 확장</li>
-</ul>
-</li>
-<li>gulp-csso<ul>
-<li>css 파일 코드 압축</li>
-</ul>
-</li>
-<li>gulp-bro (babelify, uglifyify)<ul>
-<li>간편하게 Babel로 호환성 변환, 코드 압축</li>
-</ul>
-</li>
-<li>gulp-gh-pages<ul>
-<li>Github Page 배포</li>
-</ul>
-</li>
-</ul>
+<h2 id="Nest-관점에서-OOP의-이해"><a href="#Nest-관점에서-OOP의-이해" class="headerlink" title="Nest 관점에서 OOP의 이해"></a>Nest 관점에서 OOP의 이해</h2><h3 id="모듈"><a href="#모듈" class="headerlink" title="모듈"></a>모듈</h3><p><img src="/images/2021-01-27-22-15-06.png" alt="모듈의 구조"></p>
+<p>모듈은 어플리케이션의 일부분이다. 한 어플리케이션 안에는 루트 모듈(Root Module)이 1개 존재하고, 그 루트 모듈 하위에 여러가지 모듈이 import된다. 그림처럼 Users, Orders, Chat 3가지 각각 다른 역할의 어플리케이션의 일부분은 루트 모듈 하위에 들어간다. Nest에서는 <code>@Module()</code> 데코레이터로 모듈을 정의한다.</p>
+<h3 id="컨트롤러"><a href="#컨트롤러" class="headerlink" title="컨트롤러"></a>컨트롤러</h3><p><img src="/images/2021-01-27-22-18-58.png" alt="컨트롤러의 구조"></p>
+<p>컨트롤러는 Express의 라우터 개념이다. 클라이언트의 Request를 받고 Response를 반환해준다. uri로 전달받은 요청을 프로바이더로 넘겨준다.</p>
+<h3 id="프로바이더-서비스"><a href="#프로바이더-서비스" class="headerlink" title="프로바이더 (서비스)"></a>프로바이더 (서비스)</h3><p><img src="/images/2021-01-27-22-20-05.png" alt="프로바이더의 구조"></p>
+<p>컨트롤러에서 받은 요청을 처리하는 비즈니스 로직을 정의하는 부분이다. Nest는 컨트롤러를 비즈니스 로직(서비스)와 구분짓고 싶어한다.</p>
+<h2 id="generate-사용하기"><a href="#generate-사용하기" class="headerlink" title="generate 사용하기"></a>generate 사용하기</h2><p>Root 구조(<code>app.module</code>, <code>app.controller</code>, <code>app.service</code>)는 자동으로 초기에 잡아준다. 그러면 다른 파일은 직접 작성해야 할까? 사실 이 부분에서 감동이었다. 명령어 몇 자만 치면 내가 원하는 파일을 만들고, <code>.spec</code> 파일을 만들고(나중에 유닛 테스트시 필요한 파일이다), App Module(루트 모듈)에 자동으로 import도 시켜준다. (여기다가 vscode extension 중 auto import라는 툴을 같이 사용하면 코드 꼭대기에서 import… 를 직접 칠 일이 없다)</p>
+<h3 id="nest를-쳐보자"><a href="#nest를-쳐보자" class="headerlink" title="nest를 쳐보자"></a>nest를 쳐보자</h3><p><img src="/images/2021-01-27-22-27-49.png" alt="nest 명령어"></p>
+<p>쉘에 <code>nest</code>를 입력하면 generate 옵션들이 나온다. 위에서 말한 모듈, 컨트롤러, 서비스(프로바이더)가 목록에 있다. 이외에도 graphql 리졸버까지 자동으로 만들어준다.</p>
+<h3 id="nest-g"><a href="#nest-g" class="headerlink" title="nest g"></a>nest g</h3><p>generate는 g로 대체할 수 있고, 위 목록에서 name을 전부 치지 않고 alias만 쳐도 된다.</p>
+<p>그러니까 모듈은 <code>nest g mo</code>, 컨트롤러는 <code>nest g co</code>, 서비스는 <code>nest g s</code>로 만들 수 있다.</p>
+<p>예를 들어 컨트롤러를 만들기 위해 <code>nest g co</code>를 입력하면</p>
+<p><img src="/images/2021-01-27-22-31-05.png" alt="nest g co 입력시"></p>
+<p>이렇게 컨트롤러의 이름을 묻는다. 내가 원하는 이름으로 해주면 되는데, 그에 따른 모듈과 서비스의 이름도 동일하게 만들면 된다. 그러면 한 폴더에서 자동으로 서로 엮어준다.</p>
 <blockquote>
-<p>나는 <a href="nomadcoders.co">노마드코더</a>에서 강의를 보았고, 단순 클론 코딩이 아닌 내 워크플로우에 적용할 수 있는 메커니즘을 배운 것 같다. 어느 정도 규모가 있는 프로젝트에 적용하면 잘 써먹을 수 있겠다.</p>
+<p>지금은 Nest.js에 대한 기초 공부를 모두 마친 상태인데, 다시 정리할 겸 적고 있다. 앞으로 Pure Express 어플리케이션을 만들 일이 있을까 싶다. 공부하다 보면 얼마전에 맛만 본 Spring Boot와 정말 비슷한 느낌이 드는데, 난 개인적으로 Java보다 Typescript가 더 좋다. 그래서 Nest.js는 3일동안 정말 흥미롭게 공부했고 푹 빠졌다.</p>
 </blockquote>
 
         </div>
@@ -358,9 +327,7 @@
                 <span class="tag">
                     
                     
-                        <a href="/tags/nodejs/"># nodejs</a>
-                    
-                        <a href="/tags/gulpjs/"># gulpjs</a>
+                        <a href="/tags/Nest-js/"># Nest.js</a>
                     
                         
                 </span>
@@ -373,10 +340,8 @@
         </section>
         <section class="post-nav">
             
-                <a class="prev" rel="prev" href="/2021/01/27/nestjs-study-1/">Nest.js 시작하기</a>
             
-            
-            <a class="next" rel="next" href="/2021/01/16/typescript-study-2-tsconfig/">Typescript - tsconfig 속성</a>
+            <a class="next" rel="next" href="/2021/01/27/node-gulp-start/">Gulp.js로 빌드 자동화하기</a>
             
         </section>
 
