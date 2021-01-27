@@ -258,7 +258,7 @@
         </header>
 
         <div class="post-content">
-            <h1 id="Gulp-js로-빌드-자동화하기"><a href="#Gulp-js로-빌드-자동화하기" class="headerlink" title="Gulp.js로 빌드 자동화하기"></a>Gulp.js로 빌드 자동화하기</h1><h2 id="Gulp-js"><a href="#Gulp-js" class="headerlink" title="Gulp.js"></a>Gulp.js</h2><p>Node.js 프로젝트를 하면서 빌드, 개발 테스트에 귀찮을 때가 많다. 이런 귀찮음을 위해서 쓰는 도구가 <a href="gulpjs.com">Gulp.js</a>이다.</p>
+            <h2 id="Gulp-js"><a href="#Gulp-js" class="headerlink" title="Gulp.js"></a>Gulp.js</h2><p>Node.js 프로젝트를 하면서 빌드, 개발 테스트에 귀찮을 때가 많다. 이런 귀찮음을 위해서 쓰는 도구가 <a href="gulpjs.com">Gulp.js</a>이다.</p>
 <p>사용하는 방법은 정말 간단하다. 자동화가 필요한 부분을 역할에 맞게 나눠서 “파이프”를 연결하고, “시리즈”로 묶어주면 된다. 전체적인 플로우는 이렇게 설명할 수 있지만, 중간에 막히면 공식 문서를 보거나 검색하면 충분히 나온다.</p>
 <h3 id="자동화-분배하기"><a href="#자동화-분배하기" class="headerlink" title="자동화 분배하기"></a>자동화 분배하기</h3><p>pug, scss, 이미지 파일, 자바스크립트 파일을 다뤘다. 일반적으로 Gulp 없이는 하나하나 코드를 줄이던지, 이미지를 압축하던지, 렌더링 템플릿을 변환하던지 따로 작업해야 한다. 각각의 작업에 필요한 일련의 과정을 <code>src</code>, <code>pipe</code>, <code>dest</code>를 이용하여 묶는다.</p>
 <h3 id="작업-만들기"><a href="#작업-만들기" class="headerlink" title="작업 만들기"></a>작업 만들기</h3><h4 id="src-pipe-dest"><a href="#src-pipe-dest" class="headerlink" title="src().pipe().dest()"></a>src().pipe().dest()</h4><p>기본적인 로직은 다음과 같다.</p>
