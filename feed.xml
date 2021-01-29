@@ -6,7 +6,7 @@
   <link href="https://zinirun.github.io/feed.xml" rel="self"/>
   
   <link href="https://zinirun.github.io/"/>
-  <updated>2021-01-28T06:23:55.085Z</updated>
+  <updated>2021-01-29T07:01:01.252Z</updated>
   <id>https://zinirun.github.io/</id>
   
   <author>
@@ -15,6 +15,30 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Nest.js - DTO를 PartialType으로 재사용하기</title>
+    <link href="https://zinirun.github.io/2021/01/29/nestjs-study-3/"/>
+    <id>https://zinirun.github.io/2021/01/29/nestjs-study-3/</id>
+    <published>2021-01-29T06:55:52.000Z</published>
+    <updated>2021-01-29T07:01:01.252Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="extends-PartialType"><a href="#extends-PartialType" class="headerlink" title="extends PartialType"></a>extends PartialType</h2><p>POST, UPDATE 요청을 처리할 때 데이터 삽입에 대한 DTO, 데이터 수정에 대한 DTO를 만든다. 일반적으로 데이터 수정 DTO는 삽입 시의 DTO에 종속된다. 수정시의 DTO에 들어가는 개체가 삽입시의 DTO에 들어있는 개체에 포함된다는 것이다.</p><p>그런 상황에서 사용할 수 있는 것이 <code>PartialType</code>다.</p><p>POST 처리를 위한 DTO가 <code>CreateDto</code>라고 가정하면,</p><figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; IsNumber, IsOptional, IsString &#125; <span class="keyword">from</span> <span class="string">&#x27;class-validator&#x27;</span>;</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">class</span> CreateDto &#123;</span><br><span class="line">    <span class="meta">@IsString</span>()</span><br><span class="line">    <span class="keyword">readonly</span> title: <span class="built_in">string</span>;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@IsNumber</span>()</span><br><span class="line">    <span class="keyword">readonly</span> year: <span class="built_in">number</span>;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@IsString</span>(&#123; each: <span class="literal">true</span> &#125;)</span><br><span class="line">    <span class="meta">@IsOptional</span>()</span><br><span class="line">    <span class="keyword">readonly</span> genres: <span class="built_in">string</span>[];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><p>이런식이 된다. 이제 이 클래스를 <code>UpdateDto</code>에도 재사용할 수 있다.</p><figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; PartialType &#125; <span class="keyword">from</span> <span class="string">&#x27;@nestjs/mapped-types&#x27;</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; IsNumber, IsString &#125; <span class="keyword">from</span> <span class="string">&#x27;class-validator&#x27;</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; CreateMovieDto &#125; <span class="keyword">from</span> <span class="string">&#x27;./create-movie.dto&#x27;</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">class</span> UpdateDto <span class="keyword">extends</span> PartialType(CreateDto) &#123;&#125;</span><br></pre></td></tr></table></figure><p>위처럼 <code>extends PartialType(상위DTO)</code>를 통해 선택적으로 종속받을 수 있다.</p>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;h2 id=&quot;extends-PartialType&quot;&gt;&lt;a href=&quot;#extends-PartialType&quot; class=&quot;headerlink&quot; title=&quot;extends PartialType&quot;&gt;&lt;/a&gt;extends PartialType&lt;/h2&gt;&lt;p&gt;PO</summary>
+      
+    
+    
+    
+    <category term="Nest.js" scheme="https://zinirun.github.io/categories/Nest-js/"/>
+    
+    
+    <category term="Nest.js" scheme="https://zinirun.github.io/tags/Nest-js/"/>
+    
+  </entry>
   
   <entry>
     <title>Nest.js - 컨트롤러, 서비스, 모듈의 구현</title>
@@ -524,38 +548,6 @@
     <category term="express" scheme="https://zinirun.github.io/tags/express/"/>
     
     <category term="https" scheme="https://zinirun.github.io/tags/https/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Node.js 심화 공부와 졸업작품 리팩토링 계획</title>
-    <link href="https://zinirun.github.io/2020/10/04/capstone-design-review-2/"/>
-    <id>https://zinirun.github.io/2020/10/04/capstone-design-review-2/</id>
-    <published>2020-10-04T06:58:35.000Z</published>
-    <updated>2020-10-04T07:38:22.971Z</updated>
-    
-    <content type="html"><![CDATA[<h2 id="추석-기념-Node-js-심화-공부"><a href="#추석-기념-Node-js-심화-공부" class="headerlink" title="추석 기념(?) Node.js 심화 공부"></a>추석 기념(?) Node.js 심화 공부</h2><p>코로나때문에 추석에 고향을 가지 않았다. 보다 알찬 추석을 위해 그동안 하고 싶었던 졸업작품 리팩토링이 떠올랐다. 무턱대고 하기에는 확신이 없어서, Node.js와 Express 관련 강의를 처음부터 끝까지 동영상을 100개정도 본 것 같다. 아는 것도 많았지만 반성할 점 투성이었다. 지금까지 졸업 작품의 코드가 되게 바보같다는 생각을 했다.</p><h2 id="졸업작품-셀프-코드리뷰-그리고-반성"><a href="#졸업작품-셀프-코드리뷰-그리고-반성" class="headerlink" title="졸업작품 셀프 코드리뷰 그리고 반성"></a>졸업작품 셀프 코드리뷰 그리고 반성</h2><h3 id="REST-API-미준수"><a href="#REST-API-미준수" class="headerlink" title="REST API 미준수"></a>REST API 미준수</h3><p>우선 REST API를 제대로 준수하지 않았다. 예를 들어 회원가입을 굳이 GET 요청은 <code>/register</code>로, POST 요청은 <code>/reg_submit</code>으로 하는 등, CRUD 요청을 한 URL에서 라우터의 속성만 바꿔서 작성하면 될 것을 뒤에 <code>submit</code>이라는 말을 붙여 불필요하게 만들었다는 것이다.</p><h3 id="주먹구구식-app-js"><a href="#주먹구구식-app-js" class="headerlink" title="주먹구구식 app.js"></a>주먹구구식 app.js</h3><p><img src="/images/2020-10-04-16-10-36.png"></p><p>모든 라우터와 익스프레스 설정이 포함된 <code>app.js</code>도 엉망이다. <code>server.js</code>로 분리하여 서버에 대한 설정(미들웨어 등)을 하고 각 대분류에 대한 컨트롤러 파일을 따로 만들었다면 유지보수가 훨씬 수월한 코드가 만들어졌을텐데, 지금의 코드는 주먹구구식이었다. 그리고 서버에 대한 코드를 class화 한다면 인스턴스 관점에서의 서버 접속 관리를 할 수 있다. 구조에 대한 전체적인 수정이 필요하다..</p><h3 id="바보같은-미들웨어-처리"><a href="#바보같은-미들웨어-처리" class="headerlink" title="바보같은 미들웨어 처리"></a>바보같은 미들웨어 처리</h3><p>지금 만드는 서비스는 기본적으로 로그인이 되어 있어야 동작한다. 그래서 모든 라우터에는</p><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (req.session.user) &#123;</span><br><span class="line">  <span class="comment">// 로그인이 되어 있을 때</span></span><br><span class="line">&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">  <span class="comment">// 로그인으로 넘기기</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><p>이 로그인 확인 로직이 기본적으로 처음에 들어간다. 사실 <code>checkLogined</code> 함수를 따로 만들어서 미들웨어로 <code>next()</code> 처리만 해주면 똑같은 코드를 복사해서 쓰는 어리석은 짓은 하지 않아도 됐었다.</p><h3 id="레이아웃이-없는-뷰"><a href="#레이아웃이-없는-뷰" class="headerlink" title="레이아웃이 없는 뷰"></a>레이아웃이 없는 뷰</h3><p>프론트엔드 단에서는 <code>ejs</code> 템플릿 엔진을 사용하고 있는데 별도의 레이아웃을 사용하지 않아서 내비게이션 바같은 상단에 고정에 들어가는 항목들이 모든 html 파일에 포함되어 있다. 당연히 내비게이션 바의 코드를 수정하려면 모든 html을 수정해야 한다. 레이아웃 뷰를 도입했다면 이런 비효율적인 행위를 하지 않아도 됐었다.</p><h2 id="리팩토링-계획"><a href="#리팩토링-계획" class="headerlink" title="리팩토링 계획"></a>리팩토링 계획</h2><p>생각보다 리팩토링할 내용이 너무 많다. 위에서 나온 4가지 큰 문제를 수정할 계획인데, 일단 서버 사이드의 코드부터 뜯어 고치고 프론트 사이드에 레이아웃을 적용할 생각이다.</p><ol><li>app.js, server.js 분리, class화</li><li>미들웨어 처리</li><li>라우터에 MVC 패턴 도입, REST API 준수</li><li>짜잘한 코드 수정 (함수 세분화)</li><li>레이아웃 뷰 사용하기</li></ol><p>위 순서대로 차근차근 리팩토링을 할 계획이다. 이번 졸업작품에서 제대로 된 코드를 작성한다면 다음 프로젝트에서는 이런 번거로운 리팩토링은 하지 않아도 될 기대를 한다. 물론 완벽한 리팩토링이란 것은 없지만, 현재의 코드에 안주하는 개발자는 발전 가능성이 없다는 것을 잘 알고 있기에 더 완벽한 코드를 지향하려 한다.</p>]]></content>
-    
-    
-      
-      
-    <summary type="html">&lt;h2 id=&quot;추석-기념-Node-js-심화-공부&quot;&gt;&lt;a href=&quot;#추석-기념-Node-js-심화-공부&quot; class=&quot;headerlink&quot; title=&quot;추석 기념(?) Node.js 심화 공부&quot;&gt;&lt;/a&gt;추석 기념(?) Node.js 심화 공부&lt;/h2</summary>
-      
-    
-    
-    
-    <category term="nodejs" scheme="https://zinirun.github.io/categories/nodejs/"/>
-    
-    
-    <category term="capstone design" scheme="https://zinirun.github.io/tags/capstone-design/"/>
-    
-    <category term="homes" scheme="https://zinirun.github.io/tags/homes/"/>
-    
-    <category term="nodejs" scheme="https://zinirun.github.io/tags/nodejs/"/>
-    
-    <category term="express" scheme="https://zinirun.github.io/tags/express/"/>
-    
-    <category term="refactoring" scheme="https://zinirun.github.io/tags/refactoring/"/>
     
   </entry>
   

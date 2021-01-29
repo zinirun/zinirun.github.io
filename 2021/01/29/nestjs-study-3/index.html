@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+<link rel="canonical" href="https://zinirun.github.io/2021/01/29/nestjs-study-3/">
+
+
+<link rel="stylesheet" href="//fonts.googleapis.com/earlyaccess/notosanskr.css">
+
+
+    <meta name="author" content="zini">
+
+
+    <meta name="subtitle" content="tech blog by Zini">
+
+
+
+
+<title>Nest.js - DTO를 PartialType으로 재사용하기 | zinirun</title>
+
+
+
+    <link rel="icon" href="/favicon.png">
+
+
+
+
+    <!-- stylesheets list from _config.yml -->
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+
+
+
+    <!-- scripts list from _config.yml -->
+    
+    <script src="/js/script.js"></script>
+    
+    <script src="/js/tocbot.min.js"></script>
+    
+
+
+
+    
+    
+        
+    
+
+
+
+<script>
+	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+		(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+			m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+	ga('create', 'UA-175983012-1', 'auto');
+	ga('send', 'pageview');
+</script>
+
+<meta name="generator" content="Hexo 5.0.2"><link rel="alternate" href="/feed.xml" title="zinirun" type="application/atom+xml">
+</head>
+<body>
+    <div class="wrapper">
+        <header>
+  <nav class="navbar">
+    <div class="container">
+      <div class="navbar-header header-logo" style="font-size: 13pt; font-weight: 600;">
+        <a id="blog_logo" href="/" style="color: #2d96bd;"><img class="logo-ico spin circle" src="/image/logo.png" alt="zini's Devlog"></a>
+        
+        <a class="menu-item left-menu" href="/archives">Posts</a>
+        
+        <a class="menu-item left-menu" href="/category">Categories</a>
+        
+        <a class="menu-item left-menu" href="/tag">Tags</a>
+        
+<!--
+        <input id="switch_default" type="checkbox" class="switch_default" />
+        <label for="switch_default" class="toggleBtn" style="margin-left: 0px;"></label>
+-->
+      </div>
+      <div class="menu navbar-right">
+        <!--mynav-->
+        <div id="mynav-container">
+        
+        <a class="menu-item" href="/categories/javascript"><img class="menu-ico" src="/image/icons/javascript.png" alt="Javascript"></a>
+        
+        <a class="menu-item" href="/categories/typescript"><img class="menu-ico" src="/image/icons/typescript.png" alt="Typescript"></a>
+        
+        <a class="menu-item" href="/categories/nodejs"><img class="menu-ico" src="/image/icons/node.png" alt="Node"></a>
+        
+        <a class="menu-item" href="/categories/ReactJS"><img class="menu-ico" src="/image/icons/react.png" alt="React"></a>
+        
+        <a class="menu-item" href="/categories/redux"><img class="menu-ico" src="/image/icons/redux.png" alt="Redux"></a>
+        
+        <a class="menu-item" href="/categories/cloud/docker"><img class="menu-ico" src="/image/icons/dockernew.png" alt="Docker"></a>
+        
+        <a class="menu-item" href="/categories/cloud/kubernetes"><img class="menu-ico" src="/image/icons/k8s.png" alt="Kubernetes"></a>
+        
+        <a class="menu-item" href="/categories/algorithm"><img class="menu-ico" src="/image/icons/ps-code.png" alt="Algorithm"></a>
+        
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  
+  <nav class="navbar-mobile" id="nav-mobile">
+    <div class="container">
+      <div class="navbar-header">
+        <div>
+          <a id="blog_logo" href="/" style="color: #2d96bd;"><img class="logo-ico" src="/image/logo.png" alt="zini's Devlog"></a>
+        </div>
+        <div class="menu-toggle" onclick="mobileBtn()">&#9776; Menu</div>
+      </div>
+      <div class="menu" id="mobile-menu">
+       <div id="mobile-nav">
+        
+        <a class="menu-item" href="/archives">Posts</a>
+        
+        <a class="menu-item" href="/category">Categories</a>
+        
+        <a class="menu-item" href="/tag">Tags</a>
+        
+          </div>
+        <div id="mobile-mynav">
+        
+        <a class="menu-item" href="/categories/javascript"><img class="menu-ico" src="/image/icons/javascript.png" alt="Javascript"></a>
+        
+        <a class="menu-item" href="/categories/typescript"><img class="menu-ico" src="/image/icons/typescript.png" alt="Typescript"></a>
+        
+        <a class="menu-item" href="/categories/nodejs"><img class="menu-ico" src="/image/icons/node.png" alt="Node"></a>
+        
+        <a class="menu-item" href="/categories/ReactJS"><img class="menu-ico" src="/image/icons/react.png" alt="React"></a>
+        
+        <a class="menu-item" href="/categories/redux"><img class="menu-ico" src="/image/icons/redux.png" alt="Redux"></a>
+        
+        <a class="menu-item" href="/categories/cloud/docker"><img class="menu-ico" src="/image/icons/dockernew.png" alt="Docker"></a>
+        
+        <a class="menu-item" href="/categories/cloud/kubernetes"><img class="menu-ico" src="/image/icons/k8s.png" alt="Kubernetes"></a>
+        
+        <a class="menu-item" href="/categories/algorithm"><img class="menu-ico" src="/image/icons/ps-code.png" alt="Algorithm"></a>
+        
+          </div>
+      </div>
+    </div>
+  </nav>
+</header>
+<script>
+  var mobileBtn = function f() {
+    var toggleMenu = document.getElementsByClassName("menu-toggle")[0];
+    var mobileMenu = document.getElementById("mobile-menu");
+    if (toggleMenu.classList.contains("active")) {
+      toggleMenu.classList.remove("active");
+      mobileMenu.classList.remove("active");
+    } else {
+      toggleMenu.classList.add("active");
+      mobileMenu.classList.add("active");
+    }
+  };
+</script>
+
+        <div class="main">
+            <div class="container">
+    
+    
+        <div class="post-toc">
+    <div class="tocbot-list">
+    </div>
+    <div class="tocbot-list-menu">
+        <a class="tocbot-toc-expand" onclick="expand_toc()">Expand All</a>
+        <a onclick="go_top()">Top</a>
+        <a onclick="go_bottom()">Bottom</a>
+    </div>
+</div>
+
+<script>
+    document.ready(
+        function () {
+            tocbot.init({
+                tocSelector: '.tocbot-list',
+                contentSelector: '.post-content',
+                headingSelector: 'h1, h2, h3, h4, h5',
+                collapseDepth: 1,
+                orderedList: false,
+                scrollSmooth: true,
+            })
+        }
+    )
+
+    function expand_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 6,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "collapse_toc()");
+        b.innerHTML = "Collapse all"
+    }
+
+    function collapse_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 1,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "expand_toc()");
+        b.innerHTML = "Expand all"
+    }
+
+    function go_top() {
+        window.scrollTo(0, 0);
+    }
+
+    function go_bottom() {
+        window.scrollTo(0, document.body.scrollHeight);
+    }
+
+</script>
+    
+
+    
+    <article class="post-wrap">
+        <header class="post-header">
+            <h1 class="post-title">Nest.js - DTO를 PartialType으로 재사용하기</h1>
+            
+                <div class="post-meta">
+                    
+                        Author: <a itemprop="author" rel="author" href="/">zini</a>
+                    
+
+                    
+                        <span class="post-time">
+                        Date: <a href="#">January 29, 2021&nbsp;&nbsp;15:55:52</a>
+                        </span>
+                    
+                    
+                        <span class="post-category">
+                    Category:
+                            
+                                <a href="/categories/Nest-js/">Nest.js</a>
+                            
+                        </span>
+                    
+                </div>
+            
+        </header>
+
+        <div class="post-content">
+            <h2 id="extends-PartialType"><a href="#extends-PartialType" class="headerlink" title="extends PartialType"></a>extends PartialType</h2><p>POST, UPDATE 요청을 처리할 때 데이터 삽입에 대한 DTO, 데이터 수정에 대한 DTO를 만든다. 일반적으로 데이터 수정 DTO는 삽입 시의 DTO에 종속된다. 수정시의 DTO에 들어가는 개체가 삽입시의 DTO에 들어있는 개체에 포함된다는 것이다.</p>
+<p>그런 상황에서 사용할 수 있는 것이 <code>PartialType</code>다.</p>
+<p>POST 처리를 위한 DTO가 <code>CreateDto</code>라고 가정하면,</p>
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; IsNumber, IsOptional, IsString &#125; <span class="keyword">from</span> <span class="string">&#x27;class-validator&#x27;</span>;</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">class</span> CreateDto &#123;</span><br><span class="line">    <span class="meta">@IsString</span>()</span><br><span class="line">    <span class="keyword">readonly</span> title: <span class="built_in">string</span>;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@IsNumber</span>()</span><br><span class="line">    <span class="keyword">readonly</span> year: <span class="built_in">number</span>;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@IsString</span>(&#123; each: <span class="literal">true</span> &#125;)</span><br><span class="line">    <span class="meta">@IsOptional</span>()</span><br><span class="line">    <span class="keyword">readonly</span> genres: <span class="built_in">string</span>[];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>이런식이 된다. 이제 이 클래스를 <code>UpdateDto</code>에도 재사용할 수 있다.</p>
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; PartialType &#125; <span class="keyword">from</span> <span class="string">&#x27;@nestjs/mapped-types&#x27;</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; IsNumber, IsString &#125; <span class="keyword">from</span> <span class="string">&#x27;class-validator&#x27;</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; CreateMovieDto &#125; <span class="keyword">from</span> <span class="string">&#x27;./create-movie.dto&#x27;</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">class</span> UpdateDto <span class="keyword">extends</span> PartialType(CreateDto) &#123;&#125;</span><br></pre></td></tr></table></figure>
+
+<p>위처럼 <code>extends PartialType(상위DTO)</code>를 통해 선택적으로 종속받을 수 있다.</p>
+
+        </div>
+
+        
+            <section class="post-copyright">
+                
+                
+                
+                
+
+            </section>
+        
+        <section class="post_disqus">
+            <div id="disqus_thread"></div>
+            <script>
+            
+            /**
+            *  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+            *  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables*/
+            /*
+            var disqus_config = function () {
+            this.page.url = PAGE_URL;  // Replace PAGE_URL with your page's canonical URL variable
+            this.page.identifier = PAGE_IDENTIFIER; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+            };
+            */
+            (function() { // DON'T EDIT BELOW THIS LINE
+            var d = document, s = d.createElement('script');
+            s.src = 'https://zinirun.disqus.com/embed.js';
+            s.setAttribute('data-timestamp', +new Date());
+            (d.head || d.body).appendChild(s);
+            })();
+            </script>
+            <noscript>Please enable JavaScript to view the <a target="_blank" rel="external nofollow noopener noreferrer" href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+        </section>
+        <section class="post-tags">
+            <div>
+                <span>Tag(s):</span>
+                <span class="tag">
+                    
+                    
+                        <a href="/tags/Nest-js/"># Nest.js</a>
+                    
+                        
+                </span>
+            </div>
+            <div>
+                <a href="javascript:window.history.back();">back</a>
+                <span>· </span>
+                <a href="/">home</a>
+            </div>
+        </section>
+        <section class="post-nav">
+            
+            
+            <a class="next" rel="next" href="/2021/01/28/nestjs-study-2/">Nest.js - 컨트롤러, 서비스, 모듈의 구현</a>
+            
+        </section>
+
+
+    </article>
+</div>
+
+        </div>
+        <footer id="footer" class="footer">
+  <div class="copyright">
+    <span>© zini | Powered by
+      <a href="https://hexo.io" target="_blank" rel="external nofollow noopener noreferrer">Hexo</a>
+  </span></div>
+</footer>
+
+    </div>
+</body>
+</html>
