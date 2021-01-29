@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+<link rel="canonical" href="https://zinirun.github.io/2021/01/29/nestjs-study-4/">
+
+
+<link rel="stylesheet" href="//fonts.googleapis.com/earlyaccess/notosanskr.css">
+
+
+    <meta name="author" content="zini">
+
+
+    <meta name="subtitle" content="tech blog by Zini">
+
+
+
+
+<title>Nest.js - Jest를 이용한 테스트 | zinirun</title>
+
+
+
+    <link rel="icon" href="/favicon.png">
+
+
+
+
+    <!-- stylesheets list from _config.yml -->
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+
+
+
+    <!-- scripts list from _config.yml -->
+    
+    <script src="/js/script.js"></script>
+    
+    <script src="/js/tocbot.min.js"></script>
+    
+
+
+
+    
+    
+        
+    
+
+
+
+<script>
+	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+		(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+			m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+	ga('create', 'UA-175983012-1', 'auto');
+	ga('send', 'pageview');
+</script>
+
+<meta name="generator" content="Hexo 5.0.2"><link rel="alternate" href="/feed.xml" title="zinirun" type="application/atom+xml">
+</head>
+<body>
+    <div class="wrapper">
+        <header>
+  <nav class="navbar">
+    <div class="container">
+      <div class="navbar-header header-logo" style="font-size: 13pt; font-weight: 600;">
+        <a id="blog_logo" href="/" style="color: #2d96bd;"><img class="logo-ico spin circle" src="/image/logo.png" alt="zini's Devlog"></a>
+        
+        <a class="menu-item left-menu" href="/archives">Posts</a>
+        
+        <a class="menu-item left-menu" href="/category">Categories</a>
+        
+        <a class="menu-item left-menu" href="/tag">Tags</a>
+        
+<!--
+        <input id="switch_default" type="checkbox" class="switch_default" />
+        <label for="switch_default" class="toggleBtn" style="margin-left: 0px;"></label>
+-->
+      </div>
+      <div class="menu navbar-right">
+        <!--mynav-->
+        <div id="mynav-container">
+        
+        <a class="menu-item" href="/categories/javascript"><img class="menu-ico" src="/image/icons/javascript.png" alt="Javascript"></a>
+        
+        <a class="menu-item" href="/categories/typescript"><img class="menu-ico" src="/image/icons/typescript.png" alt="Typescript"></a>
+        
+        <a class="menu-item" href="/categories/nodejs"><img class="menu-ico" src="/image/icons/node.png" alt="Node"></a>
+        
+        <a class="menu-item" href="/categories/ReactJS"><img class="menu-ico" src="/image/icons/react.png" alt="React"></a>
+        
+        <a class="menu-item" href="/categories/redux"><img class="menu-ico" src="/image/icons/redux.png" alt="Redux"></a>
+        
+        <a class="menu-item" href="/categories/cloud/docker"><img class="menu-ico" src="/image/icons/dockernew.png" alt="Docker"></a>
+        
+        <a class="menu-item" href="/categories/cloud/kubernetes"><img class="menu-ico" src="/image/icons/k8s.png" alt="Kubernetes"></a>
+        
+        <a class="menu-item" href="/categories/algorithm"><img class="menu-ico" src="/image/icons/ps-code.png" alt="Algorithm"></a>
+        
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  
+  <nav class="navbar-mobile" id="nav-mobile">
+    <div class="container">
+      <div class="navbar-header">
+        <div>
+          <a id="blog_logo" href="/" style="color: #2d96bd;"><img class="logo-ico" src="/image/logo.png" alt="zini's Devlog"></a>
+        </div>
+        <div class="menu-toggle" onclick="mobileBtn()">&#9776; Menu</div>
+      </div>
+      <div class="menu" id="mobile-menu">
+       <div id="mobile-nav">
+        
+        <a class="menu-item" href="/archives">Posts</a>
+        
+        <a class="menu-item" href="/category">Categories</a>
+        
+        <a class="menu-item" href="/tag">Tags</a>
+        
+          </div>
+        <div id="mobile-mynav">
+        
+        <a class="menu-item" href="/categories/javascript"><img class="menu-ico" src="/image/icons/javascript.png" alt="Javascript"></a>
+        
+        <a class="menu-item" href="/categories/typescript"><img class="menu-ico" src="/image/icons/typescript.png" alt="Typescript"></a>
+        
+        <a class="menu-item" href="/categories/nodejs"><img class="menu-ico" src="/image/icons/node.png" alt="Node"></a>
+        
+        <a class="menu-item" href="/categories/ReactJS"><img class="menu-ico" src="/image/icons/react.png" alt="React"></a>
+        
+        <a class="menu-item" href="/categories/redux"><img class="menu-ico" src="/image/icons/redux.png" alt="Redux"></a>
+        
+        <a class="menu-item" href="/categories/cloud/docker"><img class="menu-ico" src="/image/icons/dockernew.png" alt="Docker"></a>
+        
+        <a class="menu-item" href="/categories/cloud/kubernetes"><img class="menu-ico" src="/image/icons/k8s.png" alt="Kubernetes"></a>
+        
+        <a class="menu-item" href="/categories/algorithm"><img class="menu-ico" src="/image/icons/ps-code.png" alt="Algorithm"></a>
+        
+          </div>
+      </div>
+    </div>
+  </nav>
+</header>
+<script>
+  var mobileBtn = function f() {
+    var toggleMenu = document.getElementsByClassName("menu-toggle")[0];
+    var mobileMenu = document.getElementById("mobile-menu");
+    if (toggleMenu.classList.contains("active")) {
+      toggleMenu.classList.remove("active");
+      mobileMenu.classList.remove("active");
+    } else {
+      toggleMenu.classList.add("active");
+      mobileMenu.classList.add("active");
+    }
+  };
+</script>
+
+        <div class="main">
+            <div class="container">
+    
+    
+        <div class="post-toc">
+    <div class="tocbot-list">
+    </div>
+    <div class="tocbot-list-menu">
+        <a class="tocbot-toc-expand" onclick="expand_toc()">Expand All</a>
+        <a onclick="go_top()">Top</a>
+        <a onclick="go_bottom()">Bottom</a>
+    </div>
+</div>
+
+<script>
+    document.ready(
+        function () {
+            tocbot.init({
+                tocSelector: '.tocbot-list',
+                contentSelector: '.post-content',
+                headingSelector: 'h1, h2, h3, h4, h5',
+                collapseDepth: 1,
+                orderedList: false,
+                scrollSmooth: true,
+            })
+        }
+    )
+
+    function expand_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 6,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "collapse_toc()");
+        b.innerHTML = "Collapse all"
+    }
+
+    function collapse_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 1,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "expand_toc()");
+        b.innerHTML = "Expand all"
+    }
+
+    function go_top() {
+        window.scrollTo(0, 0);
+    }
+
+    function go_bottom() {
+        window.scrollTo(0, document.body.scrollHeight);
+    }
+
+</script>
+    
+
+    
+    <article class="post-wrap">
+        <header class="post-header">
+            <h1 class="post-title">Nest.js - Jest를 이용한 테스트</h1>
+            
+                <div class="post-meta">
+                    
+                        Author: <a itemprop="author" rel="author" href="/">zini</a>
+                    
+
+                    
+                        <span class="post-time">
+                        Date: <a href="#">January 29, 2021&nbsp;&nbsp;16:02:20</a>
+                        </span>
+                    
+                    
+                        <span class="post-category">
+                    Category:
+                            
+                                <a href="/categories/Nest-js/">Nest.js</a>
+                            
+                        </span>
+                    
+                </div>
+            
+        </header>
+
+        <div class="post-content">
+            <h2 id="테스트의-종류"><a href="#테스트의-종류" class="headerlink" title="테스트의 종류"></a>테스트의 종류</h2><p>테스트에는 많은 종류가 있다.</p>
+<ul>
+<li><strong>유닛 테스트(Unit Testing)</strong> : 컴포넌트, 함수 단위의 작은 코드를 테스트</li>
+<li><strong>엔드 투 엔드 테스트(End to End Testing)</strong> : 사용자 관점에서 취할만한 행동에 따라 각각의 서비스가 정해진 대로 동작하는지 테스트</li>
+<li><strong>부하 테스트(Load Testing), 스트레스 테스트(Stress Testing)</strong> : 얼마나 많은 동시 접속자를 처리할 수 있는지 테스트 (서버 관점에서의 테스트)</li>
+</ul>
+<p>Nest.js에서는 기본적으로 E2E(End To End) 테스트 파일을 만들어주고, 컨트롤러, 서비스 각각을 제너레이터를 사용하여 생성하면 유닛 테스트 파일도 자동으로 만들어준다.</p>
+<p>E2E 테스트는 <code>test</code> 폴더의 <code>app.e2e-spec.ts</code>에 있고, 유닛 테스트는 <code>src</code> 폴더 내부에 <code>.spec.ts</code>의 파일로 사용한다.</p>
+<h2 id="유닛-테스트"><a href="#유닛-테스트" class="headerlink" title="유닛 테스트"></a>유닛 테스트</h2><p>기본적으로 <code>describe</code> <code>it</code> <code>expect</code>만 사용해서도 테스트할 수 있고, 원활한 사용을 위해서는 <code>beforeEach</code> <code>beforeAll</code> <code>afterEach</code> <code>afterAll</code>도 같이 쓴다.</p>
+<h3 id="테스트-구조"><a href="#테스트-구조" class="headerlink" title="테스트 구조"></a>테스트 구조</h3><figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">describe(<span class="string">&#x27;MoviesService&#x27;</span>, <span class="function">() =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">let</span> service: MoviesService;</span><br><span class="line"></span><br><span class="line">    beforeEach(<span class="keyword">async</span> () =&gt; &#123;</span><br><span class="line">        <span class="keyword">const</span> <span class="keyword">module</span>: TestingModule = await Test.createTestingModule(&#123;</span><br><span class="line">            providers: [MoviesService],</span><br><span class="line">        &#125;).compile();</span><br><span class="line"></span><br><span class="line">        service = <span class="built_in">module</span>.get&lt;MoviesService&gt;(MoviesService);</span><br><span class="line">    &#125;);</span><br><span class="line"></span><br><span class="line">    it(<span class="string">&#x27;should be defined&#x27;</span>, <span class="function">() =&gt;</span> &#123;</span><br><span class="line">        expect(service).toBeDefined();</span><br><span class="line">    &#125;);</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>beforeEach에 대해서는 테스트 구조 설명 후 알아보겠다.</p>
+</blockquote>
+<p>먼저 테스트할 서비스를 불러오고, 서비스가 정의된 객체인지 판별한다. 테스트에 통과했다면 이제 서비스에 구현한 각각의 함수(Unit)에 대해 테스트를 수행하면 된다. <code>describe</code> 내부에 <code>describe</code>를 써서 상위, 하위 개념으로 작성한다.</p>
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">describe(<span class="string">&#x27;getAll&#x27;</span>, <span class="function">() =&gt;</span> &#123;</span><br><span class="line">    it(<span class="string">&#x27;should be return an array&#x27;</span>, <span class="function">() =&gt;</span> &#123;</span><br><span class="line">        <span class="keyword">const</span> result = service.getAll();</span><br><span class="line">        expect(result).toBeInstanceOf(<span class="built_in">Array</span>);</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<p><code>getAll</code> 메소드는 배열 타입을 반환해야 하는데, 이를 테스트한 것이다. <code>expect</code>는 말그대로 “기대”이다. <code>expect(a).toEqual(b)</code>라면 “a가 b와 같기를 기대해” 라는 의미이고, <code>toEqual</code>, <code>toBeDefined</code>, <code>toBeGreaterThan</code> 등 <code>expect</code>에서 사용할 수 있는 다양한 메소드를 활용해서 테스트를 진행한다.</p>
+<p>하나 더 예를 들면, 서비스가 404(Not Found)를 뱉어주기를 원한다면 다음과 같이 작성할 수 있다.</p>
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">it(<span class="string">&#x27;should return a 404&#x27;</span>, <span class="function">() =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">try</span> &#123;</span><br><span class="line">        service.deleteOne(<span class="number">999</span>);</span><br><span class="line">    &#125; <span class="keyword">catch</span> (e) &#123;</span><br><span class="line">        expect(e).toBeInstanceOf(NotFoundException);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<p>물론 서비스에서도 핸들링을 통해 <code>NotFoundException</code>을 뱉어야 한다. 이런 저명(?)한 예외 처리는 <code>@nestjs/common</code>에 왠만하면 다 들어가있어서 별도로 에러 객체를 구현하지 않아도 된다.</p>
+<h3 id="beforeEach-beforeAll-afterEach-afterAll"><a href="#beforeEach-beforeAll-afterEach-afterAll" class="headerlink" title="beforeEach, beforeAll, afterEach, afterAll"></a>beforeEach, beforeAll, afterEach, afterAll</h3><p><code>describe</code> 내부에 넣는 하나의 메소드인데, 말 그대로 테스트 전/후로 각각 테스트/전체 테스트에 메소드를 실행하는 것이다.</p>
+<p>예를 들어 <code>beforeEach</code>나 <code>beforeAll</code>은 테스트할 서비스 객체를 가져오거나 DB 연결을 초기화하는 등의 작업을 수행할 수 있고, <code>afterEach</code>나 <code>afterAll</code>로는 테스트 후 DB를 정리하는 등의 작업을 할 수 있다. 대부분의 테스트는 DB와 함께 동작할텐데, 이 때 필요한 동작을 번거로움없이 해결 할 수 있다.</p>
+<h3 id="테스트-수행"><a href="#테스트-수행" class="headerlink" title="테스트 수행"></a>테스트 수행</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ yarn <span class="built_in">test</span> <span class="comment"># npm run test</span></span><br><span class="line">$ yarn <span class="built_in">test</span>:watch <span class="comment"># npm run test:watch</span></span><br></pre></td></tr></table></figure>
+<p>기본적으로 <code>test</code> 명령어로 테스트를 실행하고, <code>:watch</code>를 사용하면 파일이 저장되어 바뀔 때마다 새롭게 테스트를 실행할 수 있다.</p>
+<h2 id="E2E-테스트"><a href="#E2E-테스트" class="headerlink" title="E2E 테스트"></a>E2E 테스트</h2><p>E2E 테스트도 유닛 테스트와 구조는 다를 게 없다. 테스트 하는 대상의 범위만 다를 뿐이다. 유닛 테스트가 톱니바퀴에 나사가 잘 끼워졌는지, 윤활은 잘 되어있는지 등을 검사한다면 E2E 테스트는 톱니바퀴가 잘 돌아가는 그림 정도를 본다.</p>
+<h3 id="테스트-구조-1"><a href="#테스트-구조-1" class="headerlink" title="테스트 구조"></a>테스트 구조</h3><figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">describe(<span class="string">&#x27;AppController (e2e)&#x27;</span>, <span class="function">() =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">let</span> app: INestApplication;</span><br><span class="line"></span><br><span class="line">    beforeAll(<span class="keyword">async</span> () =&gt; &#123;</span><br><span class="line">        <span class="keyword">const</span> moduleFixture: TestingModule = <span class="keyword">await</span> Test.createTestingModule(&#123;</span><br><span class="line">            imports: [AppModule],</span><br><span class="line">        &#125;).compile();</span><br><span class="line"></span><br><span class="line">        app = moduleFixture.createNestApplication();</span><br><span class="line">        <span class="comment">// 실제 app의 pipe를 test에도 별도로 적용해야 데코레이터가 적용됨</span></span><br><span class="line">        app.useGlobalPipes(</span><br><span class="line">            <span class="keyword">new</span> ValidationPipe(&#123;</span><br><span class="line">                whitelist: <span class="literal">true</span>,</span><br><span class="line">                forbidNonWhitelisted: <span class="literal">true</span>,</span><br><span class="line">                transform: <span class="literal">true</span>,</span><br><span class="line">            &#125;),</span><br><span class="line">        );</span><br><span class="line">        <span class="keyword">await</span> app.init();</span><br><span class="line">    &#125;);</span><br><span class="line"></span><br><span class="line">    it(<span class="string">&#x27;/ (GET)&#x27;</span>, <span class="function">() =&gt;</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> request(app.getHttpServer()).get(<span class="string">&#x27;/&#x27;</span>).expect(<span class="number">200</span>).expect(<span class="string">&#x27;Welcome to API&#x27;</span>);</span><br><span class="line">    &#125;);</span><br></pre></td></tr></table></figure>
+
+<p>Nest가 자동으로 E2E 테스트의 틀은 짜준다. 여기서 채워넣으면 되는데, 주의할 점이 있다. 테스트 전에 실행하는 메소드인 <code>beforeAll</code> 내부를 보면 <code>app</code>을 다시 생성한다. 따라서 <code>main.ts</code>에서 별도로 <code>app</code>에 global pipe를 추가했거나 다른 파이프를 연결한 경우 필요에 따라 다시 app에 미들웨어를 끼워줘야 한다. 이러지 않으면 실제 구동할 때와 테스트할 때 app의 속성이 달라서 당황할 수도 있다.</p>
+<h3 id="GET-테스트"><a href="#GET-테스트" class="headerlink" title="GET 테스트"></a>GET 테스트</h3><p><code>/</code>에 GET 요청이 들어왔을 때의 E2E 테스트를 보자.</p>
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">it(<span class="string">&#x27;/ (GET)&#x27;</span>, <span class="function">() =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">return</span> request(app.getHttpServer()).get(<span class="string">&#x27;/&#x27;</span>).expect(<span class="number">200</span>).expect(<span class="string">&#x27;Welcome to movie API&#x27;</span>);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<p><code>beforeAll</code>에서 초기화한 <code>app</code>을 사용하기 위해 <code>request()</code> 메소드를 사용한다. <code>request(app.getHttpServer())</code>를 통해 GET, POST 등의 요청을 보낼 수 있다. 그 후 똑같이 <code>expect</code>를 테스트 목적에 맞게 이어주면 된다.</p>
+<h3 id="POST-테스트"><a href="#POST-테스트" class="headerlink" title="POST 테스트"></a>POST 테스트</h3><p>POST 요청에 대한 테스트로 하나 더 예를 들자면,</p>
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">it(<span class="string">&#x27;POST 201&#x27;</span>, <span class="function">() =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">return</span> request(app.getHttpServer())</span><br><span class="line">        .post(<span class="string">&#x27;/movies&#x27;</span>)</span><br><span class="line">        .send(&#123;</span><br><span class="line">            title: <span class="string">&#x27;Test&#x27;</span>,</span><br><span class="line">            year: <span class="number">2020</span>,</span><br><span class="line">            genres: [<span class="string">&#x27;test&#x27;</span>],</span><br><span class="line">        &#125;)</span><br><span class="line">        .expect(<span class="number">201</span>);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<p>GET과 방식은 유사한데, <code>send</code> 메소드를 통해 Body에 내용을 실어서 보낸다. 그리고 정상적으로 POST되었다는 응답인 201 상태를 <code>expect</code>에 걸어주면 된다.</p>
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">it(<span class="string">&#x27;POST 400&#x27;</span>, <span class="function">() =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">return</span> request(app.getHttpServer())</span><br><span class="line">        .post(<span class="string">&#x27;/movies&#x27;</span>)</span><br><span class="line">        .send(&#123;</span><br><span class="line">            title: <span class="string">&#x27;Test&#x27;</span>,</span><br><span class="line">            year: <span class="number">2020</span>,</span><br><span class="line">            genres: [<span class="string">&#x27;test&#x27;</span>],</span><br><span class="line">            other: <span class="string">&#x27;thing&#x27;</span>,</span><br><span class="line">        &#125;)</span><br><span class="line">        .expect(<span class="number">400</span>);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<p>Validator에 대한 검증을 위해 성공하면 안되는 경우를 테스트할 때는 위처럼 400 상태를 <code>expect</code>에 걸어주면 된다.</p>
+<h3 id="uri에-대한-테스트-묶기"><a href="#uri에-대한-테스트-묶기" class="headerlink" title="uri에 대한 테스트 묶기"></a>uri에 대한 테스트 묶기</h3><p>그리고 일반적으로 한 uri에 포함된 GET, POST, DELETE 등의 테스트들은 한 개의 <code>describe</code>에 묶어준다.</p>
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">describe(<span class="string">&#x27;/movies/:id&#x27;</span>, <span class="function">() =&gt;</span> &#123;</span><br><span class="line">        it(<span class="string">&#x27;GET 200&#x27;</span>, <span class="function">() =&gt;</span> &#123;</span><br><span class="line">            <span class="keyword">return</span> request(app.getHttpServer()).get(<span class="string">&#x27;/movies/1&#x27;</span>).expect(<span class="number">200</span>);</span><br><span class="line">        &#125;);</span><br><span class="line">        it(<span class="string">&#x27;GET 404&#x27;</span>, <span class="function">() =&gt;</span> &#123;</span><br><span class="line">            <span class="keyword">return</span> request(app.getHttpServer()).get(<span class="string">&#x27;/movies/999&#x27;</span>).expect(<span class="number">404</span>);</span><br><span class="line">        &#125;);</span><br><span class="line">        it(<span class="string">&#x27;PATCH 200&#x27;</span>, <span class="function">() =&gt;</span> &#123;</span><br><span class="line">            <span class="keyword">return</span> request(app.getHttpServer())</span><br><span class="line">                .patch(<span class="string">&#x27;/movies/1&#x27;</span>)</span><br><span class="line">                .send(&#123; title: <span class="string">&#x27;Updated Test&#x27;</span> &#125;)</span><br><span class="line">                .expect(<span class="number">200</span>);</span><br><span class="line">        &#125;);</span><br><span class="line">        it(<span class="string">&#x27;DELETE 200&#x27;</span>, <span class="function">() =&gt;</span> &#123;</span><br><span class="line">            <span class="keyword">return</span> request(app.getHttpServer()).delete(<span class="string">&#x27;/movies/1&#x27;</span>).expect(<span class="number">200</span>);</span><br><span class="line">        &#125;);</span><br><span class="line">        it(<span class="string">&#x27;DELETE 404&#x27;</span>, <span class="function">() =&gt;</span> &#123;</span><br><span class="line">            <span class="keyword">return</span> request(app.getHttpServer()).delete(<span class="string">&#x27;/movies/999&#x27;</span>).expect(<span class="number">404</span>);</span><br><span class="line">        &#125;);</span><br><span class="line">    &#125;);</span><br></pre></td></tr></table></figure>
+
+<p>위 같은 방식으로 묶어주면 테스트 화면에서</p>
+<p><img src="/images/2021-01-29-16-41-19.png"></p>
+<p>이렇게 가독성 좋은 결과를 출력할 수 있다.</p>
+<h3 id="테스트-수행-1"><a href="#테스트-수행-1" class="headerlink" title="테스트 수행"></a>테스트 수행</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ yarn <span class="built_in">test</span>:e2e <span class="comment"># npm run test:e2e</span></span><br></pre></td></tr></table></figure>
+<p>말 그대로 <code>test</code>에 <code>:e2e</code>를 붙여주면 E2E 테스트를 수행할 수 있다.</p>
+<h2 id="마치며"><a href="#마치며" class="headerlink" title="마치며"></a>마치며</h2><h3 id="테스트-커버리지-보기"><a href="#테스트-커버리지-보기" class="headerlink" title="테스트 커버리지 보기"></a>테스트 커버리지 보기</h3><p>테스트에 대한 커버리지를 보고 싶다면 다음과 같이 입력하자.</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ yarn <span class="built_in">test</span>:cov <span class="comment"># npm run test:cov</span></span><br></pre></td></tr></table></figure>
+
+<p><img src="/images/2021-01-29-16-49-23.png"></p>
+<p>정상적으로 테스트를 모든 유닛에 대해 적용했다면 100이 나온다.</p>
+<h3 id="테스트의-중요성"><a href="#테스트의-중요성" class="headerlink" title="테스트의 중요성"></a>테스트의 중요성</h3><p>Nest에서 기본적으로 제공하는 Jest를 활용한 테스트를 알아보았다. 실제 실무에서는 비즈니스 로직에 대한 코드 작성보다 테스트를 위한 코드 작성에 시간을 더 할애하는 경우도 많다고 한다. 그만큼 테스트가 중요하다는 말이다.</p>
+
+        </div>
+
+        
+            <section class="post-copyright">
+                
+                
+                
+                
+
+            </section>
+        
+        <section class="post_disqus">
+            <div id="disqus_thread"></div>
+            <script>
+            
+            /**
+            *  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+            *  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables*/
+            /*
+            var disqus_config = function () {
+            this.page.url = PAGE_URL;  // Replace PAGE_URL with your page's canonical URL variable
+            this.page.identifier = PAGE_IDENTIFIER; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+            };
+            */
+            (function() { // DON'T EDIT BELOW THIS LINE
+            var d = document, s = d.createElement('script');
+            s.src = 'https://zinirun.disqus.com/embed.js';
+            s.setAttribute('data-timestamp', +new Date());
+            (d.head || d.body).appendChild(s);
+            })();
+            </script>
+            <noscript>Please enable JavaScript to view the <a target="_blank" rel="external nofollow noopener noreferrer" href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+        </section>
+        <section class="post-tags">
+            <div>
+                <span>Tag(s):</span>
+                <span class="tag">
+                    
+                    
+                        <a href="/tags/Nest-js/"># Nest.js</a>
+                    
+                        
+                </span>
+            </div>
+            <div>
+                <a href="javascript:window.history.back();">back</a>
+                <span>· </span>
+                <a href="/">home</a>
+            </div>
+        </section>
+        <section class="post-nav">
+            
+            
+            <a class="next" rel="next" href="/2021/01/29/nestjs-study-3/">Nest.js - DTO를 PartialType으로 재사용하기</a>
+            
+        </section>
+
+
+    </article>
+</div>
+
+        </div>
+        <footer id="footer" class="footer">
+  <div class="copyright">
+    <span>© zini | Powered by
+      <a href="https://hexo.io" target="_blank" rel="external nofollow noopener noreferrer">Hexo</a>
+  </span></div>
+</footer>
+
+    </div>
+</body>
+</html>
