@@ -259,7 +259,7 @@
             <p><img src="/images/2021-01-31-17-57-53.png" alt="heroku + go"></p>
 <p>요즘 Golang에 빠졌다. 책 한권을 다 읽고 Go의 병렬처리를 이용한 서비스를 만들었고, <code>echo</code> 기반의 웹으로 만들어서 배포해보고 싶었다. 갓 헤로쿠에서는 Go도 지원한다. 처음엔 조금 헤맸는데, 몇 번 시도 끝에 성공했다.</p>
 <p>먼저 헤로쿠에 프로젝트를 하나 생성하고, 깃을 연결한다. 나는 깃허브 계정의 프로젝트를 연결했는데, Auto Deploy를 설정하면 커밋할 때마다 다시 빌드 후 배포해줘서 편하다.(이 과정에 대한 설명은 생략하겠다)</p>
-<h3 id="Procfile-만들기"><a href="#Procfile-만들기" class="headerlink" title="Procfile 만들기"></a>Procfile 만들기</h3><p>프로젝트 최상단에 <code>Procfile</code> 파일을 만든다. 헤로쿠의 배포 설정에 대한 부분이고 확장자는 없다.</p>
+<h2 id="Procfile-만들기"><a href="#Procfile-만들기" class="headerlink" title="Procfile 만들기"></a>Procfile 만들기</h2><p>프로젝트 최상단에 <code>Procfile</code> 파일을 만든다. 헤로쿠의 배포 설정에 대한 부분이고 확장자는 없다.</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">web: go-project-name</span><br></pre></td></tr></table></figure>
 
 <p><code>go-project-name</code>은 본인 프로젝트의 이름에 맞게 수정하면 된다. Procfile 설정은 끝이다.</p>
