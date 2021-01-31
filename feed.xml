@@ -6,7 +6,7 @@
   <link href="https://zinirun.github.io/feed.xml" rel="self"/>
   
   <link href="https://zinirun.github.io/"/>
-  <updated>2021-01-29T07:50:33.577Z</updated>
+  <updated>2021-01-31T09:30:18.934Z</updated>
   <id>https://zinirun.github.io/</id>
   
   <author>
@@ -15,6 +15,35 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Go 서비스를 헤로쿠에 배포하기</title>
+    <link href="https://zinirun.github.io/2021/01/31/go-deploy-heroku/"/>
+    <id>https://zinirun.github.io/2021/01/31/go-deploy-heroku/</id>
+    <published>2021-01-31T08:54:49.000Z</published>
+    <updated>2021-01-31T09:30:18.934Z</updated>
+    
+    <content type="html"><![CDATA[<p><img src="/images/2021-01-31-17-57-53.png" alt="heroku + go"></p><p>요즘 Golang에 빠졌다. 책 한권을 다 읽고 Go의 병렬처리를 이용한 서비스를 만들었고, <code>echo</code> 기반의 웹으로 만들어서 배포해보고 싶었다. 갓 헤로쿠에서는 Go도 지원한다. 처음엔 조금 헤맸는데, 몇 번 시도 끝에 성공했다.</p><p>먼저 헤로쿠에 프로젝트를 하나 생성하고, 깃을 연결한다. 나는 깃허브 계정의 프로젝트를 연결했는데, Auto Deploy를 설정하면 커밋할 때마다 다시 빌드 후 배포해줘서 편하다.(이 과정에 대한 설명은 생략하겠다)</p><h3 id="Procfile-만들기"><a href="#Procfile-만들기" class="headerlink" title="Procfile 만들기"></a>Procfile 만들기</h3><p>프로젝트 최상단에 <code>Procfile</code> 파일을 만든다. 헤로쿠의 배포 설정에 대한 부분이고 확장자는 없다.</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">web: go-project-name</span><br></pre></td></tr></table></figure><p><code>go-project-name</code>은 본인 프로젝트의 이름에 맞게 수정하면 된다. Procfile 설정은 끝이다.</p><h2 id="의존성-추가하기"><a href="#의존성-추가하기" class="headerlink" title="의존성 추가하기"></a>의존성 추가하기</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">go mod init github.com/user-name/project-name</span><br></pre></td></tr></table></figure><p>본인의 깃허브 레파지토리에 맞게 <code>go mod init</code> 명령어를 실행하면 <code>go.mod</code> 파일이 생성된다. <code>go mod</code> 파일에 require 항목을 작성해야 하는데, VSCode + Go 환경인 경우 <code>go.mod</code> 최상단에 보이는 버튼으로 자동으로 <code>require</code> 항목을 작성해주고, 의존성에 따른 <code>vendor</code> 폴더까지 자동으로 만들어준다.</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">module github.com&#x2F;zinirun&#x2F;eden-zip</span><br><span class="line"></span><br><span class="line">go 1.15</span><br><span class="line"></span><br><span class="line">require (</span><br><span class="line">    github.com&#x2F;labstack&#x2F;echo v3.3.10+incompatible</span><br><span class="line">    github.com&#x2F;labstack&#x2F;gommon v0.3.0 &#x2F;&#x2F; indirect</span><br><span class="line">    golang.org&#x2F;x&#x2F;crypto v0.0.0-20201221181555-eec23a3978ad &#x2F;&#x2F; indirect</span><br><span class="line">)</span><br></pre></td></tr></table></figure><p>내 프로젝트에 적용한 <code>go.mod</code> 파일의 예시이다. <code>// indirect</code> 주석이 달린 의존성은 프로젝트에서 직접 추가한 패키지가 아닌, 패키지에서 요구되는 또 다른 의존성 패키지라는 의미이다.</p><h2 id="포트-설정하기"><a href="#포트-설정하기" class="headerlink" title="포트 설정하기"></a>포트 설정하기</h2><p>이번 프로젝트에는 Echo 프레임워크를 사용했는데, 다른 웹 프레임워크도 포트 설정은 비슷하게 할 것이다. 포트를 하드코딩하는 것이 아닌 <code>os.Getenv(&quot;PORT&quot;)</code>로 포트를 잡아줘야 헤로쿠 내부의 포트로 정상적으로 실행된다.</p><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">    e := echo.New()</span><br><span class="line">    e.Start(<span class="string">&quot;:&quot;</span> + os.Getenv(<span class="string">&quot;PORT&quot;</span>))</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><p>기존에는 <code>:1323</code> 등의 방법으로 로컬에서 실행했지만, 배포시 <code>:ENV상의 PORT</code>로 설정해준다.</p><h2 id="Commit-and-Push"><a href="#Commit-and-Push" class="headerlink" title="Commit and Push"></a>Commit and Push</h2><p>이제 설정을 마친 레파지토리를 커밋 후 푸시하면 헤로쿠에 배포된다. <img src="www.herokuapp.com" alt="헤로쿠 웹페이지">에서 빌드 과정, 로그를 확인할 수 있다. 프로그램 실행 중의 로그를 볼 수도 있다.</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">heroku logs -a 앱이름</span><br></pre></td></tr></table></figure><p><img src="/images/2021-01-31-18-29-47.png"></p><p>로그의 일부인데, 빌드가 정상적으로 끝났지만 웹이 열리지 않는 경우 로그를 보면 해결에 도움이 된다.</p>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;p&gt;&lt;img src=&quot;/images/2021-01-31-17-57-53.png&quot; alt=&quot;heroku + go&quot;&gt;&lt;/p&gt;
+&lt;p&gt;요즘 Golang에 빠졌다. 책 한권을 다 읽고 Go의 병렬처리를 이용한 서비스를 만들었고, &lt;code&gt;echo&lt;/code</summary>
+      
+    
+    
+    
+    <category term="go" scheme="https://zinirun.github.io/categories/go/"/>
+    
+    
+    <category term="heroku" scheme="https://zinirun.github.io/tags/heroku/"/>
+    
+    <category term="go" scheme="https://zinirun.github.io/tags/go/"/>
+    
+    <category term="echo" scheme="https://zinirun.github.io/tags/echo/"/>
+    
+  </entry>
   
   <entry>
     <title>Nest.js - Jest를 이용한 테스트</title>
@@ -518,34 +547,6 @@
     
     
     <category term="sqld" scheme="https://zinirun.github.io/tags/sqld/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Node.js - MySQL timezone 삽질기</title>
-    <link href="https://zinirun.github.io/2020/10/11/nodejs-mysql-timezone/"/>
-    <id>https://zinirun.github.io/2020/10/11/nodejs-mysql-timezone/</id>
-    <published>2020-10-11T08:54:18.000Z</published>
-    <updated>2020-10-11T14:01:36.064Z</updated>
-    
-    <content type="html"><![CDATA[<h2 id="제-컴에선-되는데요"><a href="#제-컴에선-되는데요" class="headerlink" title="제 컴에선 되는데요"></a>제 컴에선 되는데요</h2><p>개발자들간의 대화에서 자주 나오는 변명이다. 지금 고군분투하고 있는 졸업작품에서 뼈저리게 느껴지는 말이다. 테스트 환경(로컬)과 운영 환경이 정말 다르다. localhost에선 잘만 되던 것이 도커로 서버에 배포하면 기대와 정말 다르다. 이번 문제는 도커로 배포된 MySQL 컨테이너의 시간대가 <code>UTC</code>로 설정되어 있어서 발생했다.</p><h2 id="삽질의-시작"><a href="#삽질의-시작" class="headerlink" title="삽질의 시작"></a>삽질의 시작</h2><p>백엔드(Node)에서 DB에 대한 config를 수정해야겠다 싶어서 구글링하다가 <a href="https://lemontia.tistory.com/873">비슷한 문제에 대한 해결방법</a>을 찾았다. Sequalize를 사용하지는 않지만 MySQL 설정에 대한 방법은 동일하겠다 싶었다.</p><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">module</span>.exports = &#123;</span><br><span class="line">  connectionLimit: <span class="number">30</span>,</span><br><span class="line">  host: process.env.DATABASE_HOST,</span><br><span class="line">  user: <span class="string">&quot;root&quot;</span>,</span><br><span class="line">  password,</span><br><span class="line">  database,</span><br><span class="line">  dateStrings: <span class="string">&quot;date&quot;</span>,</span><br><span class="line">  charset: <span class="string">&quot;utf8mb4&quot;</span>,</span><br><span class="line">  debug: <span class="literal">false</span>,</span><br><span class="line">  insecureAuth: <span class="literal">true</span>,</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure><p>이 config를</p><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">module</span>.exports = &#123;</span><br><span class="line">  connectionLimit: <span class="number">30</span>,</span><br><span class="line">  host: process.env.DATABASE_HOST,</span><br><span class="line">  user: <span class="string">&quot;root&quot;</span>,</span><br><span class="line">  password,</span><br><span class="line">  database,</span><br><span class="line">  timezone: <span class="string">&quot;Asia/Seoul&quot;</span>,</span><br><span class="line">  dateStrings: <span class="literal">true</span>,</span><br><span class="line">  typeCast: <span class="literal">true</span>,</span><br><span class="line">  charset: <span class="string">&quot;utf8mb4&quot;</span>,</span><br><span class="line">  debug: <span class="literal">false</span>,</span><br><span class="line">  insecureAuth: <span class="literal">true</span>,</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure><p>이렇게 바꿨다. 배포해보니 결과는 똑같았다.</p><p><img src="/images/2020-10-11-22-55-06.png"></p><p>9시간 전으로 타임스탬프가 찍힌다.. <code>timezone: &#39;+09:00&#39;</code>으로 설정해도 먹히지 않았다. 대체 왜 이러는걸까 생각하다가 도커로 배포한 MySQL에서 직접 <code>select current_timestamp()</code>를 찍어봐야겠다 생각했다.</p><p>그러니 문제의 timezone과 동일한 시간이 출력되어서 데이터베이스의 timezone만 바꾸면 되겠다고 생각했다. (여기서 해결한 줄 알았다)</p><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SET</span> <span class="keyword">time_zone</span> = <span class="string">&#x27;Asia/Seoul&#x27;</span>;</span><br></pre></td></tr></table></figure><p>이제 현재시간도 정상적으로 찍힌다.</p><p>그런데 배포했는데 또 안된다. 9시간 전으로 (UTC 시간으로) 찍힌다.</p><h2 id="해결-방법"><a href="#해결-방법" class="headerlink" title="해결 방법"></a>해결 방법</h2><p>데이터베이스에서 timezone을 설정하는 방법은 맞았다. 하지만 데이터베이스 컨테이너 내 모든 DB의 Global 값을 설정해야 모든 테이블에 대해 timezone이 정상적으로 적용되는 것이었다.</p><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SET</span> <span class="keyword">GLOBAL</span> <span class="keyword">time_zone</span> = <span class="string">&#x27;Asia/Seoul&#x27;</span>;</span><br></pre></td></tr></table></figure><p><img src="/images/2020-10-11-22-59-39.png"></p><p>이제 정상적으로 찍힌다. 사실 이 설정들을 바꾸는 건 어렵지 않은데, 아무리 배포 자동화가 되어 있어도 깃에 푸시하고 서버에 접속해서 스크립트를 실행하면 몇 초만에 끝나는 것도 아니라서 꽤 번거로웠다. 로컬 환경에서 배포 환경 기준으로 테스트할 수 있는 방법이 있으면 좋겠다..</p>]]></content>
-    
-    
-      
-      
-    <summary type="html">&lt;h2 id=&quot;제-컴에선-되는데요&quot;&gt;&lt;a href=&quot;#제-컴에선-되는데요&quot; class=&quot;headerlink&quot; title=&quot;제 컴에선 되는데요&quot;&gt;&lt;/a&gt;제 컴에선 되는데요&lt;/h2&gt;&lt;p&gt;개발자들간의 대화에서 자주 나오는 변명이다. 지금 고군분투하고 있는 </summary>
-      
-    
-    
-    
-    <category term="nodejs" scheme="https://zinirun.github.io/categories/nodejs/"/>
-    
-    
-    <category term="nodejs" scheme="https://zinirun.github.io/tags/nodejs/"/>
-    
-    <category term="docker" scheme="https://zinirun.github.io/tags/docker/"/>
-    
-    <category term="mysql" scheme="https://zinirun.github.io/tags/mysql/"/>
     
   </entry>
   

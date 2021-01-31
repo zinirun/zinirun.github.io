@@ -3,6 +3,27 @@
 
 
     <url>
+        <loc>https://zinirun.github.io/tags/echo/</loc>
+        <lastmod>2021-01-31T09:30:18.934Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
+        <loc>https://zinirun.github.io/tags/go/</loc>
+        <lastmod>2021-01-31T09:30:18.934Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
+        <loc>https://zinirun.github.io/tags/heroku/</loc>
+        <lastmod>2021-01-31T09:30:18.934Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
         <loc>https://zinirun.github.io/tags/Nest-js/</loc>
         <lastmod>2021-01-29T07:50:33.577Z</lastmod>
         <changefreq>weekly</changefreq>
@@ -180,13 +201,6 @@
     <url>
         <loc>https://zinirun.github.io/tags/capstone-design/</loc>
         <lastmod>2020-10-04T07:38:22.971Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.2</priority>
-    </url>
-
-    <url>
-        <loc>https://zinirun.github.io/tags/heroku/</loc>
-        <lastmod>2020-09-28T01:05:31.711Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>
     </url>

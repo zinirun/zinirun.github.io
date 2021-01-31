@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+<link rel="canonical" href="https://zinirun.github.io/2021/01/31/go-deploy-heroku/">
+
+
+<link rel="stylesheet" href="//fonts.googleapis.com/earlyaccess/notosanskr.css">
+
+
+    <meta name="author" content="zini">
+
+
+    <meta name="subtitle" content="tech blog by Zini">
+
+
+
+
+<title>Go 서비스를 헤로쿠에 배포하기 | zinirun</title>
+
+
+
+    <link rel="icon" href="/favicon.png">
+
+
+
+
+    <!-- stylesheets list from _config.yml -->
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+
+
+
+    <!-- scripts list from _config.yml -->
+    
+    <script src="/js/script.js"></script>
+    
+    <script src="/js/tocbot.min.js"></script>
+    
+
+
+
+    
+    
+        
+    
+
+
+
+<script>
+	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+		(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+			m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+	ga('create', 'UA-175983012-1', 'auto');
+	ga('send', 'pageview');
+</script>
+
+<meta name="generator" content="Hexo 5.0.2"><link rel="alternate" href="/feed.xml" title="zinirun" type="application/atom+xml">
+</head>
+<body>
+    <div class="wrapper">
+        <header>
+  <nav class="navbar">
+    <div class="container">
+      <div class="navbar-header header-logo" style="font-size: 13pt; font-weight: 600;">
+        <a id="blog_logo" href="/" style="color: #2d96bd;"><img class="logo-ico spin circle" src="/image/logo.png" alt="zini's Devlog"></a>
+        
+        <a class="menu-item left-menu" href="/archives">Posts</a>
+        
+        <a class="menu-item left-menu" href="/category">Categories</a>
+        
+        <a class="menu-item left-menu" href="/tag">Tags</a>
+        
+<!--
+        <input id="switch_default" type="checkbox" class="switch_default" />
+        <label for="switch_default" class="toggleBtn" style="margin-left: 0px;"></label>
+-->
+      </div>
+      <div class="menu navbar-right">
+        <!--mynav-->
+        <div id="mynav-container">
+        
+        <a class="menu-item" href="/categories/javascript"><img class="menu-ico" src="/image/icons/javascript.png" alt="Javascript"></a>
+        
+        <a class="menu-item" href="/categories/typescript"><img class="menu-ico" src="/image/icons/typescript.png" alt="Typescript"></a>
+        
+        <a class="menu-item" href="/categories/nodejs"><img class="menu-ico" src="/image/icons/node.png" alt="Node"></a>
+        
+        <a class="menu-item" href="/categories/ReactJS"><img class="menu-ico" src="/image/icons/react.png" alt="React"></a>
+        
+        <a class="menu-item" href="/categories/redux"><img class="menu-ico" src="/image/icons/redux.png" alt="Redux"></a>
+        
+        <a class="menu-item" href="/categories/cloud/docker"><img class="menu-ico" src="/image/icons/dockernew.png" alt="Docker"></a>
+        
+        <a class="menu-item" href="/categories/cloud/kubernetes"><img class="menu-ico" src="/image/icons/k8s.png" alt="Kubernetes"></a>
+        
+        <a class="menu-item" href="/categories/algorithm"><img class="menu-ico" src="/image/icons/ps-code.png" alt="Algorithm"></a>
+        
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  
+  <nav class="navbar-mobile" id="nav-mobile">
+    <div class="container">
+      <div class="navbar-header">
+        <div>
+          <a id="blog_logo" href="/" style="color: #2d96bd;"><img class="logo-ico" src="/image/logo.png" alt="zini's Devlog"></a>
+        </div>
+        <div class="menu-toggle" onclick="mobileBtn()">&#9776; Menu</div>
+      </div>
+      <div class="menu" id="mobile-menu">
+       <div id="mobile-nav">
+        
+        <a class="menu-item" href="/archives">Posts</a>
+        
+        <a class="menu-item" href="/category">Categories</a>
+        
+        <a class="menu-item" href="/tag">Tags</a>
+        
+          </div>
+        <div id="mobile-mynav">
+        
+        <a class="menu-item" href="/categories/javascript"><img class="menu-ico" src="/image/icons/javascript.png" alt="Javascript"></a>
+        
+        <a class="menu-item" href="/categories/typescript"><img class="menu-ico" src="/image/icons/typescript.png" alt="Typescript"></a>
+        
+        <a class="menu-item" href="/categories/nodejs"><img class="menu-ico" src="/image/icons/node.png" alt="Node"></a>
+        
+        <a class="menu-item" href="/categories/ReactJS"><img class="menu-ico" src="/image/icons/react.png" alt="React"></a>
+        
+        <a class="menu-item" href="/categories/redux"><img class="menu-ico" src="/image/icons/redux.png" alt="Redux"></a>
+        
+        <a class="menu-item" href="/categories/cloud/docker"><img class="menu-ico" src="/image/icons/dockernew.png" alt="Docker"></a>
+        
+        <a class="menu-item" href="/categories/cloud/kubernetes"><img class="menu-ico" src="/image/icons/k8s.png" alt="Kubernetes"></a>
+        
+        <a class="menu-item" href="/categories/algorithm"><img class="menu-ico" src="/image/icons/ps-code.png" alt="Algorithm"></a>
+        
+          </div>
+      </div>
+    </div>
+  </nav>
+</header>
+<script>
+  var mobileBtn = function f() {
+    var toggleMenu = document.getElementsByClassName("menu-toggle")[0];
+    var mobileMenu = document.getElementById("mobile-menu");
+    if (toggleMenu.classList.contains("active")) {
+      toggleMenu.classList.remove("active");
+      mobileMenu.classList.remove("active");
+    } else {
+      toggleMenu.classList.add("active");
+      mobileMenu.classList.add("active");
+    }
+  };
+</script>
+
+        <div class="main">
+            <div class="container">
+    
+    
+        <div class="post-toc">
+    <div class="tocbot-list">
+    </div>
+    <div class="tocbot-list-menu">
+        <a class="tocbot-toc-expand" onclick="expand_toc()">Expand All</a>
+        <a onclick="go_top()">Top</a>
+        <a onclick="go_bottom()">Bottom</a>
+    </div>
+</div>
+
+<script>
+    document.ready(
+        function () {
+            tocbot.init({
+                tocSelector: '.tocbot-list',
+                contentSelector: '.post-content',
+                headingSelector: 'h1, h2, h3, h4, h5',
+                collapseDepth: 1,
+                orderedList: false,
+                scrollSmooth: true,
+            })
+        }
+    )
+
+    function expand_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 6,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "collapse_toc()");
+        b.innerHTML = "Collapse all"
+    }
+
+    function collapse_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 1,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "expand_toc()");
+        b.innerHTML = "Expand all"
+    }
+
+    function go_top() {
+        window.scrollTo(0, 0);
+    }
+
+    function go_bottom() {
+        window.scrollTo(0, document.body.scrollHeight);
+    }
+
+</script>
+    
+
+    
+    <article class="post-wrap">
+        <header class="post-header">
+            <h1 class="post-title">Go 서비스를 헤로쿠에 배포하기</h1>
+            
+                <div class="post-meta">
+                    
+                        Author: <a itemprop="author" rel="author" href="/">zini</a>
+                    
+
+                    
+                        <span class="post-time">
+                        Date: <a href="#">January 31, 2021&nbsp;&nbsp;17:54:49</a>
+                        </span>
+                    
+                    
+                        <span class="post-category">
+                    Category:
+                            
+                                <a href="/categories/go/">go</a>
+                            
+                        </span>
+                    
+                </div>
+            
+        </header>
+
+        <div class="post-content">
+            <p><img src="/images/2021-01-31-17-57-53.png" alt="heroku + go"></p>
+<p>요즘 Golang에 빠졌다. 책 한권을 다 읽고 Go의 병렬처리를 이용한 서비스를 만들었고, <code>echo</code> 기반의 웹으로 만들어서 배포해보고 싶었다. 갓 헤로쿠에서는 Go도 지원한다. 처음엔 조금 헤맸는데, 몇 번 시도 끝에 성공했다.</p>
+<p>먼저 헤로쿠에 프로젝트를 하나 생성하고, 깃을 연결한다. 나는 깃허브 계정의 프로젝트를 연결했는데, Auto Deploy를 설정하면 커밋할 때마다 다시 빌드 후 배포해줘서 편하다.(이 과정에 대한 설명은 생략하겠다)</p>
+<h3 id="Procfile-만들기"><a href="#Procfile-만들기" class="headerlink" title="Procfile 만들기"></a>Procfile 만들기</h3><p>프로젝트 최상단에 <code>Procfile</code> 파일을 만든다. 헤로쿠의 배포 설정에 대한 부분이고 확장자는 없다.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">web: go-project-name</span><br></pre></td></tr></table></figure>
+
+<p><code>go-project-name</code>은 본인 프로젝트의 이름에 맞게 수정하면 된다. Procfile 설정은 끝이다.</p>
+<h2 id="의존성-추가하기"><a href="#의존성-추가하기" class="headerlink" title="의존성 추가하기"></a>의존성 추가하기</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">go mod init github.com/user-name/project-name</span><br></pre></td></tr></table></figure>
+
+<p>본인의 깃허브 레파지토리에 맞게 <code>go mod init</code> 명령어를 실행하면 <code>go.mod</code> 파일이 생성된다. <code>go mod</code> 파일에 require 항목을 작성해야 하는데, VSCode + Go 환경인 경우 <code>go.mod</code> 최상단에 보이는 버튼으로 자동으로 <code>require</code> 항목을 작성해주고, 의존성에 따른 <code>vendor</code> 폴더까지 자동으로 만들어준다.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">module github.com&#x2F;zinirun&#x2F;eden-zip</span><br><span class="line"></span><br><span class="line">go 1.15</span><br><span class="line"></span><br><span class="line">require (</span><br><span class="line">    github.com&#x2F;labstack&#x2F;echo v3.3.10+incompatible</span><br><span class="line">    github.com&#x2F;labstack&#x2F;gommon v0.3.0 &#x2F;&#x2F; indirect</span><br><span class="line">    golang.org&#x2F;x&#x2F;crypto v0.0.0-20201221181555-eec23a3978ad &#x2F;&#x2F; indirect</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+
+<p>내 프로젝트에 적용한 <code>go.mod</code> 파일의 예시이다. <code>// indirect</code> 주석이 달린 의존성은 프로젝트에서 직접 추가한 패키지가 아닌, 패키지에서 요구되는 또 다른 의존성 패키지라는 의미이다.</p>
+<h2 id="포트-설정하기"><a href="#포트-설정하기" class="headerlink" title="포트 설정하기"></a>포트 설정하기</h2><p>이번 프로젝트에는 Echo 프레임워크를 사용했는데, 다른 웹 프레임워크도 포트 설정은 비슷하게 할 것이다. 포트를 하드코딩하는 것이 아닌 <code>os.Getenv(&quot;PORT&quot;)</code>로 포트를 잡아줘야 헤로쿠 내부의 포트로 정상적으로 실행된다.</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">    e := echo.New()</span><br><span class="line">    e.Start(<span class="string">&quot;:&quot;</span> + os.Getenv(<span class="string">&quot;PORT&quot;</span>))</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>기존에는 <code>:1323</code> 등의 방법으로 로컬에서 실행했지만, 배포시 <code>:ENV상의 PORT</code>로 설정해준다.</p>
+<h2 id="Commit-and-Push"><a href="#Commit-and-Push" class="headerlink" title="Commit and Push"></a>Commit and Push</h2><p>이제 설정을 마친 레파지토리를 커밋 후 푸시하면 헤로쿠에 배포된다. <img src="www.herokuapp.com" alt="헤로쿠 웹페이지">에서 빌드 과정, 로그를 확인할 수 있다. 프로그램 실행 중의 로그를 볼 수도 있다.</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">heroku logs -a 앱이름</span><br></pre></td></tr></table></figure>
+
+<p><img src="/images/2021-01-31-18-29-47.png"></p>
+<p>로그의 일부인데, 빌드가 정상적으로 끝났지만 웹이 열리지 않는 경우 로그를 보면 해결에 도움이 된다.</p>
+
+        </div>
+
+        
+            <section class="post-copyright">
+                
+                
+                
+                
+
+            </section>
+        
+        <section class="post_disqus">
+            <div id="disqus_thread"></div>
+            <script>
+            
+            /**
+            *  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+            *  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables*/
+            /*
+            var disqus_config = function () {
+            this.page.url = PAGE_URL;  // Replace PAGE_URL with your page's canonical URL variable
+            this.page.identifier = PAGE_IDENTIFIER; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+            };
+            */
+            (function() { // DON'T EDIT BELOW THIS LINE
+            var d = document, s = d.createElement('script');
+            s.src = 'https://zinirun.disqus.com/embed.js';
+            s.setAttribute('data-timestamp', +new Date());
+            (d.head || d.body).appendChild(s);
+            })();
+            </script>
+            <noscript>Please enable JavaScript to view the <a target="_blank" rel="external nofollow noopener noreferrer" href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+        </section>
+        <section class="post-tags">
+            <div>
+                <span>Tag(s):</span>
+                <span class="tag">
+                    
+                    
+                        <a href="/tags/heroku/"># heroku</a>
+                    
+                        <a href="/tags/go/"># go</a>
+                    
+                        <a href="/tags/echo/"># echo</a>
+                    
+                        
+                </span>
+            </div>
+            <div>
+                <a href="javascript:window.history.back();">back</a>
+                <span>· </span>
+                <a href="/">home</a>
+            </div>
+        </section>
+        <section class="post-nav">
+            
+            
+            <a class="next" rel="next" href="/2021/01/29/nestjs-study-4/">Nest.js - Jest를 이용한 테스트</a>
+            
+        </section>
+
+
+    </article>
+</div>
+
+        </div>
+        <footer id="footer" class="footer">
+  <div class="copyright">
+    <span>© zini | Powered by
+      <a href="https://hexo.io" target="_blank" rel="external nofollow noopener noreferrer">Hexo</a>
+  </span></div>
+</footer>
+
+    </div>
+</body>
+</html>
