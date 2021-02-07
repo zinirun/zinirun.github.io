@@ -281,7 +281,7 @@
 <figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">    e := echo.New()</span><br><span class="line">    e.Start(<span class="string">&quot;:&quot;</span> + os.Getenv(<span class="string">&quot;PORT&quot;</span>))</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <p>기존에는 <code>:1323</code> 등의 방법으로 로컬에서 실행했지만, 배포시 <code>:ENV상의 PORT</code>로 설정해준다.</p>
-<h2 id="Commit-and-Push"><a href="#Commit-and-Push" class="headerlink" title="Commit and Push"></a>Commit and Push</h2><p>이제 설정을 마친 레파지토리를 커밋 후 푸시하면 헤로쿠에 배포된다. <img src="www.herokuapp.com" alt="헤로쿠 웹페이지">에서 빌드 과정, 로그를 확인할 수 있다. 프로그램 실행 중의 로그를 볼 수도 있다.</p>
+<h2 id="Commit-and-Push"><a href="#Commit-and-Push" class="headerlink" title="Commit and Push"></a>Commit and Push</h2><p>이제 설정을 마친 레파지토리를 커밋 후 푸시하면 헤로쿠에 배포된다. <a href="www.herokuapp.com">헤로쿠 웹페이지</a>에서 빌드 과정, 로그를 확인할 수 있다. 프로그램 실행 중의 로그를 볼 수도 있다.</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">heroku logs -a 앱이름</span><br></pre></td></tr></table></figure>
 
 <p><img src="/images/2021-01-31-18-29-47.png"></p>
