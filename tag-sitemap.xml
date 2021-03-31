@@ -3,6 +3,41 @@
 
 
     <url>
+        <loc>https://zinirun.github.io/tags/ssl/</loc>
+        <lastmod>2021-03-31T10:12:51.994Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
+        <loc>https://zinirun.github.io/tags/certbot/</loc>
+        <lastmod>2021-03-31T10:12:51.994Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
+        <loc>https://zinirun.github.io/tags/https/</loc>
+        <lastmod>2021-03-31T10:12:51.994Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
+        <loc>https://zinirun.github.io/tags/nginx/</loc>
+        <lastmod>2021-03-31T10:12:51.994Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
+        <loc>https://zinirun.github.io/tags/docker/</loc>
+        <lastmod>2021-03-31T10:12:51.994Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
         <loc>https://zinirun.github.io/tags/echo/</loc>
         <lastmod>2021-02-07T07:38:50.784Z</lastmod>
         <changefreq>weekly</changefreq>
@@ -115,13 +150,6 @@
     </url>
 
     <url>
-        <loc>https://zinirun.github.io/tags/docker/</loc>
-        <lastmod>2020-10-27T16:25:44.229Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.2</priority>
-    </url>
-
-    <url>
         <loc>https://zinirun.github.io/tags/sql/</loc>
         <lastmod>2020-10-23T01:17:39.511Z</lastmod>
         <changefreq>weekly</changefreq>
@@ -152,13 +180,6 @@
     <url>
         <loc>https://zinirun.github.io/tags/database/</loc>
         <lastmod>2020-10-23T01:17:39.511Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.2</priority>
-    </url>
-
-    <url>
-        <loc>https://zinirun.github.io/tags/https/</loc>
-        <lastmod>2020-10-16T15:07:00.890Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>
     </url>
@@ -277,13 +298,6 @@
 
     <url>
         <loc>https://zinirun.github.io/tags/uwsgi/</loc>
-        <lastmod>2020-08-22T14:40:05.629Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.2</priority>
-    </url>
-
-    <url>
-        <loc>https://zinirun.github.io/tags/nginx/</loc>
         <lastmod>2020-08-22T14:40:05.629Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>
